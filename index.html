@@ -305,57 +305,141 @@
             transform: translateY(-2px);
         }
 
-        /* ---------------- EXPERIENCE BADGE NAVIGATOR DOCK ---------------- */
-        .experience-dock-nav {
+        /* ---------------- SECTION 2: EXPERIENCE PANEL (ULTRAMIND) ---------------- */
+        .experience-panel-wrapper {
             position: fixed;
-            top: 96px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 52%;
+            right: 48px;
+            transform: translateY(-50%) translateX(20px);
+            width: 100%;
+            max-width: 480px;
             background: var(--card-ivory);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 26px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: var(--card-shadow);
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .experience-panel-wrapper.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(-50%) translateX(0);
+        }
+        .exp-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .exp-company-tag {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent-green);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .exp-date-badge {
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 12px;
             border-radius: 100px;
-            padding: 8px 18px;
+            background: rgba(36, 71, 53, 0.08);
+            color: var(--accent-green);
+            white-space: nowrap;
+        }
+        .exp-role-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-charcoal);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        .exp-product-subtitle {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: -6px;
+        }
+        .exp-bullets-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 2px;
+            max-height: 270px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+        .exp-bullets-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .exp-bullets-list::-webkit-scrollbar-thumb {
+            background: rgba(36, 37, 34, 0.15);
+            border-radius: 4px;
+        }
+        .exp-bullet-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .exp-bullet-icon {
+            color: var(--accent-green);
+            font-size: 11px;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+        .exp-bullet-item p {
+            font-size: 12.5px;
+            color: var(--text-charcoal);
+            line-height: 1.45;
+            font-weight: 450;
+        }
+        .exp-tools-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(36, 37, 34, 0.08);
+        }
+        .exp-tool-chip {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-green);
+            background: rgba(36, 71, 53, 0.06);
+            border: 1px solid rgba(36, 71, 53, 0.15);
+            padding: 3px 10px;
+            border-radius: 100px;
+        }
+        .exp-actions-row {
             display: flex;
             align-items: center;
-            gap: 16px;
-            z-index: 90;
-            box-shadow: var(--card-shadow);
+            justify-content: flex-start;
+            margin-top: 2px;
         }
-        .badge-nav-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-charcoal);
-            font-size: 18px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 100px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .badge-nav-btn:hover {
-            color: var(--accent-green);
-            background: rgba(36, 71, 53, 0.08);
-        }
-        .badge-counter-txt {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text-charcoal);
-        }
-        .badge-flip-action {
+        .btn-flip-badge {
             background: var(--accent-green);
-            border: none;
             color: var(--bg-ivory);
-            padding: 7px 18px;
+            border: none;
+            padding: 8px 18px;
             border-radius: 100px;
             font-size: 12.5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        .badge-flip-action:hover {
+        .btn-flip-badge:hover {
             background: var(--accent-green-hover);
+            transform: translateY(-1px);
         }
 
         /* ---------------- EDUCATION CALLOUTS & SVG LEADER LINES ---------------- */
@@ -532,6 +616,7 @@
             .hero-heading { font-size: 38px; }
             .hero-lead { font-size: 16px; }
             .undock-btn { left: 20px; }
+            .experience-panel-wrapper { right: 20px; left: 20px; max-width: 100%; top: auto; bottom: 20px; transform: none; max-height: 55vh; }
             .edu-callout-card { right: 20px; max-width: calc(100vw - 40px); }
         }
     </style>
@@ -596,12 +681,52 @@
         </div>
     </div>
 
-    <!-- Section 2: Floating Experience Badge Navigator (Noticeboard) -->
-    <div class="experience-dock-nav" id="badge-nav-bar" style="display: none;">
-        <button class="badge-nav-btn" onclick="cycleBadge(-1)" title="Previous Badge (Arrow Left)">‹</button>
-        <span class="badge-counter-txt" id="badge-counter">01 / 02 · UltraMind</span>
-        <button class="badge-flip-action" onclick="toggleFlipActiveBadge()">Flip Badge ↺</button>
-        <button class="badge-nav-btn" onclick="cycleBadge(1)" title="Next Badge (Arrow Right)">›</button>
+    <!-- ---------------- SECTION 2: EXPERIENCE (Noticeboard & Ultramind Role) ---------------- -->
+    <div class="experience-panel-wrapper" id="experience-panel">
+        <div class="exp-card-header">
+            <span class="exp-company-tag">ULTRAMIND</span>
+            <span class="exp-date-badge">April 2024 – Present</span>
+        </div>
+        <h2 class="exp-role-title">Product Designer</h2>
+        <div class="exp-product-subtitle">iOS Mobile Application & Official Web Platform</div>
+
+        <div class="exp-bullets-list">
+            <div class="exp-bullet-item">
+                <span class="exp-bullet-icon">✦</span>
+                <p>Designed the complete product experience from early stages—including user flows, wireframes, high-fidelity UI, widgets, and interactive prototypes for the iOS application (live on App Store).</p>
+            </div>
+            <div class="exp-bullet-item">
+                <span class="exp-bullet-icon">✦</span>
+                <p>Translated product requirements and user needs into clear flows and high-fidelity interfaces, refining existing flows to improve usability and clarity.</p>
+            </div>
+            <div class="exp-bullet-item">
+                <span class="exp-bullet-icon">✦</span>
+                <p>Designed the official Ultramind website, maintaining consistency in structure, usability, and visual quality across product and web experiences.</p>
+            </div>
+            <div class="exp-bullet-item">
+                <span class="exp-bullet-icon">✦</span>
+                <p>Collaborated with developers and managers to review designs, gather feedback, resolve design issues, and refine interfaces through development.</p>
+            </div>
+            <div class="exp-bullet-item">
+                <span class="exp-bullet-icon">✦</span>
+                <p>Used Figma, Figma AI, Claude, and Adobe tools for design research, ideation, UI design, animation, and visual effects; built automation workflows to streamline team efficiency.</p>
+            </div>
+        </div>
+
+        <div class="exp-tools-row">
+            <span class="exp-tool-chip">Figma</span>
+            <span class="exp-tool-chip">Figma AI</span>
+            <span class="exp-tool-chip">Claude</span>
+            <span class="exp-tool-chip">Adobe Suite</span>
+            <span class="exp-tool-chip">iOS Widgets</span>
+            <span class="exp-tool-chip">App Store Live</span>
+        </div>
+
+        <div class="exp-actions-row">
+            <button class="btn-flip-badge" onclick="toggleFlipActiveBadge()">
+                <span>Flip 3D Badge ↺</span>
+            </button>
+        </div>
     </div>
 
     <!-- Section 4: Education (Cupboard Wardrobe & Straight Horizontal Leader Lines) -->
@@ -1847,12 +1972,12 @@
             },
             {
                 id: 2,
-                name: 'Experience (ID Badges)',
-                cameraPos: [-1.65, 3.57, 1.55],
-                cameraTarget: [-3.59, 3.57, 1.55],
-                fov: 34.0,
+                name: 'Experience (Ultramind Role & Noticeboard)',
+                cameraPos: [-1.65, 3.57, 1.25],
+                cameraTarget: [-3.59, 3.57, 1.25],
+                fov: 35.0,
                 cupboardOpen: false,
-                hint: 'Click ID badges to flip 3D credentials'
+                hint: 'Ultramind Product Designer · Click 3D badge or button to flip credentials'
             },
             {
                 id: 3,
@@ -2057,10 +2182,11 @@
                 else heroPanel.classList.remove('active');
             }
 
-            // Experience Badge Nav Pill
-            const badgeNav = document.getElementById('badge-nav-bar');
-            if (badgeNav) {
-                badgeNav.style.display = (index === 2) ? 'flex' : 'none';
+            // Experience Section Panel
+            const expPanel = document.getElementById('experience-panel');
+            if (expPanel) {
+                if (index === 2) expPanel.classList.add('active');
+                else expPanel.classList.remove('active');
             }
 
             // Education leader lines and cards column
@@ -2095,44 +2221,24 @@
             });
         }
 
-        // ---------------- EXPERIENCE ID BADGES ----------------
-        const badgesData = [
-            { company: "UltraMind", role: "Product Designer · iOS & Web (Apr 2024 — Present)" },
-            { company: "Product & UI/UX Consultant", role: "Independent Designer & Spatial Specialist (2022 — 2024)" }
-        ];
-
-        let curBadgeIdx = 0;
+        // ---------------- EXPERIENCE ID BADGES & FLIP ----------------
         let isBadgeFlipped = false;
-
-        function updateBadgeUI() {
-            const b = badgesData[curBadgeIdx];
-            document.getElementById('badge-counter').innerText = '0' + (curBadgeIdx + 1) + ' / 0' + badgesData.length + ' · ' + b.company;
-        }
-
-        function cycleBadge(dir) {
-            curBadgeIdx = (curBadgeIdx + dir + badgesData.length) % badgesData.length;
-            isBadgeFlipped = false;
-            updateBadgeUI();
-
-            const targetBadge = curBadgeIdx === 0 ? badgeCard0 : badgeCard1;
-            if (targetBadge) {
-                new TWEEN.Tween(targetBadge.rotation)
-                    .to({ y: 0 }, 500)
-                    .easing(TWEEN.Easing.Cubic.Out)
-                    .start();
-            }
-            showToast('Badge: ' + badgesData[curBadgeIdx].company);
-        }
 
         function toggleFlipActiveBadge() {
             isBadgeFlipped = !isBadgeFlipped;
-            const targetBadge = curBadgeIdx === 0 ? badgeCard0 : badgeCard1;
+            const targetBadge = badgeCard0 || badgeCard1;
             if (targetBadge) {
                 new TWEEN.Tween(targetBadge.rotation)
                     .to({ y: isBadgeFlipped ? Math.PI : 0 }, 700)
                     .easing(TWEEN.Easing.Cubic.Out)
                     .start();
-                showToast(isBadgeFlipped ? "Flipped to Back Credentials" : "Flipped to Front Side");
+                if (badgeCard1 && badgeCard1 !== targetBadge) {
+                    new TWEEN.Tween(badgeCard1.rotation)
+                        .to({ y: isBadgeFlipped ? Math.PI : 0 }, 700)
+                        .easing(TWEEN.Easing.Cubic.Out)
+                        .start();
+                }
+                showToast(isBadgeFlipped ? "Flipped to Back Credentials" : "Flipped to Front Credentials");
             }
         }
 
@@ -2180,42 +2286,38 @@
 
             if (screenItems.length < 3) return;
 
-            const minGap = 16;
+            // Enforce EXACT same space (gap) between Card 0 & Card 1 and Card 1 & Card 2
+            const equalGap = 20; // Exact identical spacing between cards
+            const h0 = screenItems[0].cardH;
+            const h1 = screenItems[1].cardH;
+            const h2 = screenItems[2].cardH;
+            const totalSpan = h0 + equalGap + h1 + equalGap + h2;
+
+            // Center the entire 3-card block around the middle uniform projected sy
+            const midY = screenItems[1].sy;
+            let top0 = Math.round(midY - (h0 + equalGap + h1 * 0.5));
+            let top1 = top0 + h0 + equalGap;
+            let top2 = top1 + h1 + equalGap;
+
             const topBoundary = 86; // below navbar
             const bottomBoundary = window.innerHeight - 20;
 
-            // 1. Forward relaxation pass: ensure no card overlaps the one above it
-            for (let i = 0; i < screenItems.length; i++) {
-                if (i === 0) {
-                    screenItems[i].top = Math.max(topBoundary, screenItems[i].top);
-                } else {
-                    const prevBottom = screenItems[i - 1].top + screenItems[i - 1].cardH;
-                    screenItems[i].top = Math.max(prevBottom + minGap, screenItems[i].top);
-                }
+            if (top0 < topBoundary) {
+                const shift = topBoundary - top0;
+                top0 += shift;
+                top1 += shift;
+                top2 += shift;
+            }
+            if (top2 + h2 > bottomBoundary) {
+                const shift = (top2 + h2) - bottomBoundary;
+                top0 -= shift;
+                top1 -= shift;
+                top2 -= shift;
             }
 
-            // 2. Backward relaxation pass: ensure cards do not overflow the bottom
-            for (let i = screenItems.length - 1; i >= 0; i--) {
-                const curBottom = screenItems[i].top + screenItems[i].cardH;
-                if (curBottom > bottomBoundary) {
-                    screenItems[i].top = bottomBoundary - screenItems[i].cardH;
-                }
-                if (i > 0) {
-                    const requiredBottom = screenItems[i].top - minGap;
-                    if (screenItems[i - 1].top + screenItems[i - 1].cardH > requiredBottom) {
-                        screenItems[i - 1].top = requiredBottom - screenItems[i - 1].cardH;
-                    }
-                }
-            }
-
-            // 3. Final topBoundary guard
-            for (let i = 0; i < screenItems.length; i++) {
-                if (i === 0) {
-                    screenItems[i].top = Math.max(topBoundary, screenItems[i].top);
-                } else {
-                    screenItems[i].top = Math.max(screenItems[i - 1].top + screenItems[i - 1].cardH + minGap, screenItems[i].top);
-                }
-            }
+            screenItems[0].top = top0;
+            screenItems[1].top = top1;
+            screenItems[2].top = top2;
 
             // Apply calculated positions and draw clean horizontal leader lines
             screenItems.forEach(item => {
