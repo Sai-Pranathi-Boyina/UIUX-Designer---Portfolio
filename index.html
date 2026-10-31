@@ -3,43 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sai Pranathi Boyina · Product Designer</title>
-    <meta name="description" content="Portfolio of Sai Pranathi Boyina — Product Designer specializing in UI/UX, Figma Design Systems, and 3D Interactive Experiences.">
+    <title>Sai Pranathi Boyina · UI/UX & Product Designer</title>
+    <meta name="description" content="Portfolio of Sai Pranathi Boyina — UI/UX & Product Designer passionate about understanding people, solving problems, and crafting meaningful product experiences.">
+    
+    <!-- Google Fonts: Montserrat -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js and Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+
     <style>
         :root {
-            --bg-base: #0f121a;
-            --screen: #8b5cf6;
-            --accent-pink: #ec4899;
-            --accent-emerald: #10b981;
-            --accent-cyan: #06b6d4;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --text-sub: #64748b;
-            --glass-bg: rgba(15, 18, 26, 0.82);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-border-hover: rgba(139, 92, 246, 0.45);
-            --glass-blur: blur(24px);
-            --shadow-float: 0 24px 60px rgba(0, 0, 0, 0.55);
+            --bg-ivory: #F4EFE7;
+            --text-charcoal: #242522;
+            --accent-green: #244735;
+            --accent-green-hover: #193325;
+            --accent-sage: #A8B49A;
+            --text-muted: #5b5c57;
+            --text-sub: #7a7c75;
+            --card-ivory: rgba(244, 239, 231, 0.94);
+            --card-border: rgba(36, 37, 34, 0.12);
+            --card-shadow: 0 16px 40px rgba(36, 37, 34, 0.08);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background: var(--bg-base);
-            color: var(--text-main);
+            background: var(--bg-ivory);
+            color: var(--text-charcoal);
             overflow: hidden;
             width: 100vw;
             height: 100vh;
@@ -55,118 +57,141 @@
             z-index: 1;
         }
 
-        .ambient-vignette {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 2;
-            background: radial-gradient(circle at 50% 50%, transparent 65%, rgba(10, 12, 18, 0.4) 100%);
-        }
-
-        /* UI Master Layer */
-        .ui-layer {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 28px 36px;
-        }
-
-        .interactive {
-            pointer-events: auto;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow: var(--shadow-float);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Hero Signature */
-        .hero-sig {
-            position: absolute;
-            top: 28px;
-            left: 36px;
+        /* ---------------- TOP NAVBAR (Reference Image 3) ---------------- */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 76px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            padding: 12px 22px;
-            border-radius: 100px;
-            z-index: 12;
-            cursor: pointer;
-        }
-        .hero-sig:hover {
-            border-color: var(--glass-border-hover);
-            transform: translateY(-1px);
+            justify-content: space-between;
+            padding: 0 48px;
+            z-index: 100;
+            background: rgba(244, 239, 231, 0.88);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(36, 37, 34, 0.06);
+            transition: all 0.3s ease;
         }
 
-        .sig-status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--accent-emerald);
-            box-shadow: 0 0 12px var(--accent-emerald);
-            position: relative;
+        .nav-monogram {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease;
         }
-        .sig-status-dot::after {
+        .nav-monogram:hover {
+            transform: scale(1.05);
+        }
+        .monogram-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(36, 71, 53, 0.2);
+        }
+        .monogram-slash {
+            width: 22px;
+            height: 2.5px;
+            background: var(--bg-ivory);
+            transform: rotate(-45deg);
+            border-radius: 2px;
+        }
+
+        .nav-center-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-charcoal);
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            padding: 6px 0;
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover {
+            color: var(--accent-green);
+        }
+        .nav-link.active {
+            color: var(--accent-green);
+            font-weight: 700;
+        }
+        .nav-link.active::after {
             content: '';
             position: absolute;
-            inset: -4px;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
-            background: var(--accent-emerald);
-            opacity: 0.3;
-            animation: pulseRing 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
-        }
-        @keyframes pulseRing {
-            0% { transform: scale(0.8); opacity: 0.6; }
-            50% { transform: scale(1.8); opacity: 0; }
-            100% { transform: scale(0.8); opacity: 0; }
+            background: var(--accent-green);
         }
 
-        .sig-text h1 {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: #fff;
-            line-height: 1.2;
-        }
-        .sig-text p {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 500;
+        .nav-right-cta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
         }
 
-        /* "◄ Back to the room" Undock Button */
+        .btn-nav-cta {
+            background: var(--accent-green);
+            color: var(--bg-ivory);
+            padding: 11px 24px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(36, 71, 53, 0.22);
+            transition: all 0.25s ease;
+        }
+        .btn-nav-cta:hover {
+            background: var(--accent-green-hover);
+            transform: translateY(-1.5px);
+            box-shadow: 0 6px 18px rgba(36, 71, 53, 0.32);
+        }
+
+        /* ---------------- BACK TO ROOM BUTTON ---------------- */
         .undock-btn {
-            position: absolute;
-            top: 88px;
-            left: 36px;
+            position: fixed;
+            top: 96px;
+            left: 48px;
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 9px 18px;
+            padding: 10px 20px;
             border-radius: 100px;
-            background: rgba(15, 18, 26, 0.88);
+            background: var(--card-ivory);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            color: #e2e8f0;
-            font-size: 12.5px;
+            border: 1px solid var(--card-border);
+            color: var(--text-charcoal);
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            z-index: 12;
+            z-index: 90;
             opacity: 0;
             pointer-events: none;
-            transform: translateY(-6px);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: var(--card-shadow);
         }
         .undock-btn.visible {
             opacity: 1;
@@ -174,232 +199,144 @@
             transform: translateY(0);
         }
         .undock-btn:hover {
-            background: rgba(139, 92, 246, 0.25);
-            border-color: rgba(139, 92, 246, 0.6);
-            color: #fff;
-            transform: translateY(-1px);
-        }
-
-        /* Header CTA */
-        .header-cta {
-            position: absolute;
-            top: 28px;
-            right: 36px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 12;
-        }
-
-        .hud-toggle-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            border-radius: 100px;
-            background: rgba(15, 18, 26, 0.8);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: var(--text-muted);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .hud-toggle-btn:hover {
-            color: #fff;
-            border-color: var(--glass-border-hover);
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .hud-toggle-btn.hud-off {
-            background: rgba(139, 92, 246, 0.2);
-            border-color: rgba(139, 92, 246, 0.5);
-            color: #ddd6fe;
-        }
-
-        .cta-btn-main {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 11px 22px;
-            border-radius: 100px;
-            background: linear-gradient(135deg, #8b5cf6, #6366f1);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            color: #fff;
-            font-size: 13.5px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 8px 24px rgba(139, 92, 246, 0.35);
-            transition: all 0.25s ease;
-        }
-        .cta-btn-main:hover {
+            background: var(--accent-green);
+            color: var(--bg-ivory);
+            border-color: var(--accent-green);
             transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(139, 92, 246, 0.5);
-            background: linear-gradient(135deg, #9333ea, #4f46e5);
         }
 
-        /* Blender Viewport Tools Suite */
-        .blender-viewport-tools {
+        /* ---------------- HERO SECTION (Right Side - Image 1 Reference) ---------------- */
+        .hero-panel-wrapper {
             position: absolute;
-            top: 84px;
-            right: 36px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 12px;
-            z-index: 12;
-        }
-
-        .blender-gizmo-box {
-            position: relative;
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background: rgba(15, 18, 26, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        #blender-gizmo-canvas {
-            width: 60px;
-            height: 60px;
-            cursor: pointer;
-        }
-
-        /* Scrollytelling Story Sections */
-        .scrolly-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 8;
-        }
-
-        .story-section {
-            position: absolute;
-            inset: 0;
+            right: 6%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            max-width: 560px;
+            z-index: 10;
             pointer-events: none;
             opacity: 0;
-            transform: translateY(28px) scale(0.97);
-            transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            align-items: center;
-            padding: 96px 48px 108px 48px;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .story-section.active {
+        .hero-panel-wrapper.active {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            transform: translateY(-50%);
         }
 
-        .placement-right { justify-content: flex-end; }
-        .placement-center { justify-content: center; }
+        .hero-kicker {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
 
-        .story-card {
-            width: 100%;
+        .hero-heading {
+            font-size: 52px;
+            font-weight: 800;
+            color: var(--text-charcoal);
+            line-height: 1.12;
+            letter-spacing: -0.025em;
+            margin-bottom: 12px;
+        }
+
+        .hero-subheading {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--accent-green);
+            letter-spacing: -0.015em;
+            margin-bottom: 16px;
+        }
+
+        .hero-accent-line {
+            width: 64px;
+            height: 3.5px;
+            background: var(--accent-sage);
+            border-radius: 2px;
+            margin-bottom: 22px;
+        }
+
+        .hero-lead {
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--text-muted);
+            line-height: 1.65;
             max-width: 480px;
-            padding: 36px 38px;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
+            margin-bottom: 34px;
         }
 
-        .section-eyebrow {
+        .hero-buttons {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 16px;
         }
 
-        .eyebrow-pill {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            font-weight: 600;
-            padding: 5px 12px;
+        .btn-primary-hero {
+            background: var(--accent-green);
+            color: var(--bg-ivory);
+            padding: 14px 30px;
             border-radius: 100px;
-            background: rgba(139, 92, 246, 0.16);
-            border: 1px solid rgba(139, 92, 246, 0.35);
-            color: #ddd6fe;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .card-title {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            color: #fff;
-            line-height: 1.15;
-        }
-
-        .card-role {
             font-size: 15px;
             font-weight: 600;
-            color: var(--screen);
-            letter-spacing: -0.01em;
-            margin-top: 4px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 20px rgba(36, 71, 53, 0.25);
+            transition: all 0.25s ease;
+        }
+        .btn-primary-hero:hover {
+            background: var(--accent-green-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(36, 71, 53, 0.35);
         }
 
-        .card-desc {
-            font-size: 14px;
-            line-height: 1.65;
-            color: var(--text-muted);
+        .btn-secondary-hero {
+            background: var(--bg-ivory);
+            color: var(--text-charcoal);
+            padding: 14px 30px;
+            border-radius: 100px;
+            font-size: 15px;
+            font-weight: 600;
+            border: 1.5px solid var(--text-charcoal);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.25s ease;
         }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .stat-num {
-            font-size: 20px;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: -0.02em;
-        }
-        .stat-lbl {
-            font-size: 11px;
-            color: var(--text-sub);
-            font-weight: 500;
+        .btn-secondary-hero:hover {
+            background: var(--text-charcoal);
+            color: var(--bg-ivory);
+            transform: translateY(-2px);
         }
 
         /* ---------------- EXPERIENCE BADGE NAVIGATOR DOCK ---------------- */
         .experience-dock-nav {
-            position: absolute;
-            top: 28px;
+            position: fixed;
+            top: 96px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 18, 28, 0.9);
+            background: var(--card-ivory);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid var(--card-border);
             border-radius: 100px;
-            padding: 6px 14px;
+            padding: 8px 18px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            z-index: 25;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+            gap: 16px;
+            z-index: 90;
+            box-shadow: var(--card-shadow);
         }
         .badge-nav-btn {
             background: transparent;
             border: none;
-            color: #cbd5e1;
-            font-size: 16px;
+            color: var(--text-charcoal);
+            font-size: 18px;
             font-weight: 700;
             padding: 4px 10px;
             border-radius: 100px;
@@ -407,34 +344,32 @@
             transition: all 0.2s ease;
         }
         .badge-nav-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-green);
+            background: rgba(36, 71, 53, 0.08);
         }
         .badge-counter-txt {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-charcoal);
         }
         .badge-flip-action {
-            background: rgba(139, 92, 246, 0.25);
-            border: 1px solid rgba(139, 92, 246, 0.5);
-            color: #ddd6fe;
-            padding: 5px 14px;
+            background: var(--accent-green);
+            border: none;
+            color: var(--bg-ivory);
+            padding: 7px 18px;
             border-radius: 100px;
-            font-size: 11.5px;
+            font-size: 12.5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         .badge-flip-action:hover {
-            background: rgba(139, 92, 246, 0.45);
-            color: #fff;
+            background: var(--accent-green-hover);
         }
 
-        /* ---------------- EDUCATION CALLOUTS & SVG LINES ---------------- */
+        /* ---------------- EDUCATION CALLOUTS & SVG LEADER LINES ---------------- */
         .education-lines-overlay {
-            position: absolute;
+            position: fixed;
             inset: 0;
             width: 100vw;
             height: 100vh;
@@ -448,8 +383,8 @@
         }
 
         .education-cards-column {
-            position: absolute;
-            top: 50%;
+            position: fixed;
+            top: 52%;
             right: 48px;
             transform: translateY(-50%);
             display: flex;
@@ -459,34 +394,39 @@
             max-width: 440px;
             z-index: 10;
             pointer-events: auto;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .education-cards-column.active {
+            opacity: 1;
         }
         .edu-callout-card {
-            background: rgba(15, 18, 28, 0.92);
+            background: var(--card-ivory);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            border: 1px solid var(--card-border);
             border-radius: 16px;
-            padding: 18px 22px;
+            padding: 20px 24px;
             display: flex;
             flex-direction: column;
             gap: 6px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
             position: relative;
         }
         .edu-callout-card:hover {
-            border-color: rgba(139, 92, 246, 0.5);
+            border-color: var(--accent-green);
             transform: translateX(-4px);
-            background: rgba(18, 22, 34, 0.96);
+            background: #fff;
         }
         .edu-callout-card.card-btech {
-            border-left: 4px solid #10b981;
+            border-left: 5px solid var(--accent-green);
         }
         .edu-callout-card.card-inter {
-            border-left: 4px solid #8b5cf6;
+            border-left: 5px solid var(--accent-sage);
         }
         .edu-callout-card.card-ssc {
-            border-left: 4px solid #f59e0b;
+            border-left: 5px solid var(--text-charcoal);
         }
         .edu-card-head {
             display: flex;
@@ -494,33 +434,33 @@
             align-items: center;
         }
         .edu-tag-badge {
-            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             font-weight: 700;
-            color: #cbd5e1;
+            color: var(--accent-green);
             text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
         .edu-card-grade {
-            font-size: 11.5px;
+            font-size: 12px;
             font-weight: 700;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 100px;
-            background: rgba(255, 255, 255, 0.08);
-            color: #fff;
+            background: rgba(36, 71, 53, 0.08);
+            color: var(--accent-green);
         }
         .edu-card-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-charcoal);
             letter-spacing: -0.01em;
         }
         .edu-card-inst {
-            font-size: 12.5px;
+            font-size: 13px;
             color: var(--text-muted);
             font-weight: 500;
         }
         .edu-card-desc {
-            font-size: 12px;
+            font-size: 12.5px;
             color: var(--text-sub);
             line-height: 1.5;
             margin-top: 2px;
@@ -528,109 +468,46 @@
 
         /* ---------------- INTERACTIVE SCENE HINT ---------------- */
         .interactive-scene-hint {
-            position: absolute;
-            bottom: 84px;
+            position: fixed;
+            bottom: 36px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 18px;
+            gap: 10px;
+            padding: 10px 22px;
             border-radius: 100px;
-            background: rgba(15, 18, 26, 0.82);
+            background: var(--card-ivory);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: #cbd5e1;
-            font-size: 12px;
+            border: 1px solid var(--card-border);
+            color: var(--text-charcoal);
+            font-size: 13px;
             font-weight: 600;
-            z-index: 12;
+            z-index: 80;
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            box-shadow: var(--card-shadow);
         }
         .interactive-scene-hint.active {
             opacity: 1;
         }
 
-        /* Bottom Nav Dock */
-        .bottom-nav-dock {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            z-index: 15;
-        }
-
-        nav.index-dock {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            padding: 6px 8px;
-            border-radius: 100px;
-        }
-
-        .index-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 12.5px;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 100px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .index-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.06);
-        }
-        .index-btn.active {
-            background: #fff;
-            color: #0f121a;
-            font-weight: 700;
-            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25);
-        }
-        .index-btn.active .index-num {
-            color: var(--screen);
-        }
-
-        .index-num {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
-            font-weight: 700;
-            color: var(--text-sub);
-        }
-
-        .drag-hint {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
         /* Action Toast */
         .action-toast {
             position: fixed;
-            top: 24px;
+            top: 92px;
             left: 50%;
             transform: translateX(-50%) translateY(-100px);
-            background: rgba(15, 18, 28, 0.94);
-            border: 1px solid rgba(139, 92, 246, 0.5);
-            color: #fff;
-            padding: 10px 24px;
+            background: var(--text-charcoal);
+            color: var(--bg-ivory);
+            padding: 11px 26px;
             border-radius: 100px;
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 600;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-            z-index: 100;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+            z-index: 150;
             opacity: 0;
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
@@ -640,60 +517,12 @@
             opacity: 1;
         }
 
-        /* Hotkeys Modal */
-        .hotkeys-modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.95);
-            background: rgba(15, 18, 28, 0.95);
-            backdrop-filter: blur(28px);
-            -webkit-backdrop-filter: blur(28px);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 20px;
-            padding: 28px 32px;
-            z-index: 99;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.25s ease;
-            max-width: 480px;
-            width: 90vw;
-        }
-        .hotkeys-modal.open {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1);
-        }
-        .hotkeys-grid {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            row-gap: 12px;
-            column-gap: 20px;
-            margin-top: 18px;
-            font-size: 13px;
-        }
-        .hotkey-row {
-            display: contents;
-            color: #cbd5e1;
-        }
-        .key-badge {
-            font-family: 'JetBrains Mono', monospace;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            border-radius: 6px;
-            padding: 3px 8px;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
         /* Loader */
         #loader {
             position: fixed;
             inset: 0;
-            background: var(--bg-base);
-            z-index: 50;
+            background: var(--bg-ivory);
+            z-index: 200;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -704,8 +533,8 @@
         .spinner {
             width: 44px;
             height: 44px;
-            border: 3px solid rgba(139, 92, 246, 0.2);
-            border-top-color: var(--screen);
+            border: 3.5px solid rgba(36, 71, 53, 0.15);
+            border-top-color: var(--accent-green);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
@@ -713,32 +542,20 @@
             to { transform: rotate(360deg); }
         }
 
-        /* HUD Hidden State */
-        body.hud-hidden .hero-sig,
-        body.hud-hidden .bottom-nav-dock,
-        body.hud-hidden .scrolly-container,
-        body.hud-hidden .education-lines-overlay,
-        body.hud-hidden .experience-dock-nav,
-        body.hud-hidden .interactive-scene-hint {
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
         @media (max-width: 900px) {
-            .ui-layer { padding: 18px; }
-            .hero-sig { left: 18px; top: 18px; padding: 8px 14px; }
-            .header-cta { right: 18px; top: 18px; }
-            .undock-btn { left: 18px; top: 72px; }
-            nav.index-dock { display: none; }
-            .story-card { max-width: 100%; }
-            .story-section { padding: 80px 18px; }
-            .education-cards-column { right: 18px; max-width: calc(100vw - 36px); }
+            .top-navbar { padding: 0 20px; }
+            .nav-center-links { display: none; }
+            .hero-panel-wrapper { right: 20px; left: 20px; max-width: 100%; }
+            .hero-heading { font-size: 38px; }
+            .hero-subheading { font-size: 20px; }
+            .hero-lead { font-size: 16px; }
+            .undock-btn { left: 20px; }
+            .education-cards-column { right: 20px; max-width: calc(100vw - 40px); }
         }
     </style>
 </head>
 <body>
     <div id="canvas-container"></div>
-    <div class="ambient-vignette"></div>
 
     <!-- Action Toast Notification -->
     <div class="action-toast" id="action-toast">Action Completed</div>
@@ -746,229 +563,140 @@
     <!-- Loading Screen -->
     <div id="loader">
         <div class="spinner"></div>
-        <div style="font-size: 15px; color: #f1f5f9; font-weight: 600; letter-spacing: -0.01em;">Entering 3D Studio...</div>
-        <div style="font-size: 12px; color: #64748b;">Loading studio scene & in-model screens</div>
+        <div style="font-size: 16px; color: #242522; font-weight: 700; letter-spacing: -0.01em;">Entering 3D Studio...</div>
+        <div style="font-size: 13px; color: #7a7c75;">Loading workspace, character & in-model screens</div>
     </div>
 
-    <!-- UI Overlay Layer -->
-    <div class="ui-layer">
-        <!-- Hero Signature (Top-Left) -->
-        <div class="glass-panel hero-sig interactive" onclick="goToSection(0)">
-            <div class="sig-status-dot"></div>
-            <div class="sig-text">
-                <h1>Sai Pranathi Boyina</h1>
-                <p>Product Designer · UI/UX & Design Systems</p>
+    <!-- ---------------- TOP NAVBAR (Reference Image 3) ---------------- -->
+    <header class="top-navbar">
+        <!-- Monogram (Left) -->
+        <a class="nav-monogram" onclick="goToSection(0)" title="Home / Overview">
+            <div class="monogram-circle">
+                <div class="monogram-slash"></div>
             </div>
-        </div>
+            <span style="font-size: 15px; font-weight: 700; color: #242522; letter-spacing: -0.01em;">Sai Pranathi</span>
+        </a>
 
-        <!-- "◄ Back to the room" Undock Button -->
-        <button class="undock-btn interactive" id="undock-btn" onclick="goToSection(0)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            <span>Back to the room</span>
-        </button>
+        <!-- Center Links -->
+        <nav class="nav-center-links">
+            <a class="nav-link active" data-section="0" onclick="goToSection(0)">Home</a>
+            <a class="nav-link" data-section="1" onclick="goToSection(1)">Skills</a>
+            <a class="nav-link" data-section="3" onclick="goToSection(3)">Projects</a>
+            <a class="nav-link" data-section="2" onclick="goToSection(2)">Experience</a>
+            <a class="nav-link" data-section="4" onclick="goToSection(4)">Education</a>
+            <a class="nav-link" data-section="5" onclick="goToSection(5)">Contact</a>
+        </nav>
 
-        <!-- Top-Right Direct CTA & HUD Toggle -->
-        <div class="header-cta interactive">
-            <button class="hud-toggle-btn" id="hud-toggle-btn" onclick="toggleHUD()" title="Toggle HUD Overlay (Shortcut: H)">
-                <svg id="hud-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-                <span id="hud-toggle-text">Hide HUD</span>
-            </button>
-            <button class="cta-btn-main" onclick="goToSection(5)">
-                <span>Let's Talk</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <!-- Right CTA Button -->
+        <div class="nav-right-cta">
+            <button class="btn-nav-cta" onclick="goToSection(5)">
+                <span>Get in Touch ↗</span>
             </button>
         </div>
+    </header>
 
-        <!-- Blender Viewport Tools Suite -->
-        <div class="blender-viewport-tools interactive" id="blender-tools">
-            <div class="blender-gizmo-box">
-                <canvas id="blender-gizmo-canvas" width="144" height="144" title="Click axes to snap view (X/Y/Z)"></canvas>
+    <!-- "◄ Back to the room" Undock Button -->
+    <button class="undock-btn" id="undock-btn" onclick="goToSection(0)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back to the room</span>
+    </button>
+
+    <!-- ---------------- HERO SECTION (Right Side - Image 1 Reference) ---------------- -->
+    <div class="hero-panel-wrapper active" id="hero-panel">
+        <div class="hero-kicker">UI/UX & PRODUCT DESIGNER</div>
+        <h1 class="hero-heading">Hi, I'm Sai Pranathi</h1>
+        <div class="hero-subheading">UI/UX & Product Designer</div>
+        <div class="hero-accent-line"></div>
+        <p class="hero-lead">Passionate about understanding people, solving problems, and crafting meaningful product experiences.</p>
+        <div class="hero-buttons">
+            <button class="btn-primary-hero" onclick="goToSection(3)">
+                <span>View My Work ↗</span>
+            </button>
+            <button class="btn-secondary-hero" onclick="goToSection(5)">
+                <span>Get in Touch</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Section 2: Floating Experience Badge Navigator (Noticeboard) -->
+    <div class="experience-dock-nav" id="badge-nav-bar" style="display: none;">
+        <button class="badge-nav-btn" onclick="cycleBadge(-1)" title="Previous Badge (Arrow Left)">‹</button>
+        <span class="badge-counter-txt" id="badge-counter">01 / 02 · UltraMind</span>
+        <button class="badge-flip-action" onclick="toggleFlipActiveBadge()">Flip Badge ↺</button>
+        <button class="badge-nav-btn" onclick="cycleBadge(1)" title="Next Badge (Arrow Right)">›</button>
+    </div>
+
+    <!-- Section 4: Education (Cupboard Wardrobe & Leader Lines) -->
+    <svg class="education-lines-overlay" id="edu-lines-svg">
+        <path id="edu-line-btech" stroke="#244735" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" />
+        <circle id="edu-dot-btech" r="6" fill="#244735" />
+        <path id="edu-line-inter" stroke="#A8B49A" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" />
+        <circle id="edu-dot-inter" r="6" fill="#A8B49A" />
+        <path id="edu-line-ssc" stroke="#242522" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" />
+        <circle id="edu-dot-ssc" r="6" fill="#242522" />
+    </svg>
+
+    <div class="education-cards-column" id="edu-cards-col">
+        <div class="edu-callout-card card-btech" id="card-edu-btech">
+            <div class="edu-card-head">
+                <span class="edu-tag-badge">1. B.Tech Uniform</span>
+                <span class="edu-card-grade">CGPA: 8.62 / 10</span>
             </div>
+            <h3 class="edu-card-title">B.Tech in Computer Science & Engineering</h3>
+            <div class="edu-card-inst">Dr. B. R. Ambedkar University · 2020 – 2024</div>
+            <p class="edu-card-desc">First Class with Distinction. Specialization in Human-Computer Interaction (HCI), UI Systems, Computer Graphics, and Frontend Engineering.</p>
         </div>
 
-        <!-- Section 2: Floating Experience Badge Navigator (Hamza's Desk Style) -->
-        <div class="experience-dock-nav interactive" id="badge-nav-bar" style="display: none;">
-            <button class="badge-nav-btn" onclick="cycleBadge(-1)" title="Previous Badge (Arrow Left)">‹</button>
-            <span class="badge-counter-txt" id="badge-counter">01 / 02 · UltraMind</span>
-            <button class="badge-flip-action" onclick="toggleFlipActiveBadge()">Flip Badge ↺</button>
-            <button class="badge-nav-btn" onclick="cycleBadge(1)" title="Next Badge (Arrow Right)">›</button>
+        <div class="edu-callout-card card-inter" id="card-edu-inter">
+            <div class="edu-card-head">
+                <span class="edu-tag-badge">2. Intermediate Uniform</span>
+                <span class="edu-card-grade">94.6% Marks</span>
+            </div>
+            <h3 class="edu-card-title">Higher Secondary Education · MPC</h3>
+            <div class="edu-card-inst">Sri Chaitanya Junior College · 2018 – 2020</div>
+            <p class="edu-card-desc">Major coursework in Mathematics, Physics, and Chemistry. Strong foundations in analytical modeling, spatial geometry, and quantitative problem solving.</p>
         </div>
 
-        <!-- In-Scene Interactive Hint -->
-        <div class="interactive-scene-hint" id="scene-interaction-hint">
-            <span>💡</span>
-            <span id="hint-text">Click screen to interact directly in 3D</span>
+        <div class="edu-callout-card card-ssc" id="card-edu-ssc">
+            <div class="edu-card-head">
+                <span class="edu-tag-badge">3. High School Uniform</span>
+                <span class="edu-card-grade">GPA: 9.8 / 10</span>
+            </div>
+            <h3 class="edu-card-title">Secondary School Certificate (SSC)</h3>
+            <div class="edu-card-inst">High School Honors · 2017 – 2018</div>
+            <p class="edu-card-desc">Graduated with top academic standing. Active leadership in visual design, fine arts, science exhibitions, and digital graphics workshops.</p>
         </div>
+    </div>
 
-        <!-- Scrollytelling Panels Container -->
-        <div class="scrolly-container">
-            <!-- Section 0: Home Page Hero (Right side Introduction) -->
-            <section class="story-section placement-right active" id="section-0">
-                <div class="glass-panel story-card interactive">
-                    <div class="section-eyebrow">
-                        <span class="eyebrow-pill">👋 00 · Studio Overview</span>
-                    </div>
-                    <div>
-                        <h2 class="card-title">Sai Pranathi Boyina</h2>
-                        <div class="card-role">Product Designer · UI/UX Design & Design Systems</div>
-                    </div>
-                    <p class="card-desc">
-                        Designing intuitive digital products, mobile applications, and scalable design systems. Crafting seamless end-to-end user experiences from early wireframing and design research to high-fidelity interactive prototypes and 3D spatial computing.
-                    </p>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <span class="stat-num">3+ Yrs</span>
-                            <span class="stat-lbl">Figma Mastery</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-num">iOS & Web</span>
-                            <span class="stat-lbl">Shipped to Prod</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-num">8.62</span>
-                            <span class="stat-lbl">B.Tech CGPA</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; gap: 10px; margin-top: 6px;">
-                        <button class="cta-btn-main" style="flex: 1; justify-content: center;" onclick="goToSection(1)">
-                            <span>Explore Skills (Laptop) ▾</span>
-                        </button>
-                        <button class="index-btn" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); padding: 10px 16px;" onclick="goToSection(3)">
-                            <span>View Projects</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 1: Skills (In-Model on 3D Laptop Screen - No Separate UI) -->
-            <section class="story-section" id="section-1" style="pointer-events: none;"></section>
-
-            <!-- Section 2: Experience (In-Model on 3D Noticeboard ID Badges) -->
-            <section class="story-section" id="section-2" style="pointer-events: none;"></section>
-
-            <!-- Section 3: Projects (In-Model on 3D 27" Desktop Monitor - No Separate UI) -->
-            <section class="story-section" id="section-3" style="pointer-events: none;"></section>
-
-            <!-- Section 4: Education (Cupboard Wardrobe & Dynamic Leader Lines) -->
-            <section class="story-section" id="section-4" style="pointer-events: none;">
-                <!-- Dynamic SVG Leader Lines connecting Uniforms to Cards -->
-                <svg class="education-lines-overlay" id="edu-lines-svg">
-                    <defs>
-                        <filter id="glow-filter" x="-20%" y="-20%" width="140%" height="140%">
-                            <feGaussianBlur stdDeviation="3.5" result="blur" />
-                            <feMerge>
-                                <feMergeNode in="blur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    <path id="edu-line-btech" stroke="#10b981" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" filter="url(#glow-filter)" />
-                    <circle id="edu-dot-btech" r="6" fill="#10b981" filter="url(#glow-filter)" />
-                    <path id="edu-line-inter" stroke="#8b5cf6" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" filter="url(#glow-filter)" />
-                    <circle id="edu-dot-inter" r="6" fill="#8b5cf6" filter="url(#glow-filter)" />
-                    <path id="edu-line-ssc" stroke="#f59e0b" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" filter="url(#glow-filter)" />
-                    <circle id="edu-dot-ssc" r="6" fill="#f59e0b" filter="url(#glow-filter)" />
-                </svg>
-
-                <!-- 3 Education Cards on the right side connected by leader lines -->
-                <div class="education-cards-column" id="edu-cards-col">
-                    <div class="edu-callout-card card-btech" id="card-edu-btech">
-                        <div class="edu-card-head">
-                            <span class="edu-tag-badge">1. B.Tech Uniform</span>
-                            <span class="edu-card-grade">CGPA: 8.62 / 10</span>
-                        </div>
-                        <h3 class="edu-card-title">B.Tech in Computer Science & Engineering</h3>
-                        <div class="edu-card-inst">Dr. B. R. Ambedkar University · 2020 – 2024</div>
-                        <p class="edu-card-desc">First Class with Distinction. Specialization in Human-Computer Interaction (HCI), Computer Graphics, Design Systems, and Frontend Engineering.</p>
-                    </div>
-
-                    <div class="edu-callout-card card-inter" id="card-edu-inter">
-                        <div class="edu-card-head">
-                            <span class="edu-tag-badge">2. Intermediate Uniform</span>
-                            <span class="edu-card-grade">94.6% Marks</span>
-                        </div>
-                        <h3 class="edu-card-title">Higher Secondary Education · MPC</h3>
-                        <div class="edu-card-inst">Sri Chaitanya Junior College · 2018 – 2020</div>
-                        <p class="edu-card-desc">Major coursework in Mathematics, Physics, and Chemistry. Strong foundations in analytical modeling, spatial geometry, and quantitative problem solving.</p>
-                    </div>
-
-                    <div class="edu-callout-card card-ssc" id="card-edu-ssc">
-                        <div class="edu-card-head">
-                            <span class="edu-tag-badge">3. High School Uniform</span>
-                            <span class="edu-card-grade">GPA: 9.8 / 10</span>
-                        </div>
-                        <h3 class="edu-card-title">Secondary School Certificate (SSC)</h3>
-                        <div class="edu-card-inst">High School Honors · 2017 – 2018</div>
-                        <p class="edu-card-desc">Graduated with top academic standing. Active leadership in visual design, fine arts, science exhibitions, and digital graphics workshops.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section 5: Contact (In-Model on 3D Phone Lockscreen - No Separate UI) -->
-            <section class="story-section" id="section-5" style="pointer-events: none;"></section>
-        </div>
-
-        <!-- The Index Navigation Pill (Hamza's Desk iconic bottom glass capsule) -->
-        <div class="bottom-nav-dock">
-            <nav class="glass-panel index-dock interactive">
-                <button class="index-btn active" onclick="goToSection(0)">
-                    <span class="index-num">00</span>
-                    <span>Room</span>
-                </button>
-                <button class="index-btn" onclick="goToSection(1)">
-                    <span class="index-num">01</span>
-                    <span>Skills (Laptop)</span>
-                </button>
-                <button class="index-btn" onclick="goToSection(2)">
-                    <span class="index-num">02</span>
-                    <span>Experience</span>
-                </button>
-                <button class="index-btn" onclick="goToSection(3)">
-                    <span class="index-num">03</span>
-                    <span>Projects (Monitor)</span>
-                </button>
-                <button class="index-btn" onclick="goToSection(4)">
-                    <span class="index-num">04</span>
-                    <span>Education (Cupboard)</span>
-                </button>
-                <button class="index-btn" onclick="goToSection(5)">
-                    <span class="index-num">05</span>
-                    <span>Contact (Phone)</span>
-                </button>
-            </nav>
-        </div>
+    <!-- In-Scene Interactive Hint -->
+    <div class="interactive-scene-hint" id="scene-interaction-hint">
+        <span>💡</span>
+        <span id="hint-text">Click screen to interact directly in 3D</span>
     </div>
 
     <script>
         // ---------------- THREE.JS INITIALIZATION ----------------
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x0e1118);
+        // Warm Ivory Studio Background
+        scene.background = new THREE.Color(0xF4EFE7);
 
         // Perspective Camera
         const camera = new THREE.PerspectiveCamera(44.0, window.innerWidth / window.innerHeight, 0.1, 100);
-        // Start at user's reference starting angle (Image 3) - zoomed in safely in front of wall
-        camera.position.set(3.2, 2.7, 1.7);
-
-        // Orthographic Camera for Blender Toggle
-        const aspect = window.innerWidth / window.innerHeight;
-        const orthoCamera = new THREE.OrthographicCamera(-5 * aspect, 5 * aspect, 5, -5, 0.1, 100);
-        let isOrtho = false;
-        let activeCamera = camera;
+        // Start exactly framed as in Image 1: Desk on left, character seated, open space on right
+        camera.position.set(3.49, 2.70, 0.95);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setClearColor(0xF4EFE7, 1);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 1.08;
         container.appendChild(renderer.domElement);
 
-        const controls = new THREE.OrbitControls(activeCamera, renderer.domElement);
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
         controls.enablePan = true;
@@ -977,7 +705,7 @@
         controls.minDistance = 0.3;
         controls.maxDistance = 15.0;
         // Looking at character desk in opening angle
-        controls.target.set(-0.2, 2.0, 0.4);
+        controls.target.set(0.16, 2.00, -0.53);
         controls.maxPolarAngle = Math.PI / 2 + 0.15;
         controls.enabled = true;
 
@@ -1002,11 +730,11 @@
             }
         });
 
-        // Clean Studio Daylight Lighting
-        const ambientLight = new THREE.AmbientLight(0xfffaf3, 1.25);
+        // Warm Clean Studio Daylight Lighting
+        const ambientLight = new THREE.AmbientLight(0xfffbf5, 1.35);
         scene.add(ambientLight);
 
-        const keyLight = new THREE.DirectionalLight(0xfff8ee, 1.9);
+        const keyLight = new THREE.DirectionalLight(0xfff8ee, 1.85);
         keyLight.position.set(4.3, 7.8, -1.5);
         keyLight.castShadow = true;
         keyLight.shadow.mapSize.width = 2048;
@@ -1014,7 +742,7 @@
         keyLight.shadow.bias = -0.0005;
         scene.add(keyLight);
 
-        const fillLight = new THREE.DirectionalLight(0xeef3ff, 0.75);
+        const fillLight = new THREE.DirectionalLight(0xf4efe7, 0.85);
         fillLight.position.set(1.5, 6.5, -4.2);
         scene.add(fillLight);
 
@@ -1044,8 +772,7 @@
             let found = null;
             const cleanPattern = pattern.toLowerCase().replace(/[^a-z0-9]/g, '');
             officeModel.traverse(child => {
-                if (found) return;
-                if (child.name) {
+                if (!found && child.name) {
                     const cleanName = child.name.toLowerCase().replace(/[^a-z0-9]/g, '');
                     if (cleanName.includes(cleanPattern)) {
                         found = child;
@@ -1055,8 +782,8 @@
             return found;
         }
 
-        // ---------------- 1. IN-MODEL LAPTOP CANVAS TEXTURE (SKILLS) ----------------
-        let activeSkillTab = 'all'; // 'all', 'figma', 'ux', 'spatial', 'tools'
+        // ---------------- 1. IN-MODEL 16" LAPTOP SCREEN (SKILLS UI - LARGE & VISIBLE) ----------------
+        let activeSkillTab = 'all';
 
         function initLaptopCanvas() {
             laptopCanvas = document.createElement('canvas');
@@ -1080,173 +807,176 @@
             const w = 1024;
             const h = 700;
 
+            // Clean Dark Slate IDE Canvas for ultra-high contrast readability
             const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-            bgGrad.addColorStop(0, '#0e111a');
-            bgGrad.addColorStop(1, '#161928');
+            bgGrad.addColorStop(0, '#16191f');
+            bgGrad.addColorStop(1, '#1e222b');
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, w, h);
 
-            // Figma Dark Canvas Grid
+            // Subtle Grid
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
             ctx.lineWidth = 1;
-            for (let x = 0; x < w; x += 32) {
+            for (let x = 0; x < w; x += 40) {
                 ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
             }
-            for (let y = 0; y < h; y += 32) {
+            for (let y = 0; y < h; y += 40) {
                 ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
             }
 
-            // Top Bar
-            ctx.fillStyle = '#1e2235';
-            ctx.fillRect(0, 0, w, 44);
+            // Top Header Bar
+            ctx.fillStyle = '#222632';
+            ctx.fillRect(0, 0, w, 52);
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.moveTo(0, 44); ctx.lineTo(w, 44); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, 52); ctx.lineTo(w, 52); ctx.stroke();
 
             // macOS Window Dots
-            ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(22, 22, 6, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(42, 22, 6, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(62, 22, 6, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(26, 26, 7, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(50, 26, 7, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(74, 26, 7, 0, Math.PI * 2); ctx.fill();
 
-            // Figma File Title
-            ctx.fillStyle = '#f1f5f9';
-            ctx.font = 'bold 13px "JetBrains Mono", monospace';
+            // Figma / Workspace Title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px "Montserrat", sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText('❖ Sai_Pranathi_Skills_Design_Systems.fig', 94, 26);
+            ctx.fillText('❖ Sai_Pranathi_Design_System.fig', 110, 32);
 
             ctx.fillStyle = '#10b981';
-            ctx.beginPath(); ctx.arc(950, 22, 4, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '11px sans-serif';
-            ctx.fillText('Production Ready', 962, 26);
+            ctx.beginPath(); ctx.arc(880, 26, 5, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#A8B49A';
+            ctx.font = '600 14px "Montserrat", sans-serif';
+            ctx.fillText('Ready for Production', 894, 31);
 
             // Category Filter Tabs Row
             const tabs = [
-                { id: 'all', label: 'All Capabilities', x: 24, w: 160 },
-                { id: 'figma', label: '❖ Figma & Systems', x: 194, w: 175 },
-                { id: 'ux', label: '🧭 UX Strategy', x: 379, w: 165 },
-                { id: 'spatial', label: '🥽 3D & Spatial', x: 554, w: 160 },
-                { id: 'tools', label: '🛠️ Tools Suite', x: 724, w: 150 }
+                { id: 'all', label: 'All Skills', x: 24, w: 160 },
+                { id: 'figma', label: '❖ Figma & Systems', x: 194, w: 190 },
+                { id: 'ux', label: '🧭 UX Strategy', x: 394, w: 175 },
+                { id: 'spatial', label: '🥽 3D & Spatial', x: 579, w: 175 },
+                { id: 'tools', label: '🛠️ Tools Suite', x: 764, w: 160 }
             ];
 
             tabs.forEach(t => {
                 const isActive = activeSkillTab === t.id;
-                ctx.fillStyle = isActive ? 'rgba(139, 92, 246, 0.3)' : 'rgba(255, 255, 255, 0.05)';
-                ctx.beginPath(); ctx.roundRect(t.x, 54, t.w, 36, 10); ctx.fill();
-                ctx.strokeStyle = isActive ? '#8b5cf6' : 'rgba(255, 255, 255, 0.1)';
-                ctx.lineWidth = isActive ? 1.5 : 1;
+                ctx.fillStyle = isActive ? '#244735' : 'rgba(255, 255, 255, 0.06)';
+                ctx.beginPath(); ctx.roundRect(t.x, 64, t.w, 42, 12); ctx.fill();
+                ctx.strokeStyle = isActive ? '#A8B49A' : 'rgba(255, 255, 255, 0.12)';
+                ctx.lineWidth = isActive ? 2 : 1;
                 ctx.stroke();
 
-                ctx.fillStyle = isActive ? '#fff' : '#94a3b8';
-                ctx.font = isActive ? 'bold 12.5px sans-serif' : '12px sans-serif';
+                ctx.fillStyle = isActive ? '#F4EFE7' : '#cbd5e1';
+                ctx.font = isActive ? 'bold 15px "Montserrat", sans-serif' : '600 14.5px "Montserrat", sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(t.label, t.x + t.w / 2, 77);
+                ctx.fillText(t.label, t.x + t.w / 2, 90);
             });
 
-            // Helper to draw progress bar
+            // Helper to draw bold, visible skill progress bars
             function drawSkillBar(name, level, bx, by, bw) {
-                ctx.fillStyle = '#f8fafc';
-                ctx.font = 'bold 12px sans-serif';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 17px "Montserrat", sans-serif';
                 ctx.textAlign = 'left';
                 ctx.fillText(name, bx, by);
 
-                ctx.fillStyle = '#a78bfa';
-                ctx.font = 'bold 11px "JetBrains Mono", monospace';
+                ctx.fillStyle = '#A8B49A';
+                ctx.font = 'bold 16px "JetBrains Mono", monospace';
                 ctx.textAlign = 'right';
                 ctx.fillText(level + '%', bx + bw, by);
 
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.roundRect(bx, by + 6, bw, 7, 4); ctx.fill();
+                // Bar background
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.beginPath(); ctx.roundRect(bx, by + 8, bw, 10, 5); ctx.fill();
 
+                // Bar fill with vivid emerald/green gradient
                 const grad = ctx.createLinearGradient(bx, 0, bx + bw, 0);
-                grad.addColorStop(0, '#8b5cf6');
-                grad.addColorStop(1, '#ec4899');
+                grad.addColorStop(0, '#244735');
+                grad.addColorStop(1, '#10b981');
                 ctx.fillStyle = grad;
-                ctx.beginPath(); ctx.roundRect(bx, by + 6, bw * (level / 100), 7, 4); ctx.fill();
+                ctx.beginPath(); ctx.roundRect(bx, by + 8, bw * (level / 100), 10, 5); ctx.fill();
             }
 
             // Card 1: Figma & Design Systems Architecture
             if (activeSkillTab === 'all' || activeSkillTab === 'figma') {
                 const cx = (activeSkillTab === 'figma') ? 160 : 36;
-                const cy = 108;
+                const cy = 126;
                 const cw = (activeSkillTab === 'figma') ? 704 : 460;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
-                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 260, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 255, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
 
-                ctx.fillStyle = '#a78bfa'; ctx.font = 'bold 13px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('❖ FIGMA & ATOMIC DESIGN SYSTEMS', cx + 22, cy + 32);
+                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('❖ FIGMA & ATOMIC DESIGN SYSTEMS', cx + 24, cy + 36);
 
-                drawSkillBar('Design Tokens Architecture & Variables', 98, cx + 22, cy + 68, cw - 44);
-                drawSkillBar('Atomic Component Libraries & Variants', 96, cx + 22, cy + 128, cw - 44);
-                drawSkillBar('Auto-Layout 5.0 & Responsive Frames', 97, cx + 22, cy + 188, cw - 44);
+                drawSkillBar('Design Tokens Architecture & Variables', 98, cx + 24, cy + 78, cw - 48);
+                drawSkillBar('Atomic Component Libraries & Variants', 96, cx + 24, cy + 138, cw - 48);
+                drawSkillBar('Auto-Layout 5.0 & Responsive Frames', 97, cx + 24, cy + 198, cw - 48);
             }
 
             // Card 2: UI/UX & User Research
             if (activeSkillTab === 'all' || activeSkillTab === 'ux') {
                 const cx = (activeSkillTab === 'ux') ? 160 : 528;
-                const cy = 108;
+                const cy = 126;
                 const cw = (activeSkillTab === 'ux') ? 704 : 460;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
-                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 260, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 255, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
 
-                ctx.fillStyle = '#f472b6'; ctx.font = 'bold 13px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('🧭 USER RESEARCH & PRODUCT UX', cx + 22, cy + 32);
+                ctx.fillStyle = '#10b981'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🧭 USER RESEARCH & PRODUCT UX', cx + 24, cy + 36);
 
-                drawSkillBar('Wireframing, User Flow & Journey Maps', 95, cx + 22, cy + 68, cw - 44);
-                drawSkillBar('Usability Testing & Conversion Optimization', 92, cx + 22, cy + 128, cw - 44);
-                drawSkillBar('Information Architecture & Micro-interactions', 94, cx + 22, cy + 188, cw - 44);
+                drawSkillBar('Wireframing, User Flow & Journey Maps', 95, cx + 24, cy + 78, cw - 48);
+                drawSkillBar('Usability Testing & Conversion Optimization', 92, cx + 24, cy + 138, cw - 48);
+                drawSkillBar('Information Architecture & Micro-interactions', 94, cx + 24, cy + 198, cw - 48);
             }
 
             // Card 3: 3D & Spatial Design
             if (activeSkillTab === 'all' || activeSkillTab === 'spatial') {
                 const cx = (activeSkillTab === 'spatial') ? 160 : 36;
-                const cy = (activeSkillTab === 'spatial') ? 120 : 390;
+                const cy = (activeSkillTab === 'spatial') ? 140 : 405;
                 const cw = (activeSkillTab === 'spatial') ? 704 : 460;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
-                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 275, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 265, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
 
-                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 13px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('🥽 3D INTERACTION & SPATIAL UX', cx + 22, cy + 32);
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🥽 3D INTERACTION & SPATIAL UX', cx + 24, cy + 36);
 
-                drawSkillBar('Blender 3D Modeling & Animation', 90, cx + 22, cy + 68, cw - 44);
-                drawSkillBar('Three.js WebGL Interactive Scene Architecture', 88, cx + 22, cy + 128, cw - 44);
-                drawSkillBar('Spline 3D Spatial Interactions & Webflow', 89, cx + 22, cy + 188, cw - 44);
+                drawSkillBar('Blender 3D Modeling & Animation', 90, cx + 24, cy + 78, cw - 48);
+                drawSkillBar('Three.js WebGL Interactive Scene Architecture', 88, cx + 24, cy + 138, cw - 48);
+                drawSkillBar('Spline 3D Spatial Interactions & Webflow', 89, cx + 24, cy + 198, cw - 48);
             }
 
             // Card 4: Tools Suite
             if (activeSkillTab === 'all' || activeSkillTab === 'tools') {
                 const cx = (activeSkillTab === 'tools') ? 160 : 528;
-                const cy = (activeSkillTab === 'tools') ? 120 : 390;
+                const cy = (activeSkillTab === 'tools') ? 140 : 405;
                 const cw = (activeSkillTab === 'tools') ? 704 : 460;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
-                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 275, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 265, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
 
-                ctx.fillStyle = '#c4b5fd'; ctx.font = 'bold 13px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('🛠️ TOOLS & HANDOFF SUITE', cx + 22, cy + 32);
+                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🛠️ TOOLS & PRODUCT HANDOFF SUITE', cx + 24, cy + 36);
 
                 const tools = [
-                    'Figma', 'FigJam', 'Blender', 'Spline 3D',
-                    'Claude AI', 'HTML5 / CSS3', 'React UI', 'Notion',
-                    'Illustrator', 'Photoshop', 'Keynote', 'Linear'
+                    'Figma', 'FigJam', 'Blender 3D', 'Spline',
+                    'HTML5 / CSS3', 'React UI', 'Three.js', 'Linear',
+                    'Illustrator', 'Photoshop', 'Notion', 'WCAG AA'
                 ];
-                let tx = cx + 22, ty = cy + 70;
+                let tx = cx + 24, ty = cy + 80;
                 tools.forEach(tool => {
-                    ctx.font = 'bold 12px sans-serif';
-                    const tw = ctx.measureText(tool).width + 26;
+                    ctx.font = 'bold 15px "Montserrat", sans-serif';
+                    const tw = ctx.measureText(tool).width + 32;
                     if (tx + tw > cx + cw - 20) {
-                        tx = cx + 22;
-                        ty += 42;
+                        tx = cx + 24;
+                        ty += 52;
                     }
-                    ctx.fillStyle = 'rgba(139, 92, 246, 0.2)';
-                    ctx.beginPath(); ctx.roundRect(tx, ty - 18, tw, 30, 8); ctx.fill();
-                    ctx.strokeStyle = 'rgba(139, 92, 246, 0.45)'; ctx.stroke();
-                    ctx.fillStyle = '#e2e8f0';
+                    ctx.fillStyle = 'rgba(36, 71, 53, 0.35)';
+                    ctx.beginPath(); ctx.roundRect(tx, ty - 22, tw, 38, 10); ctx.fill();
+                    ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1; ctx.stroke();
+                    ctx.fillStyle = '#ffffff';
                     ctx.textAlign = 'left';
-                    ctx.fillText(tool, tx + 13, ty + 2);
-                    tx += tw + 10;
+                    ctx.fillText(tool, tx + 16, ty + 3);
+                    tx += tw + 12;
                 });
             }
 
@@ -1259,14 +989,14 @@
             showToast('Skills Filter: ' + tab.toUpperCase());
         }
 
-        // ---------------- 2. IN-MODEL 27" MONITOR CANVAS TEXTURE (AUTHENTIC PROJECTS CAROUSEL) ----------------
+        // ---------------- 2. IN-MODEL 27" MONITOR CANVAS TEXTURE (PROJECTS CAROUSEL - LARGE & VISIBLE) ----------------
         const projectsData = [
             {
                 id: 'happenix',
-                badge: 'FEATURED CASE STUDY · EVENT DISCOVERY & TICKETING',
-                title: 'Happenix — Mobile Event Discovery & Ticketing App',
+                badge: 'FEATURED CASE STUDY · MOBILE APP & DESIGN SYSTEM',
+                title: 'Happenix',
                 role: 'Lead Product Designer · iOS & Android App',
-                desc: 'Happenix is an end-to-end event discovery, social RSVP, and instant mobile ticketing platform built with human-centered UX and a comprehensive Figma atomic design system.',
+                desc: 'End-to-end event discovery, social RSVP, and instant mobile ticketing platform built with human-centered UX and atomic Figma components.',
                 stats: [
                     { num: '+42%', lbl: 'Ticket Checkout Conversion' },
                     { num: '4.8★', lbl: 'App Store Rating (12k Reviews)' },
@@ -1274,14 +1004,14 @@
                 ],
                 deliverables: 'User Flow · Wireframes · Design System · High-Fidelity Prototype · Mobile UI Design',
                 link: 'https://www.twine.net/boyinasaipranathi679',
-                color: '#ec4899'
+                color: '#244735'
             },
             {
                 id: 'ultramind',
                 badge: 'ENTERPRISE AI PLATFORM · CROSS-PLATFORM SYSTEM',
-                title: 'UltraMind — AI-Driven Cognitive Workspace Engine',
+                title: 'UltraMind',
                 role: 'Senior UI/UX Designer & Systems Architect',
-                desc: 'A next-gen enterprise AI workspace synthesizing multi-modal LLM reasoning, visual canvas manipulation, real-time collaboration, and design system governance.',
+                desc: 'Next-generation enterprise AI workspace synthesizing multi-modal reasoning, canvas orchestration, and design system governance.',
                 stats: [
                     { num: '3.5×', lbl: 'Faster Workflow Completion' },
                     { num: '12+', lbl: 'Enterprise Deployments' },
@@ -1289,14 +1019,14 @@
                 ],
                 deliverables: 'Information Architecture · Design Tokens · Dark Theme System · Usability Testing',
                 link: 'https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/',
-                color: '#8b5cf6'
+                color: '#244735'
             },
             {
                 id: 'finflow',
                 badge: 'FINTECH WEB OS · DASHBOARD ARCHITECTURE',
-                title: 'FinFlow OS — Modern Financial Intelligence Hub',
+                title: 'FinFlow OS',
                 role: 'Product Designer · Web Dashboard & Mobile Responsive',
-                desc: 'Comprehensive financial dashboard aggregating multi-asset wealth portfolios, automated DCA rebalancing, and conversational financial analytics with sleek micro-interactions.',
+                desc: 'Comprehensive financial dashboard aggregating multi-asset wealth portfolios, automated rebalancing, and conversational analytics.',
                 stats: [
                     { num: '$120M+', lbl: 'Tracked Assets on Platform' },
                     { num: '99.4%', lbl: 'Design System Adoption' },
@@ -1304,14 +1034,14 @@
                 ],
                 deliverables: 'Interactive Charts UX · Data Tables · High-Contrast Accessibility · WCAG AA Audit',
                 link: 'https://www.twine.net/boyinasaipranathi679',
-                color: '#06b6d4'
+                color: '#244735'
             },
             {
                 id: 'spatial',
                 badge: '3D SPATIAL DESIGN · INTERACTIVE WEBGL EXPERIENCE',
-                title: 'Spatial 3D Studio — Interactive Product Showroom',
+                title: 'Spatial 3D Studio',
                 role: '3D Spatial Designer & Creative Technologist',
-                desc: 'Interactive 3D low-poly product showroom combining Blender 3D assets, custom Three.js WebGL shaders, camera transitions, and tactile UI elements.',
+                desc: 'Interactive 3D low-poly product showroom combining Blender 3D models, custom Three.js WebGL shaders, and tactile UI elements.',
                 stats: [
                     { num: '60 FPS', lbl: 'Consistent WebGL Render' },
                     { num: 'Featured', lbl: '3D Design Portfolio Showcase' },
@@ -1319,7 +1049,7 @@
                 ],
                 deliverables: 'Blender 3D Modeling · Texture Baking · Three.js Raycasting · Responsive 3D Canvas',
                 link: 'https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/',
-                color: '#10b981'
+                color: '#244735'
             }
         ];
 
@@ -1341,7 +1071,7 @@
             drawMonitorScreen();
         }
 
-        // Draw an authentic multi-card interactive Carousel
+        // Draw High-Visibility Projects Carousel on Monitor
         function drawMonitorScreen() {
             if (!monitorCtx) return;
             const ctx = monitorCtx;
@@ -1351,56 +1081,56 @@
             const prevIdx = (curProjectIdx - 1 + projectsData.length) % projectsData.length;
             const nextIdx = (curProjectIdx + 1) % projectsData.length;
 
-            // Deep Studio Ambient Background
+            // Deep Studio Background
             const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-            bgGrad.addColorStop(0, '#0a0d16');
-            bgGrad.addColorStop(0.5, '#121626');
-            bgGrad.addColorStop(1, '#090c14');
+            bgGrad.addColorStop(0, '#101318');
+            bgGrad.addColorStop(0.5, '#171b24');
+            bgGrad.addColorStop(1, '#0e1116');
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, w, h);
 
-            // Subtle Background Radial Accent Glow
-            const rad = ctx.createRadialGradient(w / 2, h / 2, 80, w / 2, h / 2, 750);
-            rad.addColorStop(0, p.color + '24');
+            // Subtle Ambient Radial Glow
+            const rad = ctx.createRadialGradient(w / 2, h / 2, 100, w / 2, h / 2, 800);
+            rad.addColorStop(0, 'rgba(36, 71, 53, 0.28)');
             rad.addColorStop(1, 'transparent');
             ctx.fillStyle = rad;
             ctx.fillRect(0, 0, w, h);
 
             // ---------------- 1. TOP CAROUSEL HEADER ----------------
-            ctx.fillStyle = '#111522';
-            ctx.fillRect(0, 0, w, 64);
+            ctx.fillStyle = '#1b1f2a';
+            ctx.fillRect(0, 0, w, 72);
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.moveTo(0, 64); ctx.lineTo(w, 64); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(0, 72); ctx.lineTo(w, 72); ctx.stroke();
 
             // Brand Title
-            ctx.fillStyle = '#f8fafc';
-            ctx.font = 'bold 16px "JetBrains Mono", monospace';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px "Montserrat", sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText('❖ SAI PRANATHI BOYINA · INTERACTIVE PROJECTS CAROUSEL', 44, 40);
+            ctx.fillText('❖ SAI PRANATHI BOYINA · SELECTED CASE STUDIES', 48, 46);
 
             // Center Counter Badge
-            ctx.fillStyle = 'rgba(139, 92, 246, 0.2)';
-            ctx.beginPath(); ctx.roundRect(w / 2 - 110, 14, 220, 36, 18); ctx.fill();
-            ctx.strokeStyle = 'rgba(139, 92, 246, 0.4)'; ctx.stroke();
-            ctx.fillStyle = '#c4b5fd';
-            ctx.font = 'bold 13px "JetBrains Mono", monospace';
+            ctx.fillStyle = 'rgba(36, 71, 53, 0.45)';
+            ctx.beginPath(); ctx.roundRect(w / 2 - 130, 14, 260, 44, 22); ctx.fill();
+            ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+            ctx.fillStyle = '#F4EFE7';
+            ctx.font = 'bold 18px "Montserrat", sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('SLIDE 0' + (curProjectIdx + 1) + ' OF 0' + projectsData.length, w / 2, 38);
+            ctx.fillText('PROJECT 0' + (curProjectIdx + 1) + ' OF 0' + projectsData.length, w / 2, 42);
 
-            // Top-Right Prev / Next Controls
+            // Top-Right Controls
             ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.roundRect(1600, 14, 115, 36, 18); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)'; ctx.stroke();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 13.5px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('‹ PREV', 1657, 38);
+            ctx.beginPath(); ctx.roundRect(1590, 14, 125, 44, 22); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.stroke();
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+            ctx.fillText('‹ PREV', 1652, 42);
 
             ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.roundRect(1740, 14, 115, 36, 18); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)'; ctx.stroke();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 13.5px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('NEXT ›', 1797, 38);
+            ctx.beginPath(); ctx.roundRect(1735, 14, 125, 44, 22); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.stroke();
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+            ctx.fillText('NEXT ›', 1797, 42);
 
-            // ---------------- 2. CAROUSEL PEEKING PREVIOUS CARD (LEFT) ----------------
+            // ---------------- 2. PEEKING PREVIOUS CARD (LEFT) ----------------
             const prevCardX = -460;
             const prevCardY = 120;
             const peekW = 740;
@@ -1408,159 +1138,153 @@
 
             ctx.save();
             ctx.globalAlpha = 0.35;
-            ctx.fillStyle = 'rgba(18, 22, 36, 0.8)';
+            ctx.fillStyle = 'rgba(25, 30, 42, 0.85)';
             ctx.beginPath(); ctx.roundRect(prevCardX, prevCardY, peekW, peekH, 24); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
 
             ctx.fillStyle = '#fff';
-            ctx.font = 'bold 28px "Plus Jakarta Sans", sans-serif';
+            ctx.font = 'bold 36px "Montserrat", sans-serif';
             ctx.textAlign = 'right';
-            ctx.fillText('‹ ' + projectsData[prevIdx].title.split('—')[0].trim(), prevCardX + peekW - 40, prevCardY + 120);
+            ctx.fillText('‹ ' + projectsData[prevIdx].title, prevCardX + peekW - 44, prevCardY + 120);
 
-            ctx.fillStyle = projectsData[prevIdx].color;
-            ctx.font = 'bold 16px sans-serif';
-            ctx.fillText(projectsData[prevIdx].role, prevCardX + peekW - 40, prevCardY + 160);
+            ctx.fillStyle = '#A8B49A';
+            ctx.font = 'bold 22px "Montserrat", sans-serif';
+            ctx.fillText(projectsData[prevIdx].role, prevCardX + peekW - 44, prevCardY + 170);
             ctx.restore();
 
-            // ---------------- 3. CAROUSEL PEEKING NEXT CARD (RIGHT) ----------------
+            // ---------------- 3. PEEKING NEXT CARD (RIGHT) ----------------
             const nextCardX = 1640;
             const nextCardY = 120;
 
             ctx.save();
             ctx.globalAlpha = 0.35;
-            ctx.fillStyle = 'rgba(18, 22, 36, 0.8)';
+            ctx.fillStyle = 'rgba(25, 30, 42, 0.85)';
             ctx.beginPath(); ctx.roundRect(nextCardX, nextCardY, peekW, peekH, 24); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
 
             ctx.fillStyle = '#fff';
-            ctx.font = 'bold 28px "Plus Jakarta Sans", sans-serif';
+            ctx.font = 'bold 36px "Montserrat", sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText(projectsData[nextIdx].title.split('—')[0].trim() + ' ›', nextCardX + 40, nextCardY + 120);
+            ctx.fillText(projectsData[nextIdx].title + ' ›', nextCardX + 44, nextCardY + 120);
 
-            ctx.fillStyle = projectsData[nextIdx].color;
-            ctx.font = 'bold 16px sans-serif';
-            ctx.fillText(projectsData[nextIdx].role, nextCardX + 40, nextCardY + 160);
+            ctx.fillStyle = '#A8B49A';
+            ctx.font = 'bold 22px "Montserrat", sans-serif';
+            ctx.fillText(projectsData[nextIdx].role, nextCardX + 44, nextCardY + 170);
             ctx.restore();
 
             // ---------------- 4. MAIN FEATURED CAROUSEL CARD (CENTER) ----------------
             const cardX = 330;
-            const cardY = 96;
+            const cardY = 100;
             const cardW = 1260;
-            const cardH = 880;
+            const cardH = 875;
 
-            // Main Card Shadow and Glass Body
-            ctx.fillStyle = 'rgba(16, 20, 32, 0.94)';
-            ctx.beginPath(); ctx.roundRect(cardX, cardY, cardW, cardH, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)';
-            ctx.lineWidth = 1.5;
+            // Main Card Glass Body
+            ctx.fillStyle = 'rgba(20, 24, 34, 0.95)';
+            ctx.beginPath(); ctx.roundRect(cardX, cardY, cardW, cardH, 24); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+            ctx.lineWidth = 2;
             ctx.stroke();
 
-            // Card Header Accent Line
-            ctx.fillStyle = p.color;
-            ctx.beginPath(); ctx.roundRect(cardX + 2, cardY + 2, cardW - 4, 6, [26, 26, 0, 0]); ctx.fill();
+            // Top Forest Green Accent Strip
+            ctx.fillStyle = '#244735';
+            ctx.beginPath(); ctx.roundRect(cardX + 2, cardY + 2, cardW - 4, 8, [24, 24, 0, 0]); ctx.fill();
 
-            // LEFT HALF: Rich Interactive Product UI Showcase Mockup
-            const mockX = cardX + 36;
-            const mockY = cardY + 36;
-            const mockW = 540;
-            const mockH = cardH - 72;
+            // LEFT HALF: Rich Interactive UI Showcase Mockup
+            const mockX = cardX + 38;
+            const mockY = cardY + 40;
+            const mockW = 530;
+            const mockH = cardH - 80;
 
-            ctx.fillStyle = '#0b0e18';
+            ctx.fillStyle = '#121520';
             ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, mockH, 20); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
 
-            // Project-specific Interactive UI Mockups
+            // Render project-specific visual preview
             if (curProjectIdx === 0) {
                 // HAPPENIX - Mobile App UI Mockup
-                const phoneW = 380, phoneH = 680;
+                const phoneW = 390, phoneH = 675;
                 const px = mockX + (mockW - phoneW) / 2, py = mockY + 40;
 
-                ctx.fillStyle = '#141828';
+                ctx.fillStyle = '#1c2130';
                 ctx.beginPath(); ctx.roundRect(px, py, phoneW, phoneH, 28); ctx.fill();
-                ctx.strokeStyle = 'rgba(236, 72, 153, 0.4)'; ctx.lineWidth = 2; ctx.stroke();
+                ctx.strokeStyle = 'rgba(36, 71, 53, 0.8)'; ctx.lineWidth = 2.5; ctx.stroke();
 
                 // Dynamic Island
                 ctx.fillStyle = '#000';
-                ctx.beginPath(); ctx.roundRect(px + phoneW / 2 - 60, py + 14, 120, 26, 13); ctx.fill();
+                ctx.beginPath(); ctx.roundRect(px + phoneW / 2 - 65, py + 16, 130, 26, 13); ctx.fill();
 
-                // App Search Bar
+                // Search Bar
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.roundRect(px + 20, py + 56, phoneW - 40, 42, 12); ctx.fill();
-                ctx.fillStyle = '#94a3b8'; ctx.font = '13px sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('🔍 Search concerts, nightlife, fests...', px + 36, py + 82);
+                ctx.beginPath(); ctx.roundRect(px + 22, py + 58, phoneW - 44, 46, 14); ctx.fill();
+                ctx.fillStyle = '#A8B49A'; ctx.font = '15px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🔍 Search concerts, nightlife, fests...', px + 40, py + 86);
 
                 // Featured Event Card
-                ctx.fillStyle = 'linear-gradient(135deg, #ec4899, #8b5cf6)';
-                ctx.fillStyle = '#221936';
-                ctx.beginPath(); ctx.roundRect(px + 20, py + 116, phoneW - 40, 260, 18); ctx.fill();
-                ctx.strokeStyle = 'rgba(236, 72, 153, 0.5)'; ctx.stroke();
+                ctx.fillStyle = '#244735';
+                ctx.beginPath(); ctx.roundRect(px + 22, py + 120, phoneW - 44, 255, 20); ctx.fill();
+                ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
 
-                ctx.fillStyle = '#ec4899';
-                ctx.beginPath(); ctx.roundRect(px + 36, py + 134, 130, 26, 8); ctx.fill();
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 11px "JetBrains Mono", monospace';
-                ctx.fillText('TRENDING NOW', px + 44, py + 151);
+                ctx.fillStyle = '#A8B49A';
+                ctx.beginPath(); ctx.roundRect(px + 40, py + 138, 140, 28, 8); ctx.fill();
+                ctx.fillStyle = '#244735'; ctx.font = 'bold 12px "Montserrat", sans-serif';
+                ctx.fillText('TRENDING NOW', px + 50, py + 157);
 
                 ctx.fillStyle = '#fff';
-                ctx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
-                ctx.fillText('Neon Pulse Festival', px + 36, py + 195);
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '13px sans-serif';
-                ctx.fillText('San Francisco Arena · Oct 30, 8:00 PM', px + 36, py + 222);
+                ctx.font = 'bold 26px "Montserrat", sans-serif';
+                ctx.fillText('Neon Pulse Festival', px + 40, py + 205);
+                ctx.fillStyle = '#F4EFE7'; ctx.font = '15px "Montserrat", sans-serif';
+                ctx.fillText('San Francisco Arena · Oct 30, 8:00 PM', px + 40, py + 236);
 
-                // Price and Ticket Button
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 20px "JetBrains Mono", monospace';
-                ctx.fillText('$45.00', px + 36, py + 265);
-                ctx.fillStyle = '#ec4899';
-                ctx.beginPath(); ctx.roundRect(px + 220, py + 240, 120, 36, 18); ctx.fill();
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center';
-                ctx.fillText('Get Pass →', px + 280, py + 263);
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 24px "JetBrains Mono", monospace';
+                ctx.fillText('$45.00', px + 40, py + 310);
+                ctx.fillStyle = '#A8B49A';
+                ctx.beginPath(); ctx.roundRect(px + 225, py + 280, 120, 42, 21); ctx.fill();
+                ctx.fillStyle = '#242522'; ctx.font = 'bold 15px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                ctx.fillText('Get Pass →', px + 285, py + 307);
 
                 // Scannable Ticket Pass Preview
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                ctx.beginPath(); ctx.roundRect(px + 20, py + 396, phoneW - 40, 180, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+                ctx.beginPath(); ctx.roundRect(px + 22, py + 395, phoneW - 44, 185, 18); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
 
-                ctx.fillStyle = '#a78bfa'; ctx.font = 'bold 12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('DIGITAL TICKET PASS · VIP ADMISSION', px + 36, py + 426);
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 17px sans-serif';
-                ctx.fillText('Sai Pranathi · Tier A Access', px + 36, py + 458);
+                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 14px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
+                ctx.fillText('DIGITAL TICKET PASS · VIP ADMISSION', px + 40, py + 428);
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 20px "Montserrat", sans-serif';
+                ctx.fillText('Sai Pranathi · Tier A Access', px + 40, py + 462);
 
-                // Barcode simulation
                 for (let b = 0; b < 24; b++) {
-                    ctx.fillStyle = b % 2 === 0 ? '#ec4899' : '#fff';
-                    ctx.fillRect(px + 36 + b * 13, py + 486, (b % 3 === 0 ? 5 : 2), 48);
+                    ctx.fillStyle = b % 2 === 0 ? '#A8B49A' : '#fff';
+                    ctx.fillRect(px + 40 + b * 13, py + 490, (b % 3 === 0 ? 5 : 2), 52);
                 }
             } else if (curProjectIdx === 1) {
                 // ULTRAMIND - AI Cognitive Workspace Mockup
-                ctx.fillStyle = '#131728';
+                ctx.fillStyle = '#181d28';
                 ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(139, 92, 246, 0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.strokeStyle = '#244735'; ctx.lineWidth = 2; ctx.stroke();
 
-                // Studio Top Bar
-                ctx.fillStyle = '#1c223a';
-                ctx.fillRect(mockX + 24, mockY + 36, mockW - 48, 44);
-                ctx.fillStyle = '#8b5cf6'; ctx.font = 'bold 13px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('⚡ ULTRAMIND COGNITIVE AI CANVAS', mockX + 44, mockY + 63);
+                // Top Bar
+                ctx.fillStyle = '#244735';
+                ctx.fillRect(mockX + 24, mockY + 36, mockW - 48, 50);
+                ctx.fillStyle = '#F4EFE7'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('⚡ ULTRAMIND COGNITIVE AI CANVAS', mockX + 46, mockY + 68);
 
                 // Prompt Box
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 104, mockW - 88, 110, 12); ctx.fill();
-                ctx.fillStyle = '#ddd6fe'; ctx.font = '13px "JetBrains Mono", monospace';
-                ctx.fillText('> Synthesize design tokens for multi-brand architecture...', mockX + 60, mockY + 138);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.beginPath(); ctx.roundRect(mockX + 46, mockY + 114, mockW - 92, 115, 14); ctx.fill();
+                ctx.fillStyle = '#ffffff'; ctx.font = '15px "JetBrains Mono", monospace';
+                ctx.fillText('> Synthesize design tokens for multi-brand architecture...', mockX + 64, mockY + 152);
 
-                // AI Response Stream
-                ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 60, mockY + 175, 4, 0, Math.PI * 2); ctx.fill();
-                ctx.fillStyle = '#94a3b8'; ctx.font = '12px sans-serif';
-                ctx.fillText('Tokens Generated: 1,200 variants · 12 Enterprise themes active', mockX + 74, mockY + 179);
+                ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 64, mockY + 192, 5, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#A8B49A'; ctx.font = '600 14px "Montserrat", sans-serif';
+                ctx.fillText('Tokens Generated: 1,200 variants · 12 Enterprise themes active', mockX + 80, mockY + 197);
 
-                // Visual Graph Node Simulator
                 const nodes = [
-                    { x: mockX + 110, y: mockY + 310, label: 'Color Tokens' },
-                    { x: mockX + 370, y: mockY + 280, label: 'Typography Scale' },
-                    { x: mockX + 240, y: mockY + 440, label: 'Component Variants' },
-                    { x: mockX + 390, y: mockY + 540, label: 'Export Engine' }
+                    { x: mockX + 115, y: mockY + 325, label: 'Color Tokens' },
+                    { x: mockX + 375, y: mockY + 295, label: 'Typography Scale' },
+                    { x: mockX + 245, y: mockY + 455, label: 'Component Variants' },
+                    { x: mockX + 395, y: mockY + 555, label: 'Export Engine' }
                 ];
-
-                ctx.strokeStyle = 'rgba(139, 92, 246, 0.4)'; ctx.lineWidth = 2;
+                ctx.strokeStyle = '#244735'; ctx.lineWidth = 2.5;
                 ctx.beginPath();
                 ctx.moveTo(nodes[0].x, nodes[0].y); ctx.lineTo(nodes[2].x, nodes[2].y);
                 ctx.moveTo(nodes[1].x, nodes[1].y); ctx.lineTo(nodes[2].x, nodes[2].y);
@@ -1568,48 +1292,47 @@
                 ctx.stroke();
 
                 nodes.forEach(n => {
-                    ctx.fillStyle = '#1e243d';
-                    ctx.beginPath(); ctx.roundRect(n.x - 70, n.y - 24, 140, 48, 12); ctx.fill();
-                    ctx.strokeStyle = '#8b5cf6'; ctx.stroke();
-                    ctx.fillStyle = '#fff'; ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center';
-                    ctx.fillText(n.label, n.x, n.y + 4);
+                    ctx.fillStyle = '#222838';
+                    ctx.beginPath(); ctx.roundRect(n.x - 75, n.y - 26, 150, 52, 12); ctx.fill();
+                    ctx.strokeStyle = '#A8B49A'; ctx.stroke();
+                    ctx.fillStyle = '#fff'; ctx.font = 'bold 14px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText(n.label, n.x, n.y + 6);
                 });
             } else if (curProjectIdx === 2) {
-                // FINFLOW OS - Modern Financial Intelligence Dashboard
-                ctx.fillStyle = '#101422';
+                // FINFLOW OS - Modern Financial Intelligence
+                ctx.fillStyle = '#161b24';
                 ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(6, 182, 212, 0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.strokeStyle = '#244735'; ctx.lineWidth = 2; ctx.stroke();
 
-                // Total Net Worth Card
-                ctx.fillStyle = 'rgba(6, 182, 212, 0.08)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 60, mockW - 88, 140, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(6, 182, 212, 0.3)'; ctx.stroke();
+                ctx.fillStyle = 'rgba(36, 71, 53, 0.25)';
+                ctx.beginPath(); ctx.roundRect(mockX + 46, mockY + 60, mockW - 92, 145, 16); ctx.fill();
+                ctx.strokeStyle = '#A8B49A'; ctx.stroke();
 
-                ctx.fillStyle = '#94a3b8'; ctx.font = '12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('TOTAL TRACKED ASSET VALUE', mockX + 64, mockY + 92);
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 36px "JetBrains Mono", monospace';
-                ctx.fillText('$124,580.00', mockX + 64, mockY + 140);
-                ctx.fillStyle = '#10b981'; ctx.font = 'bold 14px sans-serif';
-                ctx.fillText('+14.2% Past 30 Days (+$15,420)', mockX + 64, mockY + 174);
+                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 14px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('TOTAL TRACKED ASSET VALUE', mockX + 66, mockY + 95);
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 44px "JetBrains Mono", monospace';
+                ctx.fillText('$124,580.00', mockX + 66, mockY + 148);
+                ctx.fillStyle = '#10b981'; ctx.font = 'bold 16px "Montserrat", sans-serif';
+                ctx.fillText('+14.2% Past 30 Days (+$15,420)', mockX + 66, mockY + 184);
 
-                // Financial Line Chart Graphic
-                ctx.strokeStyle = '#06b6d4'; ctx.lineWidth = 3;
+                // Trend chart line
+                ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 3.5;
                 ctx.beginPath();
                 const chartPts = [320, 290, 310, 260, 280, 230, 240, 190, 210, 160];
-                const segW = (mockW - 120) / (chartPts.length - 1);
+                const segW = (mockW - 130) / (chartPts.length - 1);
                 chartPts.forEach((ptY, idx) => {
-                    const cx = mockX + 60 + idx * segW;
+                    const cx = mockX + 65 + idx * segW;
                     const cy = mockY + ptY + 50;
                     if (idx === 0) ctx.moveTo(cx, cy);
                     else ctx.lineTo(cx, cy);
                 });
                 ctx.stroke();
 
-                // Transactions Row
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 450, mockW - 88, 180, 14); ctx.fill();
-                ctx.fillStyle = '#cbd5e1'; ctx.font = 'bold 13px "JetBrains Mono", monospace';
-                ctx.fillText('AUTOMATED DCA PORTFOLIO ALLOCATION', mockX + 64, mockY + 485);
+                // Allocations
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                ctx.beginPath(); ctx.roundRect(mockX + 46, mockY + 450, mockW - 92, 185, 14); ctx.fill();
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 15px "Montserrat", sans-serif';
+                ctx.fillText('AUTOMATED DCA ALLOCATION', mockX + 66, mockY + 486);
 
                 const assets = [
                     { name: 'Ethereum Staking', alloc: '45%', val: '$56,061.00' },
@@ -1617,28 +1340,26 @@
                     { name: 'Treasury Yield', alloc: '20%', val: '$24,916.00' }
                 ];
                 assets.forEach((ast, aIdx) => {
-                    const ay = mockY + 524 + aIdx * 34;
-                    ctx.fillStyle = '#fff'; ctx.font = '13px sans-serif'; ctx.textAlign = 'left';
-                    ctx.fillText(ast.name, mockX + 64, ay);
-                    ctx.fillStyle = '#06b6d4'; ctx.textAlign = 'center';
+                    const ay = mockY + 526 + aIdx * 36;
+                    ctx.fillStyle = '#cbd5e1'; ctx.font = '14px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                    ctx.fillText(ast.name, mockX + 66, ay);
+                    ctx.fillStyle = '#A8B49A'; ctx.textAlign = 'center';
                     ctx.fillText(ast.alloc, mockX + 280, ay);
                     ctx.fillStyle = '#fff'; ctx.textAlign = 'right';
-                    ctx.fillText(ast.val, mockX + mockW - 64, ay);
+                    ctx.fillText(ast.val, mockX + mockW - 66, ay);
                 });
             } else {
                 // SPATIAL 3D - Interactive WebGL Viewport
-                ctx.fillStyle = '#0f141f';
+                ctx.fillStyle = '#141822';
                 ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(16, 185, 129, 0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.strokeStyle = '#244735'; ctx.lineWidth = 2; ctx.stroke();
 
-                ctx.fillStyle = '#10b981'; ctx.font = 'bold 13px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('🥽 THREE.JS WEBGL SPATIAL VIEWPORT', mockX + 44, mockY + 70);
+                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 15px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🥽 THREE.JS WEBGL SPATIAL VIEWPORT', mockX + 46, mockY + 72);
 
-                // 3D Viewport Geometry Wireframe Simulation
                 const cx = mockX + mockW / 2;
                 const cy = mockY + 280;
-                ctx.strokeStyle = '#10b981'; ctx.lineWidth = 1.5;
-
+                ctx.strokeStyle = '#10b981'; ctx.lineWidth = 2;
                 for (let r = 30; r <= 150; r += 30) {
                     ctx.beginPath();
                     ctx.ellipse(cx, cy, r, r * 0.45, 0, 0, Math.PI * 2);
@@ -1651,47 +1372,46 @@
                     ctx.stroke();
                 }
 
-                // WebGL Performance Badge
-                ctx.fillStyle = 'rgba(16, 185, 129, 0.15)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 480, mockW - 88, 140, 14); ctx.fill();
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 24px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('60.0 FPS · WebGL 2.0', mockX + 64, mockY + 524);
-                ctx.fillStyle = '#94a3b8'; ctx.font = '14px sans-serif';
-                ctx.fillText('Optimized PBR Shaders · Draco Compressed Meshes · Real-Time Post Processing Vignette', mockX + 64, mockY + 560, mockW - 128);
+                ctx.fillStyle = 'rgba(36, 71, 53, 0.35)';
+                ctx.beginPath(); ctx.roundRect(mockX + 46, mockY + 480, mockW - 92, 140, 14); ctx.fill();
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 26px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('60.0 FPS · WebGL 2.0', mockX + 66, mockY + 526);
+                ctx.fillStyle = '#F4EFE7'; ctx.font = '15px "Montserrat", sans-serif';
+                ctx.fillText('Optimized PBR Shaders · Draco Compressed Meshes · Real-Time Post Processing', mockX + 66, mockY + 565, mockW - 132);
             }
 
-            // RIGHT HALF: Project Specifications, Metrics & Action Buttons
-            const specX = cardX + 610;
-            const specY = cardY + 56;
+            // RIGHT HALF: Project Details, Huge Letters, High-Contrast Visibility
+            const specX = cardX + 600;
+            const specY = cardY + 52;
 
             // Eyebrow Badge
-            ctx.fillStyle = 'rgba(139, 92, 246, 0.2)';
-            ctx.beginPath(); ctx.roundRect(specX, specY, 590, 36, 18); ctx.fill();
-            ctx.strokeStyle = 'rgba(139, 92, 246, 0.45)'; ctx.stroke();
-            ctx.fillStyle = '#c4b5fd'; ctx.font = 'bold 12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-            ctx.fillText(p.badge, specX + 18, specY + 23);
+            ctx.fillStyle = 'rgba(36, 71, 53, 0.45)';
+            ctx.beginPath(); ctx.roundRect(specX, specY, 600, 40, 20); ctx.fill();
+            ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+            ctx.fillStyle = '#F4EFE7'; ctx.font = 'bold 15px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+            ctx.fillText(p.badge, specX + 22, specY + 26);
 
-            // Large Title
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 36px "Plus Jakarta Sans", sans-serif';
-            ctx.fillText(p.title, specX, specY + 95, 600);
+            // Large Punchy Title (52px Montserrat)
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '800 52px "Montserrat", sans-serif';
+            ctx.fillText(p.title, specX, specY + 104, 610);
 
             // Role Subtitle
-            ctx.fillStyle = p.color;
-            ctx.font = 'bold 18px sans-serif';
-            ctx.fillText(p.role, specX, specY + 145);
+            ctx.fillStyle = '#A8B49A';
+            ctx.font = 'bold 24px "Montserrat", sans-serif';
+            ctx.fillText(p.role, specX, specY + 152);
 
-            // Description Paragraph
-            ctx.fillStyle = '#cbd5e1';
-            ctx.font = '15.5px/1.65 "Plus Jakarta Sans", sans-serif';
+            // Description Paragraph (Clear, Legible 22px)
+            ctx.fillStyle = '#F4EFE7';
+            ctx.font = '500 22px/1.6 "Montserrat", sans-serif';
             const words = p.desc.split(' ');
-            let line = '', lineY = specY + 195;
+            let line = '', lineY = specY + 205;
             for (let n = 0; n < words.length; n++) {
                 const testLine = line + words[n] + ' ';
-                if (ctx.measureText(testLine).width > 590 && n > 0) {
+                if (ctx.measureText(testLine).width > 600 && n > 0) {
                     ctx.fillText(line, specX, lineY);
                     line = words[n] + ' ';
-                    lineY += 26;
+                    lineY += 34;
                 } else {
                     line = testLine;
                 }
@@ -1700,73 +1420,73 @@
 
             // Key Results / Metric Cards (3 Column)
             const statBoxY = lineY + 36;
-            const sW = 188;
+            const sW = 192;
             p.stats.forEach((st, idx) => {
-                const sx = specX + idx * (sW + 13);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(sx, statBoxY, sW, 115, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+                const sx = specX + idx * (sW + 14);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+                ctx.beginPath(); ctx.roundRect(sx, statBoxY, sW, 125, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.stroke();
 
-                ctx.fillStyle = '#fff';
-                ctx.font = 'bold 30px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText(st.num, sx + 16, statBoxY + 44);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 36px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText(st.num, sx + 18, statBoxY + 50);
 
-                ctx.fillStyle = '#94a3b8';
-                ctx.font = '500 12px sans-serif';
-                ctx.fillText(st.lbl, sx + 16, statBoxY + 76, sW - 32);
+                ctx.fillStyle = '#A8B49A';
+                ctx.font = '600 15px "Montserrat", sans-serif';
+                ctx.fillText(st.lbl, sx + 18, statBoxY + 86, sW - 36);
             });
 
             // Action Buttons
-            const btnY = statBoxY + 155;
+            const btnY = statBoxY + 165;
 
-            // 1. View Live Case Study Button
-            ctx.fillStyle = '#8b5cf6';
-            ctx.beginPath(); ctx.roundRect(specX, btnY, 320, 56, 28); ctx.fill();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 16px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('↗ View Live Case Study', specX + 160, btnY + 35);
+            // 1. View Live Case Study Button (Forest green #244735)
+            ctx.fillStyle = '#244735';
+            ctx.beginPath(); ctx.roundRect(specX, btnY, 320, 60, 30); ctx.fill();
+            ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+            ctx.fillStyle = '#F4EFE7'; ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+            ctx.fillText('View Live Case Study ↗', specX + 160, btnY + 37);
 
             // 2. Next Project Button
             ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.roundRect(specX + 340, btnY, 250, 56, 28); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)'; ctx.stroke();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 15px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('Next Project →', specX + 465, btnY + 35);
+            ctx.beginPath(); ctx.roundRect(specX + 340, btnY, 260, 60, 30); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.stroke();
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+            ctx.fillText('Next Project →', specX + 470, btnY + 37);
 
             // ---------------- 5. BOTTOM CAROUSEL TRACK / DOTS ----------------
             const dotY = 1010;
             const dotW = 140;
-            const dotGap = 15;
+            const dotGap = 16;
             const totalDotW = 4 * dotW + 3 * dotGap;
             const startDotX = (w - totalDotW) / 2;
 
             projectsData.forEach((item, idx) => {
-                const dx = startDotX + idx * (dotW + dotGap);
-                const isCur = idx === curProjectIdx;
-                ctx.fillStyle = isCur ? 'rgba(139, 92, 246, 0.35)' : 'rgba(255, 255, 255, 0.05)';
-                ctx.beginPath(); ctx.roundRect(dx, dotY, dotW, 42, 21); ctx.fill();
-                ctx.strokeStyle = isCur ? '#8b5cf6' : 'rgba(255, 255, 255, 0.12)';
-                ctx.lineWidth = isCur ? 2 : 1;
-                ctx.stroke();
+                const curDotX = startDotX + idx * (dotW + dotGap);
+                const isSelected = idx === curProjectIdx;
 
-                ctx.fillStyle = isCur ? '#fff' : '#94a3b8';
-                ctx.font = isCur ? 'bold 12.5px sans-serif' : '12px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('0' + (idx + 1) + ' · ' + item.title.split('—')[0].trim(), dx + dotW / 2, dotY + 26);
+                ctx.fillStyle = isSelected ? '#244735' : 'rgba(255, 255, 255, 0.12)';
+                ctx.beginPath(); ctx.roundRect(curDotX, dotY, dotW, 14, 7); ctx.fill();
+                if (isSelected) {
+                    ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+                }
             });
 
             if (monitorTexture) monitorTexture.needsUpdate = true;
         }
 
-        function setProject(idx) {
-            curProjectIdx = (idx + projectsData.length) % projectsData.length;
+        function nextProject() {
+            curProjectIdx = (curProjectIdx + 1) % projectsData.length;
             drawMonitorScreen();
-            showToast('Carousel: ' + projectsData[curProjectIdx].title.split('—')[0].trim());
+            showToast('Project: ' + projectsData[curProjectIdx].title);
         }
 
-        function nextProject() { setProject(curProjectIdx + 1); }
-        function prevProject() { setProject(curProjectIdx - 1); }
+        function prevProject() {
+            curProjectIdx = (curProjectIdx - 1 + projectsData.length) % projectsData.length;
+            drawMonitorScreen();
+            showToast('Project: ' + projectsData[curProjectIdx].title);
+        }
 
-        // ---------------- 3. IN-MODEL PHONE CANVAS TEXTURE (CONTACT LOCK SCREEN - PORTRAIT) ----------------
+        // ---------------- 3. IN-MODEL PHONE SCREEN (CONTACT - PORTRAIT) ----------------
         function initPhoneCanvas() {
             phoneCanvas = document.createElement('canvas');
             phoneCanvas.width = 720;
@@ -1776,9 +1496,11 @@
             phoneTexture = new THREE.CanvasTexture(phoneCanvas);
             phoneTexture.minFilter = THREE.LinearFilter;
             phoneTexture.magFilter = THREE.LinearFilter;
+            phoneTexture.wrapS = THREE.RepeatWrapping;
+            phoneTexture.repeat.x = -1;
+            phoneTexture.offset.x = 1;
 
             drawPhoneScreen();
-            setInterval(drawPhoneScreen, 30000);
         }
 
         function drawPhoneScreen() {
@@ -1787,384 +1509,198 @@
             const w = 720;
             const h = 1440;
 
-            // AMOLED Deep Black Gradient
             const bg = ctx.createLinearGradient(0, 0, 0, h);
-            bg.addColorStop(0, '#0a0d18');
-            bg.addColorStop(0.35, '#0e1222');
-            bg.addColorStop(0.7, '#080a14');
-            bg.addColorStop(1, '#05070c');
+            bg.addColorStop(0, '#10141a');
+            bg.addColorStop(0.5, '#161d24');
+            bg.addColorStop(1, '#0c0f14');
             ctx.fillStyle = bg;
             ctx.fillRect(0, 0, w, h);
 
-            // Atmospheric colored glows behind cards
-            const glow1 = ctx.createRadialGradient(360, 490, 20, 360, 490, 280);
-            glow1.addColorStop(0, 'rgba(139, 92, 246, 0.16)');
-            glow1.addColorStop(1, 'rgba(139, 92, 246, 0.0)');
-            ctx.fillStyle = glow1;
-            ctx.fillRect(0, 250, w, 480);
-
-            const glow2 = ctx.createRadialGradient(360, 860, 20, 360, 860, 260);
-            glow2.addColorStop(0, 'rgba(16, 185, 129, 0.14)');
-            glow2.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
-            ctx.fillStyle = glow2;
-            ctx.fillRect(0, 680, w, 460);
-
-            // 1. TOP STATUS BAR (Dynamic Island, Carrier, Battery)
-            const islandW = 180;
-            const islandH = 38;
-            const islandX = (w - islandW) / 2;
-            const islandY = 22;
+            // Dynamic Island
+            const islandW = 180, islandH = 38;
             ctx.fillStyle = '#000000';
-            ctx.beginPath(); ctx.roundRect(islandX, islandY, islandW, islandH, 19); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1.5; ctx.stroke();
-            // Tiny camera sensor dots inside Dynamic Island
-            ctx.fillStyle = '#10b981';
-            ctx.beginPath(); ctx.arc(islandX + 146, islandY + 19, 4, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#1e1b4b';
-            ctx.beginPath(); ctx.arc(islandX + 34, islandY + 19, 6, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.roundRect((w - islandW) / 2, 22, islandW, islandH, 19); ctx.fill();
 
-            // Status Bar Text (Left: Carrier & 5G)
-            ctx.fillStyle = '#e2e8f0';
-            ctx.font = 'bold 20px "JetBrains Mono", monospace';
+            // Status Time & Icons
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 22px "Montserrat", sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText('5G · Airtel', 40, 48);
+            ctx.fillText('9:41', 54, 48);
 
-            // Status Bar Text (Right: Battery)
             ctx.textAlign = 'right';
-            ctx.fillText('100% 🔋', w - 40, 48);
-
-            // 2. LOCK SCREEN HEADER & DIGITAL CLOCK
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-            const dateStr = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
-
-            // Small lock icon
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '22px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('🔒', w / 2, 102);
-
-            // Date
-            ctx.fillStyle = '#cbd5e1';
-            ctx.font = '600 24px "Plus Jakarta Sans", sans-serif';
-            ctx.fillText(dateStr, w / 2, 142);
+            ctx.fillText('5G  100%', w - 54, 48);
 
             // Big Clock
             ctx.fillStyle = '#ffffff';
-            ctx.font = '800 96px "Plus Jakarta Sans", sans-serif';
-            ctx.fillText(timeStr, w / 2, 238);
-
-            // 3. PROFILE STATUS PILL
-            const pillY = 265;
-            const pillW = 640;
-            const pillX = (w - pillW) / 2;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-            ctx.beginPath(); ctx.roundRect(pillX, pillY, pillW, 76, 20); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1; ctx.stroke();
-
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
-            ctx.textAlign = 'left';
-            ctx.fillText('Sai Pranathi Boyina', pillX + 24, pillY + 34);
-
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '500 15px "Plus Jakarta Sans", sans-serif';
-            ctx.fillText('Product Designer · Hyderabad, IN', pillX + 24, pillY + 60);
-
-            // Open to work tag inside pill
-            ctx.fillStyle = 'rgba(16, 185, 129, 0.18)';
-            ctx.beginPath(); ctx.roundRect(pillX + pillW - 204, pillY + 20, 180, 36, 18); ctx.fill();
-            ctx.strokeStyle = 'rgba(16, 185, 129, 0.45)'; ctx.stroke();
-            ctx.fillStyle = '#10b981';
-            ctx.font = 'bold 12.5px "JetBrains Mono", monospace';
+            ctx.font = '800 96px "Montserrat", sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('● OPEN TO WORK', pillX + pillW - 114, pillY + 43);
+            ctx.fillText('09:41', w / 2, 220);
 
-            // 4. NOTIFICATION CARD 1: DIRECT INQUIRIES
-            const cardW = 640;
-            const cardX = (w - cardW) / 2;
-            const c1Y = 360;
-            const c1H = 320;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
-            ctx.beginPath(); ctx.roundRect(cardX, c1Y, cardW, c1H, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1; ctx.stroke();
+            ctx.fillStyle = '#A8B49A';
+            ctx.font = '600 24px "Montserrat", sans-serif';
+            ctx.fillText('Available for Product Design Roles', w / 2, 268);
 
-            // Card 1 Header: Icon & App Name
-            ctx.fillStyle = '#8b5cf6';
-            ctx.beginPath(); ctx.roundRect(cardX + 24, c1Y + 22, 40, 40, 12); ctx.fill();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 20px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('✉️', cardX + 44, c1Y + 49);
-
-            ctx.fillStyle = '#ddd6fe'; ctx.font = 'bold 15px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-            ctx.fillText('DIRECT INQUIRIES', cardX + 76, c1Y + 48);
-
-            ctx.fillStyle = '#64748b'; ctx.font = '500 14px "JetBrains Mono", monospace'; ctx.textAlign = 'right';
-            ctx.fillText('now', cardX + cardW - 24, c1Y + 48);
-
-            // Headline & Text
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 25px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'left';
-            ctx.fillText("Let's Build Together", cardX + 24, c1Y + 98);
-
-            ctx.fillStyle = '#cbd5e1'; ctx.font = '500 16px "Plus Jakarta Sans", sans-serif';
-            ctx.fillText('Available for product design, systems, or contract work.', cardX + 24, c1Y + 128);
-
-            // Button 1: Mail Sai Now
-            ctx.fillStyle = '#8b5cf6';
-            ctx.beginPath(); ctx.roundRect(cardX + 24, c1Y + 152, cardW - 48, 64, 18); ctx.fill();
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('✉️  Mail Sai Now', cardX + cardW / 2, c1Y + 192);
-
-            // Button 2: Copy Email Address
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.09)';
-            ctx.beginPath(); ctx.roundRect(cardX + 24, c1Y + 230, cardW - 48, 60, 18); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.20)'; ctx.lineWidth = 1; ctx.stroke();
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 18px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('📋  Copy Email Address', cardX + cardW / 2, c1Y + 268);
-
-            // 5. NOTIFICATION CARD 2: CURRICULUM VITAE
-            const c2Y = 700;
-            const c2H = 330;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
-            ctx.beginPath(); ctx.roundRect(cardX, c2Y, cardW, c2H, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1; ctx.stroke();
-
-            // Card 2 Header
-            ctx.fillStyle = '#10b981';
-            ctx.beginPath(); ctx.roundRect(cardX + 24, c2Y + 22, 40, 40, 12); ctx.fill();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 20px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('📄', cardX + 44, c2Y + 49);
-
-            ctx.fillStyle = '#a7f3d0'; ctx.font = 'bold 15px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-            ctx.fillText('CURRICULUM VITAE', cardX + 76, c2Y + 48);
-
-            ctx.fillStyle = '#64748b'; ctx.font = '500 14px "JetBrains Mono", monospace'; ctx.textAlign = 'right';
-            ctx.fillText('2026 Edition', cardX + cardW - 24, c2Y + 48);
-
-            // Headline & Text
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 23px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'left';
-            ctx.fillText('Sai_Pranathi_Boyina_Resume.pdf', cardX + 24, c2Y + 98);
-
-            ctx.fillStyle = '#cbd5e1'; ctx.font = '500 16px "Plus Jakarta Sans", sans-serif';
-            ctx.fillText('UI/UX, Figma Design Systems & 3D Web · 1.4 MB', cardX + 24, c2Y + 128);
-
-            // Button: Download CV / Resume
-            ctx.fillStyle = '#10b981';
-            ctx.beginPath(); ctx.roundRect(cardX + 24, c2Y + 152, cardW - 48, 64, 18); ctx.fill();
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 20px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('⬇  Download CV / Resume', cardX + cardW / 2, c2Y + 192);
-
-            // Highlights Row inside Card 2
-            const chipY = c2Y + 236;
-            const chipW = 186;
-            const chips = ['✦ 3+ Yrs Exp', '✦ 15+ Systems', '✦ Mobile & SaaS'];
-            chips.forEach((ch, ci) => {
-                const cx = cardX + 24 + ci * (chipW + 17);
+            // Contact Notification Cards
+            function drawContactCard(icon, title, subtitle, action, cy, borderAccent) {
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                ctx.beginPath(); ctx.roundRect(cx, chipY, chipW, 44, 12); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1; ctx.stroke();
-                ctx.fillStyle = '#e2e8f0'; ctx.font = 'bold 14px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'center';
-                ctx.fillText(ch, cx + chipW / 2, chipY + 27);
-            });
+                ctx.beginPath(); ctx.roundRect(44, cy, w - 88, 140, 24); ctx.fill();
+                ctx.strokeStyle = borderAccent || 'rgba(255, 255, 255, 0.12)';
+                ctx.lineWidth = 1.5; ctx.stroke();
 
-            // Status message
-            ctx.fillStyle = '#94a3b8'; ctx.font = '13px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
-            ctx.fillText('Verified Portfolio Document · Instant Access', cardX + cardW / 2, c2Y + 310);
+                ctx.fillStyle = '#244735';
+                ctx.beginPath(); ctx.roundRect(68, cy + 24, 92, 92, 20); ctx.fill();
+                ctx.fillStyle = '#F4EFE7';
+                ctx.font = '36px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(icon, 114, cy + 82);
 
-            // 6. CARD 3: SOCIAL & VERIFIED PROFILES
-            const c3Y = 1050;
-            const c3H = 150;
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.07)';
-            ctx.beginPath(); ctx.roundRect(cardX, c3Y, cardW, c3H, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1; ctx.stroke();
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 26px "Montserrat", sans-serif';
+                ctx.fillText(title, 184, cy + 64);
 
-            ctx.fillStyle = '#94a3b8'; ctx.font = 'bold 14px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-            ctx.fillText('VERIFIED PROFILES', cardX + 24, c3Y + 36);
+                ctx.fillStyle = '#cbd5e1';
+                ctx.font = '500 19px "Montserrat", sans-serif';
+                ctx.fillText(subtitle, 184, cy + 100);
 
-            const sChipW = 186;
-            const sChipY = c3Y + 58;
-            const sChipH = 64;
+                ctx.fillStyle = '#A8B49A';
+                ctx.font = 'bold 18px "Montserrat", sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(action, w - 74, cy + 82);
+            }
 
-            // Chip 1: LinkedIn
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.09)';
-            ctx.beginPath(); ctx.roundRect(cardX + 24, sChipY, sChipW, sChipH, 16); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.20)'; ctx.lineWidth = 1; ctx.stroke();
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 17px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('LinkedIn ↗', cardX + 24 + sChipW / 2, sChipY + 39);
+            drawContactCard('✉️', 'Email Me', 'boyinasaipranathi@gmail.com', 'Send →', 340, '#244735');
+            drawContactCard('💼', 'LinkedIn', 'Sai Pranathi Boyina', 'Connect →', 510, '#A8B49A');
+            drawContactCard('🌐', 'Twine Portfolio', 'boyinasaipranathi679', 'Explore →', 680, 'rgba(255, 255, 255, 0.15)');
+            drawContactCard('📄', 'Resume (CV)', 'Product_Designer_CV.pdf', 'Download →', 850, '#244735');
 
-            // Chip 2: Twine
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.09)';
-            ctx.beginPath(); ctx.roundRect(cardX + 24 + sChipW + 17, sChipY, sChipW, sChipH, 16); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.20)'; ctx.lineWidth = 1; ctx.stroke();
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 17px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('Twine ↗', cardX + 24 + sChipW + 17 + sChipW / 2, sChipY + 39);
+            // Quick Callout at Bottom
+            ctx.fillStyle = 'rgba(36, 71, 53, 0.35)';
+            ctx.beginPath(); ctx.roundRect(44, 1040, w - 88, 180, 24); ctx.fill();
+            ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
 
-            // Chip 3: Call
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.09)';
-            ctx.beginPath(); ctx.roundRect(cardX + 24 + (sChipW + 17) * 2, sChipY, sChipW, sChipH, 16); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.20)'; ctx.lineWidth = 1; ctx.stroke();
-            ctx.fillStyle = '#ffffff'; ctx.font = 'bold 17px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('Call ↗', cardX + 24 + (sChipW + 17) * 2 + sChipW / 2, sChipY + 39);
+            ctx.fillStyle = '#F4EFE7';
+            ctx.font = 'bold 24px "Montserrat", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Let\'s Build Something Exceptional', w / 2, 1105);
 
-            // 7. BOTTOM QUICK ACTIONS (Flashlight & Camera)
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
-            ctx.beginPath(); ctx.arc(88, 1285, 34, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)'; ctx.lineWidth = 1.5; ctx.stroke();
-            ctx.fillStyle = '#ffffff'; ctx.font = '26px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('🔦', 88, 1294);
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '500 18px "Montserrat", sans-serif';
+            ctx.fillText('Open for Full-Time, Contract & Advisory Roles', w / 2, 1150);
 
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
-            ctx.beginPath(); ctx.arc(w - 88, 1285, 34, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)'; ctx.lineWidth = 1.5; ctx.stroke();
-            ctx.fillStyle = '#ffffff'; ctx.font = '26px sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('📷', w - 88, 1294);
-
-            // 8. HOME INDICATOR BAR
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.40)';
-            ctx.font = '500 15px "Plus Jakarta Sans", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('Swipe up to unlock', w / 2, 1375);
-
-            const homeBarW = 200;
-            const homeBarH = 6;
+            // Home Indicator Bar
             ctx.fillStyle = '#ffffff';
-            ctx.beginPath(); ctx.roundRect((w - homeBarW) / 2, 1400, homeBarW, homeBarH, 3); ctx.fill();
+            ctx.beginPath(); ctx.roundRect(w / 2 - 90, 1400, 180, 6, 3); ctx.fill();
 
             if (phoneTexture) phoneTexture.needsUpdate = true;
         }
 
-        // ---------------- LOAD 3D GLTF STUDIO ROOM MODEL ----------------
+        // ---------------- LOAD GLTF OFFICE MODEL ----------------
         const loader = new THREE.GLTFLoader();
-        loader.load('home_office.glb?v=' + Date.now(), (gltf) => {
-            officeModel = gltf.scene;
+        loader.load(
+            './home_office.glb',
+            (gltf) => {
+                officeModel = gltf.scene;
+                scene.add(officeModel);
 
-            // Find key objects using flexible pattern helper
-            hangerBTech = findNode('cabinet hanger 01');
-            hangerInter = findNode('cabinet hanger 02');
-            hangerSSC = findNode('cabinet hanger 03');
-            badgeCard0 = findNode('badge card 0');
-            badgeCard1 = findNode('badge card 1');
+                // Initialize In-Model Canvas Textures
+                initLaptopCanvas();
+                initMonitorCanvas();
+                initPhoneCanvas();
 
-            // Init In-Model 2D Canvas Textures
-            initLaptopCanvas();
-            initMonitorCanvas();
-            initPhoneCanvas();
-
-            // 1. Mount 3D Laptop Screen Mesh
-            const laptopLidPivot = findNode('laptop lid pivot');
-            const origLaptopDisp = findNode('laptop vivid polygon display');
-            if (origLaptopDisp) origLaptopDisp.visible = false;
-
-            if (laptopLidPivot) {
-                const laptopMat = new THREE.MeshBasicMaterial({
-                    map: laptopTexture,
-                    side: THREE.DoubleSide
-                });
-                laptopScreenMesh = new THREE.Mesh(new THREE.PlaneGeometry(0.895, 0.655), laptopMat);
-                laptopScreenMesh.name = 'InteractiveLaptopScreen';
-                laptopScreenMesh.position.set(0, 0.38, -0.022);
-                laptopScreenMesh.rotation.y = Math.PI;
-                laptopLidPivot.add(laptopScreenMesh);
-            }
-
-            // 2. Mount 3D Monitor Screen Mesh
-            const monitorAssembly = findNode('monitor assembly');
-            const origMonitorDisp = findNode('monitor geometric violet sunset');
-            if (origMonitorDisp) origMonitorDisp.visible = false;
-
-            if (monitorAssembly) {
-                const monitorMat = new THREE.MeshBasicMaterial({
-                    map: monitorTexture,
-                    side: THREE.DoubleSide
-                });
-                monitorScreenMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.605, 0.960), monitorMat);
-                monitorScreenMesh.name = 'InteractiveMonitorScreen';
-                monitorScreenMesh.position.set(0, 0.87, -0.047);
-                monitorScreenMesh.rotation.y = Math.PI;
-                monitorAssembly.add(monitorScreenMesh);
-            }
-
-            // 3. Mount 3D Phone Screen Mesh
-            const phoneNode = findNode('phone black glass');
-            if (phoneNode) {
-                const phoneMat = new THREE.MeshBasicMaterial({
-                    map: phoneTexture,
-                    side: THREE.DoubleSide
-                });
-                // Exactly sized to sit neatly inside the phone metallic rim in vertical portrait orientation
-                const phoneGeom = new THREE.PlaneGeometry(0.210, 0.420);
-                // Un-mirror UVs to compensate for environment negative scale reflection
-                const uvs = phoneGeom.attributes.uv;
-                for (let i = 0; i < uvs.count; i++) {
-                    uvs.setX(i, 1.0 - uvs.getX(i));
-                }
-                uvs.needsUpdate = true;
-
-                phoneScreenMesh = new THREE.Mesh(phoneGeom, phoneMat);
-                phoneScreenMesh.name = 'InteractivePhoneScreen';
-                phoneScreenMesh.position.set(0, 0.0055, 0);
-                phoneScreenMesh.rotation.set(Math.PI / 2, Math.PI, 0);
-                phoneNode.add(phoneScreenMesh);
-            }
-
-            scene.add(officeModel);
-
-            // Play Blender character animations (blinking eyes, idle movement)
-            if (gltf.animations && gltf.animations.length > 0) {
-                mixer = new THREE.AnimationMixer(officeModel);
-                activeActions = [];
-                gltf.animations.forEach(clip => {
-                    const action = mixer.clipAction(clip);
-                    if (clip.name.toLowerCase().includes('cupboard')) {
-                        action.stop();
-                    } else {
+                // Setup Skeletal Animations
+                if (gltf.animations && gltf.animations.length > 0) {
+                    mixer = new THREE.AnimationMixer(officeModel);
+                    gltf.animations.forEach((clip) => {
+                        const action = mixer.clipAction(clip);
                         action.play();
+                        activeActions.push(action);
+                    });
+                }
+
+                // Traverse and configure materials and screen meshes
+                officeModel.traverse((child) => {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+
+                        const name = (child.name || '').toLowerCase();
+
+                        // 1. Laptop Screen Mesh
+                        if (name.includes('laptop') && (name.includes('screen') || name.includes('display') || name.includes('glass'))) {
+                            laptopScreenMesh = child;
+                            child.material = new THREE.MeshBasicMaterial({
+                                map: laptopTexture,
+                                toneMapped: false
+                            });
+                        }
+
+                        // 2. 27" Desktop Monitor Screen Mesh
+                        if ((name.includes('monitor') || name.includes('display')) && !name.includes('laptop')) {
+                            if (name.includes('screen') || name.includes('glass') || name.includes('face') || name.includes('panel')) {
+                                monitorScreenMesh = child;
+                                child.material = new THREE.MeshBasicMaterial({
+                                    map: monitorTexture,
+                                    toneMapped: false
+                                });
+                            }
+                        }
+
+                        // 3. Desk Smartphone Screen Mesh
+                        if (name.includes('phone') && (name.includes('screen') || name.includes('glass') || name.includes('face'))) {
+                            phoneScreenMesh = child;
+                            child.material = new THREE.MeshBasicMaterial({
+                                map: phoneTexture,
+                                toneMapped: false
+                            });
+                        }
+
+                        // Identify noticeboard badge meshes for 3D flip physics
+                        if (name.includes('badge') || name.includes('id_card') || name.includes('portrait')) {
+                            if (!badgeCard0) badgeCard0 = child;
+                            else if (!badgeCard1) badgeCard1 = child;
+                        }
+
+                        // Identify cupboard uniform hangers for leader lines
+                        if (name.includes('hanger') || name.includes('uniform') || name.includes('coat')) {
+                            if (!hangerBTech) hangerBTech = child;
+                            else if (!hangerInter) hangerInter = child;
+                            else if (!hangerSSC) hangerSSC = child;
+                        }
                     }
-                    activeActions.push(action);
                 });
+
+                // Fallback detection if screen meshes were not named with 'screen'
+                if (!laptopScreenMesh) laptopScreenMesh = findNode('laptop');
+                if (!monitorScreenMesh) monitorScreenMesh = findNode('monitor');
+                if (!phoneScreenMesh) phoneScreenMesh = findNode('phone');
+
+                // Dismiss loading screen
+                const loaderEl = document.getElementById('loader');
+                if (loaderEl) {
+                    loaderEl.style.opacity = '0';
+                    setTimeout(() => loaderEl.style.display = 'none', 600);
+                }
+            },
+            (xhr) => {
+                // Progress
+            },
+            (error) => {
+                console.error("Error loading GLTF model:", error);
+                const loaderEl = document.getElementById('loader');
+                if (loaderEl) loaderEl.innerText = "Error loading 3D scene.";
             }
+        );
 
-            // Remove loading screen
-            document.getElementById('loader').style.opacity = '0';
-            setTimeout(() => document.getElementById('loader').style.display = 'none', 600);
-
-            // Opening Camera Cinematic:
-            // Starts at Image 3 angle: camera [3.2, 2.7, 1.7], target [-0.2, 2.0, 0.4], fov 44.0 (safely inside room in front of wall)
-            // Smoothly glides back over 3.0s to Room Home overview with zero delay
-            const duration = 3000;
-            new TWEEN.Tween(camera.position)
-                .to({ x: 7.60, y: 4.20, z: -1.60 }, duration)
-                .easing(TWEEN.Easing.Cubic.InOut)
-                .start();
-            new TWEEN.Tween(controls.target)
-                .to({ x: 0.76, y: 2.10, z: -1.50 }, duration)
-                .easing(TWEEN.Easing.Cubic.InOut)
-                .onComplete(() => {
-                    controls.enabled = true;
-                    controls.update();
-                })
-                .start();
-            new TWEEN.Tween(camera)
-                .to({ fov: 42.0 }, duration)
-                .easing(TWEEN.Easing.Cubic.InOut)
-                .onUpdate(() => camera.updateProjectionMatrix())
-                .onComplete(() => {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const initSec = parseInt(urlParams.get('sec') || '0', 10);
-                    if (!isNaN(initSec) && initSec > 0 && initSec < sectionsData.length) {
-                        goToSection(initSec);
-                    }
-                })
-                .start();
-        });
-
-        // ---------------- SCROLLYTELLING STATE & TARGETS ----------------
-        // Exact viewport coordinates aligned from front desk view
+        // ---------------- CAMERA SECTIONS DATA & CONTROLS ----------------
         const sectionsData = [
             {
                 id: 0,
                 name: 'Room (Home)',
-                cameraPos: [7.60, 4.20, -1.60],
-                cameraTarget: [0.76, 2.10, -1.50],
-                fov: 42.0,
+                // Exactly framed as in Image 1: character & desk on left, right side open for typography
+                cameraPos: [3.49, 2.70, 0.95],
+                cameraTarget: [0.16, 2.00, -0.53],
+                fov: 44.0,
                 cupboardOpen: false,
                 hint: ''
             },
@@ -2179,12 +1715,12 @@
             },
             {
                 id: 2,
-                name: 'Experience (ID Cards Noticeboard)',
+                name: 'Experience (ID Badges)',
                 cameraPos: [-1.65, 3.57, 1.55],
                 cameraTarget: [-3.59, 3.57, 1.55],
                 fov: 34.0,
                 cupboardOpen: false,
-                hint: 'Click ID badges to flip 3D card'
+                hint: 'Click ID badges to flip 3D credentials'
             },
             {
                 id: 3,
@@ -2193,7 +1729,7 @@
                 cameraTarget: [0.774, 2.70, 2.125],
                 fov: 40.0,
                 cupboardOpen: false,
-                hint: 'Click tabs or buttons on 27" monitor to cycle projects'
+                hint: 'Click carousel buttons on 27" monitor to view projects'
             },
             {
                 id: 4,
@@ -2207,12 +1743,11 @@
             {
                 id: 5,
                 name: 'Contact (Desk Phone)',
-                // Direct front-of-desk view looking down at phone with zero 90-degree twist
                 cameraPos: [2.12, 2.70, -0.15],
                 cameraTarget: [2.12, 1.87, 0.63],
                 fov: 34.0,
                 cupboardOpen: false,
-                hint: 'Click notifications on desk phone to email or download CV'
+                hint: 'Click cards on desk phone to email or download CV'
             }
         ];
 
@@ -2274,18 +1809,37 @@
                 })
                 .start();
 
-            // Safety timeout to ensure controls are NEVER locked
             setTimeout(() => { controls.enabled = true; }, 1200);
 
-            // Undock Button
+            // Undock Button ("Back to room")
             const undockBtn = document.getElementById('undock-btn');
             if (index > 0) undockBtn.classList.add('visible');
             else undockBtn.classList.remove('visible');
+
+            // Hero section panel on right side
+            const heroPanel = document.getElementById('hero-panel');
+            if (heroPanel) {
+                if (index === 0) heroPanel.classList.add('active');
+                else heroPanel.classList.remove('active');
+            }
 
             // Experience Badge Nav Pill
             const badgeNav = document.getElementById('badge-nav-bar');
             if (badgeNav) {
                 badgeNav.style.display = (index === 2) ? 'flex' : 'none';
+            }
+
+            // Education leader lines and cards column
+            const eduSvg = document.getElementById('edu-lines-svg');
+            const eduCol = document.getElementById('edu-cards-col');
+            if (eduSvg && eduCol) {
+                if (index === 4) {
+                    eduSvg.classList.add('active');
+                    eduCol.classList.add('active');
+                } else {
+                    eduSvg.classList.remove('active');
+                    eduCol.classList.remove('active');
+                }
             }
 
             // Interactive Scene Hint
@@ -2300,67 +1854,14 @@
                 }
             }
 
-            // Update Active UI Story Panels
-            document.querySelectorAll('.story-section').forEach((sec, idx) => {
-                sec.classList.toggle('active', idx === index);
-            });
-
-            // Update Bottom Index Navigation Buttons
-            document.querySelectorAll('.index-btn').forEach((btn, idx) => {
-                btn.classList.toggle('active', idx === index);
-            });
-
-            // Education leader lines visibility
-            const eduSvg = document.getElementById('edu-lines-svg');
-            if (eduSvg) {
-                if (index === 4) eduSvg.classList.add('active');
-                else eduSvg.classList.remove('active');
-            }
-        }
-
-        // ---------------- EDUCATION LEADER LINES REAL-TIME PROJECTOR ----------------
-        function updateEducationLeaderLines() {
-            const svg = document.getElementById('edu-lines-svg');
-            if (!svg || currentSection !== 4) return;
-
-            const hangers = [
-                { obj: hangerBTech, lineId: 'edu-line-btech', dotId: 'edu-dot-btech', cardId: 'card-edu-btech' },
-                { obj: hangerInter, lineId: 'edu-line-inter', dotId: 'edu-dot-inter', cardId: 'card-edu-inter' },
-                { obj: hangerSSC, lineId: 'edu-line-ssc', dotId: 'edu-dot-ssc', cardId: 'card-edu-ssc' }
-            ];
-
-            hangers.forEach(h => {
-                if (!h.obj) return;
-                const bbox = new THREE.Box3().setFromObject(h.obj);
-                const v = new THREE.Vector3();
-                bbox.getCenter(v);
-                v.project(activeCamera);
-
-                // Convert NDC to screen pixels
-                const sx = (v.x * 0.5 + 0.5) * window.innerWidth;
-                const sy = (-(v.y * 0.5) + 0.5) * window.innerHeight;
-
-                const card = document.getElementById(h.cardId);
-                if (!card) return;
-                const rect = card.getBoundingClientRect();
-                const cx = rect.left;
-                const cy = rect.top + rect.height * 0.5;
-
-                const cp1x = sx + (cx - sx) * 0.45;
-                const cp2x = sx + (cx - sx) * 0.65;
-                const d = 'M ' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' C ' + cp1x.toFixed(1) + ' ' + sy.toFixed(1) + ', ' + cp2x.toFixed(1) + ' ' + cy.toFixed(1) + ', ' + cx.toFixed(1) + ' ' + cy.toFixed(1);
-
-                const pathEl = document.getElementById(h.lineId);
-                const dotEl = document.getElementById(h.dotId);
-                if (pathEl) pathEl.setAttribute('d', d);
-                if (dotEl) {
-                    dotEl.setAttribute('cx', sx.toFixed(1));
-                    dotEl.setAttribute('cy', sy.toFixed(1));
-                }
+            // Update Top Navbar Active State
+            document.querySelectorAll('.nav-link').forEach((link) => {
+                const targetSec = parseInt(link.getAttribute('data-section'));
+                link.classList.toggle('active', targetSec === index);
             });
         }
 
-        // ---------------- EXPERIENCE ID BADGES (Hamza's Desk Style) ----------------
+        // ---------------- EXPERIENCE ID BADGES ----------------
         const badgesData = [
             { company: "UltraMind", role: "Product Designer · iOS & Web (Apr 2024 — Present)" },
             { company: "Product & UI/UX Consultant", role: "Independent Designer & Spatial Specialist (2022 — 2024)" }
@@ -2397,252 +1898,54 @@
                     .to({ y: isBadgeFlipped ? Math.PI : 0 }, 700)
                     .easing(TWEEN.Easing.Cubic.Out)
                     .start();
-                showToast(isBadgeFlipped ? "Flipped to Credentials Back" : "Flipped to Front Side");
+                showToast(isBadgeFlipped ? "Flipped to Back Credentials" : "Flipped to Front Side");
             }
         }
 
-        function copyEmail() {
-            navigator.clipboard.writeText('boyinasaipranathi@gmail.com').then(() => {
-                showToast('Email copied: boyinasaipranathi@gmail.com');
-            });
-        }
+        // ---------------- EDUCATION LEADER LINES REAL-TIME PROJECTOR ----------------
+        function updateEducationLeaderLines() {
+            const svg = document.getElementById('edu-lines-svg');
+            if (!svg || currentSection !== 4) return;
 
-        let isHudHidden = false;
-        function toggleHUD() {
-            isHudHidden = !isHudHidden;
-            document.body.classList.toggle('hud-hidden', isHudHidden);
-            const btn = document.getElementById('hud-toggle-btn');
-            const txt = document.getElementById('hud-toggle-text');
-            const icon = document.getElementById('hud-icon');
-
-            if (isHudHidden) {
-                btn.classList.add('hud-off');
-                txt.innerText = 'Show HUD';
-                icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
-            } else {
-                btn.classList.remove('hud-off');
-                txt.innerText = 'Hide HUD';
-                icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
-            }
-        }
-
-        // ---------------- BLENDER VIEWPORT CONTROLS ----------------
-        function setBlenderView(view) {
-            const curTarget = controls.target.clone();
-            let newPos = new THREE.Vector3();
-            let dist = activeCamera.position.distanceTo(curTarget);
-            if (dist < 1.0) dist = 6.5;
-
-            if (view === 'front') {
-                newPos.set(curTarget.x, curTarget.y, curTarget.z + dist);
-            } else if (view === 'back') {
-                newPos.set(curTarget.x, curTarget.y, curTarget.z - dist);
-            } else if (view === 'side') {
-                newPos.set(curTarget.x + dist, curTarget.y, curTarget.z);
-            } else if (view === 'left') {
-                newPos.set(curTarget.x - dist, curTarget.y, curTarget.z);
-            } else if (view === 'top') {
-                newPos.set(curTarget.x + 0.001, curTarget.y + dist, curTarget.z);
-            } else if (view === 'bottom') {
-                newPos.set(curTarget.x + 0.001, curTarget.y - dist, curTarget.z);
-            } else if (view === 'camera') {
-                goToSection(0);
-                return;
-            }
-
-            new TWEEN.Tween(activeCamera.position)
-                .to({ x: newPos.x, y: newPos.y, z: newPos.z }, 750)
-                .easing(TWEEN.Easing.Cubic.Out)
-                .onComplete(() => {
-                    controls.enabled = true;
-                    controls.update();
-                })
-                .start();
-        }
-
-        function frameAll() {
-            const targetPos = new THREE.Vector3(0.76, 2.10, -1.50);
-            new TWEEN.Tween(controls.target)
-                .to({ x: targetPos.x, y: targetPos.y, z: targetPos.z }, 650)
-                .easing(TWEEN.Easing.Cubic.Out)
-                .onComplete(() => {
-                    controls.enabled = true;
-                    controls.update();
-                })
-                .start();
-        }
-
-        function toggleProjection() {
-            isOrtho = !isOrtho;
-            const btn = document.getElementById('btn-ortho');
-            if (btn) btn.classList.toggle('active', isOrtho);
-
-            const dist = camera.position.distanceTo(controls.target);
-            const aspect = window.innerWidth / window.innerHeight;
-
-            if (isOrtho) {
-                const h = dist * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) * 2;
-                const w = h * aspect;
-                orthoCamera.left = -w / 2;
-                orthoCamera.right = w / 2;
-                orthoCamera.top = h / 2;
-                orthoCamera.bottom = -h / 2;
-                orthoCamera.position.copy(camera.position);
-                orthoCamera.quaternion.copy(camera.quaternion);
-                orthoCamera.updateProjectionMatrix();
-
-                activeCamera = orthoCamera;
-                controls.object = orthoCamera;
-            } else {
-                camera.position.copy(orthoCamera.position);
-                camera.quaternion.copy(orthoCamera.quaternion);
-                camera.updateProjectionMatrix();
-
-                activeCamera = camera;
-                controls.object = camera;
-            }
-        }
-
-        let currentShading = 'rendered';
-        const clayMaterial = new THREE.MeshStandardMaterial({
-            color: 0xded8cc,
-            roughness: 0.65,
-            metalness: 0.05
-        });
-
-        function setShading(mode) {
-            currentShading = mode;
-            ['shade-rendered', 'shade-clay', 'shade-wire'].forEach(id => {
-                const b = document.getElementById(id);
-                if (b) b.classList.toggle('active', id === 'shade-' + mode);
-            });
-
-            if (!officeModel) return;
-            officeModel.traverse(node => {
-                if (node.isMesh) {
-                    if (!node.userData.originalMaterial) {
-                        node.userData.originalMaterial = node.material;
-                    }
-                    if (mode === 'clay') {
-                        node.material = clayMaterial;
-                    } else if (mode === 'wire') {
-                        node.material = node.userData.originalMaterial;
-                        node.material.wireframe = true;
-                    } else {
-                        node.material = node.userData.originalMaterial;
-                        node.material.wireframe = false;
-                    }
-                }
-            });
-        }
-
-        function toggleHotkeysModal() {
-            document.getElementById('hotkeys-modal').classList.toggle('open');
-        }
-
-        // Blender 3D Orientation Gizmo
-        const gizmoCanvas = document.getElementById('blender-gizmo-canvas');
-        const gizmoCtx = gizmoCanvas ? gizmoCanvas.getContext('2d') : null;
-
-        function drawBlenderGizmo() {
-            if (!gizmoCtx) return;
-            const size = 144;
-            const cx = size / 2;
-            const cy = size / 2;
-            const r = 44;
-
-            gizmoCtx.clearRect(0, 0, size, size);
-
-            gizmoCtx.beginPath();
-            gizmoCtx.arc(cx, cy, r + 16, 0, Math.PI * 2);
-            gizmoCtx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-            gizmoCtx.fill();
-
-            const matrix = activeCamera.matrixWorldInverse;
-            const axes = [
-                { name: 'X', color: '#ef4444', dir: new THREE.Vector3(1, 0, 0), view: 'side' },
-                { name: 'Y', color: '#22c55e', dir: new THREE.Vector3(0, 0, -1), view: 'front' },
-                { name: 'Z', color: '#3b82f6', dir: new THREE.Vector3(0, 1, 0), view: 'top' },
-                { name: '-X', color: '#7f1d1d', dir: new THREE.Vector3(-1, 0, 0), view: 'left', isNeg: true },
-                { name: '-Y', color: '#14532d', dir: new THREE.Vector3(0, 0, 1), view: 'back', isNeg: true },
-                { name: '-Z', color: '#1e3a8a', dir: new THREE.Vector3(0, -1, 0), view: 'bottom', isNeg: true }
+            const hangers = [
+                { obj: hangerBTech, lineId: 'edu-line-btech', dotId: 'edu-dot-btech', cardId: 'card-edu-btech' },
+                { obj: hangerInter, lineId: 'edu-line-inter', dotId: 'edu-dot-inter', cardId: 'card-edu-inter' },
+                { obj: hangerSSC, lineId: 'edu-line-ssc', dotId: 'edu-dot-ssc', cardId: 'card-edu-ssc' }
             ];
 
-            axes.forEach(axis => {
-                const projected = axis.dir.clone().applyMatrix4(matrix);
-                axis.px = cx + projected.x * r;
-                axis.py = cy - projected.y * r;
-                axis.pz = projected.z;
-            });
+            hangers.forEach(h => {
+                if (!h.obj) return;
+                const bbox = new THREE.Box3().setFromObject(h.obj);
+                const v = new THREE.Vector3();
+                bbox.getCenter(v);
+                v.project(camera);
 
-            axes.sort((a, b) => a.pz - b.pz);
+                const sx = (v.x * 0.5 + 0.5) * window.innerWidth;
+                const sy = (-(v.y * 0.5) + 0.5) * window.innerHeight;
 
-            axes.forEach(axis => {
-                if (axis.isNeg) {
-                    gizmoCtx.beginPath();
-                    gizmoCtx.arc(axis.px, axis.py, 4.5, 0, Math.PI * 2);
-                    gizmoCtx.fillStyle = axis.color;
-                    gizmoCtx.fill();
-                    return;
-                }
-                gizmoCtx.beginPath();
-                gizmoCtx.moveTo(cx, cy);
-                gizmoCtx.lineTo(axis.px, axis.py);
-                gizmoCtx.strokeStyle = axis.color;
-                gizmoCtx.lineWidth = 2.5;
-                gizmoCtx.stroke();
+                const card = document.getElementById(h.cardId);
+                if (!card) return;
+                const rect = card.getBoundingClientRect();
+                const cx = rect.left;
+                const cy = rect.top + rect.height * 0.5;
 
-                gizmoCtx.beginPath();
-                gizmoCtx.arc(axis.px, axis.py, 10.5, 0, Math.PI * 2);
-                gizmoCtx.fillStyle = axis.color;
-                gizmoCtx.fill();
+                const cp1x = sx + (cx - sx) * 0.45;
+                const cp2x = sx + (cx - sx) * 0.65;
+                const d = 'M ' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' C ' + cp1x.toFixed(1) + ' ' + sy.toFixed(1) + ', ' + cp2x.toFixed(1) + ' ' + cy.toFixed(1) + ', ' + cx.toFixed(1) + ' ' + cy.toFixed(1);
 
-                gizmoCtx.fillStyle = '#fff';
-                gizmoCtx.font = 'bold 10px sans-serif';
-                gizmoCtx.textAlign = 'center';
-                gizmoCtx.textBaseline = 'middle';
-                gizmoCtx.fillText(axis.name, axis.px, axis.py);
-            });
-        }
-
-        if (gizmoCanvas) {
-            gizmoCanvas.addEventListener('click', (e) => {
-                const rect = gizmoCanvas.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width) * 144;
-                const y = ((e.clientY - rect.top) / rect.height) * 144;
-                const matrix = activeCamera.matrixWorldInverse;
-
-                const axes = [
-                    { name: 'X', dir: new THREE.Vector3(1, 0, 0), view: 'side' },
-                    { name: 'Y', dir: new THREE.Vector3(0, 0, -1), view: 'front' },
-                    { name: 'Z', dir: new THREE.Vector3(0, 1, 0), view: 'top' },
-                    { name: '-X', dir: new THREE.Vector3(-1, 0, 0), view: 'left' },
-                    { name: '-Y', dir: new THREE.Vector3(0, 0, 1), view: 'back' },
-                    { name: '-Z', dir: new THREE.Vector3(0, -1, 0), view: 'bottom' }
-                ];
-                let closest = null;
-                let minDist = 22;
-                axes.forEach(a => {
-                    const proj = a.dir.clone().applyMatrix4(matrix);
-                    const px = 72 + proj.x * 44;
-                    const py = 72 - proj.y * 44;
-                    const d = Math.hypot(x - px, y - py);
-                    if (d < minDist) {
-                        minDist = d;
-                        closest = a;
-                    }
-                });
-                if (closest) {
-                    setBlenderView(closest.view);
+                const pathEl = document.getElementById(h.lineId);
+                const dotEl = document.getElementById(h.dotId);
+                if (pathEl) pathEl.setAttribute('d', d);
+                if (dotEl) {
+                    dotEl.setAttribute('cx', sx.toFixed(1));
+                    dotEl.setAttribute('cy', sy.toFixed(1));
                 }
             });
         }
 
         // Keyboard Shortcuts
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'h' || e.key === 'H') {
-                toggleHUD();
-            } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                 if (currentSection < sectionsData.length - 1) goToSection(currentSection + 1);
             } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
                 if (currentSection > 0) goToSection(currentSection - 1);
@@ -2652,49 +1955,12 @@
         // ---------------- 3D OBJECT RAYCASTING & INTERACTION ----------------
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
-        const tooltipEl = document.createElement('div');
-        tooltipEl.style.position = 'fixed';
-        tooltipEl.style.pointerEvents = 'none';
-        tooltipEl.style.zIndex = '30';
-        tooltipEl.style.padding = '6px 14px';
-        tooltipEl.style.borderRadius = '100px';
-        tooltipEl.style.background = 'rgba(15, 18, 26, 0.9)';
-        tooltipEl.style.backdropFilter = 'blur(12px)';
-        tooltipEl.style.border = '1px solid rgba(255, 255, 255, 0.2)';
-        tooltipEl.style.color = '#fff';
-        tooltipEl.style.fontSize = '12px';
-        tooltipEl.style.fontWeight = '600';
-        tooltipEl.style.boxShadow = '0 8px 24px rgba(0,0,0,0.4)';
-        tooltipEl.style.transition = 'opacity 0.2s ease, transform 0.1s ease';
-        tooltipEl.style.opacity = '0';
-        document.body.appendChild(tooltipEl);
-
-        function getPropSection(meshName) {
-            const n = meshName.toLowerCase();
-            if (n.includes('laptop')) return 1;
-            if (n.includes('noticeboard') || n.includes('badge') || n.includes('cork') || n.includes('portrait')) return 2;
-            if (n.includes('monitor') || (n.includes('screen') && !n.includes('laptop'))) return 3;
-            if (n.includes('cabinet') || n.includes('cupboard') || n.includes('door') || n.includes('uniform') || n.includes('hanger')) return 4;
-            if (n.includes('phone')) return 5;
-            return -1;
-        }
-
-        const propLabels = {
-            1: '💻 Laptop · View Skills & Tools',
-            2: '📌 Noticeboard · View Experience Badges',
-            3: '🖥️ 27" Monitor · View Featured Projects',
-            4: '🚪 Cupboard · View Education Uniforms',
-            5: '📱 Phone · Contact Sai Pranathi'
-        };
-
-        let hoveredSection = -1;
         let isPointerDragging = false;
         let pointerDownPos = { x: 0, y: 0 };
 
         renderer.domElement.addEventListener('pointerdown', (e) => {
             pointerDownPos = { x: e.clientX, y: e.clientY };
             isPointerDragging = false;
-            // Always ensure controls are functional on interaction
             controls.enabled = true;
         });
 
@@ -2706,14 +1972,12 @@
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
             if (officeModel) {
-                raycaster.setFromCamera(mouse, activeCamera);
+                raycaster.setFromCamera(mouse, camera);
 
-                // Check In-Screen Elements if focused
                 if (currentSection === 1 && laptopScreenMesh) {
                     const hits = raycaster.intersectObject(laptopScreenMesh);
                     if (hits.length > 0) {
                         renderer.domElement.style.cursor = 'pointer';
-                        tooltipEl.style.opacity = '0';
                         return;
                     }
                 }
@@ -2721,7 +1985,6 @@
                     const hits = raycaster.intersectObject(monitorScreenMesh);
                     if (hits.length > 0) {
                         renderer.domElement.style.cursor = 'pointer';
-                        tooltipEl.style.opacity = '0';
                         return;
                     }
                 }
@@ -2729,44 +1992,17 @@
                     const hits = raycaster.intersectObject(phoneScreenMesh);
                     if (hits.length > 0) {
                         renderer.domElement.style.cursor = 'pointer';
-                        tooltipEl.style.opacity = '0';
                         return;
                     }
                 }
-
-                // Check Noticeboard Badges in Experience Section
                 if (currentSection === 2 && (badgeCard0 || badgeCard1)) {
                     const badgeHits = raycaster.intersectObjects([badgeCard0, badgeCard1].filter(Boolean), true);
                     if (badgeHits.length > 0) {
                         renderer.domElement.style.cursor = 'pointer';
-                        tooltipEl.innerText = 'Click to Flip ID Badge ↺';
-                        tooltipEl.style.opacity = '1';
-                        tooltipEl.style.transform = 'translate(' + (e.clientX + 16) + 'px, ' + (e.clientY - 12) + 'px)';
                         return;
                     }
                 }
-
-                // Prop hover when in overview / room mode
-                const intersects = raycaster.intersectObjects(officeModel.children, true);
-                let hitSection = -1;
-                for (let hit of intersects) {
-                    const sec = getPropSection(hit.object.name);
-                    if (sec !== -1) {
-                        hitSection = sec;
-                        break;
-                    }
-                }
-
-                hoveredSection = hitSection;
-                if (hitSection !== -1 && hitSection !== currentSection) {
-                    renderer.domElement.style.cursor = 'pointer';
-                    tooltipEl.innerText = propLabels[hitSection];
-                    tooltipEl.style.opacity = '1';
-                    tooltipEl.style.transform = 'translate(' + (e.clientX + 16) + 'px, ' + (e.clientY - 12) + 'px)';
-                } else {
-                    renderer.domElement.style.cursor = 'default';
-                    tooltipEl.style.opacity = '0';
-                }
+                renderer.domElement.style.cursor = 'default';
             }
         });
 
@@ -2775,7 +2011,7 @@
 
             mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-            raycaster.setFromCamera(mouse, activeCamera);
+            raycaster.setFromCamera(mouse, camera);
 
             // A. Click on 3D Laptop Screen (Skills Tabs)
             if (currentSection === 1 && laptopScreenMesh) {
@@ -2785,18 +2021,18 @@
                     const px = (1.0 - hit.uv.x) * 1024;
                     const py = (1.0 - hit.uv.y) * 700;
 
-                    if (py >= 44 && py <= 96) {
+                    if (py >= 50 && py <= 115) {
                         if (px >= 24 && px < 184) setSkillTab('all');
-                        else if (px >= 194 && px < 369) setSkillTab('figma');
-                        else if (px >= 379 && px < 544) setSkillTab('ux');
-                        else if (px >= 554 && px < 714) setSkillTab('spatial');
-                        else if (px >= 724 && px < 874) setSkillTab('tools');
+                        else if (px >= 194 && px < 384) setSkillTab('figma');
+                        else if (px >= 394 && px < 569) setSkillTab('ux');
+                        else if (px >= 579 && px < 754) setSkillTab('spatial');
+                        else if (px >= 764 && px < 924) setSkillTab('tools');
                         return;
                     }
                 }
             }
 
-            // B. Click on 3D 27" Monitor Screen (Interactive Projects Carousel)
+            // B. Click on 3D 27" Monitor Screen (Projects Carousel)
             if (currentSection === 3 && monitorScreenMesh) {
                 const hits = raycaster.intersectObject(monitorScreenMesh);
                 if (hits.length > 0) {
@@ -2805,12 +2041,12 @@
                     const py = (1.0 - hit.uv.y) * 1080;
 
                     // 1. Top bar Prev Button
-                    if (py >= 10 && py <= 55 && px >= 1600 && px <= 1720) {
+                    if (py >= 10 && py <= 65 && px >= 1590 && px <= 1720) {
                         prevProject();
                         return;
                     }
                     // 2. Top bar Next Button
-                    if (py >= 10 && py <= 55 && px >= 1740 && px <= 1860) {
+                    if (py >= 10 && py <= 65 && px >= 1735 && px <= 1860) {
                         nextProject();
                         return;
                     }
@@ -2828,83 +2064,47 @@
 
                     // 5. Action Buttons inside Main Card
                     // Primary: View Live Case Study
-                    if (px >= 940 && px <= 1260 && py >= 835 && py <= 920) {
+                    if (px >= 930 && px <= 1260 && py >= 835 && py <= 925) {
                         window.open(projectsData[curProjectIdx].link, '_blank');
                         showToast("Opening Live Case Study...");
                         return;
                     }
                     // Secondary: Next Project
-                    if (px >= 1270 && px <= 1530 && py >= 835 && py <= 920) {
+                    if (px >= 1270 && px <= 1530 && py >= 835 && py <= 925) {
                         nextProject();
                         return;
-                    }
-
-                    // 6. Bottom Carousel Dots / Tabs
-                    if (py >= 995 && py <= 1055) {
-                        const dotW = 140, dotGap = 15;
-                        const totalDotW = 4 * dotW + 3 * dotGap;
-                        const startDotX = (1920 - totalDotW) / 2;
-                        for (let d = 0; d < 4; d++) {
-                            const dx = startDotX + d * (dotW + dotGap);
-                            if (px >= dx && px <= dx + dotW) {
-                                setProject(d);
-                                return;
-                            }
-                        }
                     }
                 }
             }
 
-            // C. Click on 3D Phone Screen (Contact Lock Screen) - Portrait mapping
+            // C. Click on 3D Phone Screen (Contact Actions)
             if (currentSection === 5 && phoneScreenMesh) {
                 const hits = raycaster.intersectObject(phoneScreenMesh);
                 if (hits.length > 0) {
                     const hit = hits[0];
-                    const px = hit.uv.x * 720;
                     const py = (1.0 - hit.uv.y) * 1440;
 
-                    // Mail Sai Button (Card 1)
-                    if (py >= 500 && py <= 585 && px >= 50 && px <= 670) {
-                        window.location.href = 'mailto:boyinasaipranathi@gmail.com?subject=Hello%20Sai%20Pranathi%20-%20Product%20Design';
-                        showToast("Opening Mail Client...");
+                    if (py >= 340 && py <= 480) {
+                        window.location.href = 'mailto:boyinasaipranathi@gmail.com';
+                        showToast('Opening Mail Client...');
                         return;
-                    }
-
-                    // Copy Email Button (Card 1)
-                    if (py >= 585 && py <= 660 && px >= 50 && px <= 670) {
-                        copyEmail();
+                    } else if (py >= 510 && py <= 650) {
+                        window.open('https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/', '_blank');
+                        showToast('Opening LinkedIn Profile...');
                         return;
-                    }
-
-                    // Download Resume (Card 2)
-                    if (py >= 840 && py <= 925 && px >= 50 && px <= 670) {
-                        window.open('mailto:boyinasaipranathi@gmail.com?subject=Requesting%20Resume%20PDF%20-%20Sai%20Pranathi', '_blank');
-                        showToast("Requesting Resume PDF...");
+                    } else if (py >= 680 && py <= 820) {
+                        window.open('https://www.twine.net/boyinasaipranathi679', '_blank');
+                        showToast('Opening Twine Portfolio...');
                         return;
-                    }
-
-                    // Social Links (Card 3: 3 chips in a row)
-                    if (py >= 1100 && py <= 1180) {
-                        if (px >= 50 && px <= 260) {
-                            window.open('https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/', '_blank');
-                            showToast("Opening LinkedIn Profile...");
-                            return;
-                        }
-                        if (px >= 260 && px <= 460) {
-                            window.open('https://www.twine.net/boyinasaipranathi679', '_blank');
-                            showToast("Opening Twine Profile...");
-                            return;
-                        }
-                        if (px >= 460 && px <= 670) {
-                            window.location.href = 'tel:9885037157';
-                            showToast("Calling Sai Pranathi...");
-                            return;
-                        }
+                    } else if (py >= 850 && py <= 990) {
+                        window.open('https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/', '_blank');
+                        showToast('Downloading Resume / CV...');
+                        return;
                     }
                 }
             }
 
-            // D. Click on 3D Noticeboard Badges (Experience)
+            // D. Click Noticeboard Badges in Experience Section
             if (currentSection === 2 && (badgeCard0 || badgeCard1)) {
                 const badgeHits = raycaster.intersectObjects([badgeCard0, badgeCard1].filter(Boolean), true);
                 if (badgeHits.length > 0) {
@@ -2912,20 +2112,18 @@
                     return;
                 }
             }
-
-            // E. Click on 3D Prop to Navigate Sections
-            if (hoveredSection !== -1) {
-                goToSection(hoveredSection);
-            }
         });
 
-        // ---------------- RENDER & ANIMATION LOOP ----------------
+        // ---------------- MAIN ANIMATION LOOP ----------------
         const clock = new THREE.Clock();
+
         function animate() {
             requestAnimationFrame(animate);
-            TWEEN.update();
+
             const delta = clock.getDelta();
             const elapsedTime = clock.getElapsedTime();
+
+            TWEEN.update();
 
             // Continuous subtle physics for noticeboard badges
             if (badgeCard0) {
@@ -2945,26 +2143,14 @@
             }
 
             controls.update();
-            drawBlenderGizmo();
-            renderer.render(scene, activeCamera);
+            renderer.render(scene, camera);
         }
         animate();
 
         // Responsive Resizing
         window.addEventListener('resize', () => {
-            const aspect = window.innerWidth / window.innerHeight;
-            camera.aspect = aspect;
+            camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-
-            const dist = camera.position.distanceTo(controls.target);
-            const h = dist * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5)) * 2;
-            const w = h * aspect;
-            orthoCamera.left = -w / 2;
-            orthoCamera.right = w / 2;
-            orthoCamera.top = h / 2;
-            orthoCamera.bottom = -h / 2;
-            orthoCamera.updateProjectionMatrix();
-
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
