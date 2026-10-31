@@ -984,39 +984,39 @@
     <!-- ---------------- SECTION 2: EXPERIENCE (Noticeboard & Ultramind Role) ---------------- -->
     <div class="experience-panel-wrapper" id="experience-panel">
         <div class="exp-card-header">
-            <span class="exp-company-tag">ULTRAMIND</span>
-            <span class="exp-date-badge">April 2024 – Present</span>
+            <span class="exp-company-tag" style="background: #581c87; color: #ffffff;">ULTRAMIND</span>
+            <span class="exp-date-badge">April 2024 to October 2026</span>
         </div>
         <h2 class="exp-role-title">Product Designer</h2>
         <div class="exp-product-subtitle">iOS Mobile Application & Official Web Platform</div>
 
         <div class="exp-bullets-list">
             <div class="exp-bullet-item">
-                <span class="exp-bullet-icon">✦</span>
-                <p>Designed the complete product experience from early stages—including user flows, wireframes, high-fidelity UI, widgets, and interactive prototypes for the iOS application (live on App Store).</p>
+                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
+                <p><strong>Built the iOS product from the ground up —</strong> user flows, UI, widgets, and interactive prototypes.</p>
             </div>
             <div class="exp-bullet-item">
-                <span class="exp-bullet-icon">✦</span>
-                <p>Translated product requirements and user needs into clear flows and high-fidelity interfaces, refining existing flows to improve usability and clarity.</p>
+                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
+                <p><strong>Led design discussions with CTOs and CEOs</strong> to align product direction and priorities.</p>
             </div>
             <div class="exp-bullet-item">
-                <span class="exp-bullet-icon">✦</span>
-                <p>Designed the official Ultramind website, maintaining consistency in structure, usability, and visual quality across product and web experiences.</p>
+                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
+                <p><strong>Owned design quality</strong> across the product, improving usability, clarity, and consistency.</p>
             </div>
             <div class="exp-bullet-item">
-                <span class="exp-bullet-icon">✦</span>
-                <p>Collaborated with developers and managers to review designs, gather feedback, resolve design issues, and refine interfaces through development.</p>
+                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
+                <p><strong>Designed the official website</strong> <span style="background: #f3e8ff; color: #6b21a8; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12.5px;">(ultramind.in)</span> using Figma, Figma AI, Claude Design, and Adobe tools.</p>
             </div>
             <div class="exp-bullet-item">
-                <span class="exp-bullet-icon">✦</span>
-                <p>Used Figma, Figma AI, Claude, and Adobe tools for design research, ideation, UI design, animation, and visual effects; built automation workflows to streamline team efficiency.</p>
+                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
+                <p><strong>Built automation workflows</strong> to streamline repetitive design and research tasks.</p>
             </div>
         </div>
 
         <div class="exp-tools-row">
             <span class="exp-tool-chip">Figma</span>
             <span class="exp-tool-chip">Figma AI</span>
-            <span class="exp-tool-chip">Claude</span>
+            <span class="exp-tool-chip">Claude Design</span>
             <span class="exp-tool-chip">Adobe Suite</span>
             <span class="exp-tool-chip">iOS Widgets</span>
             <span class="exp-tool-chip">App Store Live</span>
@@ -1024,7 +1024,7 @@
 
         <div class="exp-actions-row">
             <button class="btn-flip-badge" onclick="toggleFlipActiveBadge()">
-                <span>Flip 3D Badge ↺</span>
+                <span id="flip-badge-btn-text">Flip 3D Badge ↺</span>
             </button>
         </div>
     </div>
@@ -1283,6 +1283,7 @@
         let officeModel;
         let hangerBTech, hangerInter, hangerSSC;
         let badgeCard0, badgeCard1;
+        let badgeFrontMesh, badgeBackMesh, badgeBaseRotY = 0;
 
         // 3D Screen Meshes
         let laptopScreenMesh, monitorScreenMesh, phoneScreenMesh;
@@ -2328,13 +2329,54 @@
                         child.receiveShadow = true;
 
                         const name = (child.name || '').toLowerCase();
-                        // Identify noticeboard badge meshes for 3D flip physics
-                        if (name.includes('badge') || name.includes('id_card') || name.includes('portrait')) {
-                            if (!badgeCard0) badgeCard0 = child;
-                            else if (!badgeCard1) badgeCard1 = child;
+                        // Remove 3D elements on the id cards, just keep the plate
+                        if (name.includes('badge photo') || name.includes('badge portrait') || name.includes('badge print') || name.includes('badge card 0') || name.includes('board hook 0')) {
+                            child.visible = false;
+                        }
+                        if (name.includes('badge card 1')) {
+                            badgeCard1 = child;
                         }
                     }
                 });
+
+                // Attach high-res UltraMind front and back textures to badgeCard1 plate
+                if (badgeCard1) {
+                    badgeBaseRotY = badgeCard1.rotation.y;
+
+                    const textureLoader = new THREE.TextureLoader();
+                    const frontTex = textureLoader.load('id_card_front_cropped.png', () => { frontTex.needsUpdate = true; });
+                    const backTex = textureLoader.load('id_card_back_cropped.png', () => { backTex.needsUpdate = true; });
+
+                    frontTex.minFilter = THREE.LinearFilter;
+                    frontTex.magFilter = THREE.LinearFilter;
+                    backTex.minFilter = THREE.LinearFilter;
+                    backTex.magFilter = THREE.LinearFilter;
+
+                    const frontMat = new THREE.MeshBasicMaterial({
+                        map: frontTex,
+                        side: THREE.FrontSide
+                    });
+                    const backMat = new THREE.MeshBasicMaterial({
+                        map: backTex,
+                        side: THREE.FrontSide
+                    });
+
+                    // Front plane facing camera (local -Z)
+                    const frontGeom = new THREE.PlaneGeometry(0.245, 0.355);
+                    badgeFrontMesh = new THREE.Mesh(frontGeom, frontMat);
+                    badgeFrontMesh.name = 'BadgeFrontPlate';
+                    badgeFrontMesh.position.set(0, 0, -0.0135);
+                    badgeFrontMesh.rotation.y = Math.PI;
+                    badgeCard1.add(badgeFrontMesh);
+
+                    // Back plane facing wall (local +Z), revealed on flip
+                    const backGeom = new THREE.PlaneGeometry(0.245, 0.355);
+                    badgeBackMesh = new THREE.Mesh(backGeom, backMat);
+                    badgeBackMesh.name = 'BadgeBackPlate';
+                    badgeBackMesh.position.set(0, 0, 0.0135);
+                    badgeBackMesh.rotation.y = 0;
+                    badgeCard1.add(badgeBackMesh);
+                }
 
                 // Distinctly identify the 3 specific uniform nodes inside the cupboard matching sketch heights
                 // Uniform 01 (Left, chest level) -> B.Tech
@@ -2759,19 +2801,18 @@
 
         function toggleFlipActiveBadge() {
             isBadgeFlipped = !isBadgeFlipped;
-            const targetBadge = badgeCard0 || badgeCard1;
-            if (targetBadge) {
-                new TWEEN.Tween(targetBadge.rotation)
-                    .to({ y: isBadgeFlipped ? Math.PI : 0 }, 700)
+            if (badgeCard1) {
+                const targetY = isBadgeFlipped ? (badgeBaseRotY + Math.PI) : badgeBaseRotY;
+                new TWEEN.Tween(badgeCard1.rotation)
+                    .to({ y: targetY }, 700)
                     .easing(TWEEN.Easing.Cubic.Out)
                     .start();
-                if (badgeCard1 && badgeCard1 !== targetBadge) {
-                    new TWEEN.Tween(badgeCard1.rotation)
-                        .to({ y: isBadgeFlipped ? Math.PI : 0 }, 700)
-                        .easing(TWEEN.Easing.Cubic.Out)
-                        .start();
+                showToast(isBadgeFlipped ? "Flipped to Back (UltraMind Experience)" : "Flipped to Front (UltraMind ID Card)");
+
+                const flipBtnText = document.getElementById('flip-badge-btn-text');
+                if (flipBtnText) {
+                    flipBtnText.innerText = isBadgeFlipped ? 'Flip to Front ID ↻' : 'Flip to Back Details ↺';
                 }
-                showToast(isBadgeFlipped ? "Flipped to Back Credentials" : "Flipped to Front Credentials");
             }
         }
 
@@ -2937,8 +2978,8 @@
                         return;
                     }
                 }
-                if (currentSection === 2 && (badgeCard0 || badgeCard1)) {
-                    const badgeHits = raycaster.intersectObjects([badgeCard0, badgeCard1].filter(Boolean), true);
+                if (currentSection === 2 && badgeCard1) {
+                    const badgeHits = raycaster.intersectObjects([badgeCard1, badgeFrontMesh, badgeBackMesh].filter(Boolean), true);
                     if (badgeHits.length > 0) {
                         renderer.domElement.style.cursor = 'pointer';
                         return;
@@ -3061,8 +3102,8 @@
             }
 
             // D. Click Noticeboard Badges in Experience Section
-            if (currentSection === 2 && (badgeCard0 || badgeCard1)) {
-                const badgeHits = raycaster.intersectObjects([badgeCard0, badgeCard1].filter(Boolean), true);
+            if (currentSection === 2 && badgeCard1) {
+                const badgeHits = raycaster.intersectObjects([badgeCard1, badgeFrontMesh, badgeBackMesh].filter(Boolean), true);
                 if (badgeHits.length > 0) {
                     toggleFlipActiveBadge();
                     return;
@@ -3082,10 +3123,6 @@
             TWEEN.update();
 
             // Continuous subtle physics for noticeboard badges
-            if (badgeCard0) {
-                badgeCard0.rotation.z = Math.sin(elapsedTime * 1.2) * 0.035;
-                badgeCard0.rotation.x = Math.sin(elapsedTime * 0.8) * 0.015;
-            }
             if (badgeCard1) {
                 badgeCard1.rotation.z = Math.sin(elapsedTime * 1.4 + 1.2) * 0.035;
                 badgeCard1.rotation.x = Math.sin(elapsedTime * 0.9 + 1.2) * 0.015;
