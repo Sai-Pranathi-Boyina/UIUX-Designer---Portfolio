@@ -537,324 +537,6 @@
             margin-top: 2px;
         }
 
-        /* ---------------- SECTION 5: CONTACT PHONE MOCKUP PANEL ---------------- */
-        .contact-backdrop {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(13, 18, 16, 0.55) 0%, rgba(5, 8, 7, 0.85) 100%);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 85;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .contact-backdrop.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .contact-panel-wrapper {
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -46%) scale(0.96);
-            width: 100%;
-            max-width: 375px;
-            z-index: 95;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .contact-panel-wrapper.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .phone-device {
-            position: relative;
-            width: 100%;
-            border-radius: 46px;
-            background: #0d1210;
-            padding: 16px 20px 22px 20px;
-            box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.7), 0 0 0 10px #1a221d, 0 0 0 12px #26332a, 0 0 35px rgba(132, 169, 140, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            overflow: hidden;
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-            user-select: none;
-            box-sizing: border-box;
-        }
-
-        /* Subtle dotted matrix pattern matching reference */
-        .phone-device::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: radial-gradient(rgba(255, 255, 255, 0.10) 1.2px, transparent 1.2px);
-            background-size: 19px 19px;
-            pointer-events: none;
-            opacity: 0.65;
-            z-index: 1;
-        }
-
-        .phone-device > * {
-            position: relative;
-            z-index: 2;
-        }
-
-        .phone-status-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 2px 8px 10px 8px;
-            color: #cbd5e1;
-        }
-
-        .phone-status-time {
-            font-size: 13.5px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
-        }
-
-        .phone-punchhole-cam {
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
-            background: #060907;
-            border: 1.5px solid #1c2720;
-            margin: 0 auto;
-        }
-
-        .phone-status-icons {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            color: #cbd5e1;
-        }
-
-        .phone-clock-display {
-            text-align: center;
-            font-size: 68px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -0.03em;
-            line-height: 1;
-            margin-top: 14px;
-        }
-
-        .phone-date-display {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 10px;
-            font-size: 11.5px;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            color: #cbd5e1;
-            text-transform: uppercase;
-        }
-
-        .phone-date-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--accent-sage);
-        }
-
-        .phone-profile-header {
-            margin-top: 28px;
-            margin-bottom: 18px;
-            padding: 0 4px;
-        }
-
-        .phone-profile-name {
-            font-size: 21px;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-
-        .phone-profile-title {
-            font-size: 13px;
-            font-weight: 500;
-            color: #94a3b8;
-            margin-top: 4px;
-            letter-spacing: 0.01em;
-        }
-
-        .phone-cards-container {
-            display: flex;
-            flex-direction: column;
-            gap: 11px;
-        }
-
-        .phone-action-card {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 13px 16px;
-            border-radius: 18px;
-            background: rgba(28, 35, 31, 0.85);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            box-sizing: border-box;
-        }
-
-        .phone-action-card:hover {
-            background: rgba(38, 48, 42, 0.95);
-            border-color: rgba(132, 169, 140, 0.35);
-            transform: translateY(-2px);
-        }
-
-        .phone-card-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 17px;
-            color: #84a98c;
-            flex-shrink: 0;
-        }
-
-        .phone-card-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .phone-card-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #ffffff;
-            line-height: 1.2;
-        }
-
-        .phone-card-sub {
-            font-size: 11.5px;
-            font-weight: 500;
-            color: #94a3b8;
-            margin-top: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .phone-card-dot {
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #475569;
-            margin-left: 6px;
-            flex-shrink: 0;
-        }
-
-        /* Resume / CV Card (Highlighted Pill in Sage Green Theme) */
-        .phone-cv-card {
-            background: linear-gradient(135deg, #84a98c 0%, #689172 100%) !important;
-            border: 1px solid rgba(255, 255, 255, 0.35) !important;
-            box-shadow: 0 8px 24px rgba(132, 169, 140, 0.3);
-        }
-
-        .phone-cv-card:hover {
-            transform: translateY(-2.5px);
-            box-shadow: 0 10px 28px rgba(132, 169, 140, 0.45);
-        }
-
-        .phone-cv-card .phone-card-icon {
-            color: #12241b;
-        }
-
-        .phone-cv-card .phone-card-title {
-            color: #12241b !important;
-            font-weight: 800;
-        }
-
-        .phone-cv-card .phone-card-sub {
-            color: #213c2c !important;
-            font-weight: 600;
-        }
-
-        .phone-cv-download-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #12241b;
-            color: #84a98c;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-        }
-
-        .phone-cv-card:hover .phone-cv-download-btn {
-            transform: scale(1.08);
-            background: #09150f;
-            color: #ffffff;
-        }
-
-        .phone-bottom-dock {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            margin-top: 30px;
-            padding: 0 4px;
-        }
-
-        .phone-dock-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #e2e8f0;
-            font-size: 17px;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            text-decoration: none;
-        }
-
-        .phone-dock-icon:hover {
-            background: rgba(132, 169, 140, 0.3);
-            border-color: var(--accent-sage);
-            color: #ffffff;
-            transform: translateY(-3px) scale(1.06);
-        }
-
-        .phone-home-indicator {
-            width: 100px;
-            height: 4px;
-            border-radius: 100px;
-            background: rgba(255, 255, 255, 0.7);
-            margin: 18px auto 2px auto;
-        }
-
-        @media (max-width: 768px) {
-            .contact-panel-wrapper {
-                max-width: min(340px, 90vw);
-            }
-        }
-
-        @media (max-height: 750px) {
-            .contact-panel-wrapper {
-                transform: translate(-50%, -50%) scale(0.85);
-            }
-            .contact-panel-wrapper.active {
-                transform: translate(-50%, -50%) scale(0.88);
-            }
-        }
-
         /* ---------------- INTERACTIVE SCENE HINT ---------------- */
         .interactive-scene-hint {
             position: fixed;
@@ -1307,9 +989,11 @@
         let badgeFrontMesh, badgeBackMesh, badgeBaseRotY = 0;
 
         // 3D Screen Meshes
-        let laptopScreenMesh, monitorScreenMesh;
+        let laptopScreenMesh, monitorScreenMesh, phoneScreenMesh;
         let laptopCanvas, laptopCtx, laptopTexture;
         let monitorCanvas, monitorCtx, monitorTexture;
+        let phoneCanvas, phoneCtx, phoneTexture;
+        let phoneAssembly;
 
         // Toast Helper
         function showToast(msg) {
@@ -2108,22 +1792,194 @@
         }
 
         function updatePhoneDisplays() {
+            if (phoneCtx) {
+                drawPhoneScreen();
+            }
+        }
+
+        function initPhoneCanvas() {
+            phoneCanvas = document.createElement('canvas');
+            phoneCanvas.width = 720;
+            phoneCanvas.height = 1440;
+            phoneCtx = phoneCanvas.getContext('2d');
+
+            phoneTexture = new THREE.CanvasTexture(phoneCanvas);
+            phoneTexture.minFilter = THREE.LinearFilter;
+            phoneTexture.magFilter = THREE.LinearFilter;
+            phoneTexture.generateMipmaps = false;
+
+            updatePhoneDisplays();
+            setInterval(updatePhoneDisplays, 1000);
+        }
+
+        function drawPhoneScreen() {
+            if (!phoneCtx) return;
+            const ctx = phoneCtx;
+            const w = 720;
+            const h = 1440;
+
+            // Deep background matching reference
+            ctx.fillStyle = '#0b0f0d';
+            ctx.fillRect(0, 0, w, h);
+
+            // Matrix dots
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+            const dotSpacing = 28;
+            for (let x = 14; x < w; x += dotSpacing) {
+                for (let y = 14; y < h; y += dotSpacing) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // Punch hole camera at top center
+            ctx.fillStyle = '#050706';
+            ctx.beginPath();
+            ctx.arc(w / 2, 44, 14, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#1a221d';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
             const timeStr = formatCurrentPhoneTime();
             const dateStr = formatCurrentPhoneDate();
 
-            const topTimeEl = document.getElementById('phone-top-time');
-            if (topTimeEl) topTimeEl.innerText = timeStr;
+            // Status Bar Text & Icons
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '600 22px "Montserrat", sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(timeStr, 56, 52);
 
-            const bigClockEl = document.getElementById('phone-big-clock');
-            if (bigClockEl) bigClockEl.innerText = timeStr;
+            ctx.textAlign = 'right';
+            ctx.font = '600 20px "Montserrat", sans-serif';
+            ctx.fillText('5G 100%', w - 56, 52);
 
-            const dateTextEl = document.getElementById('phone-date-text');
-            if (dateTextEl) dateTextEl.innerText = dateStr;
-        }
+            // Big Clock (Matching reference)
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '800 114px "Montserrat", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(timeStr, w / 2, 230);
 
-        function initPhoneClock() {
-            updatePhoneDisplays();
-            setInterval(updatePhoneDisplays, 1000);
+            // Dot and Date · HYDERABAD
+            ctx.fillStyle = '#84a98c';
+            ctx.beginPath();
+            ctx.arc(w / 2 - 130, 282, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '700 20px "Montserrat", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(dateStr, w / 2 + 10, 288);
+
+            // Profile Header (Left Aligned with cards at x = 54)
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '800 38px "Montserrat", sans-serif';
+            ctx.fillText('Boyina Sai Pranathi', 54, 395);
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '500 24px "Montserrat", sans-serif';
+            ctx.fillText('UI/UX & Product Designer', 54, 435);
+
+            // 1. Card: Email (y: 480 to 620)
+            const cardW = w - 108;
+            ctx.fillStyle = 'rgba(28, 35, 31, 0.85)';
+            ctx.beginPath(); ctx.roundRect(54, 480, cardW, 140, 26); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+            // Email Icon
+            ctx.fillStyle = '#84a98c';
+            ctx.font = '34px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('✉', 105, 564);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '700 26px "Montserrat", sans-serif';
+            ctx.fillText('Email', 156, 542);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '500 20px "Montserrat", sans-serif';
+            ctx.fillText('boyinasaipranathi@gmail.com', 156, 580);
+
+            ctx.fillStyle = '#475569';
+            ctx.beginPath(); ctx.arc(w - 90, 550, 4, 0, Math.PI * 2); ctx.fill();
+
+            // 2. Card: LinkedIn (y: 650 to 790)
+            ctx.fillStyle = 'rgba(28, 35, 31, 0.85)';
+            ctx.beginPath(); ctx.roundRect(54, 650, cardW, 140, 26); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+            // LinkedIn in Icon
+            ctx.fillStyle = '#84a98c';
+            ctx.font = 'bold 30px "Montserrat", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('in', 105, 734);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '700 26px "Montserrat", sans-serif';
+            ctx.fillText('LinkedIn', 156, 712);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '500 20px "Montserrat", sans-serif';
+            ctx.fillText('sai-pranathi-boyina', 156, 750);
+
+            ctx.fillStyle = '#475569';
+            ctx.beginPath(); ctx.arc(w - 90, 720, 4, 0, Math.PI * 2); ctx.fill();
+
+            // 3. Card: CV.pdf (Highlighted Pill in Theme Sage Green) (y: 820 to 960)
+            const cvGrad = ctx.createLinearGradient(54, 820, w - 54, 960);
+            cvGrad.addColorStop(0, '#84a98c');
+            cvGrad.addColorStop(1, '#689172');
+            ctx.fillStyle = cvGrad;
+            ctx.beginPath(); ctx.roundRect(54, 820, cardW, 140, 26); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+            // CV Icon
+            ctx.fillStyle = '#12241b';
+            ctx.font = '32px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('📄', 105, 904);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#12241b';
+            ctx.font = '800 26px "Montserrat", sans-serif';
+            ctx.fillText('CV.pdf', 156, 882);
+            ctx.fillStyle = '#213c2c';
+            ctx.font = '600 20px "Montserrat", sans-serif';
+            ctx.fillText('Download my resume', 156, 920);
+
+            // Download circular button
+            ctx.fillStyle = '#12241b';
+            ctx.beginPath(); ctx.arc(w - 105, 890, 28, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#84a98c';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('↓', w - 105, 898);
+
+            // Bottom 4 App Circular Icons (y: 1220 to 1310)
+            const dockIcons = [
+                { symbol: '📞', cx: 140 },
+                { symbol: '💬', cx: 286 },
+                { symbol: '🌐', cx: 434 },
+                { symbol: '📷', cx: 580 }
+            ];
+            dockIcons.forEach(app => {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.beginPath(); ctx.arc(app.cx, 1260, 40, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+                ctx.fillStyle = '#e2e8f0';
+                ctx.font = '28px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(app.symbol, app.cx, 1270);
+            });
+
+            // Home indicator bar at bottom
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.beginPath(); ctx.roundRect(w / 2 - 90, 1380, 180, 6, 3); ctx.fill();
+
+            if (phoneTexture) phoneTexture.needsUpdate = true;
         }
 
         // ---------------- LOAD GLTF OFFICE MODEL ----------------
@@ -2137,7 +1993,7 @@
                 // Initialize In-Model Canvas Textures
                 initLaptopCanvas();
                 initMonitorCanvas();
-                initPhoneClock();
+                initPhoneCanvas();
 
                 // Setup Skeletal & Character Animations (Blinking eyes, arms, idle movements)
                 // Filter out 'cupboard' so the doors do not open and close continuously!
@@ -2254,6 +2110,51 @@
                     monitorScreenMesh.rotation.y = Math.PI;
                     monitorAssembly.add(monitorScreenMesh);
                 }
+
+                // 3. Mount 3D Smartphone Screen Mesh on Desk (In-Scene Contact Hub)
+                const phoneGlass = findNode('phone black glass');
+                const phoneRim = findNode('phone metallic rim');
+                const phoneEarpiece = findNode('phone earpiece');
+
+                phoneAssembly = new THREE.Group();
+                phoneAssembly.name = 'phoneAssembly';
+                phoneAssembly.position.set(-2.120, 1.869, 0.630);
+                officeModel.add(phoneAssembly);
+
+                if (phoneGlass) {
+                    phoneGlass.position.set(0, 0, 0);
+                    phoneGlass.rotation.set(0, 0, 0);
+                    phoneAssembly.add(phoneGlass);
+                }
+                if (phoneRim) {
+                    phoneRim.position.set(0, -0.021, 0);
+                    phoneRim.rotation.set(0, 0, 0);
+                    phoneAssembly.add(phoneRim);
+                }
+                if (phoneEarpiece) {
+                    phoneEarpiece.position.set(-0.165, 0.007, -0.020);
+                    phoneAssembly.add(phoneEarpiece);
+                }
+
+                // Orient phone into portrait facing the user / desk front
+                phoneAssembly.rotation.y = Math.PI / 2;
+
+                const phoneMat = new THREE.MeshBasicMaterial({
+                    map: phoneTexture,
+                    side: THREE.DoubleSide
+                });
+                const phoneGeom = new THREE.PlaneGeometry(0.210, 0.420);
+                const uvs = phoneGeom.attributes.uv;
+                for (let i = 0; i < uvs.count; i++) {
+                    uvs.setX(i, 1.0 - uvs.getX(i));
+                }
+                uvs.needsUpdate = true;
+
+                phoneScreenMesh = new THREE.Mesh(phoneGeom, phoneMat);
+                phoneScreenMesh.name = 'InteractivePhoneScreen';
+                phoneScreenMesh.position.set(0, 0.0055, 0);
+                phoneScreenMesh.rotation.set(-Math.PI / 2, 0, Math.PI / 2);
+                phoneAssembly.add(phoneScreenMesh);
 
 
 
@@ -2403,12 +2304,12 @@
             },
             {
                 id: 5,
-                name: 'Contact',
-                cameraPos: [8.60, 2.35, -0.25],
-                cameraTarget: [0.76, 1.80, -1.50],
-                fov: 46.0,
+                name: 'Contact (Desk Phone)',
+                cameraPos: [2.12, 2.65, -0.02],
+                cameraTarget: [2.12, 1.87, 0.60],
+                fov: 30.0,
                 cupboardOpen: false,
-                hint: 'Contact · Tap cards on phone to Email, LinkedIn, or download CV.pdf'
+                hint: 'Desk Phone · Tap cards on screen to Email, LinkedIn, or download CV.pdf'
             }
         ];
 
@@ -2586,18 +2487,7 @@
                 }
             }
 
-            // Contact Phone Mockup Panel & Backdrop
-            const contactPanel = document.getElementById('contact-panel');
-            const contactBackdrop = document.getElementById('contact-backdrop');
-            if (contactPanel) {
-                if (index === 5) {
-                    contactPanel.classList.add('active');
-                    if (contactBackdrop) contactBackdrop.classList.add('active');
-                } else {
-                    contactPanel.classList.remove('active');
-                    if (contactBackdrop) contactBackdrop.classList.remove('active');
-                }
-            }
+            // Contact section is rendered entirely in 3D on the physical desk phone
 
             // Interactive Scene Hint
             const hintEl = document.getElementById('scene-interaction-hint');
@@ -2793,6 +2683,13 @@
                         return;
                     }
                 }
+                if (currentSection === 5 && phoneScreenMesh) {
+                    const hits = raycaster.intersectObject(phoneScreenMesh);
+                    if (hits.length > 0) {
+                        renderer.domElement.style.cursor = 'pointer';
+                        return;
+                    }
+                }
 
                 if (currentSection === 2 && badgeCard1) {
                     const badgeHits = raycaster.intersectObjects([badgeCard1, badgeFrontMesh, badgeBackMesh].filter(Boolean), true);
@@ -2872,6 +2769,48 @@
                     if (px >= 1270 && px <= 1530 && py >= 835 && py <= 925) {
                         nextProject();
                         return;
+                    }
+                }
+            }
+
+            // C. Click on 3D Phone Screen on Desk (Contact Actions)
+            if (currentSection === 5 && phoneScreenMesh) {
+                const hits = raycaster.intersectObject(phoneScreenMesh);
+                if (hits.length > 0) {
+                    const hit = hits[0];
+                    const px = hit.uv.x * 720;
+                    const py = (1.0 - hit.uv.y) * 1440;
+
+                    if (py >= 480 && py <= 620) {
+                        window.location.href = 'mailto:boyinasaipranathi@gmail.com';
+                        showToast('Opening Mail Client: boyinasaipranathi@gmail.com');
+                        return;
+                    } else if (py >= 650 && py <= 790) {
+                        window.open('https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/', '_blank');
+                        showToast('Opening LinkedIn Profile...');
+                        return;
+                    } else if (py >= 820 && py <= 960) {
+                        window.open('Boyina_Sai_Pranathi_CV.pdf', '_blank');
+                        showToast('Downloading Resume: Boyina_Sai_Pranathi_CV.pdf');
+                        return;
+                    } else if (py >= 1210 && py <= 1320) {
+                        if (px >= 90 && px <= 190) {
+                            window.location.href = 'mailto:boyinasaipranathi@gmail.com';
+                            showToast('Contact: boyinasaipranathi@gmail.com');
+                            return;
+                        } else if (px >= 236 && px <= 336) {
+                            window.location.href = 'mailto:boyinasaipranathi@gmail.com';
+                            showToast('Composing Direct Message...');
+                            return;
+                        } else if (px >= 384 && px <= 484) {
+                            window.open('https://www.twine.net/boyinasaipranathi679', '_blank');
+                            showToast('Opening Twine Portfolio...');
+                            return;
+                        } else if (px >= 530 && px <= 630) {
+                            goToSection(0);
+                            showToast('Room Overview Active');
+                            return;
+                        }
                     }
                 }
             }
