@@ -1279,63 +1279,58 @@
         // ---------------- 2. IN-MODEL 27" MONITOR CANVAS TEXTURE (PROJECTS CAROUSEL - LARGE & VISIBLE) ----------------
         const projectsData = [
             {
-                id: 'happenix',
-                badge: 'FEATURED CASE STUDY · MOBILE APP & DESIGN SYSTEM',
-                title: 'Happenix',
-                role: 'Lead Product Designer · iOS & Android App',
-                desc: 'End-to-end event discovery, social RSVP, and instant mobile ticketing platform built with human-centered UX and atomic Figma components.',
-                stats: [
-                    { num: '+42%', lbl: 'Ticket Checkout Conversion' },
-                    { num: '4.8★', lbl: 'App Store Rating (12k Reviews)' },
-                    { num: '50k+', lbl: 'Active Monthly Eventgoers' }
-                ],
-                deliverables: 'User Flow · Wireframes · Design System · High-Fidelity Prototype · Mobile UI Design',
+                id: 'mental-health',
+                badge: 'SELECTED PROJECT · 01 OF 05',
+                title: 'Mental Health Application',
+                subtitle: 'Mobile Application · UI Design & Prototyping',
+                desc: 'Mental wellness tracking app focused on clear presentation of user insights, UI design, and prototyping.',
+                tools: ['Figma'],
+                highlights: ['User Insights', 'UI Design', 'Prototyping'],
                 link: 'https://www.twine.net/boyinasaipranathi679',
                 color: '#244735'
             },
             {
-                id: 'ultramind',
-                badge: 'ENTERPRISE AI PLATFORM · CROSS-PLATFORM SYSTEM',
-                title: 'UltraMind',
-                role: 'Senior UI/UX Designer & Systems Architect',
-                desc: 'Next-generation enterprise AI workspace synthesizing multi-modal reasoning, canvas orchestration, and design system governance.',
-                stats: [
-                    { num: '3.5×', lbl: 'Faster Workflow Completion' },
-                    { num: '12+', lbl: 'Enterprise Deployments' },
-                    { num: '1,200+', lbl: 'Component Variants in System' }
-                ],
-                deliverables: 'Information Architecture · Design Tokens · Dark Theme System · Usability Testing',
-                link: 'https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/',
-                color: '#244735'
-            },
-            {
-                id: 'finflow',
-                badge: 'FINTECH WEB OS · DASHBOARD ARCHITECTURE',
-                title: 'FinFlow OS',
-                role: 'Product Designer · Web Dashboard & Mobile Responsive',
-                desc: 'Comprehensive financial dashboard aggregating multi-asset wealth portfolios, automated rebalancing, and conversational analytics.',
-                stats: [
-                    { num: '$120M+', lbl: 'Tracked Assets on Platform' },
-                    { num: '99.4%', lbl: 'Design System Adoption' },
-                    { num: '2.1s', lbl: 'Avg Interaction Speed' }
-                ],
-                deliverables: 'Interactive Charts UX · Data Tables · High-Contrast Accessibility · WCAG AA Audit',
+                id: 'campus-connect',
+                badge: 'SELECTED PROJECT · 02 OF 05',
+                title: 'Campus Connect Mobile Application',
+                subtitle: 'Education Management Mobile App',
+                desc: 'Education management app focused on information structure, user flows, and interface design.',
+                tools: ['Figma'],
+                highlights: ['Information Structure', 'User Flows', 'Interface Design'],
                 link: 'https://www.twine.net/boyinasaipranathi679',
                 color: '#244735'
             },
             {
-                id: 'spatial',
-                badge: '3D SPATIAL DESIGN · INTERACTIVE WEBGL EXPERIENCE',
-                title: 'Spatial 3D Studio',
-                role: '3D Spatial Designer & Creative Technologist',
-                desc: 'Interactive 3D low-poly product showroom combining Blender 3D models, custom Three.js WebGL shaders, and tactile UI elements.',
-                stats: [
-                    { num: '60 FPS', lbl: 'Consistent WebGL Render' },
-                    { num: 'Featured', lbl: '3D Design Portfolio Showcase' },
-                    { num: '< 2.5MB', lbl: 'Optimized GLTF Geometry' }
-                ],
-                deliverables: 'Blender 3D Modeling · Texture Baking · Three.js Raycasting · Responsive 3D Canvas',
-                link: 'https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/',
+                id: 'cms-websites',
+                badge: 'SELECTED PROJECT · 03 OF 05',
+                title: 'CMS Websites',
+                subtitle: 'VibrantVista (Event) · Ditya Jewellery',
+                desc: 'Designed and developed CMS websites for different use cases, including a college cultural fest website and a jewellery website, focusing on clear content presentation, visual design, and easy content management.',
+                tools: ['WordPress', 'Figma'],
+                highlights: ['Content Presentation', 'Visual Design', 'Content Management'],
+                link: 'https://www.twine.net/boyinasaipranathi679',
+                color: '#244735'
+            },
+            {
+                id: 'svelty-website',
+                badge: 'SELECTED PROJECT · 04 OF 05',
+                title: 'Svelty Website',
+                subtitle: 'Agency Website · Marketing & Conversions',
+                desc: 'Designed and developed the Svelty Marketing Agency website to capture users\' attention and encourage more conversions.',
+                tools: ['Figma', 'Claude Design'],
+                highlights: ['Attention Capture', 'Conversion Focus', 'Website Design'],
+                link: 'https://www.twine.net/boyinasaipranathi679',
+                color: '#244735'
+            },
+            {
+                id: 'svelty-crm',
+                badge: 'SELECTED PROJECT · 05 OF 05',
+                title: 'Svelty CRM',
+                subtitle: 'CRM Platform · Workflow Management',
+                desc: 'Designed and developed Svelty\'s CRM platform to manage roles, responsibilities, tasks, and workflows.',
+                tools: ['Figma', 'Claude Design'],
+                highlights: ['Role Management', 'Task Tracking', 'Workflows'],
+                link: 'https://www.twine.net/boyinasaipranathi679',
                 color: '#244735'
             }
         ];
@@ -1377,28 +1372,28 @@
             ctx.fillRect(0, 0, w, h);
 
             // Subtle Ambient Radial Glow
-            const rad = ctx.createRadialGradient(w / 2, h / 2, 100, w / 2, h / 2, 800);
-            rad.addColorStop(0, 'rgba(36, 71, 53, 0.28)');
-            rad.addColorStop(1, 'transparent');
-            ctx.fillStyle = rad;
+            const radGlow = ctx.createRadialGradient(w / 2, h / 2, 80, w / 2, h / 2, 900);
+            radGlow.addColorStop(0, 'rgba(36, 71, 53, 0.22)');
+            radGlow.addColorStop(0.7, 'rgba(15, 23, 19, 0.05)');
+            radGlow.addColorStop(1, 'transparent');
+            ctx.fillStyle = radGlow;
             ctx.fillRect(0, 0, w, h);
 
-            // ---------------- 1. TOP CAROUSEL HEADER ----------------
-            ctx.fillStyle = '#1b1f2a';
-            ctx.fillRect(0, 0, w, 72);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.moveTo(0, 72); ctx.lineTo(w, 72); ctx.stroke();
+            // Top Header Bar
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+            ctx.fillRect(0, 0, w, 70);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.fillRect(0, 69, w, 1);
 
-            // Brand Title
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 24px "Montserrat", sans-serif';
+            ctx.fillStyle = '#84a98c';
+            ctx.font = 'bold 20px "Montserrat", sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText('❖ SAI PRANATHI BOYINA · SELECTED CASE STUDIES', 48, 46);
+            ctx.fillText('❖ SAI PRANATHI BOYINA · SELECTED PROJECTS FROM RESUME', 48, 44);
 
             // Center Counter Badge
             ctx.fillStyle = 'rgba(36, 71, 53, 0.45)';
             ctx.beginPath(); ctx.roundRect(w / 2 - 130, 14, 260, 44, 22); ctx.fill();
-            ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+            ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
             ctx.fillStyle = '#F4EFE7';
             ctx.font = 'bold 18px "Montserrat", sans-serif';
             ctx.textAlign = 'center';
@@ -1417,11 +1412,11 @@
             ctx.fillStyle = '#fff'; ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
             ctx.fillText('NEXT ›', 1797, 42);
 
-            // ---------------- 2. PEEKING PREVIOUS CARD (LEFT) ----------------
-            const prevCardX = -460;
+            // Peeking Left Card
+            const peekW = 240;
+            const peekH = 835;
+            const prevCardX = 40;
             const prevCardY = 120;
-            const peekW = 740;
-            const peekH = 820;
 
             ctx.save();
             ctx.globalAlpha = 0.35;
@@ -1430,16 +1425,16 @@
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
 
             ctx.fillStyle = '#fff';
-            ctx.font = 'bold 36px "Montserrat", sans-serif';
+            ctx.font = 'bold 30px "Montserrat", sans-serif';
             ctx.textAlign = 'right';
-            ctx.fillText('‹ ' + projectsData[prevIdx].title, prevCardX + peekW - 44, prevCardY + 120);
+            ctx.fillText('‹ ' + projectsData[prevIdx].title, prevCardX + peekW - 30, prevCardY + 120, peekW - 50);
 
-            ctx.fillStyle = '#A8B49A';
-            ctx.font = 'bold 22px "Montserrat", sans-serif';
-            ctx.fillText(projectsData[prevIdx].role, prevCardX + peekW - 44, prevCardY + 170);
+            ctx.fillStyle = '#84a98c';
+            ctx.font = 'bold 18px "Montserrat", sans-serif';
+            ctx.fillText(projectsData[prevIdx].subtitle, prevCardX + peekW - 30, prevCardY + 165, peekW - 50);
             ctx.restore();
 
-            // ---------------- 3. PEEKING NEXT CARD (RIGHT) ----------------
+            // Peeking Right Card
             const nextCardX = 1640;
             const nextCardY = 120;
 
@@ -1450,16 +1445,16 @@
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
 
             ctx.fillStyle = '#fff';
-            ctx.font = 'bold 36px "Montserrat", sans-serif';
+            ctx.font = 'bold 30px "Montserrat", sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText(projectsData[nextIdx].title + ' ›', nextCardX + 44, nextCardY + 120);
+            ctx.fillText(projectsData[nextIdx].title + ' ›', nextCardX + 30, nextCardY + 120, peekW - 50);
 
-            ctx.fillStyle = '#A8B49A';
-            ctx.font = 'bold 22px "Montserrat", sans-serif';
-            ctx.fillText(projectsData[nextIdx].role, nextCardX + 44, nextCardY + 170);
+            ctx.fillStyle = '#84a98c';
+            ctx.font = 'bold 18px "Montserrat", sans-serif';
+            ctx.fillText(projectsData[nextIdx].subtitle, nextCardX + 30, nextCardY + 165, peekW - 50);
             ctx.restore();
 
-            // ---------------- 4. MAIN FEATURED CAROUSEL CARD (CENTER) ----------------
+            // Main Featured Card (Center)
             const cardX = 330;
             const cardY = 100;
             const cardW = 1260;
@@ -1476,7 +1471,7 @@
             ctx.fillStyle = '#244735';
             ctx.beginPath(); ctx.roundRect(cardX + 2, cardY + 2, cardW - 4, 8, [24, 24, 0, 0]); ctx.fill();
 
-            // LEFT HALF: Rich Interactive UI Showcase Mockup
+            // LEFT HALF: Interactive UI Showcase Mockup
             const mockX = cardX + 38;
             const mockY = cardY + 40;
             const mockW = 530;
@@ -1488,263 +1483,459 @@
 
             // Render project-specific visual preview
             if (curProjectIdx === 0) {
-                // HAPPENIX - Mobile App UI Mockup
+                // 1. MENTAL HEALTH APPLICATION - Wellness Tracking Mobile App
                 const phoneW = 390, phoneH = 675;
                 const px = mockX + (mockW - phoneW) / 2, py = mockY + 40;
 
-                ctx.fillStyle = '#1c2130';
+                ctx.fillStyle = '#1a221f';
                 ctx.beginPath(); ctx.roundRect(px, py, phoneW, phoneH, 28); ctx.fill();
-                ctx.strokeStyle = 'rgba(36, 71, 53, 0.8)'; ctx.lineWidth = 2.5; ctx.stroke();
+                ctx.strokeStyle = 'rgba(132, 169, 140, 0.8)'; ctx.lineWidth = 2.5; ctx.stroke();
 
-                // Dynamic Island
+                // Punch hole camera
                 ctx.fillStyle = '#000';
-                ctx.beginPath(); ctx.roundRect(px + phoneW / 2 - 65, py + 16, 130, 26, 13); ctx.fill();
+                ctx.beginPath(); ctx.arc(px + phoneW / 2, py + 26, 10, 0, Math.PI * 2); ctx.fill();
 
-                // Search Bar
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.roundRect(px + 22, py + 58, phoneW - 44, 46, 14); ctx.fill();
-                ctx.fillStyle = '#A8B49A'; ctx.font = '15px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('🔍 Search concerts, nightlife, fests...', px + 40, py + 86);
+                // Status Bar
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '600 13px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('09:41', px + 24, py + 30);
+                ctx.textAlign = 'right';
+                ctx.fillText('100%', px + phoneW - 24, py + 30);
 
-                // Featured Event Card
-                ctx.fillStyle = '#244735';
-                ctx.beginPath(); ctx.roundRect(px + 22, py + 120, phoneW - 44, 255, 20); ctx.fill();
-                ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+                // Greeting & Check-in Header
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#84a98c'; ctx.font = 'bold 13px "Montserrat", sans-serif';
+                ctx.fillText('DAILY REFLECTION', px + 24, py + 72);
+                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
+                ctx.fillText('How are you feeling?', px + 24, py + 104);
 
-                ctx.fillStyle = '#A8B49A';
-                ctx.beginPath(); ctx.roundRect(px + 40, py + 138, 140, 28, 8); ctx.fill();
-                ctx.fillStyle = '#244735'; ctx.font = 'bold 12px "Montserrat", sans-serif';
-                ctx.fillText('TRENDING NOW', px + 50, py + 157);
-
-                ctx.fillStyle = '#fff';
-                ctx.font = 'bold 26px "Montserrat", sans-serif';
-                ctx.fillText('Neon Pulse Festival', px + 40, py + 205);
-                ctx.fillStyle = '#F4EFE7'; ctx.font = '15px "Montserrat", sans-serif';
-                ctx.fillText('San Francisco Arena · Oct 30, 8:00 PM', px + 40, py + 236);
-
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 24px "JetBrains Mono", monospace';
-                ctx.fillText('$45.00', px + 40, py + 310);
-                ctx.fillStyle = '#A8B49A';
-                ctx.beginPath(); ctx.roundRect(px + 225, py + 280, 120, 42, 21); ctx.fill();
-                ctx.fillStyle = '#242522'; ctx.font = 'bold 15px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                ctx.fillText('Get Pass →', px + 285, py + 307);
-
-                // Scannable Ticket Pass Preview
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-                ctx.beginPath(); ctx.roundRect(px + 22, py + 395, phoneW - 44, 185, 18); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
-
-                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 14px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('DIGITAL TICKET PASS · VIP ADMISSION', px + 40, py + 428);
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 20px "Montserrat", sans-serif';
-                ctx.fillText('Sai Pranathi · Tier A Access', px + 40, py + 462);
-
-                for (let b = 0; b < 24; b++) {
-                    ctx.fillStyle = b % 2 === 0 ? '#A8B49A' : '#fff';
-                    ctx.fillRect(px + 40 + b * 13, py + 490, (b % 3 === 0 ? 5 : 2), 52);
-                }
-            } else if (curProjectIdx === 1) {
-                // ULTRAMIND - AI Cognitive Workspace Mockup
-                ctx.fillStyle = '#181d28';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 16); ctx.fill();
-                ctx.strokeStyle = '#244735'; ctx.lineWidth = 2; ctx.stroke();
-
-                // Top Bar
-                ctx.fillStyle = '#244735';
-                ctx.fillRect(mockX + 24, mockY + 36, mockW - 48, 50);
-                ctx.fillStyle = '#F4EFE7'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('⚡ ULTRAMIND COGNITIVE AI CANVAS', mockX + 46, mockY + 68);
-
-                // Prompt Box
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.roundRect(mockX + 46, mockY + 114, mockW - 92, 115, 14); ctx.fill();
-                ctx.fillStyle = '#ffffff'; ctx.font = '15px "JetBrains Mono", monospace';
-                ctx.fillText('> Synthesize design tokens for multi-brand architecture...', mockX + 64, mockY + 152);
-
-                ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 64, mockY + 192, 5, 0, Math.PI * 2); ctx.fill();
-                ctx.fillStyle = '#A8B49A'; ctx.font = '600 14px "Montserrat", sans-serif';
-                ctx.fillText('Tokens Generated: 1,200 variants · 12 Enterprise themes active', mockX + 80, mockY + 197);
-
-                const nodes = [
-                    { x: mockX + 115, y: mockY + 325, label: 'Color Tokens' },
-                    { x: mockX + 375, y: mockY + 295, label: 'Typography Scale' },
-                    { x: mockX + 245, y: mockY + 455, label: 'Component Variants' },
-                    { x: mockX + 395, y: mockY + 555, label: 'Export Engine' }
+                // Mood selector chips
+                const moods = [
+                    { label: '🌿 Calm', active: true },
+                    { label: '✨ Energized', active: false },
+                    { label: '💭 Reflective', active: false }
                 ];
-                ctx.strokeStyle = '#244735'; ctx.lineWidth = 2.5;
-                ctx.beginPath();
-                ctx.moveTo(nodes[0].x, nodes[0].y); ctx.lineTo(nodes[2].x, nodes[2].y);
-                ctx.moveTo(nodes[1].x, nodes[1].y); ctx.lineTo(nodes[2].x, nodes[2].y);
-                ctx.moveTo(nodes[2].x, nodes[2].y); ctx.lineTo(nodes[3].x, nodes[3].y);
-                ctx.stroke();
-
-                nodes.forEach(n => {
-                    ctx.fillStyle = '#222838';
-                    ctx.beginPath(); ctx.roundRect(n.x - 75, n.y - 26, 150, 52, 12); ctx.fill();
-                    ctx.strokeStyle = '#A8B49A'; ctx.stroke();
-                    ctx.fillStyle = '#fff'; ctx.font = 'bold 14px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                    ctx.fillText(n.label, n.x, n.y + 6);
+                let mx = px + 24;
+                moods.forEach(m => {
+                    ctx.fillStyle = m.active ? '#244735' : 'rgba(255, 255, 255, 0.06)';
+                    ctx.beginPath(); ctx.roundRect(mx, py + 124, 104, 38, 12); ctx.fill();
+                    if (m.active) {
+                        ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
+                    }
+                    ctx.fillStyle = m.active ? '#ffffff' : '#94a3b8';
+                    ctx.font = '600 13px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText(m.label, mx + 52, py + 148);
+                    mx += 114;
                 });
-            } else if (curProjectIdx === 2) {
-                // FINFLOW OS - Modern Financial Intelligence
-                ctx.fillStyle = '#161b24';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 16); ctx.fill();
-                ctx.strokeStyle = '#244735'; ctx.lineWidth = 2; ctx.stroke();
 
-                ctx.fillStyle = 'rgba(36, 71, 53, 0.25)';
-                ctx.beginPath(); ctx.roundRect(mockX + 46, mockY + 60, mockW - 92, 145, 16); ctx.fill();
-                ctx.strokeStyle = '#A8B49A'; ctx.stroke();
+                // User Insights & Trends Card
+                ctx.fillStyle = 'rgba(36, 71, 53, 0.35)';
+                ctx.beginPath(); ctx.roundRect(px + 24, py + 180, phoneW - 48, 230, 20); ctx.fill();
+                ctx.strokeStyle = 'rgba(132, 169, 140, 0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
 
-                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 14px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('TOTAL TRACKED ASSET VALUE', mockX + 66, mockY + 95);
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 44px "JetBrains Mono", monospace';
-                ctx.fillText('$124,580.00', mockX + 66, mockY + 148);
-                ctx.fillStyle = '#10b981'; ctx.font = 'bold 16px "Montserrat", sans-serif';
-                ctx.fillText('+14.2% Past 30 Days (+$15,420)', mockX + 66, mockY + 184);
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#84a98c'; ctx.font = 'bold 13px "Montserrat", sans-serif';
+                ctx.fillText('WEEKLY WELLNESS INSIGHTS', px + 44, py + 214);
+                ctx.fillStyle = '#ffffff'; ctx.font = '800 20px "Montserrat", sans-serif';
+                ctx.fillText('Consistent Calm Trends', px + 44, py + 244);
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
+                ctx.fillText('Clear presentation of user insights & tracking', px + 44, py + 272);
 
-                // Trend chart line
-                ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 3.5;
+                // Wave trend line
+                ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 3;
                 ctx.beginPath();
-                const chartPts = [320, 290, 310, 260, 280, 230, 240, 190, 210, 160];
-                const segW = (mockW - 130) / (chartPts.length - 1);
-                chartPts.forEach((ptY, idx) => {
-                    const cx = mockX + 65 + idx * segW;
-                    const cy = mockY + ptY + 50;
-                    if (idx === 0) ctx.moveTo(cx, cy);
+                const trendY = [350, 335, 345, 320, 330, 310, 315];
+                const tw = (phoneW - 96) / 6;
+                trendY.forEach((ty, i) => {
+                    const cx = px + 48 + i * tw;
+                    const cy = py + ty;
+                    if (i === 0) ctx.moveTo(cx, cy);
                     else ctx.lineTo(cx, cy);
                 });
                 ctx.stroke();
 
-                // Allocations
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                ctx.beginPath(); ctx.roundRect(mockX + 46, mockY + 450, mockW - 92, 185, 14); ctx.fill();
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 15px "Montserrat", sans-serif';
-                ctx.fillText('AUTOMATED DCA ALLOCATION', mockX + 66, mockY + 486);
+                // Days labels
+                const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+                days.forEach((d, i) => {
+                    const cx = px + 48 + i * tw;
+                    ctx.fillStyle = '#94a3b8'; ctx.font = '600 12px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText(d, cx, py + 380);
+                });
 
-                const assets = [
-                    { name: 'Ethereum Staking', alloc: '45%', val: '$56,061.00' },
-                    { name: 'US Index Funds', alloc: '35%', val: '$43,603.00' },
-                    { name: 'Treasury Yield', alloc: '20%', val: '$24,916.00' }
+                // Guided Session / Prototype Card
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                ctx.beginPath(); ctx.roundRect(px + 24, py + 430, phoneW - 48, 110, 18); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+
+                ctx.fillStyle = '#84a98c'; ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'center';
+                ctx.fillText('🧘', px + 58, py + 494);
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#ffffff'; ctx.font = '700 17px "Montserrat", sans-serif';
+                ctx.fillText('Guided Breathing Session', px + 92, py + 476);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 13px "Montserrat", sans-serif';
+                ctx.fillText('Interactive Figma Prototyping Flow', px + 92, py + 504);
+
+                // Bottom Tab Bar
+                ctx.fillStyle = 'rgba(15, 20, 18, 0.9)';
+                ctx.beginPath(); ctx.roundRect(px + 24, py + 560, phoneW - 48, 60, 30); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.stroke();
+                const tabs = ['Home', 'Insights', 'Sessions', 'Profile'];
+                tabs.forEach((tb, i) => {
+                    ctx.fillStyle = i === 1 ? '#84a98c' : '#64748b';
+                    ctx.font = 'bold 12px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText(tb, px + 68 + i * 80, py + 596);
+                });
+            } else if (curProjectIdx === 1) {
+                // 2. CAMPUS CONNECT MOBILE APPLICATION - Education Management
+                const phoneW = 390, phoneH = 675;
+                const px = mockX + (mockW - phoneW) / 2, py = mockY + 40;
+
+                ctx.fillStyle = '#161d24';
+                ctx.beginPath(); ctx.roundRect(px, py, phoneW, phoneH, 28); ctx.fill();
+                ctx.strokeStyle = 'rgba(56, 189, 248, 0.7)'; ctx.lineWidth = 2.5; ctx.stroke();
+
+                // Punch hole
+                ctx.fillStyle = '#000';
+                ctx.beginPath(); ctx.arc(px + phoneW / 2, py + 26, 10, 0, Math.PI * 2); ctx.fill();
+
+                // Header
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 13px "Montserrat", sans-serif';
+                ctx.fillText('CAMPUS CONNECT', px + 24, py + 72);
+                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
+                ctx.fillText('Education Management', px + 24, py + 104);
+
+                // Student Identity Card
+                ctx.fillStyle = 'rgba(56, 189, 248, 0.12)';
+                ctx.beginPath(); ctx.roundRect(px + 24, py + 125, phoneW - 48, 90, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(56, 189, 248, 0.3)'; ctx.stroke();
+
+                ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Montserrat", sans-serif';
+                ctx.fillText('Student Portal · Semester VI', px + 44, py + 160);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 13px "Montserrat", sans-serif';
+                ctx.fillText('Information Structure & User Flows', px + 44, py + 188);
+
+                // Class Schedule Cards
+                const classes = [
+                    { title: 'Human Computer Interaction', time: '10:00 AM - 11:30 AM', room: 'Hall 302', code: 'CS-402' },
+                    { title: 'Information Architecture', time: '01:00 PM - 02:30 PM', room: 'Lab B', code: 'UX-310' },
+                    { title: 'Interface Design Studio', time: '03:00 PM - 04:30 PM', room: 'Studio 1', code: 'UI-204' }
                 ];
-                assets.forEach((ast, aIdx) => {
-                    const ay = mockY + 526 + aIdx * 36;
-                    ctx.fillStyle = '#cbd5e1'; ctx.font = '14px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                    ctx.fillText(ast.name, mockX + 66, ay);
-                    ctx.fillStyle = '#A8B49A'; ctx.textAlign = 'center';
-                    ctx.fillText(ast.alloc, mockX + 280, ay);
-                    ctx.fillStyle = '#fff'; ctx.textAlign = 'right';
-                    ctx.fillText(ast.val, mockX + mockW - 66, ay);
+
+                classes.forEach((cl, i) => {
+                    const cy = py + 235 + i * 115;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                    ctx.beginPath(); ctx.roundRect(px + 24, cy, phoneW - 48, 100, 16); ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+
+                    ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 12px "JetBrains Mono", monospace';
+                    ctx.fillText(cl.code + ' · ' + cl.room, px + 44, cy + 30);
+                    ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Montserrat", sans-serif';
+                    ctx.fillText(cl.title, px + 44, cy + 58);
+                    ctx.fillStyle = '#94a3b8'; ctx.font = '500 13px "Montserrat", sans-serif';
+                    ctx.fillText(cl.time, px + 44, cy + 82);
+                });
+
+                // Bottom Tab Bar
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+                ctx.beginPath(); ctx.roundRect(px + 24, py + 590, phoneW - 48, 55, 28); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.stroke();
+                ['Courses', 'Schedule', 'Notices', 'Profile'].forEach((tb, i) => {
+                    ctx.fillStyle = i === 1 ? '#38bdf8' : '#64748b';
+                    ctx.font = 'bold 12px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText(tb, px + 68 + i * 80, py + 624);
+                });
+            } else if (curProjectIdx === 2) {
+                // 3. CMS WEBSITES - VibrantVista & Ditya Jewellery
+                ctx.fillStyle = '#171a22';
+                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 18); ctx.fill();
+                ctx.strokeStyle = 'rgba(217, 119, 6, 0.6)'; ctx.lineWidth = 2; ctx.stroke();
+
+                // Top Browser Bar
+                ctx.fillStyle = '#222734';
+                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, 44, [18, 18, 0, 0]); ctx.fill();
+                // 3 dots
+                ['#ef4444', '#f59e0b', '#10b981'].forEach((col, i) => {
+                    ctx.fillStyle = col;
+                    ctx.beginPath(); ctx.arc(mockX + 48 + i * 16, mockY + 58, 5, 0, Math.PI * 2); ctx.fill();
+                });
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
+                ctx.fillText('vibrantvista.edu / dityajewellery.com · WordPress CMS', mockX + 110, mockY + 62);
+
+                // Section 1: VibrantVista Cultural Fest Website
+                ctx.fillStyle = 'rgba(36, 71, 53, 0.4)';
+                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 100, mockW - 88, 260, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(132, 169, 140, 0.4)'; ctx.stroke();
+
+                ctx.fillStyle = '#84a98c'; ctx.font = 'bold 13px "Montserrat", sans-serif';
+                ctx.fillText('COLLEGE CULTURAL FEST WEBSITE · CMS', mockX + 66, mockY + 132);
+                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
+                ctx.fillText('VibrantVista Cultural Fest', mockX + 66, mockY + 168);
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
+                ctx.fillText('Easy content management, event registration & visual schedule', mockX + 66, mockY + 198);
+
+                ctx.fillStyle = '#244735';
+                ctx.beginPath(); ctx.roundRect(mockX + 66, mockY + 224, 160, 42, 21); ctx.fill();
+                ctx.strokeStyle = '#84a98c'; ctx.stroke();
+                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 13px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                ctx.fillText('View Fest Schedule →', mockX + 146, mockY + 250);
+
+                // Section 2: Ditya Jewellery Website
+                ctx.textAlign = 'left';
+                ctx.fillStyle = 'rgba(217, 119, 6, 0.15)';
+                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 390, mockW - 88, 280, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)'; ctx.stroke();
+
+                ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 13px "Montserrat", sans-serif';
+                ctx.fillText('E-COMMERCE & SHOWCASE CMS WEBSITE', mockX + 66, mockY + 422);
+                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
+                ctx.fillText('Ditya Jewellery Collection', mockX + 66, mockY + 458);
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
+                ctx.fillText('Clear content presentation, catalog visual design & WordPress CMS', mockX + 66, mockY + 488);
+
+                // Product items grid
+                const prods = ['Royal Diamond Pendant', 'Heritage Gold Choker', 'Emerald Solitaire'];
+                prods.forEach((pr, i) => {
+                    const px = mockX + 66 + i * 135;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+                    ctx.beginPath(); ctx.roundRect(px, mockY + 514, 120, 120, 12); ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+                    ctx.fillStyle = '#f59e0b'; ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
+                    ctx.fillText('💍', px + 60, mockY + 565);
+                    ctx.fillStyle = '#ffffff'; ctx.font = '600 11px "Montserrat", sans-serif';
+                    ctx.fillText(pr, px + 60, mockY + 605, 110);
+                });
+            } else if (curProjectIdx === 3) {
+                // 4. SVELTY WEBSITE - Marketing Agency Website
+                ctx.fillStyle = '#171c24';
+                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 18); ctx.fill();
+                ctx.strokeStyle = 'rgba(168, 85, 247, 0.6)'; ctx.lineWidth = 2; ctx.stroke();
+
+                // Top Browser Bar
+                ctx.fillStyle = '#222936';
+                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, 44, [18, 18, 0, 0]); ctx.fill();
+                ['#ef4444', '#f59e0b', '#10b981'].forEach((col, i) => {
+                    ctx.fillStyle = col;
+                    ctx.beginPath(); ctx.arc(mockX + 48 + i * 16, mockY + 58, 5, 0, Math.PI * 2); ctx.fill();
+                });
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
+                ctx.fillText('sveltymarketing.agency · Agency Website', mockX + 110, mockY + 62);
+
+                // Agency Hero Section
+                ctx.fillStyle = 'rgba(168, 85, 247, 0.15)';
+                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 105, mockW - 88, 320, 18); ctx.fill();
+                ctx.strokeStyle = 'rgba(168, 85, 247, 0.35)'; ctx.stroke();
+
+                ctx.fillStyle = '#c084fc'; ctx.font = 'bold 13px "Montserrat", sans-serif';
+                ctx.fillText('MARKETING AGENCY WEBSITE', mockX + 66, mockY + 140);
+                ctx.fillStyle = '#ffffff'; ctx.font = '800 28px "Montserrat", sans-serif';
+                ctx.fillText('Capture Users\' Attention', mockX + 66, mockY + 182);
+                ctx.fillText('& Drive More Conversions', mockX + 66, mockY + 220);
+
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
+                ctx.fillText('Designed and developed using Figma and Claude Design.', mockX + 66, mockY + 260);
+
+                ctx.fillStyle = '#7c3aed';
+                ctx.beginPath(); ctx.roundRect(mockX + 66, mockY + 295, 180, 46, 23); ctx.fill();
+                ctx.strokeStyle = '#c084fc'; ctx.stroke();
+                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 14px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                ctx.fillText('Start Project →', mockX + 156, mockY + 324);
+
+                // Feature Pillars
+                ctx.textAlign = 'left';
+                const pillars = [
+                    { title: 'Brand Storytelling', sub: 'Attention-capturing visual aesthetics' },
+                    { title: 'Conversion Funnels', sub: 'Optimized user journeys & high ROI' }
+                ];
+                pillars.forEach((pil, i) => {
+                    const cy = mockY + 450 + i * 105;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                    ctx.beginPath(); ctx.roundRect(mockX + 44, cy, mockW - 88, 90, 14); ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+
+                    ctx.fillStyle = '#c084fc'; ctx.font = 'bold 16px "Montserrat", sans-serif';
+                    ctx.fillText(pil.title, mockX + 66, cy + 36);
+                    ctx.fillStyle = '#94a3b8'; ctx.font = '500 13px "Montserrat", sans-serif';
+                    ctx.fillText(pil.sub, mockX + 66, cy + 64);
                 });
             } else {
-                // SPATIAL 3D - Interactive WebGL Viewport
-                ctx.fillStyle = '#141822';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 16); ctx.fill();
-                ctx.strokeStyle = '#244735'; ctx.lineWidth = 2; ctx.stroke();
+                // 5. SVELTY CRM - CRM Platform & Workflows
+                ctx.fillStyle = '#171c26';
+                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 18); ctx.fill();
+                ctx.strokeStyle = 'rgba(16, 185, 129, 0.6)'; ctx.lineWidth = 2; ctx.stroke();
 
-                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 15px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('🥽 THREE.JS WEBGL SPATIAL VIEWPORT', mockX + 46, mockY + 72);
+                // Top Browser Bar
+                ctx.fillStyle = '#202836';
+                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, 44, [18, 18, 0, 0]); ctx.fill();
+                ['#ef4444', '#f59e0b', '#10b981'].forEach((col, i) => {
+                    ctx.fillStyle = col;
+                    ctx.beginPath(); ctx.arc(mockX + 48 + i * 16, mockY + 58, 5, 0, Math.PI * 2); ctx.fill();
+                });
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
+                ctx.fillText('app.svelty.crm · Platform Dashboard', mockX + 110, mockY + 62);
 
-                const cx = mockX + mockW / 2;
-                const cy = mockY + 280;
-                ctx.strokeStyle = '#10b981'; ctx.lineWidth = 2;
-                for (let r = 30; r <= 150; r += 30) {
-                    ctx.beginPath();
-                    ctx.ellipse(cx, cy, r, r * 0.45, 0, 0, Math.PI * 2);
-                    ctx.stroke();
-                }
-                for (let a = 0; a < Math.PI; a += Math.PI / 4) {
-                    ctx.beginPath();
-                    ctx.moveTo(cx - 150 * Math.cos(a), cy - 65 * Math.sin(a));
-                    ctx.lineTo(cx + 150 * Math.cos(a), cy + 65 * Math.sin(a));
-                    ctx.stroke();
-                }
+                // CRM Dashboard Header
+                ctx.fillStyle = 'rgba(16, 185, 129, 0.15)';
+                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 105, mockW - 88, 140, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)'; ctx.stroke();
 
-                ctx.fillStyle = 'rgba(36, 71, 53, 0.35)';
-                ctx.beginPath(); ctx.roundRect(mockX + 46, mockY + 480, mockW - 92, 140, 14); ctx.fill();
-                ctx.fillStyle = '#fff'; ctx.font = 'bold 26px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('60.0 FPS · WebGL 2.0', mockX + 66, mockY + 526);
-                ctx.fillStyle = '#F4EFE7'; ctx.font = '15px "Montserrat", sans-serif';
-                ctx.fillText('Optimized PBR Shaders · Draco Compressed Meshes · Real-Time Post Processing', mockX + 66, mockY + 565, mockW - 132);
+                ctx.fillStyle = '#34d399'; ctx.font = 'bold 13px "Montserrat", sans-serif';
+                ctx.fillText('SVELTY CRM PLATFORM', mockX + 66, mockY + 138);
+                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
+                ctx.fillText('Roles, Tasks & Workflows', mockX + 66, mockY + 174);
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 13px "Montserrat", sans-serif';
+                ctx.fillText('Manage team responsibilities, project pipelines and automated actions', mockX + 66, mockY + 204);
+
+                // Workflow Kanban Columns Preview
+                const cols = [
+                    { title: 'Roles & Access', count: '12 Active' },
+                    { title: 'Task Pipelines', count: '38 Tasks' },
+                    { title: 'Live Workflows', count: '9 Running' }
+                ];
+
+                cols.forEach((cl, i) => {
+                    const cx = mockX + 44 + i * 148;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                    ctx.beginPath(); ctx.roundRect(cx, mockY + 270, 140, 200, 14); ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+
+                    ctx.fillStyle = '#34d399'; ctx.font = 'bold 13px "Montserrat", sans-serif';
+                    ctx.fillText(cl.title, cx + 16, mockY + 302, 110);
+                    ctx.fillStyle = '#94a3b8'; ctx.font = '600 12px "Montserrat", sans-serif';
+                    ctx.fillText(cl.count, cx + 16, mockY + 328);
+
+                    // Mock Task Cards inside column
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+                    ctx.beginPath(); ctx.roundRect(cx + 12, mockY + 346, 116, 44, 8); ctx.fill();
+                    ctx.fillStyle = '#ffffff'; ctx.font = '500 11px "Montserrat", sans-serif';
+                    ctx.fillText('Workflow Step ' + (i + 1), cx + 20, mockY + 372);
+
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+                    ctx.beginPath(); ctx.roundRect(cx + 12, mockY + 400, 116, 44, 8); ctx.fill();
+                    ctx.fillStyle = '#94a3b8'; ctx.font = '500 11px "Montserrat", sans-serif';
+                    ctx.fillText('Task Item · ' + (i + 2), cx + 20, mockY + 426);
+                });
+
+                // Permissions & Governance Banner
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 495, mockW - 88, 160, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
+
+                ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Montserrat", sans-serif';
+                ctx.fillText('Role Governance & Pipeline Status', mockX + 66, mockY + 535);
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
+                ctx.fillText('Custom permissions per role, automated task assignment, and transparent workflows.', mockX + 66, mockY + 568, mockW - 132);
             }
 
-            // RIGHT HALF: Project Details, Huge Letters, High-Contrast Visibility
+            // RIGHT HALF: Project Details, Verbatim from Resume
             const specX = cardX + 600;
             const specY = cardY + 52;
 
             // Eyebrow Badge
             ctx.fillStyle = 'rgba(36, 71, 53, 0.45)';
-            ctx.beginPath(); ctx.roundRect(specX, specY, 600, 40, 20); ctx.fill();
-            ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+            ctx.beginPath(); ctx.roundRect(specX, specY, 400, 40, 20); ctx.fill();
+            ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
             ctx.fillStyle = '#F4EFE7'; ctx.font = 'bold 15px "Montserrat", sans-serif'; ctx.textAlign = 'left';
             ctx.fillText(p.badge, specX + 22, specY + 26);
 
-            // Large Punchy Title (52px Montserrat)
+            // Large Title
             ctx.fillStyle = '#ffffff';
-            ctx.font = '800 52px "Montserrat", sans-serif';
+            ctx.font = '800 44px "Montserrat", sans-serif';
             ctx.fillText(p.title, specX, specY + 104, 610);
 
-            // Role Subtitle
-            ctx.fillStyle = '#A8B49A';
-            ctx.font = 'bold 24px "Montserrat", sans-serif';
-            ctx.fillText(p.role, specX, specY + 152);
+            // Subtitle
+            ctx.fillStyle = '#84a98c';
+            ctx.font = 'bold 22px "Montserrat", sans-serif';
+            ctx.fillText(p.subtitle, specX, specY + 150);
 
-            // Description Paragraph (Clear, Legible 22px)
+            // Divider Line
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.moveTo(specX, specY + 180); ctx.lineTo(specX + 610, specY + 180); ctx.stroke();
+
+            // Resume Description Header
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '700 14px "Montserrat", sans-serif';
+            ctx.fillText('PROJECT OVERVIEW & SCOPE (FROM RESUME):', specX, specY + 215);
+
+            // Description Paragraph (Word wrapped)
             ctx.fillStyle = '#F4EFE7';
             ctx.font = '500 22px/1.6 "Montserrat", sans-serif';
             const words = p.desc.split(' ');
-            let line = '', lineY = specY + 205;
+            let line = '', lineY = specY + 256;
             for (let n = 0; n < words.length; n++) {
                 const testLine = line + words[n] + ' ';
-                if (ctx.measureText(testLine).width > 600 && n > 0) {
+                if (ctx.measureText(testLine).width > 590 && n > 0) {
                     ctx.fillText(line, specX, lineY);
                     line = words[n] + ' ';
-                    lineY += 34;
+                    lineY += 36;
                 } else {
                     line = testLine;
                 }
             }
             ctx.fillText(line, specX, lineY);
 
-            // Key Results / Metric Cards (3 Column)
-            const statBoxY = lineY + 36;
-            const sW = 192;
-            p.stats.forEach((st, idx) => {
-                const sx = specX + idx * (sW + 14);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-                ctx.beginPath(); ctx.roundRect(sx, statBoxY, sW, 125, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.stroke();
+            // Tools Section (Exact from Resume)
+            const toolsY = lineY + 45;
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '700 14px "Montserrat", sans-serif';
+            ctx.fillText('TOOLS USED (FROM RESUME):', specX, toolsY);
+
+            let toolX = specX;
+            p.tools.forEach(tl => {
+                const tw = ctx.measureText(tl).width + 48;
+                ctx.fillStyle = 'rgba(36, 71, 53, 0.45)';
+                ctx.beginPath(); ctx.roundRect(toolX, toolsY + 18, tw, 46, 23); ctx.fill();
+                ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
 
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 36px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText(st.num, sx + 18, statBoxY + 50);
+                ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
+                ctx.fillText('🛠  ' + tl, toolX + tw / 2, toolsY + 47);
+                toolX += tw + 18;
+            });
 
-                ctx.fillStyle = '#A8B49A';
-                ctx.font = '600 15px "Montserrat", sans-serif';
-                ctx.fillText(st.lbl, sx + 18, statBoxY + 86, sW - 36);
+            // Focus Areas / Highlights from Resume
+            const focusY = toolsY + 95;
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '700 14px "Montserrat", sans-serif';
+            ctx.fillText('CORE FOCUS & DELIVERABLES:', specX, focusY);
+
+            let focX = specX;
+            p.highlights.forEach(h => {
+                ctx.font = '600 16px "Montserrat", sans-serif';
+                const hw = ctx.measureText(h).width + 36;
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+                ctx.beginPath(); ctx.roundRect(focX, focusY + 18, hw, 42, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1; ctx.stroke();
+
+                ctx.fillStyle = '#cbd5e1';
+                ctx.textAlign = 'center';
+                ctx.fillText(h, focX + hw / 2, focusY + 44);
+                focX += hw + 14;
             });
 
             // Action Buttons
-            const btnY = statBoxY + 165;
+            const btnY = cardY + cardH - 105;
 
-            // 1. View Live Case Study Button (Forest green #244735)
+            // 1. View Project Button (Matches resume's "View Project")
             ctx.fillStyle = '#244735';
-            ctx.beginPath(); ctx.roundRect(specX, btnY, 320, 60, 30); ctx.fill();
-            ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+            ctx.beginPath(); ctx.roundRect(specX, btnY, 280, 60, 30); ctx.fill();
+            ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
             ctx.fillStyle = '#F4EFE7'; ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('View Live Case Study ↗', specX + 160, btnY + 37);
+            ctx.fillText('View Project ↗', specX + 140, btnY + 37);
 
             // 2. Next Project Button
             ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.roundRect(specX + 340, btnY, 260, 60, 30); ctx.fill();
+            ctx.beginPath(); ctx.roundRect(specX + 300, btnY, 250, 60, 30); ctx.fill();
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.stroke();
             ctx.fillStyle = '#fff'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('Next Project →', specX + 470, btnY + 37);
+            ctx.fillText('Next Project →', specX + 425, btnY + 37);
 
             // ---------------- 5. BOTTOM CAROUSEL TRACK / DOTS ----------------
             const dotY = 1010;
-            const dotW = 140;
+            const dotW = 90;
             const dotGap = 16;
-            const totalDotW = 4 * dotW + 3 * dotGap;
+            const totalDotW = projectsData.length * dotW + (projectsData.length - 1) * dotGap;
             const startDotX = (w - totalDotW) / 2;
 
             projectsData.forEach((item, idx) => {
@@ -1754,7 +1945,7 @@
                 ctx.fillStyle = isSelected ? '#244735' : 'rgba(255, 255, 255, 0.12)';
                 ctx.beginPath(); ctx.roundRect(curDotX, dotY, dotW, 14, 7); ctx.fill();
                 if (isSelected) {
-                    ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+                    ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
                 }
             });
 
