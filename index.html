@@ -57,7 +57,7 @@
             z-index: 1;
         }
 
-        /* ---------------- TOP NAVBAR (Reference Image 3) ---------------- */
+        /* ---------------- TOP NAVBAR (Reference Image 3 - Logo Removed) ---------------- */
         .top-navbar {
             position: fixed;
             top: 0;
@@ -76,34 +76,17 @@
             transition: all 0.3s ease;
         }
 
-        .nav-monogram {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
+        .nav-brand {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-charcoal);
+            letter-spacing: -0.02em;
             text-decoration: none;
-            transition: transform 0.2s ease;
+            cursor: pointer;
+            transition: color 0.2s ease;
         }
-        .nav-monogram:hover {
-            transform: scale(1.05);
-        }
-        .monogram-circle {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--accent-green);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: 0 4px 12px rgba(36, 71, 53, 0.2);
-        }
-        .monogram-slash {
-            width: 22px;
-            height: 2.5px;
-            background: var(--bg-ivory);
-            transform: rotate(-45deg);
-            border-radius: 2px;
+        .nav-brand:hover {
+            color: var(--accent-green);
         }
 
         .nav-center-links {
@@ -205,7 +188,7 @@
             transform: translateY(-2px);
         }
 
-        /* ---------------- HERO SECTION (Right Side - Image 1 Reference) ---------------- */
+        /* ---------------- HERO SECTION (Right Side - Refined Hierarchy) ---------------- */
         .hero-panel-wrapper {
             position: absolute;
             right: 6%;
@@ -224,30 +207,24 @@
             transform: translateY(-50%);
         }
 
+        /* First line styling: uppercase green tracked kicker for "HI, I'M SAI PRANATHI" */
         .hero-kicker {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
             letter-spacing: 0.18em;
             color: var(--accent-green);
             text-transform: uppercase;
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
+        /* Second line styling: large bold charcoal heading for "UI/UX & Product Designer" */
         .hero-heading {
             font-size: 52px;
             font-weight: 800;
             color: var(--text-charcoal);
             line-height: 1.12;
             letter-spacing: -0.025em;
-            margin-bottom: 12px;
-        }
-
-        .hero-subheading {
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--accent-green);
-            letter-spacing: -0.015em;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .hero-accent-line {
@@ -547,7 +524,6 @@
             .nav-center-links { display: none; }
             .hero-panel-wrapper { right: 20px; left: 20px; max-width: 100%; }
             .hero-heading { font-size: 38px; }
-            .hero-subheading { font-size: 20px; }
             .hero-lead { font-size: 16px; }
             .undock-btn { left: 20px; }
             .education-cards-column { right: 20px; max-width: calc(100vw - 40px); }
@@ -567,14 +543,11 @@
         <div style="font-size: 13px; color: #7a7c75;">Loading workspace, character & in-model screens</div>
     </div>
 
-    <!-- ---------------- TOP NAVBAR (Reference Image 3) ---------------- -->
+    <!-- ---------------- TOP NAVBAR (Reference Image 3 - Logo Removed) ---------------- -->
     <header class="top-navbar">
-        <!-- Monogram (Left) -->
-        <a class="nav-monogram" onclick="goToSection(0)" title="Home / Overview">
-            <div class="monogram-circle">
-                <div class="monogram-slash"></div>
-            </div>
-            <span style="font-size: 15px; font-weight: 700; color: #242522; letter-spacing: -0.01em;">Sai Pranathi</span>
+        <!-- Brand Name (Left) -->
+        <a class="nav-brand" onclick="goToSection(0)" title="Home / Overview">
+            <span>Sai Pranathi</span>
         </a>
 
         <!-- Center Links -->
@@ -601,11 +574,10 @@
         <span>Back to the room</span>
     </button>
 
-    <!-- ---------------- HERO SECTION (Right Side - Image 1 Reference) ---------------- -->
+    <!-- ---------------- HERO SECTION (Right Side - Hierarchy Refined) ---------------- -->
     <div class="hero-panel-wrapper active" id="hero-panel">
-        <div class="hero-kicker">UI/UX & PRODUCT DESIGNER</div>
-        <h1 class="hero-heading">Hi, I'm Sai Pranathi</h1>
-        <div class="hero-subheading">UI/UX & Product Designer</div>
+        <div class="hero-kicker">HI, I'M SAI PRANATHI</div>
+        <h1 class="hero-heading">UI/UX & Product Designer</h1>
         <div class="hero-accent-line"></div>
         <p class="hero-lead">Passionate about understanding people, solving problems, and crafting meaningful product experiences.</p>
         <div class="hero-buttons">
@@ -1667,15 +1639,14 @@
                             if (!badgeCard0) badgeCard0 = child;
                             else if (!badgeCard1) badgeCard1 = child;
                         }
-
-                        // Identify cupboard uniform hangers for leader lines
-                        if (name.includes('hanger') || name.includes('uniform') || name.includes('coat')) {
-                            if (!hangerBTech) hangerBTech = child;
-                            else if (!hangerInter) hangerInter = child;
-                            else if (!hangerSSC) hangerSSC = child;
-                        }
                     }
                 });
+
+                // Distinctly identify the 3 specific uniform hangers inside the cupboard for Education leader lines
+                // Uniform 01 -> B.Tech, Uniform 02 -> Intermediate, Uniform 03 -> SSC
+                hangerBTech = findNode('cabinet uniform 01 tunic') || findNode('cabinet hanger 01 metal hook') || findNode('cabinet hanger 01');
+                hangerInter = findNode('cabinet uniform 02 tunic') || findNode('cabinet hanger 02 metal hook') || findNode('cabinet hanger 02');
+                hangerSSC = findNode('cabinet uniform 03 tunic') || findNode('cabinet hanger 03 metal hook') || findNode('cabinet hanger 03');
 
                 // Fallback detection if screen meshes were not named with 'screen'
                 if (!laptopScreenMesh) laptopScreenMesh = findNode('laptop');
@@ -1732,7 +1703,6 @@
             {
                 id: 0,
                 name: 'Room (Home)',
-                // Room overview angle showing desk on left and open room view
                 cameraPos: [7.60, 4.20, -1.60],
                 cameraTarget: [0.76, 2.10, -1.50],
                 fov: 42.0,
