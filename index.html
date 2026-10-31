@@ -1695,7 +1695,7 @@
                 officeModel.traverse((child) => {
                     if (child.name) {
                         const cName = child.name.toLowerCase();
-                        if (cName.includes('waste bin') || cName.includes('trash can') || (cName.includes('bin') && !cName.includes('binding'))) {
+                        if (cName.includes('waste bin') || cName.includes('trash can')) {
                             wasteBinNodes.push(child);
                         }
                     }
