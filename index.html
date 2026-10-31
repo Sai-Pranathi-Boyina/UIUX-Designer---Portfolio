@@ -64,9 +64,9 @@
             left: 0;
             width: 100%;
             height: 76px;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            justify-content: space-between;
             padding: 0 48px;
             z-index: 100;
             background: transparent;
@@ -77,23 +77,16 @@
             pointer-events: auto;
         }
 
-        .nav-brand {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-charcoal);
-            letter-spacing: -0.02em;
-            text-decoration: none;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-        .nav-brand:hover {
-            color: var(--accent-green);
+        .nav-brand-spacer {
+            visibility: hidden;
+            width: 100%;
         }
 
         .nav-center-links {
             display: flex;
             align-items: center;
             gap: 36px;
+            justify-self: center;
         }
 
         .nav-link {
@@ -129,6 +122,7 @@
             display: flex;
             align-items: center;
             gap: 14px;
+            justify-self: end;
         }
 
         .btn-nav-cta {
@@ -543,6 +537,304 @@
             margin-top: 2px;
         }
 
+        /* ---------------- SECTION 5: CONTACT PHONE MOCKUP PANEL ---------------- */
+        .contact-panel-wrapper {
+            position: fixed;
+            right: 8%;
+            top: 50%;
+            transform: translateY(-50%) translateX(30px);
+            width: 100%;
+            max-width: 375px;
+            z-index: 85;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .contact-panel-wrapper.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(-50%) translateX(0);
+        }
+
+        .phone-device {
+            position: relative;
+            width: 100%;
+            border-radius: 46px;
+            background: #0d1210;
+            padding: 16px 20px 22px 20px;
+            box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.7), 0 0 0 10px #1a221d, 0 0 0 12px #26332a, 0 0 35px rgba(132, 169, 140, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            overflow: hidden;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        /* Subtle dotted matrix pattern matching reference */
+        .phone-device::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.10) 1.2px, transparent 1.2px);
+            background-size: 19px 19px;
+            pointer-events: none;
+            opacity: 0.65;
+            z-index: 1;
+        }
+
+        .phone-device > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .phone-status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2px 8px 10px 8px;
+            color: #cbd5e1;
+        }
+
+        .phone-status-time {
+            font-size: 13.5px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .phone-punchhole-cam {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #060907;
+            border: 1.5px solid #1c2720;
+            margin: 0 auto;
+        }
+
+        .phone-status-icons {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #cbd5e1;
+        }
+
+        .phone-clock-display {
+            text-align: center;
+            font-size: 68px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-top: 14px;
+        }
+
+        .phone-date-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: #cbd5e1;
+            text-transform: uppercase;
+        }
+
+        .phone-date-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-sage);
+        }
+
+        .phone-profile-header {
+            margin-top: 28px;
+            margin-bottom: 18px;
+            padding: 0 4px;
+        }
+
+        .phone-profile-name {
+            font-size: 21px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .phone-profile-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #94a3b8;
+            margin-top: 4px;
+            letter-spacing: 0.01em;
+        }
+
+        .phone-cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+
+        .phone-action-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 13px 16px;
+            border-radius: 18px;
+            background: rgba(28, 35, 31, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-sizing: border-box;
+        }
+
+        .phone-action-card:hover {
+            background: rgba(38, 48, 42, 0.95);
+            border-color: rgba(132, 169, 140, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .phone-card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            color: #84a98c;
+            flex-shrink: 0;
+        }
+
+        .phone-card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .phone-card-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .phone-card-sub {
+            font-size: 11.5px;
+            font-weight: 500;
+            color: #94a3b8;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .phone-card-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #475569;
+            margin-left: 6px;
+            flex-shrink: 0;
+        }
+
+        /* Resume / CV Card (Highlighted Pill in Sage Green Theme) */
+        .phone-cv-card {
+            background: linear-gradient(135deg, #84a98c 0%, #689172 100%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.35) !important;
+            box-shadow: 0 8px 24px rgba(132, 169, 140, 0.3);
+        }
+
+        .phone-cv-card:hover {
+            transform: translateY(-2.5px);
+            box-shadow: 0 10px 28px rgba(132, 169, 140, 0.45);
+        }
+
+        .phone-cv-card .phone-card-icon {
+            color: #12241b;
+        }
+
+        .phone-cv-card .phone-card-title {
+            color: #12241b !important;
+            font-weight: 800;
+        }
+
+        .phone-cv-card .phone-card-sub {
+            color: #213c2c !important;
+            font-weight: 600;
+        }
+
+        .phone-cv-download-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #12241b;
+            color: #84a98c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .phone-cv-card:hover .phone-cv-download-btn {
+            transform: scale(1.08);
+            background: #09150f;
+            color: #ffffff;
+        }
+
+        .phone-bottom-dock {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 30px;
+            padding: 0 4px;
+        }
+
+        .phone-dock-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e2e8f0;
+            font-size: 17px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+        }
+
+        .phone-dock-icon:hover {
+            background: rgba(132, 169, 140, 0.3);
+            border-color: var(--accent-sage);
+            color: #ffffff;
+            transform: translateY(-3px) scale(1.06);
+        }
+
+        .phone-home-indicator {
+            width: 100px;
+            height: 4px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.7);
+            margin: 18px auto 2px auto;
+        }
+
+        @media (max-width: 768px) {
+            .contact-panel-wrapper {
+                right: 50%;
+                transform: translate(50%, -50%);
+                max-width: 335px;
+            }
+            .contact-panel-wrapper.active {
+                transform: translate(50%, -50%);
+            }
+        }
+
         /* ---------------- INTERACTIVE SCENE HINT ---------------- */
         .interactive-scene-hint {
             position: fixed;
@@ -644,12 +936,10 @@
         <div style="font-size: 13px; color: #7a7c75;">Loading workspace, character & in-model screens</div>
     </div>
 
-    <!-- ---------------- TOP NAVBAR (Reference Image 3 - Logo Removed) ---------------- -->
+    <!-- ---------------- TOP NAVBAR (Logo & Left Text Removed) ---------------- -->
     <header class="top-navbar">
-        <!-- Brand Name (Left) -->
-        <a class="nav-brand" onclick="goToSection(0)" title="Home / Overview">
-            <span>Sai Pranathi</span>
-        </a>
+        <!-- Brand Spacer (Left) -->
+        <div class="nav-brand-spacer"></div>
 
         <!-- Center Links -->
         <nav class="nav-center-links">
@@ -775,6 +1065,138 @@
             </div>
             <div class="edu-card-inst">Infant Jesus High School, Tekkali</div>
             <div class="edu-card-grade">CGPA: 10.00/10</div>
+        </div>
+    </div>
+
+    <!-- ---------------- SECTION 5: CONTACT PHONE MOCKUP PANEL ---------------- -->
+    <div class="contact-panel-wrapper" id="contact-panel">
+        <div class="phone-device">
+            <!-- Notch / Status Bar -->
+            <div class="phone-status-bar">
+                <span class="phone-status-time" id="phone-top-time">03:22</span>
+                <div class="phone-punchhole-cam"></div>
+                <div class="phone-status-icons">
+                    <!-- Signal Bars SVG -->
+                    <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor">
+                        <rect x="0" y="8" width="2.5" height="3" rx="0.6"/>
+                        <rect x="4" y="5.5" width="2.5" height="5.5" rx="0.6"/>
+                        <rect x="8" y="3" width="2.5" height="8" rx="0.6"/>
+                        <rect x="12" y="0" width="2.5" height="11" rx="0.6"/>
+                    </svg>
+                    <!-- WiFi SVG -->
+                    <svg width="15" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+                        <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+                        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+                        <line x1="12" y1="20" x2="12.01" y2="20"/>
+                    </svg>
+                    <!-- Battery SVG -->
+                    <svg width="20" height="10" viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="1" width="19" height="10" rx="2.5"/>
+                        <path d="M22 4v4" />
+                        <rect x="3" y="3" width="14" height="6" rx="1.5" fill="currentColor" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Big Digital Clock -->
+            <div class="phone-clock-display" id="phone-big-clock">03:22</div>
+            <div class="phone-date-display">
+                <span class="phone-date-dot"></span>
+                <span id="phone-date-text">SUN 1 NOV · HYDERABAD</span>
+            </div>
+
+            <!-- Profile Info (Left-aligned) -->
+            <div class="phone-profile-header">
+                <div class="phone-profile-name">Boyina Sai Pranathi</div>
+                <div class="phone-profile-title">UI/UX & Product Designer</div>
+            </div>
+
+            <!-- 3 Notification / Action Cards -->
+            <div class="phone-cards-container">
+                <!-- Card 1: Email -->
+                <a class="phone-action-card" href="mailto:boyinasaipranathi@gmail.com" onclick="showToast('Opening Mail Client: boyinasaipranathi@gmail.com')">
+                    <div class="phone-card-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="20" height="16" x="2" y="4" rx="3"></rect>
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                        </svg>
+                    </div>
+                    <div class="phone-card-content">
+                        <div class="phone-card-title">Email</div>
+                        <div class="phone-card-sub">boyinasaipranathi@gmail.com</div>
+                    </div>
+                    <span class="phone-card-dot"></span>
+                </a>
+
+                <!-- Card 2: LinkedIn -->
+                <a class="phone-action-card" href="https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/" target="_blank" rel="noopener" onclick="showToast('Opening LinkedIn Profile...')">
+                    <div class="phone-card-icon">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.53 1.53 0 0 0 0-3.06 1.53 1.53 0 0 0 0 3.06m1.4 9.74v-8.37H5.06v8.37h2.8z"/>
+                        </svg>
+                    </div>
+                    <div class="phone-card-content">
+                        <div class="phone-card-title">LinkedIn</div>
+                        <div class="phone-card-sub">sai-pranathi-boyina</div>
+                    </div>
+                    <span class="phone-card-dot"></span>
+                </a>
+
+                <!-- Card 3: CV.pdf (Highlighted Pill in Theme Sage Green) -->
+                <a class="phone-action-card phone-cv-card" href="Boyina_Sai_Pranathi_CV.pdf" download="Boyina_Sai_Pranathi_CV.pdf" onclick="showToast('Downloading Resume: Boyina_Sai_Pranathi_CV.pdf')">
+                    <div class="phone-card-icon cv-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="phone-card-content">
+                        <div class="phone-card-title">CV.pdf</div>
+                        <div class="phone-card-sub">Download my resume</div>
+                    </div>
+                    <div class="phone-cv-download-btn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Bottom Dock with 4 Circular Apps -->
+            <div class="phone-bottom-dock">
+                <a class="phone-dock-icon" href="mailto:boyinasaipranathi@gmail.com" title="Call / Email" onclick="showToast('Contact: boyinasaipranathi@gmail.com')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </a>
+                <a class="phone-dock-icon" href="mailto:boyinasaipranathi@gmail.com" title="Direct Message" onclick="showToast('Composing Message...')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </a>
+                <a class="phone-dock-icon" href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" title="Twine Portfolio Website" onclick="showToast('Opening Twine Portfolio...')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </a>
+                <a class="phone-dock-icon" href="javascript:void(0)" title="Portfolio Studio Camera" onclick="showToast('3D Studio & Desk View Active')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Home indicator bar -->
+            <div class="phone-home-indicator"></div>
         </div>
     </div>
 
@@ -1647,6 +2069,41 @@
         }
 
         // ---------------- 3. IN-MODEL PHONE SCREEN (CONTACT - PORTRAIT) ----------------
+        function formatCurrentPhoneTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+
+        function formatCurrentPhoneDate() {
+            const now = new Date();
+            const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            const dayName = days[now.getDay()];
+            const dayNum = now.getDate();
+            const monthName = months[now.getMonth()];
+            return `${dayName} ${dayNum} ${monthName} · HYDERABAD`;
+        }
+
+        function updatePhoneDisplays() {
+            const timeStr = formatCurrentPhoneTime();
+            const dateStr = formatCurrentPhoneDate();
+
+            const topTimeEl = document.getElementById('phone-top-time');
+            if (topTimeEl) topTimeEl.innerText = timeStr;
+
+            const bigClockEl = document.getElementById('phone-big-clock');
+            if (bigClockEl) bigClockEl.innerText = timeStr;
+
+            const dateTextEl = document.getElementById('phone-date-text');
+            if (dateTextEl) dateTextEl.innerText = dateStr;
+
+            if (phoneCtx) {
+                drawPhoneScreen();
+            }
+        }
+
         function initPhoneCanvas() {
             phoneCanvas = document.createElement('canvas');
             phoneCanvas.width = 720;
@@ -1660,7 +2117,8 @@
             phoneTexture.repeat.x = -1;
             phoneTexture.offset.x = 1;
 
-            drawPhoneScreen();
+            updatePhoneDisplays();
+            setInterval(updatePhoneDisplays, 1000);
         }
 
         function drawPhoneScreen() {
@@ -1669,88 +2127,166 @@
             const w = 720;
             const h = 1440;
 
-            const bg = ctx.createLinearGradient(0, 0, 0, h);
-            bg.addColorStop(0, '#10141a');
-            bg.addColorStop(0.5, '#161d24');
-            bg.addColorStop(1, '#0c0f14');
-            ctx.fillStyle = bg;
+            // Deep background
+            ctx.fillStyle = '#0d1210';
             ctx.fillRect(0, 0, w, h);
 
-            // Dynamic Island
-            const islandW = 180, islandH = 38;
-            ctx.fillStyle = '#000000';
-            ctx.beginPath(); ctx.roundRect((w - islandW) / 2, 22, islandW, islandH, 19); ctx.fill();
-
-            // Status Time & Icons
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 22px "Montserrat", sans-serif';
-            ctx.textAlign = 'left';
-            ctx.fillText('9:41', 54, 48);
-
-            ctx.textAlign = 'right';
-            ctx.fillText('5G  100%', w - 54, 48);
-
-            // Big Clock
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '800 96px "Montserrat", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('09:41', w / 2, 220);
-
-            ctx.fillStyle = '#A8B49A';
-            ctx.font = '600 24px "Montserrat", sans-serif';
-            ctx.fillText('Available for Product Design Roles', w / 2, 268);
-
-            // Contact Notification Cards
-            function drawContactCard(icon, title, subtitle, action, cy, borderAccent) {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                ctx.beginPath(); ctx.roundRect(44, cy, w - 88, 140, 24); ctx.fill();
-                ctx.strokeStyle = borderAccent || 'rgba(255, 255, 255, 0.12)';
-                ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.fillStyle = '#244735';
-                ctx.beginPath(); ctx.roundRect(68, cy + 24, 92, 92, 20); ctx.fill();
-                ctx.fillStyle = '#F4EFE7';
-                ctx.font = '36px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText(icon, 114, cy + 82);
-
-                ctx.textAlign = 'left';
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 26px "Montserrat", sans-serif';
-                ctx.fillText(title, 184, cy + 64);
-
-                ctx.fillStyle = '#cbd5e1';
-                ctx.font = '500 19px "Montserrat", sans-serif';
-                ctx.fillText(subtitle, 184, cy + 100);
-
-                ctx.fillStyle = '#A8B49A';
-                ctx.font = 'bold 18px "Montserrat", sans-serif';
-                ctx.textAlign = 'right';
-                ctx.fillText(action, w - 74, cy + 82);
+            // Subtle dot matrix pattern matching reference
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+            const dotSpacing = 28;
+            for (let x = 14; x < w; x += dotSpacing) {
+                for (let y = 14; y < h; y += dotSpacing) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
 
-            drawContactCard('✉️', 'Email Me', 'boyinasaipranathi@gmail.com', 'Send →', 340, '#244735');
-            drawContactCard('💼', 'LinkedIn', 'Sai Pranathi Boyina', 'Connect →', 510, '#A8B49A');
-            drawContactCard('🌐', 'Twine Portfolio', 'boyinasaipranathi679', 'Explore →', 680, 'rgba(255, 255, 255, 0.15)');
-            drawContactCard('📄', 'Resume (CV)', 'Product_Designer_CV.pdf', 'Download →', 850, '#244735');
+            // Punch hole camera at top center
+            ctx.fillStyle = '#060807';
+            ctx.beginPath();
+            ctx.arc(w / 2, 44, 14, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#18201a';
+            ctx.lineWidth = 2;
+            ctx.stroke();
 
-            // Quick Callout at Bottom
-            ctx.fillStyle = 'rgba(36, 71, 53, 0.35)';
-            ctx.beginPath(); ctx.roundRect(44, 1040, w - 88, 180, 24); ctx.fill();
-            ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1.5; ctx.stroke();
+            const timeStr = formatCurrentPhoneTime();
+            const dateStr = formatCurrentPhoneDate();
 
-            ctx.fillStyle = '#F4EFE7';
-            ctx.font = 'bold 24px "Montserrat", sans-serif';
+            // Status Bar Text & Icons
+            ctx.fillStyle = '#cbd5e1';
+            ctx.font = '600 22px "Montserrat", sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(timeStr, 56, 52);
+
+            ctx.textAlign = 'right';
+            ctx.font = '600 20px "Montserrat", sans-serif';
+            ctx.fillText('5G 100%', w - 56, 52);
+
+            // Big Clock (Matching reference)
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '800 114px "Montserrat", sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText('Let\'s Build Something Exceptional', w / 2, 1105);
+            ctx.fillText(timeStr, w / 2, 230);
+
+            // Dot and Date · HYDERABAD
+            ctx.fillStyle = '#84a98c';
+            ctx.beginPath();
+            ctx.arc(w / 2 - 130, 282, 5, 0, Math.PI * 2);
+            ctx.fill();
 
             ctx.fillStyle = '#cbd5e1';
-            ctx.font = '500 18px "Montserrat", sans-serif';
-            ctx.fillText('Open for Full-Time, Contract & Advisory Roles', w / 2, 1150);
+            ctx.font = '700 20px "Montserrat", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(dateStr, w / 2 + 10, 288);
 
-            // Home Indicator Bar
+            // Profile Header (Left Aligned with cards at x = 54)
+            ctx.textAlign = 'left';
             ctx.fillStyle = '#ffffff';
-            ctx.beginPath(); ctx.roundRect(w / 2 - 90, 1400, 180, 6, 3); ctx.fill();
+            ctx.font = '800 38px "Montserrat", sans-serif';
+            ctx.fillText('Boyina Sai Pranathi', 54, 395);
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '500 24px "Montserrat", sans-serif';
+            ctx.fillText('UI/UX & Product Designer', 54, 435);
+
+            // 1. Card: Email (y: 480 to 620)
+            const cardW = w - 108;
+            ctx.fillStyle = 'rgba(28, 35, 31, 0.85)';
+            ctx.beginPath(); ctx.roundRect(54, 480, cardW, 140, 26); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+            // Email Icon
+            ctx.fillStyle = '#84a98c';
+            ctx.font = '34px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('✉', 105, 564);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '700 26px "Montserrat", sans-serif';
+            ctx.fillText('Email', 156, 542);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '500 20px "Montserrat", sans-serif';
+            ctx.fillText('boyinasaipranathi@gmail.com', 156, 580);
+
+            ctx.fillStyle = '#475569';
+            ctx.beginPath(); ctx.arc(w - 90, 550, 4, 0, Math.PI * 2); ctx.fill();
+
+            // 2. Card: LinkedIn (y: 650 to 790)
+            ctx.fillStyle = 'rgba(28, 35, 31, 0.85)';
+            ctx.beginPath(); ctx.roundRect(54, 650, cardW, 140, 26); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+            // LinkedIn in Icon
+            ctx.fillStyle = '#84a98c';
+            ctx.font = 'bold 30px "Montserrat", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('in', 105, 734);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '700 26px "Montserrat", sans-serif';
+            ctx.fillText('LinkedIn', 156, 712);
+            ctx.fillStyle = '#94a3b8';
+            ctx.font = '500 20px "Montserrat", sans-serif';
+            ctx.fillText('sai-pranathi-boyina', 156, 750);
+
+            ctx.fillStyle = '#475569';
+            ctx.beginPath(); ctx.arc(w - 90, 720, 4, 0, Math.PI * 2); ctx.fill();
+
+            // 3. Card: CV.pdf (Highlighted Pill in Theme Sage Green) (y: 820 to 960)
+            const cvGrad = ctx.createLinearGradient(54, 820, w - 54, 960);
+            cvGrad.addColorStop(0, '#84a98c');
+            cvGrad.addColorStop(1, '#689172');
+            ctx.fillStyle = cvGrad;
+            ctx.beginPath(); ctx.roundRect(54, 820, cardW, 140, 26); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+            // CV Icon
+            ctx.fillStyle = '#12241b';
+            ctx.font = '32px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('📄', 105, 904);
+
+            ctx.textAlign = 'left';
+            ctx.fillStyle = '#12241b';
+            ctx.font = '800 26px "Montserrat", sans-serif';
+            ctx.fillText('CV.pdf', 156, 882);
+            ctx.fillStyle = '#213c2c';
+            ctx.font = '600 20px "Montserrat", sans-serif';
+            ctx.fillText('Download my resume', 156, 920);
+
+            // Download circular button
+            ctx.fillStyle = '#12241b';
+            ctx.beginPath(); ctx.arc(w - 105, 890, 28, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#84a98c';
+            ctx.font = 'bold 24px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('↓', w - 105, 898);
+
+            // Bottom 4 App Circular Icons (y: 1220 to 1310)
+            const dockIcons = [
+                { symbol: '📞', cx: 140 },
+                { symbol: '💬', cx: 286 },
+                { symbol: '🌐', cx: 434 },
+                { symbol: '📷', cx: 580 }
+            ];
+            dockIcons.forEach(app => {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.beginPath(); ctx.arc(app.cx, 1260, 40, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+                ctx.fillStyle = '#e2e8f0';
+                ctx.font = '28px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(app.symbol, app.cx, 1270);
+            });
+
+            // Home indicator bar at bottom
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.beginPath(); ctx.roundRect(w / 2 - 90, 1380, 180, 6, 3); ctx.fill();
 
             if (phoneTexture) phoneTexture.needsUpdate = true;
         }
@@ -2014,7 +2550,7 @@
                 cameraTarget: [2.12, 1.87, 0.63],
                 fov: 34.0,
                 cupboardOpen: false,
-                hint: 'Click cards on desk phone to email or download CV'
+                hint: 'Desk Phone · Tap cards to Email, LinkedIn, or download CV.pdf'
             }
         ];
 
@@ -2190,6 +2726,13 @@
                     eduSvg.classList.remove('active');
                     eduCol.classList.remove('active');
                 }
+            }
+
+            // Contact Phone Mockup Panel
+            const contactPanel = document.getElementById('contact-panel');
+            if (contactPanel) {
+                if (index === 5) contactPanel.classList.add('active');
+                else contactPanel.classList.remove('active');
             }
 
             // Interactive Scene Hint
@@ -2481,24 +3024,38 @@
                 const hits = raycaster.intersectObject(phoneScreenMesh);
                 if (hits.length > 0) {
                     const hit = hits[0];
+                    const px = hit.uv.x * 720;
                     const py = (1.0 - hit.uv.y) * 1440;
 
-                    if (py >= 340 && py <= 480) {
+                    if (py >= 480 && py <= 620) {
                         window.location.href = 'mailto:boyinasaipranathi@gmail.com';
-                        showToast('Opening Mail Client...');
+                        showToast('Opening Mail Client: boyinasaipranathi@gmail.com');
                         return;
-                    } else if (py >= 510 && py <= 650) {
+                    } else if (py >= 650 && py <= 790) {
                         window.open('https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/', '_blank');
                         showToast('Opening LinkedIn Profile...');
                         return;
-                    } else if (py >= 680 && py <= 820) {
-                        window.open('https://www.twine.net/boyinasaipranathi679', '_blank');
-                        showToast('Opening Twine Portfolio...');
+                    } else if (py >= 820 && py <= 960) {
+                        window.open('Boyina_Sai_Pranathi_CV.pdf', '_blank');
+                        showToast('Downloading Resume: Boyina_Sai_Pranathi_CV.pdf');
                         return;
-                    } else if (py >= 850 && py <= 990) {
-                        window.open('https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/', '_blank');
-                        showToast('Downloading Resume / CV...');
-                        return;
+                    } else if (py >= 1210 && py <= 1310) {
+                        if (px >= 90 && px <= 190) {
+                            window.location.href = 'mailto:boyinasaipranathi@gmail.com';
+                            showToast('Contact: boyinasaipranathi@gmail.com');
+                            return;
+                        } else if (px >= 236 && px <= 336) {
+                            window.location.href = 'mailto:boyinasaipranathi@gmail.com';
+                            showToast('Composing Direct Message...');
+                            return;
+                        } else if (px >= 384 && px <= 484) {
+                            window.open('https://www.twine.net/boyinasaipranathi679', '_blank');
+                            showToast('Opening Twine Portfolio...');
+                            return;
+                        } else if (px >= 530 && px <= 630) {
+                            showToast('3D Studio & Desk View Active');
+                            return;
+                        }
                     }
                 }
             }
