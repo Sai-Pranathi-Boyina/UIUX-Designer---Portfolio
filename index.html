@@ -57,7 +57,7 @@
             z-index: 1;
         }
 
-        /* ---------------- TOP NAVBAR (Reference Image 3 - Logo Removed) ---------------- */
+        /* ---------------- TOP NAVBAR (Transparent Header) ---------------- */
         .top-navbar {
             position: fixed;
             top: 0;
@@ -69,11 +69,12 @@
             justify-content: space-between;
             padding: 0 48px;
             z-index: 100;
-            background: rgba(244, 239, 231, 0.88);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom: 1px solid rgba(36, 37, 34, 0.06);
+            background: transparent;
+            pointer-events: none;
             transition: all 0.3s ease;
+        }
+        .top-navbar > * {
+            pointer-events: auto;
         }
 
         .nav-brand {
