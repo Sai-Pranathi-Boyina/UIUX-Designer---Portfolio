@@ -2116,10 +2116,11 @@
                 const phoneRim = findNode('phone metallic rim');
                 const phoneEarpiece = findNode('phone earpiece');
 
+                const phoneParent = (phoneGlass && phoneGlass.parent) || officeModel;
                 phoneAssembly = new THREE.Group();
                 phoneAssembly.name = 'phoneAssembly';
                 phoneAssembly.position.set(-2.120, 1.869, 0.630);
-                officeModel.add(phoneAssembly);
+                phoneParent.add(phoneAssembly);
 
                 if (phoneGlass) {
                     phoneGlass.position.set(0, 0, 0);
@@ -2683,7 +2684,7 @@
                         return;
                     }
                 }
-                if (currentSection === 5 && phoneScreenMesh) {
+                if ((currentSection === 5 || currentSection === 0) && phoneScreenMesh) {
                     const hits = raycaster.intersectObject(phoneScreenMesh);
                     if (hits.length > 0) {
                         renderer.domElement.style.cursor = 'pointer';
@@ -2774,6 +2775,14 @@
             }
 
             // C. Click on 3D Phone Screen on Desk (Contact Actions)
+            if (currentSection === 0 && phoneScreenMesh) {
+                const hits = raycaster.intersectObject(phoneScreenMesh);
+                if (hits.length > 0) {
+                    goToSection(5);
+                    showToast('Zooming to Contact Phone');
+                    return;
+                }
+            }
             if (currentSection === 5 && phoneScreenMesh) {
                 const hits = raycaster.intersectObject(phoneScreenMesh);
                 if (hits.length > 0) {
