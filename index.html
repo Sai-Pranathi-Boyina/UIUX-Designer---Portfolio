@@ -374,85 +374,77 @@
 
         .education-cards-column {
             position: fixed;
-            top: 52%;
-            right: 48px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            width: 100%;
-            max-width: 440px;
+            inset: 0;
+            pointer-events: none;
             z-index: 10;
-            pointer-events: auto;
             opacity: 0;
-            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition: opacity 0.4s ease;
         }
         .education-cards-column.active {
             opacity: 1;
         }
         .edu-callout-card {
+            position: fixed;
+            right: 48px;
+            width: 100%;
+            max-width: 440px;
+            pointer-events: auto;
             background: var(--card-ivory);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 20px 24px;
+            border-radius: 14px;
+            padding: 16px 20px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
             box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-            position: relative;
+            transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
         }
         .edu-callout-card:hover {
             border-color: var(--accent-green);
             transform: translateX(-4px);
-            background: #fff;
+            background: #ffffff;
         }
         .edu-callout-card.card-btech {
-            border-left: 5px solid var(--accent-green);
+            border-left: 4px solid var(--accent-green);
         }
         .edu-callout-card.card-inter {
-            border-left: 5px solid var(--accent-sage);
+            border-left: 4px solid var(--accent-sage);
         }
         .edu-callout-card.card-ssc {
-            border-left: 5px solid var(--text-charcoal);
+            border-left: 4px solid var(--text-charcoal);
         }
         .edu-card-head {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-        .edu-tag-badge {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--accent-green);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .edu-card-grade {
-            font-size: 12px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 100px;
-            background: rgba(36, 71, 53, 0.08);
-            color: var(--accent-green);
+            align-items: baseline;
+            gap: 12px;
         }
         .edu-card-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--text-charcoal);
             letter-spacing: -0.01em;
+            line-height: 1.3;
+        }
+        .edu-card-badge {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-green);
+            letter-spacing: 0.02em;
+            white-space: nowrap;
         }
         .edu-card-inst {
             font-size: 13px;
             color: var(--text-muted);
             font-weight: 500;
+            line-height: 1.4;
         }
-        .edu-card-desc {
+        .edu-card-grade {
             font-size: 12.5px;
-            color: var(--text-sub);
-            line-height: 1.5;
+            font-weight: 700;
+            color: var(--accent-green);
             margin-top: 2px;
         }
 
@@ -539,7 +531,7 @@
             .hero-heading { font-size: 38px; }
             .hero-lead { font-size: 16px; }
             .undock-btn { left: 20px; }
-            .education-cards-column { right: 20px; max-width: calc(100vw - 40px); }
+            .edu-callout-card { right: 20px; max-width: calc(100vw - 40px); }
         }
     </style>
 </head>
@@ -611,45 +603,42 @@
         <button class="badge-nav-btn" onclick="cycleBadge(1)" title="Next Badge (Arrow Right)">›</button>
     </div>
 
-    <!-- Section 4: Education (Cupboard Wardrobe & Leader Lines) -->
+    <!-- Section 4: Education (Cupboard Wardrobe & Straight Horizontal Leader Lines) -->
     <svg class="education-lines-overlay" id="edu-lines-svg">
-        <path id="edu-line-btech" stroke="#244735" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" />
-        <circle id="edu-dot-btech" r="6" fill="#244735" />
-        <path id="edu-line-inter" stroke="#A8B49A" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" />
-        <circle id="edu-dot-inter" r="6" fill="#A8B49A" />
-        <path id="edu-line-ssc" stroke="#242522" stroke-width="2.5" fill="none" stroke-dasharray="6,4" opacity="0.9" />
-        <circle id="edu-dot-ssc" r="6" fill="#242522" />
+        <path id="edu-line-btech" stroke="#242522" stroke-width="2.5" fill="none" stroke-dasharray="5,4" opacity="0.9" />
+        <circle id="edu-dot-btech" r="5" fill="#242522" />
+        <path id="edu-line-inter" stroke="#242522" stroke-width="2.5" fill="none" stroke-dasharray="5,4" opacity="0.9" />
+        <circle id="edu-dot-inter" r="5" fill="#242522" />
+        <path id="edu-line-ssc" stroke="#242522" stroke-width="2.5" fill="none" stroke-dasharray="5,4" opacity="0.9" />
+        <circle id="edu-dot-ssc" r="5" fill="#242522" />
     </svg>
 
     <div class="education-cards-column" id="edu-cards-col">
         <div class="edu-callout-card card-btech" id="card-edu-btech">
             <div class="edu-card-head">
-                <span class="edu-tag-badge">1. B.Tech Uniform</span>
-                <span class="edu-card-grade">CGPA: 8.62 / 10</span>
+                <h3 class="edu-card-title">B.Tech, Computer Science & Engineering</h3>
+                <span class="edu-card-badge">2020 – 2024</span>
             </div>
-            <h3 class="edu-card-title">B.Tech in Computer Science & Engineering</h3>
-            <div class="edu-card-inst">Dr. B. R. Ambedkar University · 2020 – 2024</div>
-            <p class="edu-card-desc">First Class with Distinction. Specialization in Human-Computer Interaction (HCI), UI Systems, Computer Graphics, and Frontend Engineering.</p>
+            <div class="edu-card-inst">Dr. B. R. Ambedkar University, Srikakulam, College of Engineering</div>
+            <div class="edu-card-grade">CGPA: 8.62/10</div>
         </div>
 
         <div class="edu-callout-card card-inter" id="card-edu-inter">
             <div class="edu-card-head">
-                <span class="edu-tag-badge">2. Intermediate Uniform</span>
-                <span class="edu-card-grade">94.6% Marks</span>
+                <h3 class="edu-card-title">Senior Secondary (XII), MPC</h3>
+                <span class="edu-card-badge">2018 – 2020</span>
             </div>
-            <h3 class="edu-card-title">Higher Secondary Education · MPC</h3>
-            <div class="edu-card-inst">Sri Chaitanya Junior College · 2018 – 2020</div>
-            <p class="edu-card-desc">Major coursework in Mathematics, Physics, and Chemistry. Strong foundations in analytical modeling, spatial geometry, and quantitative problem solving.</p>
+            <div class="edu-card-inst">AP Residential Jr. College, Thatipudi</div>
+            <div class="edu-card-grade">CGPA: 9.86/10</div>
         </div>
 
         <div class="edu-callout-card card-ssc" id="card-edu-ssc">
             <div class="edu-card-head">
-                <span class="edu-tag-badge">3. High School Uniform</span>
-                <span class="edu-card-grade">GPA: 9.8 / 10</span>
+                <h3 class="edu-card-title">Secondary (X)</h3>
+                <span class="edu-card-badge">2018</span>
             </div>
-            <h3 class="edu-card-title">Secondary School Certificate (SSC)</h3>
-            <div class="edu-card-inst">High School Honors · 2017 – 2018</div>
-            <p class="edu-card-desc">Graduated with top academic standing. Active leadership in visual design, fine arts, science exhibitions, and digital graphics workshops.</p>
+            <div class="edu-card-inst">Infant Jesus High School, Tekkali</div>
+            <div class="edu-card-grade">CGPA: 10.00/10</div>
         </div>
     </div>
 
@@ -1625,11 +1614,13 @@
                     }
                 });
 
-                // Distinctly identify the 3 specific uniform hangers inside the cupboard for Education leader lines
-                // Uniform 01 -> B.Tech, Uniform 02 -> Intermediate, Uniform 03 -> SSC
-                hangerBTech = findNode('cabinet uniform 01 tunic') || findNode('cabinet hanger 01 metal hook') || findNode('cabinet hanger 01');
-                hangerInter = findNode('cabinet uniform 02 tunic') || findNode('cabinet hanger 02 metal hook') || findNode('cabinet hanger 02');
-                hangerSSC = findNode('cabinet uniform 03 tunic') || findNode('cabinet hanger 03 metal hook') || findNode('cabinet hanger 03');
+                // Distinctly identify the 3 specific uniform nodes inside the cupboard matching sketch heights
+                // Uniform 01 (Left, chest level) -> B.Tech
+                // Uniform 02 (Middle, waist level) -> Intermediate
+                // Uniform 03 (Right, lower leg/trouser level) -> SSC
+                hangerBTech = findNode('cabinet uniform 01 continuous crossed shawl') || findNode('cabinet uniform 01 short shirt placket') || findNode('cabinet uniform 01 tunic');
+                hangerInter = findNode('cabinet uniform 02 tunic with connected sleeves') || findNode('cabinet uniform 02 front hem facing') || findNode('cabinet uniform 02 tunic');
+                hangerSSC = findNode('cabinet uniform 03 left trouser leg') || findNode('cabinet uniform 03 right trouser leg') || findNode('cabinet uniform 03 tunic');
 
                 // ---------------- MOUNT HIGH-FIDELITY 3D SCREENS ----------------
                 // 1. Mount 3D Laptop Screen Mesh (Skills UI)
@@ -1824,9 +1815,9 @@
             {
                 id: 4,
                 name: 'Education (Cupboard Wardrobe)',
-                cameraPos: [2.20, 2.35, -2.10],
-                cameraTarget: [-2.70, 2.30, -2.10],
-                fov: 40.0,
+                cameraPos: [2.45, 2.30, -2.90],
+                cameraTarget: [-2.70, 2.25, -2.90],
+                fov: 39.0,
                 cupboardOpen: true,
                 hint: 'Cupboard doors opened · Hover uniforms to view credentials'
             },
@@ -2117,13 +2108,18 @@
 
                 const card = document.getElementById(h.cardId);
                 if (!card) return;
-                const rect = card.getBoundingClientRect();
-                const cx = rect.left;
-                const cy = rect.top + rect.height * 0.5;
 
-                const cp1x = sx + (cx - sx) * 0.45;
-                const cp2x = sx + (cx - sx) * 0.65;
-                const d = 'M ' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ' C ' + cp1x.toFixed(1) + ' ' + sy.toFixed(1) + ', ' + cp2x.toFixed(1) + ' ' + cy.toFixed(1) + ', ' + cx.toFixed(1) + ' ' + cy.toFixed(1);
+                const cardH = card.offsetHeight || 80;
+                // Align card vertically centered on uniform sy
+                const targetTop = Math.max(80, Math.min(window.innerHeight - cardH - 24, Math.round(sy - cardH * 0.5)));
+                card.style.top = targetTop + 'px';
+
+                const rect = card.getBoundingClientRect();
+                const cardLeft = rect.left;
+
+                // Straight horizontal dashed line directly from uniform anchor dot to the card's left edge at sy
+                const lineY = sy;
+                const d = 'M ' + sx.toFixed(1) + ' ' + lineY.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + lineY.toFixed(1);
 
                 const pathEl = document.getElementById(h.lineId);
                 const dotEl = document.getElementById(h.dotId);
