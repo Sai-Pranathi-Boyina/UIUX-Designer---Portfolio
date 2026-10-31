@@ -538,14 +538,30 @@
         }
 
         /* ---------------- SECTION 5: CONTACT PHONE MOCKUP PANEL ---------------- */
+        .contact-backdrop {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(13, 18, 16, 0.55) 0%, rgba(5, 8, 7, 0.85) 100%);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 85;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .contact-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         .contact-panel-wrapper {
             position: fixed;
-            right: 8%;
+            left: 50%;
             top: 50%;
-            transform: translateY(-50%) translateX(30px);
+            transform: translate(-50%, -46%) scale(0.96);
             width: 100%;
             max-width: 375px;
-            z-index: 85;
+            z-index: 95;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -553,7 +569,7 @@
         .contact-panel-wrapper.active {
             opacity: 1;
             pointer-events: auto;
-            transform: translateY(-50%) translateX(0);
+            transform: translate(-50%, -50%) scale(1);
         }
 
         .phone-device {
@@ -826,12 +842,16 @@
 
         @media (max-width: 768px) {
             .contact-panel-wrapper {
-                right: 50%;
-                transform: translate(50%, -50%);
-                max-width: 335px;
+                max-width: min(340px, 90vw);
+            }
+        }
+
+        @media (max-height: 750px) {
+            .contact-panel-wrapper {
+                transform: translate(-50%, -50%) scale(0.85);
             }
             .contact-panel-wrapper.active {
-                transform: translate(50%, -50%);
+                transform: translate(-50%, -50%) scale(0.88);
             }
         }
 
@@ -1069,6 +1089,7 @@
     </div>
 
     <!-- ---------------- SECTION 5: CONTACT PHONE MOCKUP PANEL ---------------- -->
+    <div class="contact-backdrop" id="contact-backdrop"></div>
     <div class="contact-panel-wrapper" id="contact-panel">
         <div class="phone-device">
             <!-- Notch / Status Bar -->
@@ -1286,10 +1307,9 @@
         let badgeFrontMesh, badgeBackMesh, badgeBaseRotY = 0;
 
         // 3D Screen Meshes
-        let laptopScreenMesh, monitorScreenMesh, phoneScreenMesh;
+        let laptopScreenMesh, monitorScreenMesh;
         let laptopCanvas, laptopCtx, laptopTexture;
         let monitorCanvas, monitorCtx, monitorTexture;
-        let phoneCanvas, phoneCtx, phoneTexture;
 
         // Toast Helper
         function showToast(msg) {
@@ -2099,197 +2119,11 @@
 
             const dateTextEl = document.getElementById('phone-date-text');
             if (dateTextEl) dateTextEl.innerText = dateStr;
-
-            if (phoneCtx) {
-                drawPhoneScreen();
-            }
         }
 
-        function initPhoneCanvas() {
-            phoneCanvas = document.createElement('canvas');
-            phoneCanvas.width = 720;
-            phoneCanvas.height = 1440;
-            phoneCtx = phoneCanvas.getContext('2d');
-
-            phoneTexture = new THREE.CanvasTexture(phoneCanvas);
-            phoneTexture.minFilter = THREE.LinearFilter;
-            phoneTexture.magFilter = THREE.LinearFilter;
-            phoneTexture.wrapS = THREE.RepeatWrapping;
-            phoneTexture.repeat.x = -1;
-            phoneTexture.offset.x = 1;
-
+        function initPhoneClock() {
             updatePhoneDisplays();
             setInterval(updatePhoneDisplays, 1000);
-        }
-
-        function drawPhoneScreen() {
-            if (!phoneCtx) return;
-            const ctx = phoneCtx;
-            const w = 720;
-            const h = 1440;
-
-            // Deep background
-            ctx.fillStyle = '#0d1210';
-            ctx.fillRect(0, 0, w, h);
-
-            // Subtle dot matrix pattern matching reference
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            const dotSpacing = 28;
-            for (let x = 14; x < w; x += dotSpacing) {
-                for (let y = 14; y < h; y += dotSpacing) {
-                    ctx.beginPath();
-                    ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-
-            // Punch hole camera at top center
-            ctx.fillStyle = '#060807';
-            ctx.beginPath();
-            ctx.arc(w / 2, 44, 14, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#18201a';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            const timeStr = formatCurrentPhoneTime();
-            const dateStr = formatCurrentPhoneDate();
-
-            // Status Bar Text & Icons
-            ctx.fillStyle = '#cbd5e1';
-            ctx.font = '600 22px "Montserrat", sans-serif';
-            ctx.textAlign = 'left';
-            ctx.fillText(timeStr, 56, 52);
-
-            ctx.textAlign = 'right';
-            ctx.font = '600 20px "Montserrat", sans-serif';
-            ctx.fillText('5G 100%', w - 56, 52);
-
-            // Big Clock (Matching reference)
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '800 114px "Montserrat", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText(timeStr, w / 2, 230);
-
-            // Dot and Date · HYDERABAD
-            ctx.fillStyle = '#84a98c';
-            ctx.beginPath();
-            ctx.arc(w / 2 - 130, 282, 5, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#cbd5e1';
-            ctx.font = '700 20px "Montserrat", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText(dateStr, w / 2 + 10, 288);
-
-            // Profile Header (Left Aligned with cards at x = 54)
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '800 38px "Montserrat", sans-serif';
-            ctx.fillText('Boyina Sai Pranathi', 54, 395);
-
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '500 24px "Montserrat", sans-serif';
-            ctx.fillText('UI/UX & Product Designer', 54, 435);
-
-            // 1. Card: Email (y: 480 to 620)
-            const cardW = w - 108;
-            ctx.fillStyle = 'rgba(28, 35, 31, 0.85)';
-            ctx.beginPath(); ctx.roundRect(54, 480, cardW, 140, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-            // Email Icon
-            ctx.fillStyle = '#84a98c';
-            ctx.font = '34px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('✉', 105, 564);
-
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '700 26px "Montserrat", sans-serif';
-            ctx.fillText('Email', 156, 542);
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '500 20px "Montserrat", sans-serif';
-            ctx.fillText('boyinasaipranathi@gmail.com', 156, 580);
-
-            ctx.fillStyle = '#475569';
-            ctx.beginPath(); ctx.arc(w - 90, 550, 4, 0, Math.PI * 2); ctx.fill();
-
-            // 2. Card: LinkedIn (y: 650 to 790)
-            ctx.fillStyle = 'rgba(28, 35, 31, 0.85)';
-            ctx.beginPath(); ctx.roundRect(54, 650, cardW, 140, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-            // LinkedIn in Icon
-            ctx.fillStyle = '#84a98c';
-            ctx.font = 'bold 30px "Montserrat", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('in', 105, 734);
-
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '700 26px "Montserrat", sans-serif';
-            ctx.fillText('LinkedIn', 156, 712);
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '500 20px "Montserrat", sans-serif';
-            ctx.fillText('sai-pranathi-boyina', 156, 750);
-
-            ctx.fillStyle = '#475569';
-            ctx.beginPath(); ctx.arc(w - 90, 720, 4, 0, Math.PI * 2); ctx.fill();
-
-            // 3. Card: CV.pdf (Highlighted Pill in Theme Sage Green) (y: 820 to 960)
-            const cvGrad = ctx.createLinearGradient(54, 820, w - 54, 960);
-            cvGrad.addColorStop(0, '#84a98c');
-            cvGrad.addColorStop(1, '#689172');
-            ctx.fillStyle = cvGrad;
-            ctx.beginPath(); ctx.roundRect(54, 820, cardW, 140, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-            // CV Icon
-            ctx.fillStyle = '#12241b';
-            ctx.font = '32px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('📄', 105, 904);
-
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#12241b';
-            ctx.font = '800 26px "Montserrat", sans-serif';
-            ctx.fillText('CV.pdf', 156, 882);
-            ctx.fillStyle = '#213c2c';
-            ctx.font = '600 20px "Montserrat", sans-serif';
-            ctx.fillText('Download my resume', 156, 920);
-
-            // Download circular button
-            ctx.fillStyle = '#12241b';
-            ctx.beginPath(); ctx.arc(w - 105, 890, 28, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#84a98c';
-            ctx.font = 'bold 24px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('↓', w - 105, 898);
-
-            // Bottom 4 App Circular Icons (y: 1220 to 1310)
-            const dockIcons = [
-                { symbol: '📞', cx: 140 },
-                { symbol: '💬', cx: 286 },
-                { symbol: '🌐', cx: 434 },
-                { symbol: '📷', cx: 580 }
-            ];
-            dockIcons.forEach(app => {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.arc(app.cx, 1260, 40, 0, Math.PI * 2); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.fillStyle = '#e2e8f0';
-                ctx.font = '28px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText(app.symbol, app.cx, 1270);
-            });
-
-            // Home indicator bar at bottom
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            ctx.beginPath(); ctx.roundRect(w / 2 - 90, 1380, 180, 6, 3); ctx.fill();
-
-            if (phoneTexture) phoneTexture.needsUpdate = true;
         }
 
         // ---------------- LOAD GLTF OFFICE MODEL ----------------
@@ -2303,7 +2137,7 @@
                 // Initialize In-Model Canvas Textures
                 initLaptopCanvas();
                 initMonitorCanvas();
-                initPhoneCanvas();
+                initPhoneClock();
 
                 // Setup Skeletal & Character Animations (Blinking eyes, arms, idle movements)
                 // Filter out 'cupboard' so the doors do not open and close continuously!
@@ -2421,25 +2255,7 @@
                     monitorAssembly.add(monitorScreenMesh);
                 }
 
-                // 3. Mount 3D Smartphone Screen Mesh (Contact Card Hub)
-                const phoneNode = findNode('phone black glass');
-                if (phoneNode) {
-                    const phoneMat = new THREE.MeshBasicMaterial({
-                        map: phoneTexture,
-                        side: THREE.DoubleSide
-                    });
-                    const phoneGeom = new THREE.PlaneGeometry(0.210, 0.420);
-                    const uvs = phoneGeom.attributes.uv;
-                    for (let i = 0; i < uvs.count; i++) {
-                        uvs.setX(i, 1.0 - uvs.getX(i));
-                    }
-                    uvs.needsUpdate = true;
-                    phoneScreenMesh = new THREE.Mesh(phoneGeom, phoneMat);
-                    phoneScreenMesh.name = 'InteractivePhoneScreen';
-                    phoneScreenMesh.position.set(0, 0.0055, 0);
-                    phoneScreenMesh.rotation.set(Math.PI / 2, Math.PI, 0);
-                    phoneNode.add(phoneScreenMesh);
-                }
+
 
                 // Relocate potted floor plant from beside cupboard into the trash can position, and remove/hide trash can
                 const floorPlantGroup = findNode('floor plant group');
@@ -2587,12 +2403,12 @@
             },
             {
                 id: 5,
-                name: 'Contact (Desk Phone)',
-                cameraPos: [2.12, 2.70, -0.15],
-                cameraTarget: [2.12, 1.87, 0.63],
-                fov: 34.0,
+                name: 'Contact',
+                cameraPos: [8.60, 2.35, -0.25],
+                cameraTarget: [0.76, 1.80, -1.50],
+                fov: 46.0,
                 cupboardOpen: false,
-                hint: 'Desk Phone · Tap cards to Email, LinkedIn, or download CV.pdf'
+                hint: 'Contact · Tap cards on phone to Email, LinkedIn, or download CV.pdf'
             }
         ];
 
@@ -2770,11 +2586,17 @@
                 }
             }
 
-            // Contact Phone Mockup Panel
+            // Contact Phone Mockup Panel & Backdrop
             const contactPanel = document.getElementById('contact-panel');
+            const contactBackdrop = document.getElementById('contact-backdrop');
             if (contactPanel) {
-                if (index === 5) contactPanel.classList.add('active');
-                else contactPanel.classList.remove('active');
+                if (index === 5) {
+                    contactPanel.classList.add('active');
+                    if (contactBackdrop) contactBackdrop.classList.add('active');
+                } else {
+                    contactPanel.classList.remove('active');
+                    if (contactBackdrop) contactBackdrop.classList.remove('active');
+                }
             }
 
             // Interactive Scene Hint
@@ -2971,13 +2793,7 @@
                         return;
                     }
                 }
-                if (currentSection === 5 && phoneScreenMesh) {
-                    const hits = raycaster.intersectObject(phoneScreenMesh);
-                    if (hits.length > 0) {
-                        renderer.domElement.style.cursor = 'pointer';
-                        return;
-                    }
-                }
+
                 if (currentSection === 2 && badgeCard1) {
                     const badgeHits = raycaster.intersectObjects([badgeCard1, badgeFrontMesh, badgeBackMesh].filter(Boolean), true);
                     if (badgeHits.length > 0) {
@@ -3060,48 +2876,7 @@
                 }
             }
 
-            // C. Click on 3D Phone Screen (Contact Actions)
-            if (currentSection === 5 && phoneScreenMesh) {
-                const hits = raycaster.intersectObject(phoneScreenMesh);
-                if (hits.length > 0) {
-                    const hit = hits[0];
-                    const px = hit.uv.x * 720;
-                    const py = (1.0 - hit.uv.y) * 1440;
-
-                    if (py >= 480 && py <= 620) {
-                        window.location.href = 'mailto:boyinasaipranathi@gmail.com';
-                        showToast('Opening Mail Client: boyinasaipranathi@gmail.com');
-                        return;
-                    } else if (py >= 650 && py <= 790) {
-                        window.open('https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/', '_blank');
-                        showToast('Opening LinkedIn Profile...');
-                        return;
-                    } else if (py >= 820 && py <= 960) {
-                        window.open('Boyina_Sai_Pranathi_CV.pdf', '_blank');
-                        showToast('Downloading Resume: Boyina_Sai_Pranathi_CV.pdf');
-                        return;
-                    } else if (py >= 1210 && py <= 1310) {
-                        if (px >= 90 && px <= 190) {
-                            window.location.href = 'mailto:boyinasaipranathi@gmail.com';
-                            showToast('Contact: boyinasaipranathi@gmail.com');
-                            return;
-                        } else if (px >= 236 && px <= 336) {
-                            window.location.href = 'mailto:boyinasaipranathi@gmail.com';
-                            showToast('Composing Direct Message...');
-                            return;
-                        } else if (px >= 384 && px <= 484) {
-                            window.open('https://www.twine.net/boyinasaipranathi679', '_blank');
-                            showToast('Opening Twine Portfolio...');
-                            return;
-                        } else if (px >= 530 && px <= 630) {
-                            showToast('3D Studio & Desk View Active');
-                            return;
-                        }
-                    }
-                }
-            }
-
-            // D. Click Noticeboard Badges in Experience Section
+            // C. Click Noticeboard Badges in Experience Section
             if (currentSection === 2 && badgeCard1) {
                 const badgeHits = raycaster.intersectObjects([badgeCard1, badgeFrontMesh, badgeBackMesh].filter(Boolean), true);
                 if (badgeHits.length > 0) {
