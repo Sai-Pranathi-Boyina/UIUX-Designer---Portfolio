@@ -1653,6 +1653,57 @@
                 if (!monitorScreenMesh) monitorScreenMesh = findNode('monitor');
                 if (!phoneScreenMesh) phoneScreenMesh = findNode('phone');
 
+                // Relocate potted floor plant from beside cupboard into the trash can position, and remove/hide trash can
+                const floorPlantGroup = findNode('floor plant group');
+                const planterMesh = findNode('large faceted floor planter') || floorPlantGroup;
+                const wasteBinBody = findNode('waste bin body') || findNode('waste bin');
+
+                const wasteBinNodes = [];
+                officeModel.traverse((child) => {
+                    if (child.name) {
+                        const cName = child.name.toLowerCase();
+                        if (cName.includes('waste bin') || cName.includes('trash can') || (cName.includes('bin') && !cName.includes('binding'))) {
+                            wasteBinNodes.push(child);
+                        }
+                    }
+                });
+
+                if (floorPlantGroup && wasteBinBody && planterMesh) {
+                    officeModel.updateMatrixWorld(true);
+                    planterMesh.updateWorldMatrix(true, true);
+                    wasteBinBody.updateWorldMatrix(true, true);
+
+                    const planterBox = new THREE.Box3().setFromObject(planterMesh);
+                    const binBox = new THREE.Box3().setFromObject(wasteBinBody);
+
+                    const planterCenter = new THREE.Vector3();
+                    planterBox.getCenter(planterCenter);
+                    const binCenter = new THREE.Vector3();
+                    binBox.getCenter(binCenter);
+
+                    // Align planter pot center horizontally with waste bin center, and base on floor
+                    const offset = new THREE.Vector3(
+                        binCenter.x - planterCenter.x,
+                        binBox.min.y - planterBox.min.y,
+                        binCenter.z - planterCenter.z
+                    );
+
+                    const plantWorldPos = new THREE.Vector3();
+                    floorPlantGroup.getWorldPosition(plantWorldPos);
+                    const newWorldPos = plantWorldPos.clone().add(offset);
+
+                    if (floorPlantGroup.parent) {
+                        floorPlantGroup.parent.worldToLocal(newWorldPos);
+                    }
+                    floorPlantGroup.position.copy(newWorldPos);
+                    floorPlantGroup.updateMatrixWorld(true);
+
+                    // Remove/hide trash can
+                    wasteBinNodes.forEach((node) => {
+                        node.visible = false;
+                    });
+                }
+
                 // Dismiss loading screen
                 const loaderEl = document.getElementById('loader');
                 if (loaderEl) {
@@ -1661,10 +1712,10 @@
                 }
 
                 // ---------------- CINEMATIC OPENING CAMERA TRANSITION ----------------
-                // Starts zoomed into desk/character at [3.2, 2.7, 1.7] and glides back over 3.0s to Room Home overview [7.60, 4.20, -1.60]
+                // Starts zoomed into desk/character at [3.2, 2.7, 1.7] and glides back over 3.0s to Room Home overview [8.40, 4.45, -1.60] (fov 48.0)
                 const duration = 3000;
                 new TWEEN.Tween(camera.position)
-                    .to({ x: 7.60, y: 4.20, z: -1.60 }, duration)
+                    .to({ x: 8.40, y: 4.45, z: -1.60 }, duration)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .start();
                 new TWEEN.Tween(controls.target)
@@ -1676,7 +1727,7 @@
                     })
                     .start();
                 new TWEEN.Tween(camera)
-                    .to({ fov: 42.0 }, duration)
+                    .to({ fov: 48.0 }, duration)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .onUpdate(() => camera.updateProjectionMatrix())
                     .onComplete(() => {
@@ -1703,9 +1754,9 @@
             {
                 id: 0,
                 name: 'Room (Home)',
-                cameraPos: [7.60, 4.20, -1.60],
+                cameraPos: [8.40, 4.45, -1.60],
                 cameraTarget: [0.76, 2.10, -1.50],
-                fov: 42.0,
+                fov: 48.0,
                 cupboardOpen: false,
                 hint: ''
             },
