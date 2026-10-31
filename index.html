@@ -216,6 +216,9 @@
             color: var(--accent-green);
             text-transform: uppercase;
             margin-bottom: 14px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* Second line styling: large bold charcoal heading for "UI/UX & Product Designer" */
@@ -242,11 +245,12 @@
         }
 
         .hero-accent-line {
-            width: 64px;
+            width: 0px;
             height: 3.5px;
             background: var(--accent-sage);
             border-radius: 2px;
             margin-bottom: 22px;
+            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-lead {
@@ -256,12 +260,18 @@
             line-height: 1.65;
             max-width: 480px;
             margin-bottom: 34px;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-buttons {
             display: flex;
             align-items: center;
             gap: 16px;
+            opacity: 0;
+            transform: translateY(14px) scale(0.96);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .btn-primary-hero {
@@ -2058,39 +2068,18 @@
             }
             hasIntroHeroPlayed = true;
 
-            // Initial hidden state for animated parts
-            if (kickerEl) {
-                kickerEl.style.opacity = '0';
-                kickerEl.style.transform = 'translateY(-10px)';
-                kickerEl.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-            }
-            if (lineEl) {
-                lineEl.style.width = '0px';
-                lineEl.style.transition = 'width 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-            }
-            if (descEl) {
-                descEl.style.opacity = '0';
-                descEl.style.transform = 'translateY(12px)';
-                descEl.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-            }
-            if (actionsEl) {
-                actionsEl.style.opacity = '0';
-                actionsEl.style.transform = 'translateY(12px) scale(0.96)';
-                actionsEl.style.transition = 'opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-            }
-
-            // 1. Kicker appears
+            // 1. Kicker appears smoothly
             setTimeout(() => {
                 if (kickerEl) {
                     kickerEl.style.opacity = '1';
                     kickerEl.style.transform = 'translateY(0)';
                 }
-            }, 120);
+            }, 100);
 
-            // 2. Heading typing effect
+            // 2. Heading typing effect starts cleanly
             if (typedSpan) typedSpan.textContent = '';
             let charIdx = 0;
-            const typeSpeed = 36; // ~36ms per char = ~850ms total
+            const typeSpeed = 34; // ~34ms per char = ~800ms total
             setTimeout(() => {
                 const interval = setInterval(() => {
                     if (charIdx < fullHeadingText.length) {
@@ -2098,13 +2087,14 @@
                         charIdx++;
                     } else {
                         clearInterval(interval);
+
                         // Cursor fade
                         setTimeout(() => {
                             if (cursorSpan) {
                                 cursorSpan.style.transition = 'opacity 0.4s ease';
                                 cursorSpan.style.opacity = '0';
                             }
-                        }, 500);
+                        }, 400);
 
                         // 3. Accent Line expands
                         setTimeout(() => {
@@ -2117,7 +2107,7 @@
                                 descEl.style.opacity = '1';
                                 descEl.style.transform = 'translateY(0)';
                             }
-                        }, 250);
+                        }, 220);
 
                         // 5. Buttons pop in
                         setTimeout(() => {
@@ -2125,10 +2115,10 @@
                                 actionsEl.style.opacity = '1';
                                 actionsEl.style.transform = 'translateY(0) scale(1)';
                             }
-                        }, 400);
+                        }, 360);
                     }
                 }, typeSpeed);
-            }, 450);
+            }, 350);
         }
 
         function goToSection(index) {
