@@ -683,8 +683,8 @@
 
         // Perspective Camera
         const camera = new THREE.PerspectiveCamera(44.0, window.innerWidth / window.innerHeight, 0.1, 100);
-        // Start exactly framed as in Image 1: Desk on left, character seated, open space on right
-        camera.position.set(3.49, 2.70, 0.95);
+        // Start zoomed into desk/character (opening view)
+        camera.position.set(3.2, 2.7, 1.7);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -705,7 +705,7 @@
         controls.minDistance = 0.3;
         controls.maxDistance = 15.0;
         // Looking at character desk in opening angle
-        controls.target.set(0.16, 2.00, -0.53);
+        controls.target.set(-0.2, 2.0, 0.4);
         controls.maxPolarAngle = Math.PI / 2 + 0.15;
         controls.enabled = true;
 
@@ -1608,12 +1608,19 @@
                 initMonitorCanvas();
                 initPhoneCanvas();
 
-                // Setup Skeletal Animations
+                // Setup Skeletal & Character Animations (Blinking eyes, arms, idle movements)
+                // Filter out 'cupboard' so the doors do not open and close continuously!
                 if (gltf.animations && gltf.animations.length > 0) {
                     mixer = new THREE.AnimationMixer(officeModel);
+                    activeActions = [];
                     gltf.animations.forEach((clip) => {
                         const action = mixer.clipAction(clip);
-                        action.play();
+                        const cName = clip.name.toLowerCase();
+                        if (cName.includes('cupboard') || cName.includes('cabinet') || cName.includes('door')) {
+                            action.stop();
+                        } else {
+                            action.play();
+                        }
                         activeActions.push(action);
                     });
                 }
@@ -1681,6 +1688,34 @@
                     loaderEl.style.opacity = '0';
                     setTimeout(() => loaderEl.style.display = 'none', 600);
                 }
+
+                // ---------------- CINEMATIC OPENING CAMERA TRANSITION ----------------
+                // Starts zoomed into desk/character at [3.2, 2.7, 1.7] and glides back over 3.0s to Room Home overview [7.60, 4.20, -1.60]
+                const duration = 3000;
+                new TWEEN.Tween(camera.position)
+                    .to({ x: 7.60, y: 4.20, z: -1.60 }, duration)
+                    .easing(TWEEN.Easing.Cubic.InOut)
+                    .start();
+                new TWEEN.Tween(controls.target)
+                    .to({ x: 0.76, y: 2.10, z: -1.50 }, duration)
+                    .easing(TWEEN.Easing.Cubic.InOut)
+                    .onComplete(() => {
+                        controls.enabled = true;
+                        controls.update();
+                    })
+                    .start();
+                new TWEEN.Tween(camera)
+                    .to({ fov: 42.0 }, duration)
+                    .easing(TWEEN.Easing.Cubic.InOut)
+                    .onUpdate(() => camera.updateProjectionMatrix())
+                    .onComplete(() => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const initSec = parseInt(urlParams.get('sec') || '0', 10);
+                        if (!isNaN(initSec) && initSec > 0 && initSec < sectionsData.length) {
+                            goToSection(initSec);
+                        }
+                    })
+                    .start();
             },
             (xhr) => {
                 // Progress
@@ -1697,10 +1732,10 @@
             {
                 id: 0,
                 name: 'Room (Home)',
-                // Exactly framed as in Image 1: character & desk on left, right side open for typography
-                cameraPos: [3.49, 2.70, 0.95],
-                cameraTarget: [0.16, 2.00, -0.53],
-                fov: 44.0,
+                // Room overview angle showing desk on left and open room view
+                cameraPos: [7.60, 4.20, -1.60],
+                cameraTarget: [0.76, 2.10, -1.50],
+                fov: 42.0,
                 cupboardOpen: false,
                 hint: ''
             },
