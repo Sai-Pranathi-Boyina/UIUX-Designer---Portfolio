@@ -388,17 +388,17 @@
             position: fixed;
             right: 48px;
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             pointer-events: auto;
             background: var(--card-ivory);
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--card-border);
             border-radius: 14px;
-            padding: 16px 20px;
+            padding: 13px 18px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             box-shadow: var(--card-shadow);
             transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
         }
@@ -825,10 +825,10 @@
             // Category Filter Tabs Row
             const tabs = [
                 { id: 'all', label: 'All Skills', x: 24, w: 160 },
-                { id: 'figma', label: '❖ Figma & Systems', x: 194, w: 190 },
-                { id: 'ux', label: '🧭 UX Strategy', x: 394, w: 175 },
-                { id: 'spatial', label: '🥽 3D & Spatial', x: 579, w: 175 },
-                { id: 'tools', label: '🛠️ Tools Suite', x: 764, w: 160 }
+                { id: 'figma', label: '❖ Figma (3+ yrs)', x: 194, w: 190 },
+                { id: 'ux', label: '🤖 AI & Research', x: 394, w: 175 },
+                { id: 'spatial', label: '🎨 Creative & 3D', x: 579, w: 175 },
+                { id: 'tools', label: '💻 No-Code & CMS', x: 764, w: 160 }
             ];
 
             tabs.forEach(t => {
@@ -845,114 +845,164 @@
                 ctx.fillText(t.label, t.x + t.w / 2, 90);
             });
 
-            // Helper to draw bold, visible skill progress bars
-            function drawSkillBar(name, level, bx, by, bw) {
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 17px "Montserrat", sans-serif';
-                ctx.textAlign = 'left';
-                ctx.fillText(name, bx, by);
+            // Helper to draw clean skill badge pills (NO progress bars)
+            function drawSkillChips(skills, startX, startY, maxW, isFeatured) {
+                let curX = startX;
+                let curY = startY;
+                const pillH = isFeatured ? 36 : 30;
+                const pillPaddingX = isFeatured ? 16 : 12;
+                ctx.font = isFeatured ? '600 14px "Montserrat", sans-serif' : '500 13px "Montserrat", sans-serif';
 
-                ctx.fillStyle = '#A8B49A';
-                ctx.font = 'bold 16px "JetBrains Mono", monospace';
-                ctx.textAlign = 'right';
-                ctx.fillText(level + '%', bx + bw, by);
+                skills.forEach(skill => {
+                    const textW = ctx.measureText(skill).width;
+                    const pillW = textW + pillPaddingX * 2;
 
-                // Bar background
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-                ctx.beginPath(); ctx.roundRect(bx, by + 8, bw, 10, 5); ctx.fill();
-
-                // Bar fill with vivid emerald/green gradient
-                const grad = ctx.createLinearGradient(bx, 0, bx + bw, 0);
-                grad.addColorStop(0, '#244735');
-                grad.addColorStop(1, '#10b981');
-                ctx.fillStyle = grad;
-                ctx.beginPath(); ctx.roundRect(bx, by + 8, bw * (level / 100), 10, 5); ctx.fill();
-            }
-
-            // Card 1: Figma & Design Systems Architecture
-            if (activeSkillTab === 'all' || activeSkillTab === 'figma') {
-                const cx = (activeSkillTab === 'figma') ? 160 : 36;
-                const cy = 126;
-                const cw = (activeSkillTab === 'figma') ? 704 : 460;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 255, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('❖ FIGMA & ATOMIC DESIGN SYSTEMS', cx + 24, cy + 36);
-
-                drawSkillBar('Design Tokens Architecture & Variables', 98, cx + 24, cy + 78, cw - 48);
-                drawSkillBar('Atomic Component Libraries & Variants', 96, cx + 24, cy + 138, cw - 48);
-                drawSkillBar('Auto-Layout 5.0 & Responsive Frames', 97, cx + 24, cy + 198, cw - 48);
-            }
-
-            // Card 2: UI/UX & User Research
-            if (activeSkillTab === 'all' || activeSkillTab === 'ux') {
-                const cx = (activeSkillTab === 'ux') ? 160 : 528;
-                const cy = 126;
-                const cw = (activeSkillTab === 'ux') ? 704 : 460;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 255, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.fillStyle = '#10b981'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('🧭 USER RESEARCH & PRODUCT UX', cx + 24, cy + 36);
-
-                drawSkillBar('Wireframing, User Flow & Journey Maps', 95, cx + 24, cy + 78, cw - 48);
-                drawSkillBar('Usability Testing & Conversion Optimization', 92, cx + 24, cy + 138, cw - 48);
-                drawSkillBar('Information Architecture & Micro-interactions', 94, cx + 24, cy + 198, cw - 48);
-            }
-
-            // Card 3: 3D & Spatial Design
-            if (activeSkillTab === 'all' || activeSkillTab === 'spatial') {
-                const cx = (activeSkillTab === 'spatial') ? 160 : 36;
-                const cy = (activeSkillTab === 'spatial') ? 140 : 405;
-                const cw = (activeSkillTab === 'spatial') ? 704 : 460;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 265, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('🥽 3D INTERACTION & SPATIAL UX', cx + 24, cy + 36);
-
-                drawSkillBar('Blender 3D Modeling & Animation', 90, cx + 24, cy + 78, cw - 48);
-                drawSkillBar('Three.js WebGL Interactive Scene Architecture', 88, cx + 24, cy + 138, cw - 48);
-                drawSkillBar('Spline 3D Spatial Interactions & Webflow', 89, cx + 24, cy + 198, cw - 48);
-            }
-
-            // Card 4: Tools Suite
-            if (activeSkillTab === 'all' || activeSkillTab === 'tools') {
-                const cx = (activeSkillTab === 'tools') ? 160 : 528;
-                const cy = (activeSkillTab === 'tools') ? 140 : 405;
-                const cw = (activeSkillTab === 'tools') ? 704 : 460;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(cx, cy, cw, 265, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('🛠️ TOOLS & PRODUCT HANDOFF SUITE', cx + 24, cy + 36);
-
-                const tools = [
-                    'Figma', 'FigJam', 'Blender 3D', 'Spline',
-                    'HTML5 / CSS3', 'React UI', 'Three.js', 'Linear',
-                    'Illustrator', 'Photoshop', 'Notion', 'WCAG AA'
-                ];
-                let tx = cx + 24, ty = cy + 80;
-                tools.forEach(tool => {
-                    ctx.font = 'bold 15px "Montserrat", sans-serif';
-                    const tw = ctx.measureText(tool).width + 32;
-                    if (tx + tw > cx + cw - 20) {
-                        tx = cx + 24;
-                        ty += 52;
+                    if (curX + pillW > startX + maxW) {
+                        curX = startX;
+                        curY += pillH + 8;
                     }
-                    ctx.fillStyle = 'rgba(36, 71, 53, 0.35)';
-                    ctx.beginPath(); ctx.roundRect(tx, ty - 22, tw, 38, 10); ctx.fill();
-                    ctx.strokeStyle = '#A8B49A'; ctx.lineWidth = 1; ctx.stroke();
-                    ctx.fillStyle = '#ffffff';
+
+                    // Background
+                    ctx.fillStyle = isFeatured ? 'rgba(36, 71, 53, 0.5)' : 'rgba(255, 255, 255, 0.08)';
+                    ctx.beginPath();
+                    ctx.roundRect(curX, curY, pillW, pillH, 8);
+                    ctx.fill();
+
+                    // Border
+                    ctx.strokeStyle = isFeatured ? '#A8B49A' : 'rgba(255, 255, 255, 0.16)';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+
+                    // Text
+                    ctx.fillStyle = isFeatured ? '#ffffff' : '#f8fafc';
                     ctx.textAlign = 'left';
-                    ctx.fillText(tool, tx + 16, ty + 3);
-                    tx += tw + 12;
+                    ctx.fillText(skill, curX + pillPaddingX, curY + pillH - (isFeatured ? 12 : 9));
+
+                    curX += pillW + 8;
                 });
+            }
+
+            // Authentic Resume Skills Data
+            const figmaSkills = [
+                'Auto Layout', 'Components', 'Variants', 'Variables', 'Styles',
+                'Design Systems', 'Responsive Design', 'Constraints',
+                'Wireframing', 'Prototyping', 'Interactive Prototypes',
+                'Design Libraries', 'Dev Mode', 'Figma AI'
+            ];
+
+            const aiUxSkills = [
+                'Claude (Research & Ideation)', 'Figma AI (Design Support)',
+                'User Flows', 'Wireframing', 'High-Fidelity UI',
+                'Information Architecture', 'Usability Testing',
+                'Workflow Automation', 'Interface Clarity'
+            ];
+
+            const creativeSkills = [
+                'Adobe Creative Suite', 'Visual Design', 'Animation',
+                'Visual Effects', 'Spline 3D', 'Blender 3D Modeling',
+                '3D Rigging & Animation', 'Lottie & Rive (Vector Animation)'
+            ];
+
+            const noCodeSkills = [
+                'FlutterFlow (UI Building)', 'App Interface Design',
+                'Interactive Prototypes', 'Webflow (Design & CMS)',
+                'WordPress (Website Design)', 'Developer Collaboration',
+                'HTML5 / CSS3'
+            ];
+
+            // Render content based on activeSkillTab
+            if (activeSkillTab === 'all') {
+                // 2x2 Grid of Clean Skill Cards
+                // Card 1: Figma (Top Left)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(28, 120, 472, 265, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('❖ FIGMA (3+ YEARS)', 48, 150);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "Montserrat", sans-serif';
+                ctx.fillText('Design Systems, Variables & Interactive Prototyping', 48, 170);
+                drawSkillChips(figmaSkills, 48, 186, 432, false);
+
+                // Card 2: AI & Research (Top Right)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(524, 120, 472, 265, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.fillStyle = '#10b981'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🤖 AI & DESIGN RESEARCH', 544, 150);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "Montserrat", sans-serif';
+                ctx.fillText('Claude & Figma AI Ideation, Flows & Usability', 544, 170);
+                drawSkillChips(aiUxSkills, 544, 186, 432, false);
+
+                // Card 3: Creative & 3D (Bottom Left)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(28, 400, 472, 265, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🎨 CREATIVE SUITE & 3D', 48, 430);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "Montserrat", sans-serif';
+                ctx.fillText('Adobe Creative Suite, Spline, Blender & Vector Motion', 48, 450);
+                drawSkillChips(creativeSkills, 48, 466, 432, false);
+
+                // Card 4: No-Code & CMS (Bottom Right)
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(524, 400, 472, 265, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('💻 NO-CODE & WEB CMS', 544, 430);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "Montserrat", sans-serif';
+                ctx.fillText('FlutterFlow, Webflow, WordPress & App Interfaces', 544, 450);
+                drawSkillChips(noCodeSkills, 544, 466, 432, false);
+            } else {
+                // Expanded Single Domain View
+                const cx = 32;
+                const cy = 122;
+                const cw = 960;
+                const ch = 544;
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.beginPath(); ctx.roundRect(cx, cy, cw, ch, 16); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+                let activeTitle = '';
+                let activeSub = '';
+                let activeItems = [];
+                let activeColor = '#A8B49A';
+
+                if (activeSkillTab === 'figma') {
+                    activeTitle = '❖ FIGMA (3+ YEARS EXPERIENCE) · TECHNICAL PROFICIENCY';
+                    activeSub = 'Specialized in scalable component architecture, design system variables, and responsive prototypes directly from resume.';
+                    activeItems = figmaSkills;
+                    activeColor = '#A8B49A';
+                } else if (activeSkillTab === 'ux') {
+                    activeTitle = '🤖 AI & DESIGN RESEARCH · CLAUDE & FIGMA AI';
+                    activeSub = 'Leveraging Claude and Figma AI for design research, ideation, user flows, and usability optimization.';
+                    activeItems = aiUxSkills;
+                    activeColor = '#10b981';
+                } else if (activeSkillTab === 'spatial') {
+                    activeTitle = '🎨 CREATIVE SUITE & 3D SPATIAL DESIGN';
+                    activeSub = 'Visual design, animation, visual effects, and 3D modeling across Adobe, Spline, Blender, and Rive.';
+                    activeItems = creativeSkills;
+                    activeColor = '#38bdf8';
+                } else if (activeSkillTab === 'tools') {
+                    activeTitle = '💻 NO-CODE, CMS & APP INTERFACE BUILDING';
+                    activeSub = 'Building robust digital products with FlutterFlow, Webflow, WordPress, and developer design handoff.';
+                    activeItems = noCodeSkills;
+                    activeColor = '#f59e0b';
+                }
+
+                ctx.fillStyle = activeColor; ctx.font = 'bold 20px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText(activeTitle, cx + 32, cy + 44);
+
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
+                ctx.fillText(activeSub, cx + 32, cy + 76);
+
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.beginPath();
+                ctx.moveTo(cx + 32, cy + 96); ctx.lineTo(cx + cw - 32, cy + 96); ctx.stroke();
+
+                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 15px "Montserrat", sans-serif';
+                ctx.fillText('VERIFIED SKILLS FROM RESUME:', cx + 32, cy + 130);
+
+                drawSkillChips(activeItems, cx + 32, cy + 154, cw - 64, true);
             }
 
             if (laptopTexture) laptopTexture.needsUpdate = true;
@@ -2092,42 +2142,110 @@
             if (!svg || currentSection !== 4) return;
 
             const hangers = [
-                { obj: hangerBTech, lineId: 'edu-line-btech', dotId: 'edu-dot-btech', cardId: 'card-edu-btech' },
-                { obj: hangerInter, lineId: 'edu-line-inter', dotId: 'edu-dot-inter', cardId: 'card-edu-inter' },
-                { obj: hangerSSC, lineId: 'edu-line-ssc', dotId: 'edu-dot-ssc', cardId: 'card-edu-ssc' }
+                { obj: hangerBTech, lineId: 'edu-line-btech', dotId: 'edu-dot-btech', cardId: 'card-edu-btech', anchorMode: 'top' },
+                { obj: hangerInter, lineId: 'edu-line-inter', dotId: 'edu-dot-inter', cardId: 'card-edu-inter', anchorMode: 'mid' },
+                { obj: hangerSSC, lineId: 'edu-line-ssc', dotId: 'edu-dot-ssc', cardId: 'card-edu-ssc', anchorMode: 'bot' }
             ];
+
+            const screenItems = [];
 
             hangers.forEach(h => {
                 if (!h.obj) return;
                 const bbox = new THREE.Box3().setFromObject(h.obj);
                 const v = new THREE.Vector3();
-                bbox.getCenter(v);
+                if (h.anchorMode === 'top') {
+                    v.set((bbox.min.x + bbox.max.x) * 0.5, bbox.max.y - 0.05, (bbox.min.z + bbox.max.z) * 0.5);
+                } else if (h.anchorMode === 'bot') {
+                    v.set((bbox.min.x + bbox.max.x) * 0.5, bbox.min.y + 0.14, (bbox.min.z + bbox.max.z) * 0.5);
+                } else {
+                    bbox.getCenter(v);
+                }
                 v.project(camera);
 
                 const sx = (v.x * 0.5 + 0.5) * window.innerWidth;
                 const sy = (-(v.y * 0.5) + 0.5) * window.innerHeight;
 
                 const card = document.getElementById(h.cardId);
-                if (!card) return;
+                const cardH = card ? (card.offsetHeight || 84) : 84;
 
-                const cardH = card.offsetHeight || 80;
-                // Align card vertically centered on uniform sy
-                const targetTop = Math.max(80, Math.min(window.innerHeight - cardH - 24, Math.round(sy - cardH * 0.5)));
-                card.style.top = targetTop + 'px';
+                screenItems.push({
+                    h,
+                    sx,
+                    sy,
+                    card,
+                    cardH,
+                    top: Math.round(sy - cardH * 0.5)
+                });
+            });
 
-                const rect = card.getBoundingClientRect();
-                const cardLeft = rect.left;
+            if (screenItems.length < 3) return;
 
-                // Straight horizontal dashed line directly from uniform anchor dot to the card's left edge at sy
-                const lineY = sy;
-                const d = 'M ' + sx.toFixed(1) + ' ' + lineY.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + lineY.toFixed(1);
+            const minGap = 16;
+            const topBoundary = 86; // below navbar
+            const bottomBoundary = window.innerHeight - 20;
 
-                const pathEl = document.getElementById(h.lineId);
-                const dotEl = document.getElementById(h.dotId);
-                if (pathEl) pathEl.setAttribute('d', d);
-                if (dotEl) {
-                    dotEl.setAttribute('cx', sx.toFixed(1));
-                    dotEl.setAttribute('cy', sy.toFixed(1));
+            // 1. Forward relaxation pass: ensure no card overlaps the one above it
+            for (let i = 0; i < screenItems.length; i++) {
+                if (i === 0) {
+                    screenItems[i].top = Math.max(topBoundary, screenItems[i].top);
+                } else {
+                    const prevBottom = screenItems[i - 1].top + screenItems[i - 1].cardH;
+                    screenItems[i].top = Math.max(prevBottom + minGap, screenItems[i].top);
+                }
+            }
+
+            // 2. Backward relaxation pass: ensure cards do not overflow the bottom
+            for (let i = screenItems.length - 1; i >= 0; i--) {
+                const curBottom = screenItems[i].top + screenItems[i].cardH;
+                if (curBottom > bottomBoundary) {
+                    screenItems[i].top = bottomBoundary - screenItems[i].cardH;
+                }
+                if (i > 0) {
+                    const requiredBottom = screenItems[i].top - minGap;
+                    if (screenItems[i - 1].top + screenItems[i - 1].cardH > requiredBottom) {
+                        screenItems[i - 1].top = requiredBottom - screenItems[i - 1].cardH;
+                    }
+                }
+            }
+
+            // 3. Final topBoundary guard
+            for (let i = 0; i < screenItems.length; i++) {
+                if (i === 0) {
+                    screenItems[i].top = Math.max(topBoundary, screenItems[i].top);
+                } else {
+                    screenItems[i].top = Math.max(screenItems[i - 1].top + screenItems[i - 1].cardH + minGap, screenItems[i].top);
+                }
+            }
+
+            // Apply calculated positions and draw clean horizontal leader lines
+            screenItems.forEach(item => {
+                if (item.card) {
+                    item.card.style.top = Math.round(item.top) + 'px';
+                    const rect = item.card.getBoundingClientRect();
+                    const cardLeft = rect.left;
+
+                    const connectY = Math.max(item.top + 14, Math.min(item.top + item.cardH - 14, item.sy));
+
+                    let d;
+                    // If connectY aligns with sy, line is 100% straight and horizontal
+                    if (Math.abs(connectY - item.sy) <= 4) {
+                        d = 'M ' + item.sx.toFixed(1) + ' ' + item.sy.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + item.sy.toFixed(1);
+                    } else {
+                        // Smooth leader curve directly to the card edge
+                        const midX = item.sx + (cardLeft - item.sx) * 0.5;
+                        d = 'M ' + item.sx.toFixed(1) + ' ' + item.sy.toFixed(1) +
+                            ' C ' + midX.toFixed(1) + ' ' + item.sy.toFixed(1) +
+                            ', ' + midX.toFixed(1) + ' ' + connectY.toFixed(1) +
+                            ', ' + (cardLeft - 4).toFixed(1) + ' ' + connectY.toFixed(1);
+                    }
+
+                    const pathEl = document.getElementById(item.h.lineId);
+                    const dotEl = document.getElementById(item.h.dotId);
+                    if (pathEl) pathEl.setAttribute('d', d);
+                    if (dotEl) {
+                        dotEl.setAttribute('cx', item.sx.toFixed(1));
+                        dotEl.setAttribute('cy', item.sy.toFixed(1));
+                    }
                 }
             });
         }
