@@ -1015,13 +1015,15 @@
 
         function initLaptopCanvas() {
             laptopCanvas = document.createElement('canvas');
-            laptopCanvas.width = 1024;
-            laptopCanvas.height = 700;
+            laptopCanvas.width = 2048;
+            laptopCanvas.height = 1400;
             laptopCtx = laptopCanvas.getContext('2d');
 
             laptopTexture = new THREE.CanvasTexture(laptopCanvas);
-            laptopTexture.minFilter = THREE.LinearFilter;
+            laptopTexture.generateMipmaps = true;
+            laptopTexture.minFilter = THREE.LinearMipmapLinearFilter;
             laptopTexture.magFilter = THREE.LinearFilter;
+            laptopTexture.anisotropy = renderer ? renderer.capabilities.getMaxAnisotropy() : 16;
             laptopTexture.wrapS = THREE.RepeatWrapping;
             laptopTexture.repeat.x = -1;
             laptopTexture.offset.x = 1;
@@ -1032,6 +1034,8 @@
         function drawLaptopScreen() {
             if (!laptopCtx) return;
             const ctx = laptopCtx;
+            ctx.save();
+            ctx.setTransform(2, 0, 0, 2, 0, 0);
             const w = 1024;
             const h = 700;
 
@@ -1258,6 +1262,7 @@
                 drawSkillChips(activeItems, cx + 32, cy + 154, cw - 64, true);
             }
 
+            ctx.restore();
             if (laptopTexture) laptopTexture.needsUpdate = true;
         }
 
@@ -1330,13 +1335,15 @@
 
         function initMonitorCanvas() {
             monitorCanvas = document.createElement('canvas');
-            monitorCanvas.width = 1920;
-            monitorCanvas.height = 1080;
+            monitorCanvas.width = 3840;
+            monitorCanvas.height = 2160;
             monitorCtx = monitorCanvas.getContext('2d');
 
             monitorTexture = new THREE.CanvasTexture(monitorCanvas);
-            monitorTexture.minFilter = THREE.LinearFilter;
+            monitorTexture.generateMipmaps = true;
+            monitorTexture.minFilter = THREE.LinearMipmapLinearFilter;
             monitorTexture.magFilter = THREE.LinearFilter;
+            monitorTexture.anisotropy = renderer ? renderer.capabilities.getMaxAnisotropy() : 16;
             monitorTexture.wrapS = THREE.RepeatWrapping;
             monitorTexture.repeat.x = -1;
             monitorTexture.offset.x = 1;
@@ -1348,6 +1355,8 @@
         function drawMonitorScreen() {
             if (!monitorCtx) return;
             const ctx = monitorCtx;
+            ctx.save();
+            ctx.setTransform(2, 0, 0, 2, 0, 0);
             const w = 1920;
             const h = 1080;
             const p = projectsData[curProjectIdx];
@@ -1940,6 +1949,7 @@
                 }
             });
 
+            ctx.restore();
             if (monitorTexture) monitorTexture.needsUpdate = true;
         }
 
@@ -1981,14 +1991,15 @@
 
         function initPhoneCanvas() {
             phoneCanvas = document.createElement('canvas');
-            phoneCanvas.width = 720;
-            phoneCanvas.height = 1440;
+            phoneCanvas.width = 1440;
+            phoneCanvas.height = 2880;
             phoneCtx = phoneCanvas.getContext('2d');
 
             phoneTexture = new THREE.CanvasTexture(phoneCanvas);
-            phoneTexture.minFilter = THREE.LinearFilter;
+            phoneTexture.generateMipmaps = true;
+            phoneTexture.minFilter = THREE.LinearMipmapLinearFilter;
             phoneTexture.magFilter = THREE.LinearFilter;
-            phoneTexture.generateMipmaps = false;
+            phoneTexture.anisotropy = renderer ? renderer.capabilities.getMaxAnisotropy() : 16;
 
             updatePhoneDisplays();
             setInterval(updatePhoneDisplays, 1000);
@@ -1997,6 +2008,8 @@
         function drawPhoneScreen() {
             if (!phoneCtx) return;
             const ctx = phoneCtx;
+            ctx.save();
+            ctx.setTransform(2, 0, 0, 2, 0, 0);
             const w = 720;
             const h = 1440;
 
@@ -2161,6 +2174,7 @@
             ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
             ctx.beginPath(); ctx.roundRect(w / 2 - 90, 1380, 180, 6, 3); ctx.fill();
 
+            ctx.restore();
             if (phoneTexture) phoneTexture.needsUpdate = true;
         }
 
@@ -3047,6 +3061,7 @@
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         });
     </script>
 </body>
