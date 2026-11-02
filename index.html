@@ -57,93 +57,78 @@
             z-index: 1;
         }
 
-        /* ---------------- TOP NAVBAR (Transparent Header) ---------------- */
+        /* ---------------- TOP NAVBAR (Floating Blurred Header) ---------------- */
         .top-navbar {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 76px;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
             align-items: center;
-            padding: 0 48px;
+            gap: 18px;
+            padding: 6px 8px 6px 20px;
             z-index: 100;
-            background: transparent;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        .top-navbar > * {
             pointer-events: auto;
-        }
-
-        .nav-brand-spacer {
-            visibility: hidden;
-            width: 100%;
+            background: rgba(247, 246, 242, 0.75);
+            backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            border-radius: 100px;
+            box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(36, 71, 53, 0.08);
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .nav-center-links {
             display: flex;
             align-items: center;
-            gap: 36px;
-            justify-self: center;
+            gap: 12px;
         }
 
         .nav-link {
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 600;
             color: var(--text-charcoal);
             text-decoration: none;
             cursor: pointer;
-            position: relative;
-            padding: 6px 0;
-            transition: color 0.2s ease;
+            padding: 7px 14px;
+            border-radius: 100px;
+            transition: all 0.2s ease;
         }
         .nav-link:hover {
             color: var(--accent-green);
+            background: rgba(36, 71, 53, 0.08);
         }
         .nav-link.active {
-            color: var(--accent-green);
-            font-weight: 700;
-        }
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
+            color: #ffffff;
             background: var(--accent-green);
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(36, 71, 53, 0.25);
         }
 
         .nav-right-cta {
             display: flex;
             align-items: center;
-            gap: 14px;
-            justify-self: end;
         }
-
         .btn-nav-cta {
-            background: var(--accent-green);
-            color: var(--bg-ivory);
-            padding: 11px 24px;
+            background: #244735;
+            color: #ffffff;
+            padding: 8px 18px;
             border-radius: 100px;
-            font-size: 14px;
-            font-weight: 600;
-            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid #84a98c;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 14px rgba(36, 71, 53, 0.22);
+            gap: 6px;
             transition: all 0.25s ease;
+            white-space: nowrap;
         }
         .btn-nav-cta:hover {
-            background: var(--accent-green-hover);
-            transform: translateY(-1.5px);
-            box-shadow: 0 6px 18px rgba(36, 71, 53, 0.32);
+            background: #183325;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(36, 71, 53, 0.3);
         }
 
         /* ---------------- BACK TO ROOM BUTTON ---------------- */
@@ -309,141 +294,156 @@
             transform: translateY(-2px);
         }
 
-        /* ---------------- SECTION 2: EXPERIENCE PANEL (ULTRAMIND) ---------------- */
-        .experience-panel-wrapper {
+        /* ---------------- SECTION 2: EXPERIENCE BOARD (RAOMUHAMMADHAMZA STYLE PINBOARD) ---------------- */
+        .surface.board {
             position: fixed;
-            top: 52%;
+            top: 50%;
             right: 48px;
-            transform: translateY(-50%) translateX(20px);
+            transform: translateY(-50%) translateX(24px);
             width: 100%;
-            max-width: 480px;
-            background: var(--card-ivory);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--card-border);
+            max-width: 600px;
+            max-height: 84vh;
+            overflow-y: auto;
+            background-color: #b5b7bd;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.12) 0.6px, transparent 0.8px), radial-gradient(rgba(255, 255, 255, 0.18) 0.6px, transparent 0.8px);
+            background-position: 0 0, 2px 3px;
+            background-size: 4px 4px, 5px 5px;
+            border: 8px solid #5a3c26;
             border-radius: 16px;
-            padding: 26px 28px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 0, 0, 0.25);
+            padding: 20px 22px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            box-shadow: var(--card-shadow);
-            z-index: 10;
+            gap: 14px;
+            z-index: 15;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.4s ease, transform 0.4s ease;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: #5a3c26 transparent;
         }
-        .experience-panel-wrapper.active {
+        .surface.board.active {
             opacity: 1;
             pointer-events: auto;
             transform: translateY(-50%) translateX(0);
         }
-        .exp-card-header {
+
+        .board-head {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-bottom: 4px;
         }
-        .exp-company-tag {
-            font-size: 12px;
+        .board-head .kicker {
+            margin: 0;
+            letter-spacing: 0.22em;
+            color: #f4e7e2;
+            background: #1b1f33;
+            align-self: flex-start;
+            padding: 6px 14px;
+            font-size: 13px;
             font-weight: 800;
-            color: var(--accent-green);
-            letter-spacing: 0.08em;
             text-transform: uppercase;
+            border-radius: 4px;
         }
-        .exp-date-badge {
+        .board-head .cv {
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: #244735;
+            border: 1px solid #84a98c;
+            padding: 6px 14px;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11.5px;
             font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 100px;
-            background: rgba(36, 71, 53, 0.08);
-            color: var(--accent-green);
+            text-decoration: none;
+            border-radius: 999px;
+            transition: all 0.2s ease;
+        }
+        .board-head .cv:hover {
+            background: #183325;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(36, 71, 53, 0.3);
+        }
+
+        .board .notes {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 0;
+        }
+        .board .note {
+            background: #fbfbf9;
+            border-radius: 10px;
+            padding: 18px 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14), 0 1px 3px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+        .board .pin {
+            background: #e11d48;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            position: absolute;
+            top: -7px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+        }
+        .board .note:nth-child(2) .pin {
+            background: #0284c7;
+        }
+
+        .board .note-head-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            margin-top: 2px;
+        }
+        .board h3 {
+            margin: 0;
+            color: #1b1f33;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+        .board .role {
+            margin: 0;
+            color: #244735;
+            font-size: 13.5px;
+            font-weight: 700;
+        }
+        .board .when {
+            margin: 0;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #64748b;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
             white-space: nowrap;
         }
-        .exp-role-title {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-charcoal);
-            letter-spacing: -0.02em;
-            line-height: 1.2;
-        }
-        .exp-product-subtitle {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-muted);
-            margin-top: -6px;
-        }
-        .exp-bullets-list {
+        .board ul {
+            margin: 6px 0 0;
+            padding: 0;
+            list-style: none;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            margin-top: 2px;
-            max-height: 270px;
-            overflow-y: auto;
-            padding-right: 6px;
         }
-        .exp-bullets-list::-webkit-scrollbar {
-            width: 4px;
-        }
-        .exp-bullets-list::-webkit-scrollbar-thumb {
-            background: rgba(36, 37, 34, 0.15);
-            border-radius: 4px;
-        }
-        .exp-bullet-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        .exp-bullet-icon {
-            color: var(--accent-green);
-            font-size: 11px;
-            margin-top: 3px;
-            flex-shrink: 0;
-        }
-        .exp-bullet-item p {
-            font-size: 12.5px;
-            color: var(--text-charcoal);
-            line-height: 1.45;
-            font-weight: 450;
-        }
-        .exp-tools-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 4px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(36, 37, 34, 0.08);
-        }
-        .exp-tool-chip {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--accent-green);
-            background: rgba(36, 71, 53, 0.06);
-            border: 1px solid rgba(36, 71, 53, 0.15);
-            padding: 3px 10px;
-            border-radius: 100px;
-        }
-        .exp-actions-row {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin-top: 2px;
-        }
-        .btn-flip-badge {
-            background: var(--accent-green);
-            color: var(--bg-ivory);
-            border: none;
-            padding: 8px 18px;
-            border-radius: 100px;
-            font-size: 12.5px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-flip-badge:hover {
-            background: var(--accent-green-hover);
-            transform: translateY(-1px);
+        .board li {
+            color: #334155;
+            border-left: 2.5px solid #84a98c;
+            padding-left: 10px;
+            font-size: 13px;
+            line-height: 1.5;
         }
 
         /* ---------------- EDUCATION CALLOUTS & SVG LEADER LINES ---------------- */
@@ -640,8 +640,6 @@
 
     <!-- ---------------- TOP NAVBAR (Logo & Left Text Removed) ---------------- -->
     <header class="top-navbar">
-        <!-- Brand Spacer (Left) -->
-        <div class="nav-brand-spacer"></div>
 
         <!-- Center Links -->
         <nav class="nav-center-links">
@@ -683,53 +681,44 @@
         </div>
     </div>
 
-    <!-- ---------------- SECTION 2: EXPERIENCE (Noticeboard & Ultramind Role) ---------------- -->
-    <div class="experience-panel-wrapper" id="experience-panel">
-        <div class="exp-card-header">
-            <span class="exp-company-tag" style="background: #581c87; color: #ffffff;">ULTRAMIND</span>
-            <span class="exp-date-badge">April 2024 to October 2026</span>
+    <!-- ---------------- SECTION 2: EXPERIENCE (Noticeboard Surface Board - Hamza Style) ---------------- -->
+    <section class="surface board" id="experience-panel" aria-label="Experience">
+        <div class="board-head">
+            <h2 class="kicker">Experience</h2>
+            <a class="cv" href="Boyina_Sai_Pranathi_CV.pdf" download="Boyina_Sai_Pranathi_CV.pdf">Download CV ↗</a>
         </div>
-        <h2 class="exp-role-title">Product Designer</h2>
-        <div class="exp-product-subtitle">iOS Mobile Application & Official Web Platform</div>
+        <div class="notes">
+            <!-- Job 1: ULTRAMIND -->
+            <article class="note">
+                <span class="pin"></span>
+                <div class="note-head-row">
+                    <h3>ULTRAMIND</h3>
+                    <span class="when">Apr 2024 to Oct 2026</span>
+                </div>
+                <p class="role">Product Designer · iOS Application & Web Platform</p>
+                <ul>
+                    <li>Started product design from the ground up, defining user flows and creating wireframes, high-fidelity interfaces, widgets, and interactive prototypes for the iOS application.</li>
+                    <li>Led design discussions with CTOs and CEOs to align product direction and priorities, balancing user needs, product requirements, and technical feasibility in design decisions.</li>
+                    <li>Owned design quality across product flows and interfaces, refining experiences for better usability, clarity, and consistency while reviewing designs with engineering and incorporating feedback throughout development.</li>
+                    <li>Worked closely with engineering during implementation to resolve design issues and ensure the final product matched the intended experience. Designed the official Ultramind website (ultramind.in), using Figma, Figma AI, Claude Design, and Adobe tools for research, ideation, UI design, animation, and visual effects.</li>
+                    <li>Built automation workflows to streamline repetitive design and research tasks.</li>
+                </ul>
+            </article>
 
-        <div class="exp-bullets-list">
-            <div class="exp-bullet-item">
-                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
-                <p><strong>Built the iOS product from the ground up —</strong> user flows, UI, widgets, and interactive prototypes.</p>
-            </div>
-            <div class="exp-bullet-item">
-                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
-                <p><strong>Led design discussions with CTOs and CEOs</strong> to align product direction and priorities.</p>
-            </div>
-            <div class="exp-bullet-item">
-                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
-                <p><strong>Owned design quality</strong> across the product, improving usability, clarity, and consistency.</p>
-            </div>
-            <div class="exp-bullet-item">
-                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
-                <p><strong>Designed the official website</strong> <span style="background: #f3e8ff; color: #6b21a8; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12.5px;">(ultramind.in)</span> using Figma, Figma AI, Claude Design, and Adobe tools.</p>
-            </div>
-            <div class="exp-bullet-item">
-                <span class="exp-bullet-icon" style="color: #581c87; font-size: 11px;">■</span>
-                <p><strong>Built automation workflows</strong> to streamline repetitive design and research tasks.</p>
-            </div>
+            <!-- Job 2: SVELTY MARKETING AGENCY -->
+            <article class="note">
+                <span class="pin"></span>
+                <div class="note-head-row">
+                    <h3>SVELTY MARKETING AGENCY</h3>
+                    <span class="when">Present</span>
+                </div>
+                <p class="role">Product Designer & Manager</p>
+                <ul>
+                    <li>Work across product design and project coordination, including client communication, team coordination, website development, and marketing activities.</li>
+                </ul>
+            </article>
         </div>
-
-        <div class="exp-tools-row">
-            <span class="exp-tool-chip">Figma</span>
-            <span class="exp-tool-chip">Figma AI</span>
-            <span class="exp-tool-chip">Claude Design</span>
-            <span class="exp-tool-chip">Adobe Suite</span>
-            <span class="exp-tool-chip">iOS Widgets</span>
-            <span class="exp-tool-chip">App Store Live</span>
-        </div>
-
-        <div class="exp-actions-row">
-            <button class="btn-flip-badge" onclick="toggleFlipActiveBadge()">
-                <span id="flip-badge-btn-text">Flip 3D Badge ↺</span>
-            </button>
-        </div>
-    </div>
+    </section>
 
     <!-- Section 4: Education (Cupboard Wardrobe & Straight Horizontal Leader Lines) -->
     <svg class="education-lines-overlay" id="edu-lines-svg">
@@ -2324,8 +2313,7 @@
                     phoneAssembly.add(phoneRim);
                 }
                 if (phoneEarpiece) {
-                    phoneEarpiece.position.set(-0.165, 0.007, -0.020);
-                    phoneAssembly.add(phoneEarpiece);
+                    phoneEarpiece.visible = false; // Removed button-like element on phone as requested
                 }
 
                 // Orient phone into portrait facing the user / desk front
@@ -2497,9 +2485,9 @@
             {
                 id: 5,
                 name: 'Contact (Desk Phone)',
-                cameraPos: [2.12, 2.65, -0.02],
-                cameraTarget: [2.12, 1.87, 0.60],
-                fov: 30.0,
+                cameraPos: [2.12, 3.10, 0.62],
+                cameraTarget: [2.12, 1.87, 0.63],
+                fov: 28.0,
                 cupboardOpen: false,
                 hint: 'Desk Phone · Tap cards on screen to Email, LinkedIn, or download CV.pdf'
             }
@@ -2764,64 +2752,37 @@
 
             if (screenItems.length < 3) return;
 
-            // Enforce EXACT same space (gap) between Card 0 & Card 1 and Card 1 & Card 2
-            const equalGap = 20; // Exact identical spacing between cards
-            const h0 = screenItems[0].cardH;
-            const h1 = screenItems[1].cardH;
-            const h2 = screenItems[2].cardH;
-            const totalSpan = h0 + equalGap + h1 + equalGap + h2;
+            // Center each card vertically at its uniform projected sy (as annotated in user drawing)
+            screenItems.forEach(item => {
+                item.top = item.sy - item.cardH * 0.5;
+            });
 
-            // Center the entire 3-card block around the middle uniform projected sy
-            const midY = screenItems[1].sy;
-            let top0 = Math.round(midY - (h0 + equalGap + h1 * 0.5));
-            let top1 = top0 + h0 + equalGap;
-            let top2 = top1 + h1 + equalGap;
-
-            const topBoundary = 86; // below navbar
-            const bottomBoundary = window.innerHeight - 20;
-
-            if (top0 < topBoundary) {
-                const shift = topBoundary - top0;
-                top0 += shift;
-                top1 += shift;
-                top2 += shift;
+            // Ensure cards do not overlap while preserving direct horizontal alignment with each uniform
+            const minGap = 20;
+            if (screenItems[1].top < screenItems[0].top + screenItems[0].cardH + minGap) {
+                screenItems[1].top = screenItems[0].top + screenItems[0].cardH + minGap;
             }
-            if (top2 + h2 > bottomBoundary) {
-                const shift = (top2 + h2) - bottomBoundary;
-                top0 -= shift;
-                top1 -= shift;
-                top2 -= shift;
+            if (screenItems[2].top < screenItems[1].top + screenItems[1].cardH + minGap) {
+                screenItems[2].top = screenItems[1].top + screenItems[1].cardH + minGap;
             }
 
-            screenItems[0].top = top0;
-            screenItems[1].top = top1;
-            screenItems[2].top = top2;
-
-            // Apply calculated positions and draw clean horizontal leader lines
+            // Apply calculated positions and draw straight horizontal leader lines
             screenItems.forEach(item => {
                 if (item.card) {
                     item.card.style.top = Math.round(item.top) + 'px';
                     const rect = item.card.getBoundingClientRect();
                     const cardLeft = rect.left;
 
-                    const connectY = Math.max(item.top + 14, Math.min(item.top + item.cardH - 14, item.sy));
+                    // Connector Y connects straight horizontally to the card
+                    const connectY = Math.round(item.top + item.cardH * 0.5);
+                    const lineY = Math.abs(connectY - item.sy) < 20 ? item.sy : connectY;
 
-                    let d;
-                    // If connectY aligns with sy, line is 100% straight and horizontal
-                    if (Math.abs(connectY - item.sy) <= 4) {
-                        d = 'M ' + item.sx.toFixed(1) + ' ' + item.sy.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + item.sy.toFixed(1);
-                    } else {
-                        // Smooth leader curve directly to the card edge
-                        const midX = item.sx + (cardLeft - item.sx) * 0.5;
-                        d = 'M ' + item.sx.toFixed(1) + ' ' + item.sy.toFixed(1) +
-                            ' C ' + midX.toFixed(1) + ' ' + item.sy.toFixed(1) +
-                            ', ' + midX.toFixed(1) + ' ' + connectY.toFixed(1) +
-                            ', ' + (cardLeft - 4).toFixed(1) + ' ' + connectY.toFixed(1);
-                    }
+                    const d = 'M ' + item.sx.toFixed(1) + ' ' + item.sy.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + lineY.toFixed(1);
 
-                    const pathEl = document.getElementById(item.h.lineId);
+                    const lineEl = document.getElementById(item.h.lineId);
                     const dotEl = document.getElementById(item.h.dotId);
-                    if (pathEl) pathEl.setAttribute('d', d);
+
+                    if (lineEl) lineEl.setAttribute('d', d);
                     if (dotEl) {
                         dotEl.setAttribute('cx', item.sx.toFixed(1));
                         dotEl.setAttribute('cy', item.sy.toFixed(1));
