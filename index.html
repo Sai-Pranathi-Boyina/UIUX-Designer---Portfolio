@@ -474,9 +474,11 @@
         }
         .edu-callout-card {
             position: fixed;
-            right: 48px;
-            width: 100%;
-            max-width: 420px;
+            left: 60.5%;
+            right: auto;
+            width: calc(39.5% - 48px);
+            max-width: 440px;
+            min-width: 320px;
             pointer-events: auto;
             background: var(--card-ivory);
             backdrop-filter: blur(24px);
@@ -621,7 +623,7 @@
             .hero-lead { font-size: 16px; }
             .undock-btn { left: 20px; }
             .experience-panel-wrapper { right: 20px; left: 20px; max-width: 100%; top: auto; bottom: 20px; transform: none; max-height: 55vh; }
-            .edu-callout-card { right: 20px; max-width: calc(100vw - 40px); }
+            .edu-callout-card { left: 20px; right: 20px; width: auto; max-width: calc(100vw - 40px); }
         }
     </style>
 </head>
@@ -2728,7 +2730,7 @@
                 if (h.anchorMode === 'top') {
                     v.set((bbox.min.x + bbox.max.x) * 0.5, bbox.max.y - 0.05, (bbox.min.z + bbox.max.z) * 0.5);
                 } else if (h.anchorMode === 'bot') {
-                    v.set((bbox.min.x + bbox.max.x) * 0.5, bbox.min.y + 0.14, (bbox.min.z + bbox.max.z) * 0.5);
+                    v.set((bbox.min.x + bbox.max.x) * 0.5, bbox.min.y + 0.16, (bbox.min.z + bbox.max.z) * 0.5);
                 } else {
                     bbox.getCenter(v);
                 }
@@ -2745,39 +2747,64 @@
                     sx,
                     sy,
                     card,
-                    cardH,
-                    top: Math.round(sy - cardH * 0.5)
+                    cardH
                 });
             });
 
             if (screenItems.length < 3) return;
 
-            // Center each card vertically at its uniform projected sy (as annotated in user drawing)
-            screenItems.forEach(item => {
-                item.top = item.sy - item.cardH * 0.5;
-            });
+            const h0 = screenItems[0].cardH;
+            const h1 = screenItems[1].cardH;
+            const h2 = screenItems[2].cardH;
 
-            // Ensure cards do not overlap while preserving direct horizontal alignment with each uniform
-            const minGap = 20;
-            if (screenItems[1].top < screenItems[0].top + screenItems[0].cardH + minGap) {
-                screenItems[1].top = screenItems[0].top + screenItems[0].cardH + minGap;
+            // Anchor top card and bottom card to uniform bounds
+            let line0_Y = Math.round(screenItems[0].sy);
+            let line2_Y = Math.round(screenItems[2].sy);
+
+            let top0 = Math.round(line0_Y - h0 * 0.5);
+            let top2 = Math.round(line2_Y - h2 * 0.5);
+
+            // Screen boundaries check (navbar and bottom margin)
+            const minTop = 86;
+            if (top0 < minTop) {
+                const shift = minTop - top0;
+                top0 += shift;
+                top2 += shift;
+                line0_Y += shift;
+                line2_Y += shift;
             }
-            if (screenItems[2].top < screenItems[1].top + screenItems[1].cardH + minGap) {
-                screenItems[2].top = screenItems[1].top + screenItems[1].cardH + minGap;
+            const maxBottom = window.innerHeight - 24;
+            if (top2 + h2 > maxBottom) {
+                const shift = (top2 + h2) - maxBottom;
+                top0 -= shift;
+                top2 -= shift;
+                line0_Y -= shift;
+                line2_Y -= shift;
             }
 
-            // Apply calculated positions and draw straight horizontal leader lines
+            // Calculate mathematically identical equal gap between cards
+            const equalGap = Math.round((top2 - (top0 + h0 + h1)) * 0.5);
+            const top1 = top0 + h0 + equalGap;
+            const line1_Y = Math.round(top1 + h1 * 0.5);
+
+            screenItems[0].top = top0;
+            screenItems[0].lineY = line0_Y;
+
+            screenItems[1].top = top1;
+            screenItems[1].lineY = line1_Y;
+
+            screenItems[2].top = top2;
+            screenItems[2].lineY = line2_Y;
+
+            // Apply card positions & draw straight horizontal leader lines from uniforms to cards
             screenItems.forEach(item => {
                 if (item.card) {
                     item.card.style.top = Math.round(item.top) + 'px';
                     const rect = item.card.getBoundingClientRect();
                     const cardLeft = rect.left;
 
-                    // Connector Y connects straight horizontally to the card
-                    const connectY = Math.round(item.top + item.cardH * 0.5);
-                    const lineY = Math.abs(connectY - item.sy) < 20 ? item.sy : connectY;
-
-                    const d = 'M ' + item.sx.toFixed(1) + ' ' + item.sy.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + lineY.toFixed(1);
+                    // 100% straight horizontal dashed line
+                    const d = 'M ' + item.sx.toFixed(1) + ' ' + item.lineY.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + item.lineY.toFixed(1);
 
                     const lineEl = document.getElementById(item.h.lineId);
                     const dotEl = document.getElementById(item.h.dotId);
@@ -2785,7 +2812,7 @@
                     if (lineEl) lineEl.setAttribute('d', d);
                     if (dotEl) {
                         dotEl.setAttribute('cx', item.sx.toFixed(1));
-                        dotEl.setAttribute('cy', item.sy.toFixed(1));
+                        dotEl.setAttribute('cy', item.lineY.toFixed(1));
                     }
                 }
             });
