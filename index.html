@@ -379,10 +379,10 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border-radius: 0.85em;
-            grid-template-columns: 1fr auto 1fr;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 0 0.6em;
-            display: grid;
+            padding: 0 0.8em;
             user-select: none;
         }
         .surface.desk .ws {
@@ -422,11 +422,7 @@
             font-weight: 700;
         }
 
-        .surface.desk .dbar .clock {
-            color: var(--d-ink);
-            letter-spacing: 0.04em;
-            font-weight: 600;
-        }
+        
         .surface.desk .dbar .tray {
             justify-self: end;
             align-items: center;
@@ -1304,7 +1300,6 @@
                 <button type="button" data-p="svelty-website" aria-pressed="false">4 <b>svelty-website</b></button>
                 <button type="button" data-p="svelty-crm" aria-pressed="false">5 <b>svelty-crm</b></button>
             </nav>
-            <span class="clock" data-clock>Tue 3 Nov 02:00</span>
             <span class="tray" aria-hidden="true">
                 <span class="seen" data-seen>
                     <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.5"></circle></svg>
@@ -1544,7 +1539,7 @@
                         <figcaption>Mental wellness tracking app focused on clear presentation of user insights, UI design, and prototyping.</figcaption>
                         <div class="case-action-row">
                             <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UI Designer & UX Researcher</span>
-                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                            <a href="https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11" target="_blank" rel="noopener" class="btn-case-cta">View Figma Prototype ↗</a>
                         </div>
                     </div>
                 </div>
@@ -1577,7 +1572,7 @@
                             <li>Tested with user personas across diverse stress levels to validate information hierarchy.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"User Insights"</em>, <em>"UI Design"</em>, <em>"Prototyping"</em>]</p>
-                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                        <p class="gh"><span>Prototype: </span><a href="https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11" target="_blank" rel="noopener">figma.com/proto/MentalHealthApp</a></p>
                     </div>
                 </div>
             </article>
@@ -1622,7 +1617,7 @@
                         <figcaption>Education management app focused on information structure, user flows, and interface design.</figcaption>
                         <div class="case-action-row">
                             <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UX Architect & UI Designer</span>
-                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                            <a href="https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11" target="_blank" rel="noopener" class="btn-case-cta">View Figma Prototype ↗</a>
                         </div>
                     </div>
                 </div>
@@ -1654,7 +1649,7 @@
                             <li>Designed high-density overview widgets optimized for rapid one-handed mobile scanning between lectures.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Information Structure"</em>, <em>"User Flows"</em>, <em>"Interface Design"</em>]</p>
-                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                        <p class="gh"><span>Prototype: </span><a href="https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11" target="_blank" rel="noopener">figma.com/proto/MentalHealthApp</a></p>
                     </div>
                 </div>
             </article>
@@ -1707,9 +1702,10 @@
                             </svg>
                         </div>
                         <figcaption>Designed and developed CMS websites for different use cases, including a college cultural fest website and a jewellery website, focusing on clear content presentation, visual design, and easy content management.</figcaption>
-                        <div class="case-action-row">
-                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Web Designer & CMS Architect</span>
-                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                        <div class="case-action-row" style="gap: 10px; flex-wrap: wrap;">
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono); margin-right: auto;">Role: Web Designer & CMS Architect</span>
+                            <a href="https://vibrantvista-culturalfest.web.app" target="_blank" rel="noopener" class="btn-case-cta" style="background: linear-gradient(90deg, #ff9ebb, #f0a35e);">VibrantVista Fest ↗</a>
+                            <a href="https://dityajewellery.web.app" target="_blank" rel="noopener" class="btn-case-cta" style="background: linear-gradient(90deg, #8fd3c1, #5fa896);">Ditya Jewellery ↗</a>
                         </div>
                     </div>
                 </div>
@@ -1741,7 +1737,7 @@
                             <li>Image compression and lazy loading routines to ensure rapid load times even on spotty mobile networks.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"WordPress"</em>, <em>"Figma"</em>, <em>"Content Presentation"</em>, <em>"Visual Design"</em>]</p>
-                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                        <p class="gh" style="display:flex; gap:14px; flex-wrap:wrap;"><span>Live Websites:</span> <a href="https://vibrantvista-culturalfest.web.app" target="_blank" rel="noopener">vibrantvista-fest.web.app ↗</a> &nbsp;·&nbsp; <a href="https://dityajewellery.web.app" target="_blank" rel="noopener">dityajewellery.web.app ↗</a></p>
                     </div>
                 </div>
             </article>
@@ -1795,7 +1791,7 @@
                         <figcaption>Designed and developed the Svelty Marketing Agency website to capture users' attention and encourage more conversions.</figcaption>
                         <div class="case-action-row">
                             <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Lead Digital Product Designer</span>
-                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                            <a href="https://svelty.in" target="_blank" rel="noopener" class="btn-case-cta">Visit Svelty Website ↗</a>
                         </div>
                     </div>
                 </div>
@@ -1826,7 +1822,7 @@
                             <li>Typography and spacing calibrated for scannability and strong executive impression.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Claude Design"</em>, <em>"Attention Capture"</em>, <em>"Conversion Focus"</em>]</p>
-                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                        <p class="gh"><span>Live Website: </span><a href="https://svelty.in" target="_blank" rel="noopener">svelty.in ↗</a></p>
                     </div>
                 </div>
             </article>
@@ -1886,7 +1882,7 @@
                         <figcaption>Designed and developed Svelty's CRM platform to manage roles, responsibilities, tasks, and workflows.</figcaption>
                         <div class="case-action-row">
                             <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Lead Product Designer</span>
-                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                            <a href="https://svelty.in" target="_blank" rel="noopener" class="btn-case-cta">View CRM Platform ↗</a>
                         </div>
                     </div>
                 </div>
@@ -1918,7 +1914,7 @@
                             <li>Dark mode palette designed for high contrast and sustained power user focus throughout long working days.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Claude Design"</em>, <em>"Role Management"</em>, <em>"Task Tracking"</em>, <em>"Workflows"</em>]</p>
-                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                        <p class="gh"><span>Platform Architecture: </span><a href="https://svelty.in" target="_blank" rel="noopener">svelty.in/crm ↗</a></p>
                     </div>
                 </div>
             </article>
@@ -2078,7 +2074,7 @@
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg>
                 </a>
-                <a class="phone-dock-icon" href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" title="Twine Portfolio Website" onclick="showToast('Opening Twine Portfolio...')">
+                <a class="phone-dock-icon" href="https://linkedin.com/in/sai-pranathi-boyina" target="_blank" rel="noopener" title="LinkedIn Profile" onclick="showToast('Opening LinkedIn...')">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -2486,7 +2482,7 @@
                 desc: 'Mental wellness tracking app focused on clear presentation of user insights, UI design, and prototyping.',
                 tools: ['Figma'],
                 highlights: ['User Insights', 'UI Design', 'Prototyping'],
-                link: 'https://www.twine.net/boyinasaipranathi679',
+                link: 'https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11',
                 color: '#244735'
             },
             {
@@ -2497,7 +2493,7 @@
                 desc: 'Education management app focused on information structure, user flows, and interface design.',
                 tools: ['Figma'],
                 highlights: ['Information Structure', 'User Flows', 'Interface Design'],
-                link: 'https://www.twine.net/boyinasaipranathi679',
+                link: 'https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1',
                 color: '#244735'
             },
             {
@@ -2508,7 +2504,7 @@
                 desc: 'Designed and developed CMS websites for different use cases, including a college cultural fest website and a jewellery website, focusing on clear content presentation, visual design, and easy content management.',
                 tools: ['WordPress', 'Figma'],
                 highlights: ['Content Presentation', 'Visual Design', 'Content Management'],
-                link: 'https://www.twine.net/boyinasaipranathi679',
+                link: 'https://vibrantvista-culturalfest.web.app',
                 color: '#244735'
             },
             {
@@ -2519,7 +2515,7 @@
                 desc: 'Designed and developed the Svelty Marketing Agency website to capture users\' attention and encourage more conversions.',
                 tools: ['Figma', 'Claude Design'],
                 highlights: ['Attention Capture', 'Conversion Focus', 'Website Design'],
-                link: 'https://www.twine.net/boyinasaipranathi679',
+                link: 'https://svelty.in',
                 color: '#244735'
             },
             {
@@ -2530,7 +2526,7 @@
                 desc: 'Designed and developed Svelty\'s CRM platform to manage roles, responsibilities, tasks, and workflows.',
                 tools: ['Figma', 'Claude Design'],
                 highlights: ['Role Management', 'Task Tracking', 'Workflows'],
-                link: 'https://www.twine.net/boyinasaipranathi679',
+                link: 'https://svelty.in',
                 color: '#244735'
             }
         ];
@@ -2607,12 +2603,7 @@
                 curTabX += tWidth + 8;
             }
 
-            // Real-time clock in top bar center
-            ctx.fillStyle = '#f0eaf6';
-            ctx.font = 'bold 15px "Space Mono", monospace';
-            ctx.textAlign = 'center';
-            const dateStr = new Date().toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
-            ctx.fillText(dateStr, w / 2, 44);
+
 
             // Right tray
             ctx.fillStyle = '#7ee2a8';
@@ -3478,22 +3469,7 @@
             drawMonitorScreen();
         }
 
-        // Live Real-Time Clock in Top Bar
-        function updateDeskClock() {
-            const clockEl = document.querySelector('.surface.desk [data-clock]');
-            if (!clockEl) return;
-            const now = new Date();
-            clockEl.textContent = now.toLocaleString('en-GB', {
-                weekday: 'short',
-                day: 'numeric',
-                month: 'short',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-        setInterval(updateDeskClock, 1000);
-        updateDeskClock();
-
+        
         // Dynamically compute and align the surface with monitorScreenMesh
         function updateMonitorSurfacePosition() {
             const surface = document.getElementById('projects-monitor-surface');
@@ -3970,8 +3946,8 @@
                             showToast('Composing Direct Message...');
                             return;
                         } else if (px >= 384 && px <= 484) {
-                            window.open('https://www.twine.net/boyinasaipranathi679', '_blank');
-                            showToast('Opening Twine Portfolio...');
+                            window.open('https://linkedin.com/in/sai-pranathi-boyina', '_blank');
+                            showToast('Opening LinkedIn Profile...');
                             return;
                         } else if (px >= 530 && px <= 630) {
                             goToSection(0);
