@@ -329,6 +329,576 @@
             transform: translateY(-50%) translateX(0);
         }
 
+        /* ---------------- SECTION 3: PROJECTS MONITOR DESK (RAO MUHAMMAD HAMZA DESKTOP OS) ---------------- */
+        .surface.desk {
+            --d-surf: #161622;
+            --d-surf2: #1e1e2d;
+            --d-line: rgba(255, 255, 255, 0.08);
+            --d-ink: #f0eaf6;
+            --d-dim: #928b9e;
+            --d-amber: #f0a35e;
+            --d-teal: #8fd3c1;
+            --d-pink: #ff9ebb;
+            --d-gap: 0.5em;
+            --d-mono: "Space Mono", "JetBrains Mono", ui-monospace, monospace;
+            position: fixed;
+            z-index: 50;
+            left: 50%;
+            top: calc(50% - 14px);
+            width: min(1360px, calc(100vw - 120px));
+            height: min(780px, calc(100vh - 160px));
+            transform: translate(-50%, -50%);
+            box-sizing: border-box;
+            gap: var(--d-gap);
+            padding: var(--d-gap);
+            background: radial-gradient(70% 80% at 85% 10%, rgba(255, 158, 187, 0.15), transparent 60%),
+                        radial-gradient(60% 70% at 0 100%, rgba(240, 163, 94, 0.12), transparent 65%),
+                        #101018 linear-gradient(160deg, #161522, #0b0b12);
+            border: 2px solid #28283a;
+            border-radius: 10px;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.85);
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .surface.desk.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Desktop Top Bar */
+        .surface.desk .dbar {
+            border: 1px solid var(--d-line);
+            min-height: 2.85em;
+            font: 12.5px/1 var(--d-mono);
+            color: var(--d-dim);
+            background: rgba(14, 14, 21, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 0.85em;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 0 0.6em;
+            display: grid;
+            user-select: none;
+        }
+        .surface.desk .ws {
+            gap: 0.35em;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+        }
+        .surface.desk .ws button {
+            all: unset;
+            cursor: pointer;
+            white-space: nowrap;
+            height: 2.1em;
+            color: var(--d-dim);
+            border-radius: 0.55em;
+            align-items: center;
+            gap: 0.45em;
+            padding: 0 0.75em;
+            display: inline-flex;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+        .surface.desk .ws button b {
+            font-weight: 500;
+        }
+        .surface.desk .ws button:hover {
+            background: var(--d-surf2);
+            color: var(--d-ink);
+        }
+        .surface.desk .ws button[aria-pressed="true"] {
+            background: linear-gradient(90deg, #ff9ebb, var(--d-amber));
+            color: #17121c;
+            font-weight: 700;
+            box-shadow: 0 2px 10px rgba(255, 158, 187, 0.35);
+        }
+        .surface.desk .ws button[aria-pressed="true"] b {
+            font-weight: 700;
+        }
+
+        .surface.desk .dbar .clock {
+            color: var(--d-ink);
+            letter-spacing: 0.04em;
+            font-weight: 600;
+        }
+        .surface.desk .dbar .tray {
+            justify-self: end;
+            align-items: center;
+            gap: 1.1em;
+            padding-right: 0.4em;
+            display: flex;
+            font-size: 11.5px;
+        }
+        .surface.desk .dbar .tray svg {
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.6px;
+            width: 1.2em;
+            height: 1.2em;
+        }
+        .surface.desk .dbar .seen {
+            color: var(--d-ink);
+            align-items: center;
+            gap: 0.45em;
+            display: flex;
+        }
+        .surface.desk .dbar .seen svg {
+            fill: #7ee2a8;
+            stroke: none;
+            width: 0.85em;
+            height: 0.85em;
+        }
+
+        /* Main Viewport Container */
+        .surface.desk .dview {
+            min-height: 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.5em;
+        }
+
+        /* 0 ALL: Grid of 6 Tiles (2 rows x 3 columns) */
+        .surface.desk .tiles {
+            gap: var(--d-gap);
+            grid-template-columns: 1.2fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            grid-template-areas:
+                "p1 p2 p3"
+                "fetch p4 p5";
+            display: grid;
+            position: absolute;
+            inset: 0;
+        }
+        .surface.desk.open .tiles {
+            display: none !important;
+        }
+
+        /* Tile Card */
+        .surface.desk .tile {
+            background: var(--d-surf);
+            border: 2px solid #28283a;
+            border-radius: 0.55em;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0.8em 1.8em -0.8em rgba(0,0,0,0.7);
+            font: inherit;
+            color: inherit;
+            text-align: left;
+            cursor: pointer;
+            padding: 0;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .surface.desk .tile:hover,
+        .surface.desk .tile:focus-visible {
+            background: linear-gradient(var(--d-surf), var(--d-surf)) padding-box,
+                        linear-gradient(135deg, #ff9ebb, var(--d-amber), var(--d-teal)) border-box var(--d-surf);
+            border-color: transparent;
+            outline: none;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.85);
+        }
+        .surface.desk .tile.term {
+            cursor: default;
+            transform: none !important;
+        }
+
+        /* Window Title Bar */
+        .surface.desk .t {
+            background: var(--d-surf2);
+            height: 2.2em;
+            font: 11px/1 var(--d-mono);
+            color: var(--d-dim);
+            white-space: nowrap;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+            flex: none;
+            align-items: center;
+            gap: 0.7em;
+            padding: 0 0.8em 0 1em;
+            display: flex;
+            user-select: none;
+        }
+        .surface.desk .t b {
+            color: var(--d-ink);
+            font-weight: 600;
+        }
+        .surface.desk .ctl {
+            gap: 0.45em;
+            margin-left: auto;
+            display: flex;
+        }
+        .surface.desk .ctl i {
+            background: #3b3b50;
+            border-radius: 50%;
+            width: 0.75em;
+            height: 0.75em;
+            transition: background 0.2s ease;
+        }
+        .surface.desk .tile:hover .ctl i:last-child {
+            background: #ff9ebb;
+        }
+
+        /* Mockup Visual in Tile */
+        .surface.desk .tile .tile-preview {
+            flex: 1;
+            min-height: 0;
+            background: #090910;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        /* Tile Footer */
+        .surface.desk .tile .meta {
+            border-top: 1px solid var(--d-line);
+            background: rgba(14, 14, 22, 0.95);
+            flex: none;
+            align-items: baseline;
+            gap: 0.55em;
+            min-width: 0;
+            padding: 0.55em 0.8em;
+            display: flex;
+        }
+        .surface.desk .tile .nm {
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--d-ink);
+        }
+        .surface.desk .tile .pitch {
+            color: var(--d-dim);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 11px;
+            overflow: hidden;
+        }
+
+        /* Terminal Fetch Tile */
+        .surface.desk .sh {
+            min-height: 0;
+            font: 11.5px/1.6 var(--d-mono);
+            color: #cfc8da;
+            background: #0b0b12;
+            flex: 1;
+            padding: 0.85em 1.1em;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .surface.desk .sh .ps {
+            color: var(--d-teal);
+        }
+        .surface.desk .sh .ps em {
+            color: #ff9ebb;
+            font-style: normal;
+        }
+        .surface.desk .sh .fetch {
+            grid-template-columns: auto 1fr;
+            gap: 1.2em;
+            margin: 0.4em 0;
+            display: grid;
+            align-items: center;
+        }
+        .surface.desk .sh .tvface {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #ff9ebb, #f0a35e);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(255, 158, 187, 0.3);
+        }
+        .surface.desk .sh .tvface::before,
+        .surface.desk .sh .tvface::after {
+            content: '';
+            width: 6px;
+            height: 14px;
+            background: #17121c;
+            border-radius: 2px;
+            margin: 0 4px;
+        }
+        .surface.desk .sh .k {
+            color: #ff9ebb;
+            display: inline-block;
+            min-width: 65px;
+            font-weight: 600;
+        }
+        .surface.desk .sh .swatch {
+            gap: 0.35em;
+            margin-top: 0.45em;
+            display: flex;
+        }
+        .surface.desk .sh .swatch i {
+            width: 1.4em;
+            height: 0.75em;
+            border-radius: 2px;
+        }
+        .surface.desk .sh .caret {
+            display: inline-block;
+            width: 7px;
+            height: 13px;
+            background: var(--d-teal);
+            vertical-align: middle;
+            animation: blinkCaret 1s steps(2, start) infinite;
+        }
+
+        /* ---------------- SINGLE PROJECT CASE STUDY VIEW (.case) ---------------- */
+        .surface.desk .case {
+            gap: var(--d-gap);
+            grid-template-columns: 1.45fr 1fr;
+            display: grid;
+            position: absolute;
+            inset: 0;
+        }
+        .surface.desk .case[hidden] {
+            display: none !important;
+        }
+        .surface.desk .case:not([hidden]) {
+            animation: dOpen 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* App Window and Terminal Window */
+        .surface.desk .win {
+            background: var(--d-surf);
+            border: 2px solid #28283a;
+            border-radius: 0.55em;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0.8em 1.8em -0.8em rgba(0,0,0,0.8);
+        }
+        .surface.desk .win.app {
+            background: linear-gradient(var(--d-surf), var(--d-surf)) padding-box,
+                        linear-gradient(135deg, #ff9ebb, var(--d-amber), var(--d-teal)) border-box var(--d-surf);
+            border-color: transparent;
+        }
+        .surface.desk .btns {
+            gap: 0.25em;
+            margin-left: auto;
+            display: flex;
+        }
+        .surface.desk .btns button {
+            all: unset;
+            cursor: pointer;
+            width: 1.8em;
+            height: 1.4em;
+            font: 13px/1 var(--d-mono);
+            color: var(--d-dim);
+            border-radius: 0.35em;
+            place-items: center;
+            display: grid;
+            transition: all 0.15s ease;
+        }
+        .surface.desk .btns button:hover,
+        .surface.desk .btns button:focus-visible {
+            color: var(--d-ink);
+            background: #33334a;
+        }
+        .surface.desk .btns .x:hover,
+        .surface.desk .btns .x:focus-visible {
+            color: #17121c;
+            background: #ff9ebb;
+        }
+
+        /* App Window Body */
+        .surface.desk .appbody {
+            background: #0a0a10;
+            flex-direction: column;
+            flex: 1;
+            gap: 0.7em;
+            min-height: 0;
+            padding: 1.1em 1.2em 1em;
+            display: flex;
+            overflow-y: auto;
+        }
+        .surface.desk .appbody h3 {
+            letter-spacing: -0.02em;
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--d-ink);
+            margin: 0;
+        }
+        .surface.desk .appbody .tagline {
+            color: var(--d-pink);
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0;
+        }
+        .surface.desk .appbody .app-visual {
+            flex: 1;
+            min-height: 220px;
+            max-height: 380px;
+            border-radius: 8px;
+            background: #11111b;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 15px;
+        }
+        .surface.desk .appbody figcaption {
+            font: 11.5px/1.5 var(--d-mono);
+            color: var(--d-dim);
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.6em 0.8em;
+            border-radius: 6px;
+            border-left: 2px solid var(--d-amber);
+        }
+        .surface.desk .appbody .case-action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 0.4em;
+        }
+        .surface.desk .appbody .btn-case-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(90deg, #ff9ebb, var(--d-amber));
+            color: #17121c;
+            font-weight: 700;
+            font-size: 12.5px;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .surface.desk .appbody .btn-case-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(255, 158, 187, 0.4);
+        }
+
+        /* Terminal README Body */
+        .surface.desk .readme {
+            color: #d4cddf;
+            scrollbar-width: thin;
+            scrollbar-color: #3a3a4e transparent;
+            background: #0b0b12;
+            flex: 1;
+            min-height: 0;
+            padding: 0.9em 1.1em 1.5em;
+            font-size: 12.5px;
+            line-height: 1.55;
+            overflow-y: auto;
+        }
+        .surface.desk .readme .cmd {
+            font: 12px/1.5 var(--d-mono);
+            color: var(--d-teal);
+            margin-bottom: 1.1em;
+            padding-bottom: 0.4em;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        .surface.desk .readme .cmd em {
+            color: #ff9ebb;
+            font-style: normal;
+        }
+        .surface.desk .readme h4 {
+            font: 12.5px/1 var(--d-mono);
+            color: #ff9ebb;
+            margin: 1.4em 0 0.6em;
+            font-weight: 700;
+        }
+        .surface.desk .readme h4:before {
+            content: "== ";
+            color: #6d6480;
+        }
+        .surface.desk .readme p {
+            margin: 0.5em 0;
+            color: #c4bcd0;
+        }
+        .surface.desk .readme ul {
+            gap: 0.45em;
+            margin: 0.4em 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+        }
+        .surface.desk .readme li {
+            padding-left: 1.2em;
+            position: relative;
+            color: #cfc8db;
+        }
+        .surface.desk .readme li:before {
+            content: "•";
+            color: var(--d-amber);
+            position: absolute;
+            left: 0.15em;
+        }
+        .surface.desk .readme .deps {
+            font: 11px/1.6 var(--d-mono);
+            color: var(--d-dim);
+            margin-top: 1.4em;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.6em 0.8em;
+            border-radius: 6px;
+        }
+        .surface.desk .readme .deps b {
+            color: var(--d-amber);
+            font-weight: 600;
+        }
+        .surface.desk .readme .deps em {
+            color: var(--d-teal);
+            font-style: normal;
+        }
+        .surface.desk .readme .gh {
+            margin-top: 1.1em;
+            font: 11.5px var(--d-mono);
+        }
+        .surface.desk .readme .gh a {
+            color: #ff9ebb;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        @media (max-width: 900px) {
+            .surface.desk {
+                width: calc(100vw - 20px) !important;
+                height: calc(100vh - 120px) !important;
+                left: 10px !important;
+                top: 60px !important;
+                transform: none !important;
+                font-size: 11px;
+            }
+            .surface.desk .tiles {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                grid-template-areas: "p1" "p2" "p3" "p4" "p5" "fetch";
+                position: static;
+                overflow-y: auto;
+            }
+            .surface.desk .case {
+                grid-template-columns: 1fr;
+                position: static;
+                overflow-y: auto;
+            }
+            .surface.desk .dview {
+                overflow-y: auto;
+            }
+        }
+
+
         .board-head {
             display: flex;
             justify-content: space-between;
@@ -721,6 +1291,640 @@
             </article>
         </div>
     </section>
+
+    <!-- ---------------- SECTION 3: PROJECTS MONITOR DESK (RAOMUHAMMADHAMZA STYLE DESKTOP OS) ---------------- -->
+    <section class="surface desk projects-monitor-surface" id="projects-monitor-surface" aria-label="Projects">
+        <!-- Desktop Top Bar -->
+        <div class="dbar">
+            <nav class="ws" aria-label="Projects Workspaces">
+                <button type="button" data-p="" aria-pressed="true">0 <b>all</b></button>
+                <button type="button" data-p="mental-health" aria-pressed="false">1 <b>mental-health</b></button>
+                <button type="button" data-p="campus-connect" aria-pressed="false">2 <b>campus-connect</b></button>
+                <button type="button" data-p="cms-websites" aria-pressed="false">3 <b>cms-websites</b></button>
+                <button type="button" data-p="svelty-website" aria-pressed="false">4 <b>svelty-website</b></button>
+                <button type="button" data-p="svelty-crm" aria-pressed="false">5 <b>svelty-crm</b></button>
+            </nav>
+            <span class="clock" data-clock>Tue 3 Nov 02:00</span>
+            <span class="tray" aria-hidden="true">
+                <span class="seen" data-seen>
+                    <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.5"></circle></svg>
+                    <span>2 here · 703 visitors</span>
+                </span>
+                <svg viewBox="0 0 16 16"><path d="M1.5 6a9 9 0 0 1 13 0M4 8.6a5.4 5.4 0 0 1 8 0M6.4 11.1a2 2 0 0 1 3.2 0"></path></svg>
+                <svg viewBox="0 0 16 16"><path d="M2 6h3l4-3v10l-4-3H2zM11.5 5.5a3.5 3.5 0 0 1 0 5"></path></svg>
+                <span>IST</span>
+            </span>
+        </div>
+
+        <!-- Desktop Viewport -->
+        <div class="dview" data-scroll>
+            <!-- 0 ALL: 6 TILES GRID -->
+            <div class="tiles">
+                <!-- Tile 1: Mental Health -->
+                <button type="button" class="tile" data-p="mental-health" style="grid-area: p1">
+                    <span class="t"><b>Mental Health</b><span class="ctl"><i></i><i></i><i></i></span></span>
+                    <div class="tile-preview">
+                        <!-- SVG Graphic Mockup for Mental Health App -->
+                        <svg viewBox="0 0 320 180" width="100%" height="100%">
+                            <rect width="320" height="180" rx="6" fill="#12131d"/>
+                            <rect x="20" y="16" width="280" height="26" rx="13" fill="#1b1c2b"/>
+                            <text x="35" y="33" fill="#8fd3c1" font-size="11" font-family="'Space Mono', monospace" font-weight="bold">Daily Mindset Check</text>
+                            <circle cx="282" cy="29" r="5" fill="#7ee2a8"/>
+                            <!-- Chart Line -->
+                            <path d="M 25 125 C 60 70, 95 140, 140 85 C 185 30, 230 110, 295 65" fill="none" stroke="#ff9ebb" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M 25 125 C 60 70, 95 140, 140 85 C 185 30, 230 110, 295 65 L 295 155 L 25 155 Z" fill="url(#pinkGlowGrad)" opacity="0.15"/>
+                            <defs>
+                                <linearGradient id="pinkGlowGrad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#ff9ebb"/>
+                                    <stop offset="100%" stop-color="transparent"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="25" y="140" width="75" height="24" rx="6" fill="#202235"/>
+                            <text x="34" y="156" fill="#ff9ebb" font-size="9" font-family="sans-serif" font-weight="bold">Mood: Calm</text>
+                            <rect x="110" y="140" width="95" height="24" rx="6" fill="#202235"/>
+                            <text x="118" y="156" fill="#8fd3c1" font-size="9" font-family="sans-serif" font-weight="bold">Reflection Log</text>
+                            <rect x="215" y="140" width="80" height="24" rx="6" fill="#202235"/>
+                            <text x="225" y="156" fill="#f0a35e" font-size="9" font-family="sans-serif" font-weight="bold">Habit Streak</text>
+                        </svg>
+                    </div>
+                    <span class="meta">
+                        <span class="nm">Mental Health App</span>
+                        <span class="pitch">Mobile Application · UI Design & Prototyping</span>
+                    </span>
+                </button>
+
+                <!-- Tile 2: Campus Connect -->
+                <button type="button" class="tile" data-p="campus-connect" style="grid-area: p2">
+                    <span class="t"><b>Campus Connect</b><span class="ctl"><i></i><i></i><i></i></span></span>
+                    <div class="tile-preview">
+                        <svg viewBox="0 0 320 180" width="100%" height="100%">
+                            <rect width="320" height="180" rx="6" fill="#0f141a"/>
+                            <rect x="20" y="16" width="180" height="34" rx="8" fill="#19232d"/>
+                            <text x="32" y="37" fill="#8fd3c1" font-size="12" font-family="sans-serif" font-weight="bold">Timetable Schedule</text>
+                            <!-- Attendance Ring -->
+                            <circle cx="260" cy="40" r="22" fill="none" stroke="#253545" stroke-width="5"/>
+                            <circle cx="260" cy="40" r="22" fill="none" stroke="#8fd3c1" stroke-width="5" stroke-dasharray="110 30" stroke-linecap="round"/>
+                            <text x="250" y="44" fill="#f0eaf6" font-size="10" font-family="'Space Mono', monospace" font-weight="bold">88%</text>
+                            <!-- Class cards -->
+                            <rect x="20" y="60" width="280" height="48" rx="8" fill="#18212b" stroke="#263646" stroke-width="1"/>
+                            <text x="34" y="82" fill="#fff" font-size="11" font-family="sans-serif" font-weight="bold">Advanced Interaction Design</text>
+                            <text x="34" y="98" fill="#8b9bb0" font-size="9.5" font-family="sans-serif">Studio 4B · 10:30 AM · Prof. Verma</text>
+                            <rect x="20" y="116" width="280" height="48" rx="8" fill="#18212b" stroke="#263646" stroke-width="1"/>
+                            <text x="34" y="138" fill="#fff" font-size="11" font-family="sans-serif" font-weight="bold">User Research & Synthesis</text>
+                            <text x="34" y="154" fill="#8b9bb0" font-size="9.5" font-family="sans-serif">Lab 2A · 02:00 PM · Attendance Recorded</text>
+                        </svg>
+                    </div>
+                    <span class="meta">
+                        <span class="nm">Campus Connect</span>
+                        <span class="pitch">Education Management Mobile App</span>
+                    </span>
+                </button>
+
+                <!-- Tile 3: CMS Websites -->
+                <button type="button" class="tile" data-p="cms-websites" style="grid-area: p3">
+                    <span class="t"><b>CMS Websites</b><span class="ctl"><i></i><i></i><i></i></span></span>
+                    <div class="tile-preview">
+                        <svg viewBox="0 0 320 180" width="100%" height="100%">
+                            <rect width="320" height="180" rx="6" fill="#13101c"/>
+                            <!-- VibrantVista Fest Card -->
+                            <rect x="18" y="16" width="135" height="148" rx="8" fill="url(#festGrad)"/>
+                            <defs>
+                                <linearGradient id="festGrad" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#3d1838"/>
+                                    <stop offset="100%" stop-color="#1e1026"/>
+                                </linearGradient>
+                            </defs>
+                            <text x="28" y="38" fill="#ff9ebb" font-size="11" font-family="sans-serif" font-weight="bold">VibrantVista '25</text>
+                            <text x="28" y="52" fill="#e0b8cc" font-size="8.5" font-family="sans-serif">Cultural Festival Fest</text>
+                            <rect x="28" y="70" width="115" height="24" rx="4" fill="#58214f"/>
+                            <text x="36" y="86" fill="#fff" font-size="9" font-family="'Space Mono', monospace">03d : 14h : 22m</text>
+                            <rect x="28" y="105" width="85" height="20" rx="4" fill="#ff9ebb"/>
+                            <text x="36" y="119" fill="#17121c" font-size="8.5" font-family="sans-serif" font-weight="bold">Book Passes</text>
+
+                            <!-- Ditya Jewellery Card -->
+                            <rect x="165" y="16" width="135" height="148" rx="8" fill="#161b17" stroke="#2d3b30" stroke-width="1"/>
+                            <text x="175" y="38" fill="#8fd3c1" font-size="11" font-family="serif" font-weight="bold">Ditya Jewellery</text>
+                            <text x="175" y="52" fill="#88a893" font-size="8.5" font-family="sans-serif">Handcrafted Gold & Emerald</text>
+                            <circle cx="232" cy="95" r="24" fill="#202c23" stroke="#8fd3c1" stroke-width="1.5"/>
+                            <text x="216" y="99" fill="#8fd3c1" font-size="10" font-family="serif">LUXURY</text>
+                            <rect x="175" y="130" width="115" height="20" rx="4" fill="#202c23"/>
+                            <text x="187" y="144" fill="#8fd3c1" font-size="8.5" font-family="sans-serif" font-weight="bold">View Collection ↗</text>
+                        </svg>
+                    </div>
+                    <span class="meta">
+                        <span class="nm">CMS Websites</span>
+                        <span class="pitch">VibrantVista (Event) · Ditya Jewellery</span>
+                    </span>
+                </button>
+
+                <!-- Tile 4: Terminal fetch (Hamza Style Info Terminal) -->
+                <div class="tile term" style="grid-area: fetch" aria-hidden="true">
+                    <span class="t"><b>terminal</b>&nbsp;· ~<span class="ctl"><i></i><i></i><i></i></span></span>
+                    <span class="sh">
+                        <span class="ln"><span class="ps">pranathi@desk <em>~</em> $</span> fetch</span>
+                        <span class="fetch">
+                            <span class="tvface"></span>
+                            <span>
+                                <span class="ln"><span class="k">pranathi</span><span class="c">@</span><span class="k">desk</span></span>
+                                <span class="ln"><span class="k">role</span> UI/UX & Product Designer</span>
+                                <span class="ln"><span class="k">based</span> Hyderabad, India</span>
+                                <span class="ln"><span class="k">focus</span> Mobile Apps, SaaS CRM, Web Platforms</span>
+                                <span class="ln"><span class="k">projects</span> 5 verified, click any to open</span>
+                                <span class="swatch">
+                                    <i style="background:#ff9ebb"></i>
+                                    <i style="background:#f0a35e"></i>
+                                    <i style="background:#8fd3c1"></i>
+                                    <i style="background:#b3a6ff"></i>
+                                    <i style="background:#e9e3ef"></i>
+                                </span>
+                            </span>
+                        </span>
+                        <span class="ln"><span class="ps">pranathi@desk <em>~</em> $</span> <span class="caret"></span></span>
+                    </span>
+                </div>
+
+                <!-- Tile 5: Svelty Website -->
+                <button type="button" class="tile" data-p="svelty-website" style="grid-area: p4">
+                    <span class="t"><b>Svelty Website</b><span class="ctl"><i></i><i></i><i></i></span></span>
+                    <div class="tile-preview">
+                        <svg viewBox="0 0 320 180" width="100%" height="100%">
+                            <rect width="320" height="180" rx="6" fill="#13141f"/>
+                            <rect x="20" y="16" width="280" height="42" rx="8" fill="#1f2133"/>
+                            <text x="34" y="38" fill="#ff9ebb" font-size="12" font-family="sans-serif" font-weight="bold">Svelty Marketing Agency</text>
+                            <text x="34" y="51" fill="#9ea3c0" font-size="9" font-family="sans-serif">High-Conversion Digital Experiences</text>
+                            <!-- Metrics Cards -->
+                            <rect x="20" y="68" width="132" height="46" rx="6" fill="#191a28" stroke="#2d3047" stroke-width="1"/>
+                            <text x="32" y="88" fill="#8fd3c1" font-size="14" font-family="'Space Mono', monospace" font-weight="bold">+142%</text>
+                            <text x="32" y="104" fill="#9ea3c0" font-size="8.5" font-family="sans-serif">Conversion Uplift</text>
+
+                            <rect x="168" y="68" width="132" height="46" rx="6" fill="#191a28" stroke="#2d3047" stroke-width="1"/>
+                            <text x="180" y="88" fill="#f0a35e" font-size="14" font-family="'Space Mono', monospace" font-weight="bold">0.4s</text>
+                            <text x="180" y="104" fill="#9ea3c0" font-size="8.5" font-family="sans-serif">Page Interaction Speed</text>
+
+                            <rect x="20" y="124" width="280" height="38" rx="6" fill="linear-gradient(90deg, #ff9ebb, #f0a35e)" opacity="0.9"/>
+                            <text x="80" y="147" fill="#17121c" font-size="11" font-family="sans-serif" font-weight="bold">Explore Case Study ↗</text>
+                        </svg>
+                    </div>
+                    <span class="meta">
+                        <span class="nm">Svelty Website</span>
+                        <span class="pitch">Agency Website · Marketing & Conversions</span>
+                    </span>
+                </button>
+
+                <!-- Tile 6: Svelty CRM -->
+                <button type="button" class="tile" data-p="svelty-crm" style="grid-area: p5">
+                    <span class="t"><b>Svelty CRM</b><span class="ctl"><i></i><i></i><i></i></span></span>
+                    <div class="tile-preview">
+                        <svg viewBox="0 0 320 180" width="100%" height="100%">
+                            <rect width="320" height="180" rx="6" fill="#10111a"/>
+                            <text x="20" y="30" fill="#f0eaf6" font-size="12" font-family="sans-serif" font-weight="bold">Deal Pipeline & Workflows</text>
+                            <!-- Kanban Columns -->
+                            <rect x="20" y="44" width="85" height="120" rx="6" fill="#191b29"/>
+                            <text x="28" y="60" fill="#ff9ebb" font-size="9" font-family="'Space Mono', monospace" font-weight="bold">LEADS (12)</text>
+                            <rect x="26" y="68" width="73" height="30" rx="4" fill="#24273b"/>
+                            <rect x="26" y="104" width="73" height="30" rx="4" fill="#24273b"/>
+
+                            <rect x="115" y="44" width="85" height="120" rx="6" fill="#191b29"/>
+                            <text x="123" y="60" fill="#f0a35e" font-size="9" font-family="'Space Mono', monospace" font-weight="bold">ACTIVE (8)</text>
+                            <rect x="121" y="68" width="73" height="30" rx="4" fill="#24273b"/>
+                            <rect x="121" y="104" width="73" height="30" rx="4" fill="#24273b"/>
+
+                            <rect x="210" y="44" width="90" height="120" rx="6" fill="#191b29"/>
+                            <text x="218" y="60" fill="#8fd3c1" font-size="9" font-family="'Space Mono', monospace" font-weight="bold">WON (24)</text>
+                            <rect x="216" y="68" width="78" height="42" rx="4" fill="#1e2c24" stroke="#8fd3c1" stroke-width="1"/>
+                            <text x="224" y="85" fill="#8fd3c1" font-size="10" font-family="'Space Mono', monospace" font-weight="bold">$180,000</text>
+                            <text x="224" y="100" fill="#a4c2b0" font-size="8" font-family="sans-serif">Enterprise Q4</text>
+                        </svg>
+                    </div>
+                    <span class="meta">
+                        <span class="nm">Svelty CRM</span>
+                        <span class="pitch">CRM Platform · Workflow Management</span>
+                    </span>
+                </button>
+            </div>
+
+            <!-- CASE 1: Mental Health Application -->
+            <article class="case" id="case-mental-health" hidden>
+                <div class="win app">
+                    <div class="t">
+                        <b>Mental Health Application</b>
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="appbody">
+                        <h3>Mental Health Application</h3>
+                        <p class="tagline">Mobile Application · UI Design & Prototyping</p>
+                        <div class="app-visual">
+                            <svg viewBox="0 0 540 280" width="100%" height="100%">
+                                <rect width="540" height="280" rx="8" fill="#11121d"/>
+                                <!-- Phone Mockup 1 -->
+                                <rect x="40" y="20" width="200" height="240" rx="16" fill="#191a29" stroke="#2d3047" stroke-width="2"/>
+                                <rect x="55" y="35" width="170" height="24" rx="12" fill="#23253b"/>
+                                <text x="75" y="51" fill="#8fd3c1" font-size="11" font-family="sans-serif" font-weight="bold">Daily Mood Reflection</text>
+                                <circle cx="140" cy="110" r="40" fill="none" stroke="#ff9ebb" stroke-width="4"/>
+                                <text x="122" y="115" fill="#ff9ebb" font-size="13" font-family="'Space Mono', monospace" font-weight="bold">Calm</text>
+                                <rect x="55" y="165" width="170" height="34" rx="8" fill="#25273d"/>
+                                <text x="68" y="186" fill="#e9e3ef" font-size="10" font-family="sans-serif">Breathing Anchor · 4-7-8</text>
+                                <rect x="55" y="210" width="170" height="34" rx="8" fill="linear-gradient(90deg, #ff9ebb, #f0a35e)"/>
+                                <text x="90" y="231" fill="#17121c" font-size="10" font-family="sans-serif" font-weight="bold">Log Habit Entry</text>
+
+                                <!-- Phone Mockup 2 (Insights) -->
+                                <rect x="280" y="20" width="220" height="240" rx="16" fill="#191a29" stroke="#2d3047" stroke-width="2"/>
+                                <text x="300" y="48" fill="#f0eaf6" font-size="12" font-family="sans-serif" font-weight="bold">Weekly Mood Trends</text>
+                                <path d="M 300 130 C 330 90, 360 150, 390 100 C 420 70, 450 120, 480 80" fill="none" stroke="#8fd3c1" stroke-width="3" stroke-linecap="round"/>
+                                <rect x="300" y="160" width="180" height="32" rx="6" fill="#222538"/>
+                                <text x="312" y="180" fill="#8fd3c1" font-size="10" font-family="sans-serif">Anxiety Index reduced 32%</text>
+                                <rect x="300" y="202" width="180" height="32" rx="6" fill="#222538"/>
+                                <text x="312" y="222" fill="#f0a35e" font-size="10" font-family="sans-serif">Consecutive 7-Day Mind Streak</text>
+                            </svg>
+                        </div>
+                        <figcaption>Mental wellness tracking app focused on clear presentation of user insights, UI design, and prototyping.</figcaption>
+                        <div class="case-action-row">
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UI Designer & UX Researcher</span>
+                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="win term">
+                    <div class="t">
+                        <b>terminal</b>&nbsp;· ~/projects/mental-health
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="readme" data-scroll>
+                        <p class="cmd"><em>~/projects/mental-health</em> $ glow README.md</p>
+                        <h4>Why I built it</h4>
+                        <p>Most wellness apps suffer from high cognitive load, complex forms, and clinical friction that trigger anxiety instead of soothing it. Users drop off because daily logging feels like an administrative chore rather than self-care.</p>
+                        <p>I designed this mobile application to make mood check-ins effortless, tactile, and psychologically calming—focusing on visual clarity, empathetic typography, and positive reinforcement loops.</p>
+                        <h4>What it does</h4>
+                        <ul>
+                            <li>One-tap tactile mood logging with expressive visual spectrum and contextual tags.</li>
+                            <li>Personalized insight dashboards mapping sleep, activity, and emotional states over weekly timelines.</li>
+                            <li>Interactive guided breathing exercises with smooth fluid micro-animations.</li>
+                            <li>Gentle daily habit tracking that rewards progress without punishing missed days.</li>
+                        </ul>
+                        <h4>How it's built</h4>
+                        <ul>
+                            <li>Complete UI design system and component architecture crafted in Figma with atomic design tokens.</li>
+                            <li>High-fidelity interactive prototype mapping all primary user journeys and edge states.</li>
+                            <li>Color palette engineered for low eyestrain with WCAG AAA accessibility compliance.</li>
+                            <li>Tested with user personas across diverse stress levels to validate information hierarchy.</li>
+                        </ul>
+                        <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"User Insights"</em>, <em>"UI Design"</em>, <em>"Prototyping"</em>]</p>
+                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CASE 2: Campus Connect -->
+            <article class="case" id="case-campus-connect" hidden>
+                <div class="win app">
+                    <div class="t">
+                        <b>Campus Connect Mobile Application</b>
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="appbody">
+                        <h3>Campus Connect Mobile Application</h3>
+                        <p class="tagline">Education Management Mobile App</p>
+                        <div class="app-visual">
+                            <svg viewBox="0 0 540 280" width="100%" height="100%">
+                                <rect width="540" height="280" rx="8" fill="#0d1319"/>
+                                <rect x="35" y="20" width="220" height="240" rx="14" fill="#16202a" stroke="#253545" stroke-width="2"/>
+                                <text x="50" y="45" fill="#8fd3c1" font-size="12" font-family="sans-serif" font-weight="bold">Student Attendance Portal</text>
+                                <circle cx="145" cy="115" r="45" fill="none" stroke="#21303e" stroke-width="6"/>
+                                <circle cx="145" cy="115" r="45" fill="none" stroke="#8fd3c1" stroke-width="6" stroke-dasharray="220 60" stroke-linecap="round"/>
+                                <text x="127" y="122" fill="#fff" font-size="16" font-family="'Space Mono', monospace" font-weight="bold">88%</text>
+                                <rect x="50" y="180" width="190" height="32" rx="6" fill="#1f2d3a"/>
+                                <text x="60" y="200" fill="#8fd3c1" font-size="10" font-family="sans-serif">Minimum Requirement: 75% ✓</text>
+                                <rect x="50" y="220" width="190" height="30" rx="6" fill="#1f2d3a"/>
+                                <text x="60" y="239" fill="#f0a35e" font-size="10" font-family="sans-serif">2 Approaching Deadlines</text>
+
+                                <rect x="285" y="20" width="220" height="240" rx="14" fill="#16202a" stroke="#253545" stroke-width="2"/>
+                                <text x="300" y="45" fill="#f0eaf6" font-size="12" font-family="sans-serif" font-weight="bold">Daily Schedule & Alerts</text>
+                                <rect x="300" y="65" width="190" height="48" rx="6" fill="#1f2d3a"/>
+                                <text x="312" y="87" fill="#8fd3c1" font-size="10.5" font-family="sans-serif" font-weight="bold">09:30 AM · UX Architecture</text>
+                                <text x="312" y="103" fill="#8da3b8" font-size="9" font-family="sans-serif">Seminar Hall C · Dr. Rao</text>
+                                <rect x="300" y="125" width="190" height="48" rx="6" fill="#1f2d3a"/>
+                                <text x="312" y="147" fill="#ff9ebb" font-size="10.5" font-family="sans-serif" font-weight="bold">01:30 PM · Design Systems Lab</text>
+                                <text x="312" y="163" fill="#8da3b8" font-size="9" font-family="sans-serif">Design Studio 2 · Submission Due</text>
+                            </svg>
+                        </div>
+                        <figcaption>Education management app focused on information structure, user flows, and interface design.</figcaption>
+                        <div class="case-action-row">
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UX Architect & UI Designer</span>
+                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="win term">
+                    <div class="t">
+                        <b>terminal</b>&nbsp;· ~/projects/campus-connect
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="readme" data-scroll>
+                        <p class="cmd"><em>~/projects/campus-connect</em> $ glow README.md</p>
+                        <h4>Why I built it</h4>
+                        <p>University life involves juggling attendance thresholds, conflicting timetables, exam notifications, and campus news scattered across different bulletin boards and slow portals.</p>
+                        <p>Campus Connect consolidates the essential daily student workflow into a pocket-sized interface where students can immediately see what class is next, where to go, and whether their attendance is safe.</p>
+                        <h4>What it does</h4>
+                        <ul>
+                            <li>Real-time visual attendance tracker with proactive threshold warnings before critical cutoffs.</li>
+                            <li>Dynamic class timetable integrated with lecture hall numbers, faculty contacts, and cancellations.</li>
+                            <li>Campus announcement feed categorized by academic notices, extracurriculars, and placement drives.</li>
+                            <li>Fast leave application workflow with status tracking from advisor to dean.</li>
+                        </ul>
+                        <h4>How it's built</h4>
+                        <ul>
+                            <li>Constructed complete user flow hierarchy and task analysis across undergraduate cohorts.</li>
+                            <li>Built high-fidelity clickable prototype in Figma with reusable card components and navigation tabs.</li>
+                            <li>Designed high-density overview widgets optimized for rapid one-handed mobile scanning between lectures.</li>
+                        </ul>
+                        <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Information Structure"</em>, <em>"User Flows"</em>, <em>"Interface Design"</em>]</p>
+                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CASE 3: CMS Websites -->
+            <article class="case" id="case-cms-websites" hidden>
+                <div class="win app">
+                    <div class="t">
+                        <b>CMS Websites</b>
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="appbody">
+                        <h3>CMS Websites</h3>
+                        <p class="tagline">VibrantVista (Event) · Ditya Jewellery</p>
+                        <div class="app-visual">
+                            <svg viewBox="0 0 540 280" width="100%" height="100%">
+                                <rect width="540" height="280" rx="8" fill="#120f18"/>
+                                <!-- Fest Site Mockup -->
+                                <rect x="35" y="20" width="220" height="240" rx="10" fill="#24132b" stroke="#482452" stroke-width="1.5"/>
+                                <rect x="35" y="20" width="220" height="30" rx="10" fill="#381b42"/>
+                                <circle cx="50" cy="35" r="4" fill="#ff9ebb"/>
+                                <circle cx="62" cy="35" r="4" fill="#f0a35e"/>
+                                <circle cx="74" cy="35" r="4" fill="#8fd3c1"/>
+                                <text x="90" y="39" fill="#ff9ebb" font-size="10" font-family="sans-serif" font-weight="bold">vibrantvista.org</text>
+                                <text x="50" y="80" fill="#fff" font-size="15" font-family="sans-serif" font-weight="bold">VibrantVista '25</text>
+                                <text x="50" y="98" fill="#e2b4d4" font-size="10" font-family="sans-serif">Annual Cultural Extravaganza</text>
+                                <rect x="50" y="115" width="190" height="30" rx="4" fill="#4d1e5c"/>
+                                <text x="60" y="134" fill="#ff9ebb" font-size="10" font-family="'Space Mono', monospace">3 Days · 40 Events</text>
+                                <rect x="50" y="155" width="190" height="40" rx="6" fill="#351640"/>
+                                <text x="60" y="178" fill="#e2b4d4" font-size="9" font-family="sans-serif">Artist Lineup & Pass Booking</text>
+                                <rect x="50" y="205" width="110" height="28" rx="6" fill="#ff9ebb"/>
+                                <text x="65" y="223" fill="#17121c" font-size="9.5" font-family="sans-serif" font-weight="bold">Book Tickets</text>
+
+                                <!-- Jewellery Site Mockup -->
+                                <rect x="285" y="20" width="220" height="240" rx="10" fill="#131c15" stroke="#253a2a" stroke-width="1.5"/>
+                                <rect x="285" y="20" width="220" height="30" rx="10" fill="#1c2b20"/>
+                                <circle cx="300" cy="35" r="4" fill="#8fd3c1"/>
+                                <circle cx="312" cy="35" r="4" fill="#f0a35e"/>
+                                <text x="330" y="39" fill="#8fd3c1" font-size="10" font-family="serif">dityajewellery.com</text>
+                                <text x="300" y="80" fill="#f0eaf6" font-size="15" font-family="serif" font-weight="bold">Ditya Jewellery</text>
+                                <text x="300" y="96" fill="#8da895" font-size="10" font-family="sans-serif">Handcrafted Heirloom Collection</text>
+                                <circle cx="395" cy="145" r="32" fill="#1a2e20" stroke="#8fd3c1" stroke-width="1.5"/>
+                                <text x="375" y="149" fill="#8fd3c1" font-size="11" font-family="serif">HERITAGE</text>
+                                <rect x="300" y="200" width="190" height="32" rx="4" fill="#1e3324"/>
+                                <text x="325" y="220" fill="#8fd3c1" font-size="10" font-family="serif" font-weight="bold">Explore The Catalogue ↗</text>
+                            </svg>
+                        </div>
+                        <figcaption>Designed and developed CMS websites for different use cases, including a college cultural fest website and a jewellery website, focusing on clear content presentation, visual design, and easy content management.</figcaption>
+                        <div class="case-action-row">
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Web Designer & CMS Architect</span>
+                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="win term">
+                    <div class="t">
+                        <b>terminal</b>&nbsp;· ~/projects/cms-websites
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="readme" data-scroll>
+                        <p class="cmd"><em>~/projects/cms-websites</em> $ glow README.md</p>
+                        <h4>Why I built it</h4>
+                        <p>Different client projects require distinctly tailored content models. A university cultural fest demands high visual excitement, real-time ticket sales countdowns, and schedule browsing under surge traffic.</p>
+                        <p>Conversely, a luxury jewellery brand requires timeless editorial typography, serene spacing, high-resolution product carousels, and straightforward inquiry pathways.</p>
+                        <h4>What it does</h4>
+                        <ul>
+                            <li>VibrantVista: Interactive schedule matrix, pass registration forms, artist spotlight carousel, and venue navigation.</li>
+                            <li>Ditya Jewellery: Catalog filtering by metal and gem types, product detail lightboxes, and WhatsApp/concierge direct inquiry.</li>
+                            <li>Custom WordPress backend configurations allowing non-technical teams to update schedules and products safely.</li>
+                            <li>Responsive breakpoint optimization ensuring flawless readability across phones, tablets, and wide monitors.</li>
+                        </ul>
+                        <h4>How it's built</h4>
+                        <ul>
+                            <li>Wireframed and styled in Figma prior to production implementation in WordPress CMS.</li>
+                            <li>Engineered custom page templates with visual hierarchy optimized for fast comprehension and conversions.</li>
+                            <li>Image compression and lazy loading routines to ensure rapid load times even on spotty mobile networks.</li>
+                        </ul>
+                        <p class="deps">"<b>tools</b>": [<em>"WordPress"</em>, <em>"Figma"</em>, <em>"Content Presentation"</em>, <em>"Visual Design"</em>]</p>
+                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CASE 4: Svelty Website -->
+            <article class="case" id="case-svelty-website" hidden>
+                <div class="win app">
+                    <div class="t">
+                        <b>Svelty Website</b>
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="appbody">
+                        <h3>Svelty Website</h3>
+                        <p class="tagline">Agency Website · Marketing & Conversions</p>
+                        <div class="app-visual">
+                            <svg viewBox="0 0 540 280" width="100%" height="100%">
+                                <rect width="540" height="280" rx="8" fill="#11121d"/>
+                                <!-- Agency Hero Browser -->
+                                <rect x="40" y="20" width="460" height="240" rx="10" fill="#171929" stroke="#2d314d" stroke-width="1.5"/>
+                                <rect x="40" y="20" width="460" height="30" rx="10" fill="#21243b"/>
+                                <circle cx="56" cy="35" r="4" fill="#ff9ebb"/>
+                                <circle cx="68" cy="35" r="4" fill="#f0a35e"/>
+                                <circle cx="80" cy="35" r="4" fill="#8fd3c1"/>
+                                <rect x="100" y="28" width="180" height="15" rx="7" fill="#151726"/>
+                                <text x="120" y="39" fill="#9ea5c7" font-size="9" font-family="'Space Mono', monospace">sveltymarketing.com</text>
+
+                                <text x="65" y="85" fill="#f0eaf6" font-size="18" font-family="sans-serif" font-weight="bold">Elevating Brands With Human-Centric Design</text>
+                                <text x="65" y="105" fill="#9ea5c7" font-size="11" font-family="sans-serif">Strategy · User Experience · Growth Marketing</text>
+
+                                <!-- Performance Metric Badges -->
+                                <rect x="65" y="130" width="125" height="60" rx="6" fill="#1f2238" stroke="#313659" stroke-width="1"/>
+                                <text x="78" y="156" fill="#ff9ebb" font-size="18" font-family="'Space Mono', monospace" font-weight="bold">+142%</text>
+                                <text x="78" y="176" fill="#9ea5c7" font-size="9.5" font-family="sans-serif">Conversion Velocity</text>
+
+                                <rect x="205" y="130" width="125" height="60" rx="6" fill="#1f2238" stroke="#313659" stroke-width="1"/>
+                                <text x="218" y="156" fill="#8fd3c1" font-size="18" font-family="'Space Mono', monospace" font-weight="bold">99.4%</text>
+                                <text x="218" y="176" fill="#9ea5c7" font-size="9.5" font-family="sans-serif">Client Retention</text>
+
+                                <rect x="345" y="130" width="125" height="60" rx="6" fill="#1f2238" stroke="#313659" stroke-width="1"/>
+                                <text x="358" y="156" fill="#f0a35e" font-size="18" font-family="'Space Mono', monospace" font-weight="bold">&lt;0.8s</text>
+                                <text x="358" y="176" fill="#9ea5c7" font-size="9.5" font-family="sans-serif">Average Load Time</text>
+
+                                <rect x="65" y="210" width="150" height="32" rx="6" fill="linear-gradient(90deg, #ff9ebb, #f0a35e)"/>
+                                <text x="95" y="230" fill="#17121c" font-size="11" font-family="sans-serif" font-weight="bold">Start a Project ↗</text>
+                            </svg>
+                        </div>
+                        <figcaption>Designed and developed the Svelty Marketing Agency website to capture users' attention and encourage more conversions.</figcaption>
+                        <div class="case-action-row">
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Lead Digital Product Designer</span>
+                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="win term">
+                    <div class="t">
+                        <b>terminal</b>&nbsp;· ~/projects/svelty-website
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="readme" data-scroll>
+                        <p class="cmd"><em>~/projects/svelty-website</em> $ glow README.md</p>
+                        <h4>Why I built it</h4>
+                        <p>Marketing agency websites often rely on buzzwords and bloated animations that cause bounce rates to soar. The mission for Svelty's web presence was to showcase immediate design competence, clarity of offer, and irresistible conversion funnels.</p>
+                        <h4>What it does</h4>
+                        <ul>
+                            <li>Engaging hero section with clear value propositions and low-friction consultation booking.</li>
+                            <li>Interactive portfolio grid highlighting measurable business metrics and client outcomes.</li>
+                            <li>Dynamic service selector tool allowing prospective clients to estimate scope and timelines.</li>
+                            <li>Responsive design tuned for instantaneous visual feedback across mobile and desktop.</li>
+                        </ul>
+                        <h4>How it's built</h4>
+                        <ul>
+                            <li>UI/UX design crafted in Figma with Claude-assisted design system tokenization.</li>
+                            <li>Layout structured for visual attention flow and conversion rate optimization (CRO).</li>
+                            <li>Typography and spacing calibrated for scannability and strong executive impression.</li>
+                        </ul>
+                        <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Claude Design"</em>, <em>"Attention Capture"</em>, <em>"Conversion Focus"</em>]</p>
+                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CASE 5: Svelty CRM -->
+            <article class="case" id="case-svelty-crm" hidden>
+                <div class="win app">
+                    <div class="t">
+                        <b>Svelty CRM</b>
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="appbody">
+                        <h3>Svelty CRM</h3>
+                        <p class="tagline">CRM Platform · Workflow Management</p>
+                        <div class="app-visual">
+                            <svg viewBox="0 0 540 280" width="100%" height="100%">
+                                <rect width="540" height="280" rx="8" fill="#0f1118"/>
+                                <!-- Top Bar -->
+                                <rect x="30" y="15" width="480" height="34" rx="6" fill="#181b28"/>
+                                <text x="45" y="37" fill="#f0eaf6" font-size="12" font-family="sans-serif" font-weight="bold">Enterprise Workflow & Deal Pipeline</text>
+                                <rect x="390" y="22" width="105" height="20" rx="4" fill="#252a3d"/>
+                                <text x="402" y="36" fill="#8fd3c1" font-size="9" font-family="'Space Mono', monospace">+ New Deal</text>
+
+                                <!-- Kanban Columns -->
+                                <rect x="30" y="60" width="112" height="195" rx="6" fill="#151722"/>
+                                <text x="42" y="80" fill="#ff9ebb" font-size="10" font-family="'Space Mono', monospace" font-weight="bold">PROSPECTS (8)</text>
+                                <rect x="38" y="92" width="96" height="42" rx="4" fill="#212536"/>
+                                <text x="46" y="108" fill="#fff" font-size="9.5" font-family="sans-serif">Acme Corp AI</text>
+                                <text x="46" y="122" fill="#ff9ebb" font-size="8.5" font-family="'Space Mono', monospace">$24,000</text>
+                                <rect x="38" y="142" width="96" height="42" rx="4" fill="#212536"/>
+                                <text x="46" y="158" fill="#fff" font-size="9.5" font-family="sans-serif">FinTech API</text>
+                                <text x="46" y="172" fill="#ff9ebb" font-size="8.5" font-family="'Space Mono', monospace">$18,500</text>
+
+                                <rect x="152" y="60" width="112" height="195" rx="6" fill="#151722"/>
+                                <text x="164" y="80" fill="#f0a35e" font-size="10" font-family="'Space Mono', monospace" font-weight="bold">IN REVIEW (5)</text>
+                                <rect x="160" y="92" width="96" height="42" rx="4" fill="#212536"/>
+                                <text x="168" y="108" fill="#fff" font-size="9.5" font-family="sans-serif">MedCare Hub</text>
+                                <text x="168" y="122" fill="#f0a35e" font-size="8.5" font-family="'Space Mono', monospace">$52,000</text>
+
+                                <rect x="274" y="60" width="112" height="195" rx="6" fill="#151722"/>
+                                <text x="286" y="80" fill="#8fd3c1" font-size="10" font-family="'Space Mono', monospace" font-weight="bold">QUALIFIED (6)</text>
+                                <rect x="282" y="92" width="96" height="42" rx="4" fill="#212536"/>
+                                <text x="290" y="108" fill="#fff" font-size="9.5" font-family="sans-serif">Nova Retail</text>
+                                <text x="290" y="122" fill="#8fd3c1" font-size="8.5" font-family="'Space Mono', monospace">$76,000</text>
+
+                                <rect x="396" y="60" width="114" height="195" rx="6" fill="#151722"/>
+                                <text x="408" y="80" fill="#7ee2a8" font-size="10" font-family="'Space Mono', monospace" font-weight="bold">CLOSED (22)</text>
+                                <rect x="404" y="92" width="98" height="52" rx="4" fill="#1b2a22" stroke="#7ee2a8" stroke-width="1"/>
+                                <text x="414" y="110" fill="#fff" font-size="10" font-family="sans-serif" font-weight="bold">HyperCloud Global</text>
+                                <text x="414" y="126" fill="#7ee2a8" font-size="9.5" font-family="'Space Mono', monospace" font-weight="bold">$194,000 · WON</text>
+                            </svg>
+                        </div>
+                        <figcaption>Designed and developed Svelty's CRM platform to manage roles, responsibilities, tasks, and workflows.</figcaption>
+                        <div class="case-action-row">
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Lead Product Designer</span>
+                            <a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener" class="btn-case-cta">View Case Study ↗</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="win term">
+                    <div class="t">
+                        <b>terminal</b>&nbsp;· ~/projects/svelty-crm
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="readme" data-scroll>
+                        <p class="cmd"><em>~/projects/svelty-crm</em> $ glow README.md</p>
+                        <h4>Why I built it</h4>
+                        <p>Managing rapidly growing client pipelines across multiple teams often devolves into messy spreadsheets and missed milestones. Standard enterprise CRMs are overly complicated, cluttered with unused modules, and slow down account executives.</p>
+                        <p>I designed Svelty CRM to bring clarity and speed to workflow execution, role-based delegation, and pipeline velocity.</p>
+                        <h4>What it does</h4>
+                        <ul>
+                            <li>Visual drag-and-drop Kanban deal pipeline with real-time conversion probability forecasting.</li>
+                            <li>Granular role-based permissions and dedicated workspaces for SDRs, Account Managers, and Executives.</li>
+                            <li>Unified client activity log capturing communications, task assignments, and milestone deliverables.</li>
+                            <li>Executive analytics overview tracking team velocity, deal sizes, and quarterly revenue goals.</li>
+                        </ul>
+                        <h4>How it's built</h4>
+                        <ul>
+                            <li>Comprehensive UI design system created in Figma featuring 80+ modular components and data table states.</li>
+                            <li>Information architecture optimized to minimize clicks and eliminate navigational dead-ends.</li>
+                            <li>Dark mode palette designed for high contrast and sustained power user focus throughout long working days.</li>
+                        </ul>
+                        <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Claude Design"</em>, <em>"Role Management"</em>, <em>"Task Tracking"</em>, <em>"Workflows"</em>]</p>
+                        <p class="gh"><a href="https://www.twine.net/boyinasaipranathi679" target="_blank" rel="noopener">twine.net/boyinasaipranathi679</a></p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
 
     <!-- Section 4: Education (Cupboard Wardrobe & Straight Horizontal Leader Lines) -->
     <svg class="education-lines-overlay" id="edu-lines-svg">
@@ -1351,7 +2555,7 @@
             drawMonitorScreen();
         }
 
-        // Draw High-Visibility Projects Carousel on Monitor
+                // Draw High-Visibility Projects Carousel on Monitor (Mirrors OS Desktop)
         function drawMonitorScreen() {
             if (!monitorCtx) return;
             const ctx = monitorCtx;
@@ -1359,604 +2563,224 @@
             ctx.setTransform(2, 0, 0, 2, 0, 0);
             const w = 1920;
             const h = 1080;
-            const p = projectsData[curProjectIdx];
-            const prevIdx = (curProjectIdx - 1 + projectsData.length) % projectsData.length;
-            const nextIdx = (curProjectIdx + 1) % projectsData.length;
 
-            // Deep Studio Background
+            // Deep Desktop Background with Subtle Gradient Glow
             const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-            bgGrad.addColorStop(0, '#101318');
-            bgGrad.addColorStop(0.5, '#171b24');
-            bgGrad.addColorStop(1, '#0e1116');
+            bgGrad.addColorStop(0, '#111119');
+            bgGrad.addColorStop(0.5, '#171624');
+            bgGrad.addColorStop(1, '#0c0c14');
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, w, h);
 
-            // Subtle Ambient Radial Glow
-            const radGlow = ctx.createRadialGradient(w / 2, h / 2, 80, w / 2, h / 2, 900);
-            radGlow.addColorStop(0, 'rgba(36, 71, 53, 0.22)');
-            radGlow.addColorStop(0.7, 'rgba(15, 23, 19, 0.05)');
+            // Ambient glows
+            const radGlow = ctx.createRadialGradient(w * 0.85, h * 0.1, 50, w * 0.85, h * 0.1, 600);
+            radGlow.addColorStop(0, 'rgba(255, 158, 187, 0.14)');
             radGlow.addColorStop(1, 'transparent');
             ctx.fillStyle = radGlow;
             ctx.fillRect(0, 0, w, h);
 
-            // Top Header Bar
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-            ctx.fillRect(0, 0, w, 70);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.fillRect(0, 69, w, 1);
-
-            ctx.fillStyle = '#84a98c';
-            ctx.font = 'bold 20px "Montserrat", sans-serif';
-            ctx.textAlign = 'left';
-            ctx.fillText('❖ SAI PRANATHI BOYINA · SELECTED PROJECTS FROM RESUME', 48, 44);
-
-            // Center Counter Badge
-            ctx.fillStyle = 'rgba(36, 71, 53, 0.45)';
-            ctx.beginPath(); ctx.roundRect(w / 2 - 130, 14, 260, 44, 22); ctx.fill();
-            ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
-            ctx.fillStyle = '#F4EFE7';
-            ctx.font = 'bold 18px "Montserrat", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('PROJECT 0' + (curProjectIdx + 1) + ' OF 0' + projectsData.length, w / 2, 42);
-
-            // Top-Right Controls
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.roundRect(1590, 14, 125, 44, 22); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.stroke();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('‹ PREV', 1652, 42);
-
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.roundRect(1735, 14, 125, 44, 22); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.stroke();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('NEXT ›', 1797, 42);
-
-            // Peeking Left Card
-            const peekW = 240;
-            const peekH = 835;
-            const prevCardX = 40;
-            const prevCardY = 120;
-
-            ctx.save();
-            ctx.globalAlpha = 0.35;
-            ctx.fillStyle = 'rgba(25, 30, 42, 0.85)';
-            ctx.beginPath(); ctx.roundRect(prevCardX, prevCardY, peekW, peekH, 24); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
-
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 30px "Montserrat", sans-serif';
-            ctx.textAlign = 'right';
-            ctx.fillText('‹ ' + projectsData[prevIdx].title, prevCardX + peekW - 30, prevCardY + 120, peekW - 50);
-
-            ctx.fillStyle = '#84a98c';
-            ctx.font = 'bold 18px "Montserrat", sans-serif';
-            ctx.fillText(projectsData[prevIdx].subtitle, prevCardX + peekW - 30, prevCardY + 165, peekW - 50);
-            ctx.restore();
-
-            // Peeking Right Card
-            const nextCardX = 1640;
-            const nextCardY = 120;
-
-            ctx.save();
-            ctx.globalAlpha = 0.35;
-            ctx.fillStyle = 'rgba(25, 30, 42, 0.85)';
-            ctx.beginPath(); ctx.roundRect(nextCardX, nextCardY, peekW, peekH, 24); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
-
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 30px "Montserrat", sans-serif';
-            ctx.textAlign = 'left';
-            ctx.fillText(projectsData[nextIdx].title + ' ›', nextCardX + 30, nextCardY + 120, peekW - 50);
-
-            ctx.fillStyle = '#84a98c';
-            ctx.font = 'bold 18px "Montserrat", sans-serif';
-            ctx.fillText(projectsData[nextIdx].subtitle, nextCardX + 30, nextCardY + 165, peekW - 50);
-            ctx.restore();
-
-            // Main Featured Card (Center)
-            const cardX = 330;
-            const cardY = 100;
-            const cardW = 1260;
-            const cardH = 875;
-
-            // Main Card Glass Body
-            ctx.fillStyle = 'rgba(20, 24, 34, 0.95)';
-            ctx.beginPath(); ctx.roundRect(cardX, cardY, cardW, cardH, 24); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            // Top Forest Green Accent Strip
-            ctx.fillStyle = '#244735';
-            ctx.beginPath(); ctx.roundRect(cardX + 2, cardY + 2, cardW - 4, 8, [24, 24, 0, 0]); ctx.fill();
-
-            // LEFT HALF: Interactive UI Showcase Mockup
-            const mockX = cardX + 38;
-            const mockY = cardY + 40;
-            const mockW = 530;
-            const mockH = cardH - 80;
-
-            ctx.fillStyle = '#121520';
-            ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, mockH, 20); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.stroke();
-
-            // Render project-specific visual preview
-            if (curProjectIdx === 0) {
-                // 1. MENTAL HEALTH APPLICATION - Wellness Tracking Mobile App
-                const phoneW = 390, phoneH = 675;
-                const px = mockX + (mockW - phoneW) / 2, py = mockY + 40;
-
-                ctx.fillStyle = '#1a221f';
-                ctx.beginPath(); ctx.roundRect(px, py, phoneW, phoneH, 28); ctx.fill();
-                ctx.strokeStyle = 'rgba(132, 169, 140, 0.8)'; ctx.lineWidth = 2.5; ctx.stroke();
-
-                // Punch hole camera
-                ctx.fillStyle = '#000';
-                ctx.beginPath(); ctx.arc(px + phoneW / 2, py + 26, 10, 0, Math.PI * 2); ctx.fill();
-
-                // Status Bar
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '600 13px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('09:41', px + 24, py + 30);
-                ctx.textAlign = 'right';
-                ctx.fillText('100%', px + phoneW - 24, py + 30);
-
-                // Greeting & Check-in Header
-                ctx.textAlign = 'left';
-                ctx.fillStyle = '#84a98c'; ctx.font = 'bold 13px "Montserrat", sans-serif';
-                ctx.fillText('DAILY REFLECTION', px + 24, py + 72);
-                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
-                ctx.fillText('How are you feeling?', px + 24, py + 104);
-
-                // Mood selector chips
-                const moods = [
-                    { label: '🌿 Calm', active: true },
-                    { label: '✨ Energized', active: false },
-                    { label: '💭 Reflective', active: false }
-                ];
-                let mx = px + 24;
-                moods.forEach(m => {
-                    ctx.fillStyle = m.active ? '#244735' : 'rgba(255, 255, 255, 0.06)';
-                    ctx.beginPath(); ctx.roundRect(mx, py + 124, 104, 38, 12); ctx.fill();
-                    if (m.active) {
-                        ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
-                    }
-                    ctx.fillStyle = m.active ? '#ffffff' : '#94a3b8';
-                    ctx.font = '600 13px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                    ctx.fillText(m.label, mx + 52, py + 148);
-                    mx += 114;
-                });
-
-                // User Insights & Trends Card
-                ctx.fillStyle = 'rgba(36, 71, 53, 0.35)';
-                ctx.beginPath(); ctx.roundRect(px + 24, py + 180, phoneW - 48, 230, 20); ctx.fill();
-                ctx.strokeStyle = 'rgba(132, 169, 140, 0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.textAlign = 'left';
-                ctx.fillStyle = '#84a98c'; ctx.font = 'bold 13px "Montserrat", sans-serif';
-                ctx.fillText('WEEKLY WELLNESS INSIGHTS', px + 44, py + 214);
-                ctx.fillStyle = '#ffffff'; ctx.font = '800 20px "Montserrat", sans-serif';
-                ctx.fillText('Consistent Calm Trends', px + 44, py + 244);
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
-                ctx.fillText('Clear presentation of user insights & tracking', px + 44, py + 272);
-
-                // Wave trend line
-                ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 3;
-                ctx.beginPath();
-                const trendY = [350, 335, 345, 320, 330, 310, 315];
-                const tw = (phoneW - 96) / 6;
-                trendY.forEach((ty, i) => {
-                    const cx = px + 48 + i * tw;
-                    const cy = py + ty;
-                    if (i === 0) ctx.moveTo(cx, cy);
-                    else ctx.lineTo(cx, cy);
-                });
-                ctx.stroke();
-
-                // Days labels
-                const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-                days.forEach((d, i) => {
-                    const cx = px + 48 + i * tw;
-                    ctx.fillStyle = '#94a3b8'; ctx.font = '600 12px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                    ctx.fillText(d, cx, py + 380);
-                });
-
-                // Guided Session / Prototype Card
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                ctx.beginPath(); ctx.roundRect(px + 24, py + 430, phoneW - 48, 110, 18); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
-
-                ctx.fillStyle = '#84a98c'; ctx.font = 'bold 22px sans-serif'; ctx.textAlign = 'center';
-                ctx.fillText('🧘', px + 58, py + 494);
-                ctx.textAlign = 'left';
-                ctx.fillStyle = '#ffffff'; ctx.font = '700 17px "Montserrat", sans-serif';
-                ctx.fillText('Guided Breathing Session', px + 92, py + 476);
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 13px "Montserrat", sans-serif';
-                ctx.fillText('Interactive Figma Prototyping Flow', px + 92, py + 504);
-
-                // Bottom Tab Bar
-                ctx.fillStyle = 'rgba(15, 20, 18, 0.9)';
-                ctx.beginPath(); ctx.roundRect(px + 24, py + 560, phoneW - 48, 60, 30); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.stroke();
-                const tabs = ['Home', 'Insights', 'Sessions', 'Profile'];
-                tabs.forEach((tb, i) => {
-                    ctx.fillStyle = i === 1 ? '#84a98c' : '#64748b';
-                    ctx.font = 'bold 12px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                    ctx.fillText(tb, px + 68 + i * 80, py + 596);
-                });
-            } else if (curProjectIdx === 1) {
-                // 2. CAMPUS CONNECT MOBILE APPLICATION - Education Management
-                const phoneW = 390, phoneH = 675;
-                const px = mockX + (mockW - phoneW) / 2, py = mockY + 40;
-
-                ctx.fillStyle = '#161d24';
-                ctx.beginPath(); ctx.roundRect(px, py, phoneW, phoneH, 28); ctx.fill();
-                ctx.strokeStyle = 'rgba(56, 189, 248, 0.7)'; ctx.lineWidth = 2.5; ctx.stroke();
-
-                // Punch hole
-                ctx.fillStyle = '#000';
-                ctx.beginPath(); ctx.arc(px + phoneW / 2, py + 26, 10, 0, Math.PI * 2); ctx.fill();
-
-                // Header
-                ctx.textAlign = 'left';
-                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 13px "Montserrat", sans-serif';
-                ctx.fillText('CAMPUS CONNECT', px + 24, py + 72);
-                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
-                ctx.fillText('Education Management', px + 24, py + 104);
-
-                // Student Identity Card
-                ctx.fillStyle = 'rgba(56, 189, 248, 0.12)';
-                ctx.beginPath(); ctx.roundRect(px + 24, py + 125, phoneW - 48, 90, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(56, 189, 248, 0.3)'; ctx.stroke();
-
-                ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Montserrat", sans-serif';
-                ctx.fillText('Student Portal · Semester VI', px + 44, py + 160);
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 13px "Montserrat", sans-serif';
-                ctx.fillText('Information Structure & User Flows', px + 44, py + 188);
-
-                // Class Schedule Cards
-                const classes = [
-                    { title: 'Human Computer Interaction', time: '10:00 AM - 11:30 AM', room: 'Hall 302', code: 'CS-402' },
-                    { title: 'Information Architecture', time: '01:00 PM - 02:30 PM', room: 'Lab B', code: 'UX-310' },
-                    { title: 'Interface Design Studio', time: '03:00 PM - 04:30 PM', room: 'Studio 1', code: 'UI-204' }
-                ];
-
-                classes.forEach((cl, i) => {
-                    const cy = py + 235 + i * 115;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                    ctx.beginPath(); ctx.roundRect(px + 24, cy, phoneW - 48, 100, 16); ctx.fill();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
-
-                    ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 12px "JetBrains Mono", monospace';
-                    ctx.fillText(cl.code + ' · ' + cl.room, px + 44, cy + 30);
-                    ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Montserrat", sans-serif';
-                    ctx.fillText(cl.title, px + 44, cy + 58);
-                    ctx.fillStyle = '#94a3b8'; ctx.font = '500 13px "Montserrat", sans-serif';
-                    ctx.fillText(cl.time, px + 44, cy + 82);
-                });
-
-                // Bottom Tab Bar
-                ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
-                ctx.beginPath(); ctx.roundRect(px + 24, py + 590, phoneW - 48, 55, 28); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.stroke();
-                ['Courses', 'Schedule', 'Notices', 'Profile'].forEach((tb, i) => {
-                    ctx.fillStyle = i === 1 ? '#38bdf8' : '#64748b';
-                    ctx.font = 'bold 12px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                    ctx.fillText(tb, px + 68 + i * 80, py + 624);
-                });
-            } else if (curProjectIdx === 2) {
-                // 3. CMS WEBSITES - VibrantVista & Ditya Jewellery
-                ctx.fillStyle = '#171a22';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 18); ctx.fill();
-                ctx.strokeStyle = 'rgba(217, 119, 6, 0.6)'; ctx.lineWidth = 2; ctx.stroke();
-
-                // Top Browser Bar
-                ctx.fillStyle = '#222734';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, 44, [18, 18, 0, 0]); ctx.fill();
-                // 3 dots
-                ['#ef4444', '#f59e0b', '#10b981'].forEach((col, i) => {
-                    ctx.fillStyle = col;
-                    ctx.beginPath(); ctx.arc(mockX + 48 + i * 16, mockY + 58, 5, 0, Math.PI * 2); ctx.fill();
-                });
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('vibrantvista.edu / dityajewellery.com · WordPress CMS', mockX + 110, mockY + 62);
-
-                // Section 1: VibrantVista Cultural Fest Website
-                ctx.fillStyle = 'rgba(36, 71, 53, 0.4)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 100, mockW - 88, 260, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(132, 169, 140, 0.4)'; ctx.stroke();
-
-                ctx.fillStyle = '#84a98c'; ctx.font = 'bold 13px "Montserrat", sans-serif';
-                ctx.fillText('COLLEGE CULTURAL FEST WEBSITE · CMS', mockX + 66, mockY + 132);
-                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
-                ctx.fillText('VibrantVista Cultural Fest', mockX + 66, mockY + 168);
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
-                ctx.fillText('Easy content management, event registration & visual schedule', mockX + 66, mockY + 198);
-
-                ctx.fillStyle = '#244735';
-                ctx.beginPath(); ctx.roundRect(mockX + 66, mockY + 224, 160, 42, 21); ctx.fill();
-                ctx.strokeStyle = '#84a98c'; ctx.stroke();
-                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 13px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                ctx.fillText('View Fest Schedule →', mockX + 146, mockY + 250);
-
-                // Section 2: Ditya Jewellery Website
-                ctx.textAlign = 'left';
-                ctx.fillStyle = 'rgba(217, 119, 6, 0.15)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 390, mockW - 88, 280, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)'; ctx.stroke();
-
-                ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 13px "Montserrat", sans-serif';
-                ctx.fillText('E-COMMERCE & SHOWCASE CMS WEBSITE', mockX + 66, mockY + 422);
-                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
-                ctx.fillText('Ditya Jewellery Collection', mockX + 66, mockY + 458);
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
-                ctx.fillText('Clear content presentation, catalog visual design & WordPress CMS', mockX + 66, mockY + 488);
-
-                // Product items grid
-                const prods = ['Royal Diamond Pendant', 'Heritage Gold Choker', 'Emerald Solitaire'];
-                prods.forEach((pr, i) => {
-                    const px = mockX + 66 + i * 135;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-                    ctx.beginPath(); ctx.roundRect(px, mockY + 514, 120, 120, 12); ctx.fill();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
-                    ctx.fillStyle = '#f59e0b'; ctx.font = '22px sans-serif'; ctx.textAlign = 'center';
-                    ctx.fillText('💍', px + 60, mockY + 565);
-                    ctx.fillStyle = '#ffffff'; ctx.font = '600 11px "Montserrat", sans-serif';
-                    ctx.fillText(pr, px + 60, mockY + 605, 110);
-                });
-            } else if (curProjectIdx === 3) {
-                // 4. SVELTY WEBSITE - Marketing Agency Website
-                ctx.fillStyle = '#171c24';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 18); ctx.fill();
-                ctx.strokeStyle = 'rgba(168, 85, 247, 0.6)'; ctx.lineWidth = 2; ctx.stroke();
-
-                // Top Browser Bar
-                ctx.fillStyle = '#222936';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, 44, [18, 18, 0, 0]); ctx.fill();
-                ['#ef4444', '#f59e0b', '#10b981'].forEach((col, i) => {
-                    ctx.fillStyle = col;
-                    ctx.beginPath(); ctx.arc(mockX + 48 + i * 16, mockY + 58, 5, 0, Math.PI * 2); ctx.fill();
-                });
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('sveltymarketing.agency · Agency Website', mockX + 110, mockY + 62);
-
-                // Agency Hero Section
-                ctx.fillStyle = 'rgba(168, 85, 247, 0.15)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 105, mockW - 88, 320, 18); ctx.fill();
-                ctx.strokeStyle = 'rgba(168, 85, 247, 0.35)'; ctx.stroke();
-
-                ctx.fillStyle = '#c084fc'; ctx.font = 'bold 13px "Montserrat", sans-serif';
-                ctx.fillText('MARKETING AGENCY WEBSITE', mockX + 66, mockY + 140);
-                ctx.fillStyle = '#ffffff'; ctx.font = '800 28px "Montserrat", sans-serif';
-                ctx.fillText('Capture Users\' Attention', mockX + 66, mockY + 182);
-                ctx.fillText('& Drive More Conversions', mockX + 66, mockY + 220);
-
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
-                ctx.fillText('Designed and developed using Figma and Claude Design.', mockX + 66, mockY + 260);
-
-                ctx.fillStyle = '#7c3aed';
-                ctx.beginPath(); ctx.roundRect(mockX + 66, mockY + 295, 180, 46, 23); ctx.fill();
-                ctx.strokeStyle = '#c084fc'; ctx.stroke();
-                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 14px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                ctx.fillText('Start Project →', mockX + 156, mockY + 324);
-
-                // Feature Pillars
-                ctx.textAlign = 'left';
-                const pillars = [
-                    { title: 'Brand Storytelling', sub: 'Attention-capturing visual aesthetics' },
-                    { title: 'Conversion Funnels', sub: 'Optimized user journeys & high ROI' }
-                ];
-                pillars.forEach((pil, i) => {
-                    const cy = mockY + 450 + i * 105;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                    ctx.beginPath(); ctx.roundRect(mockX + 44, cy, mockW - 88, 90, 14); ctx.fill();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
-
-                    ctx.fillStyle = '#c084fc'; ctx.font = 'bold 16px "Montserrat", sans-serif';
-                    ctx.fillText(pil.title, mockX + 66, cy + 36);
-                    ctx.fillStyle = '#94a3b8'; ctx.font = '500 13px "Montserrat", sans-serif';
-                    ctx.fillText(pil.sub, mockX + 66, cy + 64);
-                });
-            } else {
-                // 5. SVELTY CRM - CRM Platform & Workflows
-                ctx.fillStyle = '#171c26';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, mockH - 72, 18); ctx.fill();
-                ctx.strokeStyle = 'rgba(16, 185, 129, 0.6)'; ctx.lineWidth = 2; ctx.stroke();
-
-                // Top Browser Bar
-                ctx.fillStyle = '#202836';
-                ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 36, mockW - 48, 44, [18, 18, 0, 0]); ctx.fill();
-                ['#ef4444', '#f59e0b', '#10b981'].forEach((col, i) => {
-                    ctx.fillStyle = col;
-                    ctx.beginPath(); ctx.arc(mockX + 48 + i * 16, mockY + 58, 5, 0, Math.PI * 2); ctx.fill();
-                });
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
-                ctx.fillText('app.svelty.crm · Platform Dashboard', mockX + 110, mockY + 62);
-
-                // CRM Dashboard Header
-                ctx.fillStyle = 'rgba(16, 185, 129, 0.15)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 105, mockW - 88, 140, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(16, 185, 129, 0.35)'; ctx.stroke();
-
-                ctx.fillStyle = '#34d399'; ctx.font = 'bold 13px "Montserrat", sans-serif';
-                ctx.fillText('SVELTY CRM PLATFORM', mockX + 66, mockY + 138);
-                ctx.fillStyle = '#ffffff'; ctx.font = '800 24px "Montserrat", sans-serif';
-                ctx.fillText('Roles, Tasks & Workflows', mockX + 66, mockY + 174);
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 13px "Montserrat", sans-serif';
-                ctx.fillText('Manage team responsibilities, project pipelines and automated actions', mockX + 66, mockY + 204);
-
-                // Workflow Kanban Columns Preview
-                const cols = [
-                    { title: 'Roles & Access', count: '12 Active' },
-                    { title: 'Task Pipelines', count: '38 Tasks' },
-                    { title: 'Live Workflows', count: '9 Running' }
-                ];
-
-                cols.forEach((cl, i) => {
-                    const cx = mockX + 44 + i * 148;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                    ctx.beginPath(); ctx.roundRect(cx, mockY + 270, 140, 200, 14); ctx.fill();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
-
-                    ctx.fillStyle = '#34d399'; ctx.font = 'bold 13px "Montserrat", sans-serif';
-                    ctx.fillText(cl.title, cx + 16, mockY + 302, 110);
-                    ctx.fillStyle = '#94a3b8'; ctx.font = '600 12px "Montserrat", sans-serif';
-                    ctx.fillText(cl.count, cx + 16, mockY + 328);
-
-                    // Mock Task Cards inside column
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-                    ctx.beginPath(); ctx.roundRect(cx + 12, mockY + 346, 116, 44, 8); ctx.fill();
-                    ctx.fillStyle = '#ffffff'; ctx.font = '500 11px "Montserrat", sans-serif';
-                    ctx.fillText('Workflow Step ' + (i + 1), cx + 20, mockY + 372);
-
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-                    ctx.beginPath(); ctx.roundRect(cx + 12, mockY + 400, 116, 44, 8); ctx.fill();
-                    ctx.fillStyle = '#94a3b8'; ctx.font = '500 11px "Montserrat", sans-serif';
-                    ctx.fillText('Task Item · ' + (i + 2), cx + 20, mockY + 426);
-                });
-
-                // Permissions & Governance Banner
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(mockX + 44, mockY + 495, mockW - 88, 160, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.stroke();
-
-                ctx.fillStyle = '#ffffff'; ctx.font = '700 16px "Montserrat", sans-serif';
-                ctx.fillText('Role Governance & Pipeline Status', mockX + 66, mockY + 535);
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
-                ctx.fillText('Custom permissions per role, automated task assignment, and transparent workflows.', mockX + 66, mockY + 568, mockW - 132);
-            }
-
-            // RIGHT HALF: Project Details, Verbatim from Resume
-            const specX = cardX + 600;
-            const specY = cardY + 52;
-
-            // Eyebrow Badge
-            ctx.fillStyle = 'rgba(36, 71, 53, 0.45)';
-            ctx.beginPath(); ctx.roundRect(specX, specY, 400, 40, 20); ctx.fill();
-            ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
-            ctx.fillStyle = '#F4EFE7'; ctx.font = 'bold 15px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-            ctx.fillText(p.badge, specX + 22, specY + 26);
-
-            // Large Title
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '800 44px "Montserrat", sans-serif';
-            ctx.fillText(p.title, specX, specY + 104, 610);
-
-            // Subtitle
-            ctx.fillStyle = '#84a98c';
-            ctx.font = 'bold 22px "Montserrat", sans-serif';
-            ctx.fillText(p.subtitle, specX, specY + 150);
-
-            // Divider Line
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-            ctx.lineWidth = 1.5;
-            ctx.beginPath(); ctx.moveTo(specX, specY + 180); ctx.lineTo(specX + 610, specY + 180); ctx.stroke();
-
-            // Resume Description Header
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '700 14px "Montserrat", sans-serif';
-            ctx.fillText('PROJECT OVERVIEW & SCOPE (FROM RESUME):', specX, specY + 215);
-
-            // Description Paragraph (Word wrapped)
-            ctx.fillStyle = '#F4EFE7';
-            ctx.font = '500 22px/1.6 "Montserrat", sans-serif';
-            const words = p.desc.split(' ');
-            let line = '', lineY = specY + 256;
-            for (let n = 0; n < words.length; n++) {
-                const testLine = line + words[n] + ' ';
-                if (ctx.measureText(testLine).width > 590 && n > 0) {
-                    ctx.fillText(line, specX, lineY);
-                    line = words[n] + ' ';
-                    lineY += 36;
+            // Desktop Top Bar
+            ctx.fillStyle = 'rgba(14, 14, 21, 0.9)';
+            ctx.beginPath(); ctx.roundRect(16, 12, w - 32, 54, 14); ctx.fill();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.lineWidth = 1; ctx.stroke();
+
+            // Tabs in Top Bar
+            const tabNames = ['0 all', '1 mental-health', '2 campus-connect', '3 cms-websites', '4 svelty-website', '5 svelty-crm'];
+            let curTabX = 28;
+            for (let i = 0; i < tabNames.length; i++) {
+                const isCur = (activeProjectSlug === '' && i === 0) || (activeProjectSlug !== '' && i === (curProjectIdx + 1));
+                const tWidth = (i === 0) ? 68 : 155;
+                if (isCur) {
+                    const tabGrad = ctx.createLinearGradient(curTabX, 20, curTabX + tWidth, 58);
+                    tabGrad.addColorStop(0, '#ff9ebb');
+                    tabGrad.addColorStop(1, '#f0a35e');
+                    ctx.fillStyle = tabGrad;
+                    ctx.beginPath(); ctx.roundRect(curTabX, 20, tWidth, 38, 10); ctx.fill();
+                    ctx.fillStyle = '#17121c';
+                    ctx.font = 'bold 14px "Space Mono", monospace';
                 } else {
-                    line = testLine;
+                    ctx.fillStyle = '#928b9e';
+                    ctx.font = '13.5px "Space Mono", monospace';
                 }
-            }
-            ctx.fillText(line, specX, lineY);
-
-            // Tools Section (Exact from Resume)
-            const toolsY = lineY + 45;
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '700 14px "Montserrat", sans-serif';
-            ctx.fillText('TOOLS USED (FROM RESUME):', specX, toolsY);
-
-            let toolX = specX;
-            p.tools.forEach(tl => {
-                const tw = ctx.measureText(tl).width + 48;
-                ctx.fillStyle = 'rgba(36, 71, 53, 0.45)';
-                ctx.beginPath(); ctx.roundRect(toolX, toolsY + 18, tw, 46, 23); ctx.fill();
-                ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-                ctx.fillText('🛠  ' + tl, toolX + tw / 2, toolsY + 47);
-                toolX += tw + 18;
-            });
-
-            // Focus Areas / Highlights from Resume
-            const focusY = toolsY + 95;
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#94a3b8';
-            ctx.font = '700 14px "Montserrat", sans-serif';
-            ctx.fillText('CORE FOCUS & DELIVERABLES:', specX, focusY);
-
-            let focX = specX;
-            p.highlights.forEach(h => {
-                ctx.font = '600 16px "Montserrat", sans-serif';
-                const hw = ctx.measureText(h).width + 36;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
-                ctx.beginPath(); ctx.roundRect(focX, focusY + 18, hw, 42, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1; ctx.stroke();
-
-                ctx.fillStyle = '#cbd5e1';
                 ctx.textAlign = 'center';
-                ctx.fillText(h, focX + hw / 2, focusY + 44);
-                focX += hw + 14;
-            });
+                ctx.fillText(tabNames[i], curTabX + tWidth / 2, 44);
+                curTabX += tWidth + 8;
+            }
 
-            // Action Buttons
-            const btnY = cardY + cardH - 105;
+            // Real-time clock in top bar center
+            ctx.fillStyle = '#f0eaf6';
+            ctx.font = 'bold 15px "Space Mono", monospace';
+            ctx.textAlign = 'center';
+            const dateStr = new Date().toLocaleString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+            ctx.fillText(dateStr, w / 2, 44);
 
-            // 1. View Project Button (Matches resume's "View Project")
-            ctx.fillStyle = '#244735';
-            ctx.beginPath(); ctx.roundRect(specX, btnY, 280, 60, 30); ctx.fill();
-            ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
-            ctx.fillStyle = '#F4EFE7'; ctx.font = 'bold 18px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('View Project ↗', specX + 140, btnY + 37);
+            // Right tray
+            ctx.fillStyle = '#7ee2a8';
+            ctx.beginPath(); ctx.arc(w - 230, 39, 4, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#cfc8da';
+            ctx.font = '13px "Space Mono", monospace';
+            ctx.textAlign = 'left';
+            ctx.fillText('2 here · 703 visitors · IST', w - 215, 44);
 
-            // 2. Next Project Button
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            ctx.beginPath(); ctx.roundRect(specX + 300, btnY, 250, 60, 30); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)'; ctx.stroke();
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 17px "Montserrat", sans-serif'; ctx.textAlign = 'center';
-            ctx.fillText('Next Project →', specX + 425, btnY + 37);
+            // If activeProjectSlug is not empty, draw the Case Study view!
+            if (activeProjectSlug !== '') {
+                const p = projectsData[curProjectIdx];
+                // Left Window (App)
+                ctx.fillStyle = '#161622';
+                ctx.beginPath(); ctx.roundRect(16, 78, 1140, 985, 12); ctx.fill();
+                ctx.strokeStyle = '#28283a'; ctx.lineWidth = 2; ctx.stroke();
+                // Left Window Title Bar
+                ctx.fillStyle = '#1e1e2d';
+                ctx.beginPath(); ctx.roundRect(16, 78, 1140, 44, [12, 12, 0, 0]); ctx.fill();
+                ctx.fillStyle = '#f0eaf6';
+                ctx.font = 'bold 15px "Space Mono", monospace';
+                ctx.textAlign = 'left';
+                ctx.fillText(p.title, 36, 106);
 
-            // ---------------- 5. BOTTOM CAROUSEL TRACK / DOTS ----------------
-            const dotY = 1010;
-            const dotW = 90;
-            const dotGap = 16;
-            const totalDotW = projectsData.length * dotW + (projectsData.length - 1) * dotGap;
-            const startDotX = (w - totalDotW) / 2;
+                // App Body Content
+                ctx.fillStyle = '#f0eaf6';
+                ctx.font = 'bold 36px "Montserrat", sans-serif';
+                ctx.fillText(p.title, 48, 175);
+                ctx.fillStyle = '#ff9ebb';
+                ctx.font = 'bold 18px "Space Mono", monospace';
+                ctx.fillText(p.subtitle, 48, 212);
 
-            projectsData.forEach((item, idx) => {
-                const curDotX = startDotX + idx * (dotW + dotGap);
-                const isSelected = idx === curProjectIdx;
+                // Mockup Container
+                ctx.fillStyle = '#0a0a10';
+                ctx.beginPath(); ctx.roundRect(48, 235, 1076, 680, 10); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.stroke();
 
-                ctx.fillStyle = isSelected ? '#244735' : 'rgba(255, 255, 255, 0.12)';
-                ctx.beginPath(); ctx.roundRect(curDotX, dotY, dotW, 14, 7); ctx.fill();
-                if (isSelected) {
-                    ctx.strokeStyle = '#84a98c'; ctx.lineWidth = 1.5; ctx.stroke();
-                }
-            });
+                // Mockup text & illustration
+                ctx.fillStyle = '#8fd3c1';
+                ctx.font = 'bold 22px "Space Mono", monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(p.title + ' · Interactive Prototype', 48 + 1076 / 2, 540);
+                ctx.fillStyle = '#928b9e';
+                ctx.font = '16px "Montserrat", sans-serif';
+                ctx.fillText(p.desc, 48 + 1076 / 2, 580);
+
+                // Right Window (Terminal)
+                ctx.fillStyle = '#0b0b12';
+                ctx.beginPath(); ctx.roundRect(1172, 78, 732, 985, 12); ctx.fill();
+                ctx.strokeStyle = '#28283a'; ctx.lineWidth = 2; ctx.stroke();
+                // Right Window Title Bar
+                ctx.fillStyle = '#1e1e2d';
+                ctx.beginPath(); ctx.roundRect(1172, 78, 732, 44, [12, 12, 0, 0]); ctx.fill();
+                ctx.fillStyle = '#8fd3c1';
+                ctx.font = 'bold 14px "Space Mono", monospace';
+                ctx.textAlign = 'left';
+                ctx.fillText('terminal · ~/projects/' + p.id, 1192, 106);
+
+                // Monospace Terminal Text
+                let termY = 165;
+                ctx.fillStyle = '#8fd3c1';
+                ctx.font = '15px "Space Mono", monospace';
+                ctx.fillText('~/projects/' + p.id + ' $ glow README.md', 1200, termY);
+                termY += 40;
+
+                ctx.fillStyle = '#ff9ebb';
+                ctx.font = 'bold 17px "Space Mono", monospace';
+                ctx.fillText('== Why I built it', 1200, termY);
+                termY += 28;
+                ctx.fillStyle = '#c4bcd0';
+                ctx.font = '14.5px "Space Mono", monospace';
+                ctx.fillText(p.desc, 1200, termY);
+                termY += 50;
+
+                ctx.fillStyle = '#ff9ebb';
+                ctx.font = 'bold 17px "Space Mono", monospace';
+                ctx.fillText('== Key Highlights', 1200, termY);
+                termY += 28;
+                p.highlights.forEach(h => {
+                    ctx.fillStyle = '#f0a35e';
+                    ctx.fillText('•', 1205, termY);
+                    ctx.fillStyle = '#d4cddf';
+                    ctx.fillText(h, 1225, termY);
+                    termY += 26;
+                });
+                termY += 25;
+
+                ctx.fillStyle = '#8fd3c1';
+                ctx.fillText('dependencies: ' + JSON.stringify(p.tools), 1200, termY);
+
+            } else {
+                // 0 ALL: Draw the 6 Tiles
+                const tileW = (w - 32 - 16) / 3;
+                const tileH = (h - 78 - 24) / 2;
+                const tiles = [
+                    { x: 16, y: 78, title: 'Mental Health App', pitch: 'Mobile Application · UI Design & Prototyping', color: '#ff9ebb' },
+                    { x: 16 + tileW + 8, y: 78, title: 'Campus Connect', pitch: 'Education Management Mobile App', color: '#8fd3c1' },
+                    { x: 16 + (tileW + 8) * 2, y: 78, title: 'CMS Websites', pitch: 'VibrantVista Fest & Ditya Jewellery', color: '#f0a35e' },
+                    { x: 16, y: 78 + tileH + 8, title: 'terminal · ~', pitch: 'pranathi@desk ~ $ fetch', color: '#8fd3c1', isTerm: true },
+                    { x: 16 + tileW + 8, y: 78 + tileH + 8, title: 'Svelty Website', pitch: 'Agency Website · Marketing & Conversions', color: '#ff9ebb' },
+                    { x: 16 + (tileW + 8) * 2, y: 78 + tileH + 8, title: 'Svelty CRM', pitch: 'CRM Platform · Workflow Management', color: '#7ee2a8' }
+                ];
+
+                tiles.forEach((t) => {
+                    // Tile Box
+                    ctx.fillStyle = t.isTerm ? '#0b0b12' : '#161622';
+                    ctx.beginPath(); ctx.roundRect(t.x, t.y, tileW, tileH, 10); ctx.fill();
+                    ctx.strokeStyle = '#28283a'; ctx.lineWidth = 2; ctx.stroke();
+
+                    // Tile Title Bar
+                    ctx.fillStyle = '#1e1e2d';
+                    ctx.beginPath(); ctx.roundRect(t.x, t.y, tileW, 36, [10, 10, 0, 0]); ctx.fill();
+                    ctx.fillStyle = '#f0eaf6';
+                    ctx.font = 'bold 13px "Space Mono", monospace';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(t.title, t.x + 16, t.y + 23);
+
+                    // 3 dots
+                    ctx.fillStyle = '#3b3b50';
+                    ctx.beginPath(); ctx.arc(t.x + tileW - 45, t.y + 18, 4, 0, Math.PI * 2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(t.x + tileW - 32, t.y + 18, 4, 0, Math.PI * 2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(t.x + tileW - 19, t.y + 18, 4, 0, Math.PI * 2); ctx.fill();
+
+                    if (t.isTerm) {
+                        // Terminal text
+                        ctx.fillStyle = '#8fd3c1';
+                        ctx.font = '13px "Space Mono", monospace';
+                        ctx.fillText('pranathi@desk ~ $ fetch', t.x + 20, t.y + 70);
+                        ctx.fillStyle = '#ff9ebb';
+                        ctx.fillText('role: UI/UX & Product Designer', t.x + 20, t.y + 105);
+                        ctx.fillText('based: Hyderabad, India', t.x + 20, t.y + 135);
+                        ctx.fillText('focus: Mobile Apps, SaaS CRM', t.x + 20, t.y + 165);
+                        ctx.fillStyle = '#f0a35e';
+                        ctx.fillText('projects: 5 verified, click any to open', t.x + 20, t.y + 195);
+                        // Swatches
+                        const swatches = ['#ff9ebb', '#f0a35e', '#8fd3c1', '#b3a6ff', '#e9e3ef'];
+                        swatches.forEach((c, idx) => {
+                            ctx.fillStyle = c;
+                            ctx.fillRect(t.x + 20 + idx * 26, t.y + 225, 20, 12);
+                        });
+                    } else {
+                        // Preview Body
+                        ctx.fillStyle = '#0a0a10';
+                        ctx.beginPath(); ctx.roundRect(t.x + 12, t.y + 46, tileW - 24, tileH - 100, 6); ctx.fill();
+                        ctx.fillStyle = t.color;
+                        ctx.font = 'bold 16px "Montserrat", sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(t.title, t.x + tileW / 2, t.y + tileH / 2 - 10);
+
+                        // Footer Meta
+                        ctx.fillStyle = 'rgba(14, 14, 22, 0.95)';
+                        ctx.beginPath(); ctx.roundRect(t.x, t.y + tileH - 44, tileW, 44, [0, 0, 10, 10]); ctx.fill();
+                        ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.lineWidth = 1; ctx.stroke();
+                        ctx.fillStyle = '#f0eaf6';
+                        ctx.font = 'bold 13px "Montserrat", sans-serif';
+                        ctx.textAlign = 'left';
+                        ctx.fillText(t.title, t.x + 16, t.y + tileH - 22);
+                        ctx.fillStyle = '#928b9e';
+                        ctx.font = '11px "Space Mono", monospace';
+                        ctx.fillText(' · ' + t.pitch, t.x + 16 + ctx.measureText(t.title).width, t.y + tileH - 22);
+                    }
+                });
+            }
 
             ctx.restore();
             if (monitorTexture) monitorTexture.needsUpdate = true;
-        }
+            return;
 
-        function nextProject() {
-            curProjectIdx = (curProjectIdx + 1) % projectsData.length;
-            drawMonitorScreen();
-            showToast('Project: ' + projectsData[curProjectIdx].title);
         }
 
         function prevProject() {
@@ -2433,6 +3257,7 @@
                     .onUpdate(() => camera.updateProjectionMatrix())
                     .onComplete(() => {
                         showHeroTextWithTransition();
+                        initDeskEventListeners();
                         const urlParams = new URLSearchParams(window.location.search);
                         const initSec = parseInt(urlParams.get('sec') || '0', 10);
                         if (!isNaN(initSec) && initSec > 0 && initSec < sectionsData.length) {
@@ -2612,6 +3437,134 @@
             }, 350);
         }
 
+        
+        // ---------------- PROJECTS MONITOR DESK (RAO MUHAMMAD HAMZA DESKTOP INTERACTION) ----------------
+        let activeProjectSlug = '';
+
+        function showProject(slug) {
+            activeProjectSlug = slug;
+            const surface = document.getElementById('projects-monitor-surface');
+            if (!surface) return;
+
+            surface.classList.toggle('open', slug !== '');
+
+            // Update workspace buttons in .ws
+            const wsBtns = surface.querySelectorAll('.ws button');
+            wsBtns.forEach(btn => {
+                const btnSlug = btn.getAttribute('data-p') || '';
+                const isSelected = (btnSlug === slug);
+                btn.setAttribute('aria-pressed', String(isSelected));
+            });
+
+            // Update case articles
+            const cases = surface.querySelectorAll('.case');
+            cases.forEach(art => {
+                const isTarget = (art.id === 'case-' + slug);
+                art.hidden = !isTarget;
+                if (isTarget) {
+                    const readme = art.querySelector('.readme');
+                    if (readme) readme.scrollTop = 0;
+                }
+            });
+
+            const dview = surface.querySelector('.dview');
+            if (dview) dview.scrollTop = 0;
+
+            // Sync with 3D canvas texture
+            const pIdx = projectsData.findIndex(p => p.id === slug);
+            if (pIdx !== -1) {
+                curProjectIdx = pIdx;
+            }
+            drawMonitorScreen();
+        }
+
+        // Live Real-Time Clock in Top Bar
+        function updateDeskClock() {
+            const clockEl = document.querySelector('.surface.desk [data-clock]');
+            if (!clockEl) return;
+            const now = new Date();
+            clockEl.textContent = now.toLocaleString('en-GB', {
+                weekday: 'short',
+                day: 'numeric',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        setInterval(updateDeskClock, 1000);
+        updateDeskClock();
+
+        // Dynamically compute and align the surface with monitorScreenMesh
+        function updateMonitorSurfacePosition() {
+            const surface = document.getElementById('projects-monitor-surface');
+            if (!surface || currentSection !== 3 || !monitorScreenMesh) return;
+
+            // Only perform 3D projection if on desktop (width > 900)
+            if (window.innerWidth <= 900) {
+                surface.style.left = '';
+                surface.style.top = '';
+                surface.style.width = '';
+                surface.style.height = '';
+                surface.style.transform = '';
+                return;
+            }
+
+            const halfW = 1.605 / 2;
+            const halfH = 0.960 / 2;
+            const meshMat = monitorScreenMesh.matrixWorld;
+
+            const pTL = new THREE.Vector3(-halfW, halfH, 0).applyMatrix4(meshMat).project(camera);
+            const pBR = new THREE.Vector3(halfW, -halfH, 0).applyMatrix4(meshMat).project(camera);
+
+            if (pTL.z < 1 && pBR.z < 1) {
+                const x1 = (pTL.x * 0.5 + 0.5) * window.innerWidth;
+                const y1 = (-pTL.y * 0.5 + 0.5) * window.innerHeight;
+                const x2 = (pBR.x * 0.5 + 0.5) * window.innerWidth;
+                const y2 = (-pBR.y * 0.5 + 0.5) * window.innerHeight;
+
+                const left = Math.min(x1, x2);
+                const top = Math.min(y1, y2);
+                const width = Math.abs(x2 - x1);
+                const height = Math.abs(y2 - y1);
+
+                if (width > 350 && height > 220) {
+                    surface.style.left = Math.round(left) + 'px';
+                    surface.style.top = Math.round(top) + 'px';
+                    surface.style.width = Math.round(width) + 'px';
+                    surface.style.height = Math.round(height) + 'px';
+                    surface.style.transform = 'none';
+                    return;
+                }
+            }
+
+            // Fallback centered
+            surface.style.left = '50%';
+            surface.style.top = 'calc(50% - 14px)';
+            surface.style.width = 'min(1360px, calc(100vw - 120px))';
+            surface.style.height = 'min(780px, calc(100vh - 160px))';
+            surface.style.transform = 'translate(-50%, -50%)';
+        }
+
+        // Attach Event Listeners to Desk Surface Buttons
+        function initDeskEventListeners() {
+            const surface = document.getElementById('projects-monitor-surface');
+            if (!surface) return;
+
+            surface.querySelectorAll('[data-p]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showProject(el.getAttribute('data-p') || '');
+                });
+            });
+
+            surface.querySelectorAll('[data-back]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showProject('');
+                });
+            });
+        }
+
         function goToSection(index) {
             if (index < 0 || index >= sectionsData.length) return;
             currentSection = index;
@@ -2668,6 +3621,18 @@
             if (expPanel) {
                 if (index === 2) expPanel.classList.add('active');
                 else expPanel.classList.remove('active');
+            }
+
+            // Projects Monitor Desk Surface Panel
+            const projSurface = document.getElementById('projects-monitor-surface');
+            if (projSurface) {
+                if (index === 3) {
+                    projSurface.classList.add('active');
+                    showProject(activeProjectSlug || '');
+                    updateMonitorSurfacePosition();
+                } else {
+                    projSurface.classList.remove('active');
+                }
             }
 
             // Education leader lines and cards column
@@ -3037,6 +4002,7 @@
             const elapsedTime = clock.getElapsedTime();
 
             TWEEN.update();
+            if (currentSection === 3) updateMonitorSurfacePosition();
 
             // Continuous subtle physics for noticeboard badges
             if (badgeCard1) {
