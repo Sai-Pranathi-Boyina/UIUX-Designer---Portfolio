@@ -2318,8 +2318,8 @@
                     phoneEarpiece.visible = false; // Removed button-like element on phone as requested
                 }
 
-                // Orient phone rotated 90 deg clockwise on desk
-                phoneAssembly.rotation.y = 0;
+                // Orient phone into portrait facing the user / desk front
+                phoneAssembly.rotation.y = Math.PI / 2;
 
                 const phoneMat = new THREE.MeshBasicMaterial({
                     map: phoneTexture,
@@ -2487,7 +2487,7 @@
             {
                 id: 5,
                 name: 'Contact (Desk Phone)',
-                cameraPos: [2.11, 3.10, 0.63],
+                cameraPos: [2.12, 3.10, 0.62],
                 cameraTarget: [2.12, 1.87, 0.63],
                 fov: 28.0,
                 cupboardOpen: false,
