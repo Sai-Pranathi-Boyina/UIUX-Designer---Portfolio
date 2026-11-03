@@ -1625,7 +1625,6 @@
                             <li>Designed high-density overview widgets optimized for rapid one-handed mobile scanning between lectures.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Information Structure"</em>, <em>"User Flows"</em>, <em>"Interface Design"</em>]</p>
-                        <p class="gh"><span>Prototype: </span><a href="https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1" target="_blank" rel="noopener">figma.com/proto/campus-connect ↗</a></p>
                     </div>
                 </div>
             </article>
@@ -2012,7 +2011,7 @@
             <div class="phone-clock-display" id="phone-big-clock">03:22</div>
             <div class="phone-date-display">
                 <span class="phone-date-dot"></span>
-                <span id="phone-date-text">SUN 1 NOV · HYDERABAD</span>
+                <span id="phone-date-text">HYDERABAD, INDIA</span>
             </div>
 
             <!-- Profile Info (Left-aligned) -->
@@ -2522,9 +2521,9 @@
                 desc: 'Education management app focused on information structure, user flows, and interface design.',
                 tools: ['Figma'],
                 highlights: ['Information Structure', 'User Flows', 'Interface Design'],
-                link: 'https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1',
-                displayUrl: 'figma.com/proto/campus-connect',
-                ctaText: 'View Prototype ↗',
+                link: '',
+                displayUrl: 'Case Study · Mobile App',
+                ctaText: '',
                 color: '#244735'
             },
             {
@@ -2638,6 +2637,28 @@
             }
             ctx.fillText(line, x, curY);
             return curY + lineHeight;
+        }
+
+        function drawCoverImage(ctx, img, dx, dy, dw, dh, radius, anchorY) {
+            if (!img || !img.complete || img.naturalWidth === 0) return false;
+            radius = radius || 0;
+            anchorY = (anchorY !== undefined) ? anchorY : 0.5;
+            ctx.save();
+            if (radius > 0 || Array.isArray(radius)) {
+                ctx.beginPath();
+                ctx.roundRect(dx, dy, dw, dh, radius);
+                ctx.clip();
+            }
+            const imgW = img.naturalWidth;
+            const imgH = img.naturalHeight;
+            const scale = Math.max(dw / imgW, dh / imgH);
+            const renderW = imgW * scale;
+            const renderH = imgH * scale;
+            const renderX = dx + (dw - renderW) / 2;
+            const renderY = dy + (dh - renderH) * anchorY;
+            ctx.drawImage(img, renderX, renderY, renderW, renderH);
+            ctx.restore();
+            return true;
         }
 
         // Draw In-Scene 3D 27" Desktop Monitor OS
@@ -2769,91 +2790,48 @@
                 // Preview Area Inside Browser Frame
                 const prevX = mockX, prevY = mockY + 40, prevW = mockW, prevH = mockH - 40;
                 if (p.id === 'ultramind') {
-                    const img = monitorImages['ultramind'];
-                    if (img.complete && img.naturalWidth > 0) {
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.roundRect(prevX, prevY, prevW, prevH, [0, 0, 10, 10]);
-                        ctx.clip();
-                        ctx.drawImage(img, prevX, prevY, prevW, prevH);
-                        ctx.restore();
-                    }
+                    drawCoverImage(ctx, monitorImages['ultramind'], prevX, prevY, prevW, prevH, [0, 0, 10, 10], 0.15);
                 } else if (p.id === 'svelty-website') {
-                    const img = monitorImages['svelty-website'];
-                    if (img.complete && img.naturalWidth > 0) {
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.roundRect(prevX, prevY, prevW, prevH, [0, 0, 10, 10]);
-                        ctx.clip();
-                        ctx.drawImage(img, prevX, prevY, prevW, prevH);
-                        ctx.restore();
-                    }
+                    drawCoverImage(ctx, monitorImages['svelty-website'], prevX, prevY, prevW, prevH, [0, 0, 10, 10], 0.1);
                 } else if (p.id === 'campus-connect') {
-                    const img = monitorImages['campus-connect'];
-                    if (img.complete && img.naturalWidth > 0) {
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.roundRect(prevX, prevY, prevW, prevH, [0, 0, 10, 10]);
-                        ctx.clip();
-                        ctx.drawImage(img, prevX, prevY, prevW, prevH);
-                        ctx.restore();
-                    }
+                    drawCoverImage(ctx, monitorImages['campus-connect'], prevX, prevY, prevW, prevH, [0, 0, 10, 10], 0.5);
                 } else if (p.id === 'cms-websites') {
-                    // Dual CMS Websites with Real Previews
-                    const halfW = (prevW - 16) / 2;
-                    // Site 1: VibrantVista Cultural Fest
+                    // Dual CMS Websites with Clean Landscape Proportions
+                    const cardH = (prevH - 12) / 2;
+                    // Site 1: VibrantVista Cultural Fest (Top)
                     ctx.fillStyle = '#1e1026';
-                    ctx.beginPath(); ctx.roundRect(prevX + 4, prevY + 6, halfW, prevH - 12, 8); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX, prevY, prevW, cardH, 8); ctx.fill();
                     ctx.strokeStyle = '#3d2354'; ctx.stroke();
                     ctx.fillStyle = '#261436';
-                    ctx.beginPath(); ctx.roundRect(prevX + 4, prevY + 6, halfW, 36, [8, 8, 0, 0]); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX, prevY, prevW, 32, [8, 8, 0, 0]); ctx.fill();
                     ctx.fillStyle = '#ff9ebb'; ctx.font = 'bold 12px "Space Mono", monospace'; ctx.textAlign = 'left';
-                    ctx.fillText('brau-vibrantvista2k24.42web.io', prevX + 16, prevY + 28);
-                    
+                    ctx.fillText('🔒 brau-vibrantvista2k24.42web.io  ·  Dr. B.R. Ambedkar Univ Cultural Fest', prevX + 16, prevY + 21);
+
                     const imgVv = monitorImages['vibrantvista'];
                     if (imgVv && imgVv.complete && imgVv.naturalWidth > 0) {
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.roundRect(prevX + 4, prevY + 42, halfW, prevH - 48, [0, 0, 8, 8]);
-                        ctx.clip();
-                        ctx.drawImage(imgVv, prevX + 4, prevY + 42, halfW, prevH - 48);
-                        ctx.restore();
-                    } else {
-                        ctx.fillStyle = '#fff'; ctx.font = 'bold 24px "Montserrat", sans-serif';
-                        ctx.fillText("VibrantVista '24", prevX + 24, prevY + 90);
-                        ctx.fillStyle = '#d8b4e2'; ctx.font = '14px sans-serif';
-                        ctx.fillText('Cultural Festival Platform', prevX + 24, prevY + 120);
+                        drawCoverImage(ctx, imgVv, prevX, prevY + 32, prevW, cardH - 32, [0, 0, 8, 8], 0);
                     }
 
-                    // Site 2: Ditya Jewellery
+                    // Site 2: Ditya Jewellery (Bottom)
+                    const site2Y = prevY + cardH + 12;
                     ctx.fillStyle = '#0f1813';
-                    ctx.beginPath(); ctx.roundRect(prevX + 12 + halfW, prevY + 6, halfW, prevH - 12, 8); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX, site2Y, prevW, cardH, 8); ctx.fill();
                     ctx.strokeStyle = '#233b2c'; ctx.stroke();
                     ctx.fillStyle = '#17261d';
-                    ctx.beginPath(); ctx.roundRect(prevX + 12 + halfW, prevY + 6, halfW, 36, [8, 8, 0, 0]); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX, site2Y, prevW, 32, [8, 8, 0, 0]); ctx.fill();
                     ctx.fillStyle = '#8fd3c1'; ctx.font = 'bold 12px "Space Mono", monospace';
-                    ctx.fillText('dityajewellery.great-site.net', prevX + 24 + halfW, prevY + 28);
+                    ctx.fillText('🔒 dityajewellery.great-site.net  ·  Royal Heritage Handcrafted Jewellery', prevX + 16, site2Y + 21);
 
                     const imgDitya = monitorImages['dityajewellery'];
                     if (imgDitya && imgDitya.complete && imgDitya.naturalWidth > 0) {
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.roundRect(prevX + 12 + halfW, prevY + 42, halfW, prevH - 48, [0, 0, 8, 8]);
-                        ctx.clip();
-                        ctx.drawImage(imgDitya, prevX + 12 + halfW, prevY + 42, halfW, prevH - 48);
-                        ctx.restore();
-                    } else {
-                        ctx.fillStyle = '#fff'; ctx.font = 'bold 24px serif';
-                        ctx.fillText('Ditya Jewellery', prevX + 32 + halfW, prevY + 90);
-                        ctx.fillStyle = '#88a893'; ctx.font = '14px sans-serif';
-                        ctx.fillText('Royal Heritage Handcrafted Gold', prevX + 32 + halfW, prevY + 120);
+                        drawCoverImage(ctx, imgDitya, prevX, site2Y + 32, prevW, cardH - 32, [0, 0, 8, 8], 0);
                     }
                 } else {
                     // Generic Mockup / Preview
                     ctx.fillStyle = '#8fd3c1';
                     ctx.font = 'bold 24px "Space Mono", monospace';
                     ctx.textAlign = 'center';
-                    ctx.fillText(p.title + ' · Interactive Prototype', prevX + prevW / 2, prevY + prevH / 2 - 20);
+                    ctx.fillText(p.title, prevX + prevW / 2, prevY + prevH / 2 - 20);
                     ctx.fillStyle = '#928b9e';
                     ctx.font = '16px "Montserrat", sans-serif';
                     ctx.fillText(p.subtitle, prevX + prevW / 2, prevY + prevH / 2 + 25);
@@ -2861,8 +2839,39 @@
 
                 // Bottom Action Buttons Row
                 const btnY = 930;
-                if (p.link) {
-                    // 1. Primary Action Button ("View Prototype ↗" or "Visit Live Website ↗")
+                if (p.id === 'cms-websites') {
+                    // Button 1: Visit VibrantVista
+                    const b1Grad = ctx.createLinearGradient(32, btnY, 32 + 250, btnY + 54);
+                    b1Grad.addColorStop(0, '#ff9ebb');
+                    b1Grad.addColorStop(1, '#f0a35e');
+                    ctx.fillStyle = b1Grad;
+                    ctx.beginPath(); ctx.roundRect(32, btnY, 250, 54, 10); ctx.fill();
+                    ctx.fillStyle = '#17121c';
+                    ctx.font = 'bold 15px "Montserrat", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('1 VibrantVista ↗', 32 + 125, btnY + 33);
+
+                    // Button 2: Visit Ditya Jewellery
+                    const b2Grad = ctx.createLinearGradient(294, btnY, 294 + 250, btnY + 54);
+                    b2Grad.addColorStop(0, '#8fd3c1');
+                    b2Grad.addColorStop(1, '#a3e0d8');
+                    ctx.fillStyle = b2Grad;
+                    ctx.beginPath(); ctx.roundRect(294, btnY, 250, 54, 10); ctx.fill();
+                    ctx.fillStyle = '#17121c';
+                    ctx.font = 'bold 15px "Montserrat", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('2 Ditya Jewellery ↗', 294 + 125, btnY + 33);
+
+                    // Button 3: Back to All Projects
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                    ctx.beginPath(); ctx.roundRect(556, btnY, 220, 54, 10); ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
+                    ctx.fillStyle = '#cbd5e1';
+                    ctx.font = 'bold 15px "Montserrat", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('← All Projects', 556 + 110, btnY + 33);
+                } else if (p.link) {
+                    // 1. Primary Action Button ("Visit Live Website ↗")
                     const btnText = p.ctaText || 'Visit Live Website ↗';
                     const btnW = 320;
                     const btnGrad = ctx.createLinearGradient(32, btnY, 32 + btnW, btnY + 54);
@@ -2874,18 +2883,29 @@
                     ctx.font = 'bold 16px "Montserrat", sans-serif';
                     ctx.textAlign = 'center';
                     ctx.fillText(btnText, 32 + btnW / 2, btnY + 33);
-                }
 
-                // 2. Back to All Projects Button
-                const backX = p.link ? 372 : 32;
-                const backW = p.link ? 260 : 320;
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.roundRect(backX, btnY, backW, 54, 12); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1; ctx.stroke();
-                ctx.fillStyle = '#f0eaf6';
-                ctx.font = 'bold 15px "Montserrat", sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('← Back to All Projects', backX + backW / 2, btnY + 33);
+                    // 2. Back to All Projects Button
+                    const backX = 372;
+                    const backW = 260;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                    ctx.beginPath(); ctx.roundRect(backX, btnY, backW, 54, 12); ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
+                    ctx.fillStyle = '#f0eaf6';
+                    ctx.font = 'bold 15px "Montserrat", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('← Back to All Projects', backX + backW / 2, btnY + 33);
+                } else {
+                    // For projects without external link (e.g. Campus Connect case study)
+                    const backX = 32;
+                    const backW = 320;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                    ctx.beginPath(); ctx.roundRect(backX, btnY, backW, 54, 12); ctx.fill();
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
+                    ctx.fillStyle = '#f0eaf6';
+                    ctx.font = 'bold 15px "Montserrat", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('← Back to All Projects', backX + backW / 2, btnY + 33);
+                }
 
                 // Right Window (Details / Terminal)
                 ctx.fillStyle = '#0b0b12';
@@ -3036,39 +3056,33 @@
                         ctx.beginPath(); ctx.roundRect(pX, pY, pW, pH, 6); ctx.fill();
 
                         let drawnImage = false;
-                        if (t.id === 'ultramind' && monitorImages['ultramind'].complete && monitorImages['ultramind'].naturalWidth > 0) {
-                            ctx.save();
-                            ctx.beginPath(); ctx.roundRect(pX, pY, pW, pH, 6); ctx.clip();
-                            ctx.drawImage(monitorImages['ultramind'], pX, pY, pW, pH);
-                            ctx.restore();
-                            drawnImage = true;
-                        } else if (t.id === 'svelty-website' && monitorImages['svelty-website'].complete && monitorImages['svelty-website'].naturalWidth > 0) {
-                            ctx.save();
-                            ctx.beginPath(); ctx.roundRect(pX, pY, pW, pH, 6); ctx.clip();
-                            ctx.drawImage(monitorImages['svelty-website'], pX, pY, pW, pH);
-                            ctx.restore();
-                            drawnImage = true;
-                        } else if (t.id === 'campus-connect' && monitorImages['campus-connect'].complete && monitorImages['campus-connect'].naturalWidth > 0) {
-                            ctx.save();
-                            ctx.beginPath(); ctx.roundRect(pX, pY, pW, pH, 6); ctx.clip();
-                            ctx.drawImage(monitorImages['campus-connect'], pX, pY, pW, pH);
-                            ctx.restore();
-                            drawnImage = true;
+                        if (t.id === 'ultramind') {
+                            drawnImage = drawCoverImage(ctx, monitorImages['ultramind'], pX, pY, pW, pH, 6, 0.15);
+                        } else if (t.id === 'svelty-website') {
+                            drawnImage = drawCoverImage(ctx, monitorImages['svelty-website'], pX, pY, pW, pH, 6, 0.1);
+                        } else if (t.id === 'campus-connect') {
+                            drawnImage = drawCoverImage(ctx, monitorImages['campus-connect'], pX, pY, pW, pH, 6, 0.5);
                         } else if (t.id === 'cms-websites') {
-                            const subW = (pW - 6) / 2;
+                            const cardH = (pH - 8) / 2;
                             const imgVv = monitorImages['vibrantvista'];
                             if (imgVv && imgVv.complete && imgVv.naturalWidth > 0) {
-                                ctx.save();
-                                ctx.beginPath(); ctx.roundRect(pX, pY, subW, pH, 6); ctx.clip();
-                                ctx.drawImage(imgVv, pX, pY, subW, pH);
-                                ctx.restore();
+                                drawCoverImage(ctx, imgVv, pX, pY, pW, cardH, [6, 6, 0, 0], 0);
+                                ctx.fillStyle = 'rgba(18, 12, 26, 0.9)';
+                                ctx.beginPath(); ctx.roundRect(pX + 8, pY + 8, 175, 24, 4); ctx.fill();
+                                ctx.fillStyle = '#ff9ebb';
+                                ctx.font = 'bold 11px "Space Mono", monospace';
+                                ctx.textAlign = 'left';
+                                ctx.fillText('1 VibrantVista 2k24', pX + 16, pY + 24);
                             }
                             const imgDitya = monitorImages['dityajewellery'];
                             if (imgDitya && imgDitya.complete && imgDitya.naturalWidth > 0) {
-                                ctx.save();
-                                ctx.beginPath(); ctx.roundRect(pX + subW + 6, pY, subW, pH, 6); ctx.clip();
-                                ctx.drawImage(imgDitya, pX + subW + 6, pY, subW, pH);
-                                ctx.restore();
+                                drawCoverImage(ctx, imgDitya, pX, pY + cardH + 8, pW, cardH, [0, 0, 6, 6], 0);
+                                ctx.fillStyle = 'rgba(12, 22, 16, 0.9)';
+                                ctx.beginPath(); ctx.roundRect(pX + 8, pY + cardH + 16, 160, 24, 4); ctx.fill();
+                                ctx.fillStyle = '#8fd3c1';
+                                ctx.font = 'bold 11px "Space Mono", monospace';
+                                ctx.textAlign = 'left';
+                                ctx.fillText('2 Ditya Jewellery', pX + 16, pY + cardH + 32);
                             }
                             drawnImage = true;
                         }
@@ -3123,13 +3137,7 @@
         }
 
         function formatCurrentPhoneDate() {
-            const now = new Date();
-            const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-            const dayName = days[now.getDay()];
-            const dayNum = now.getDate();
-            const monthName = months[now.getMonth()];
-            return `${dayName} ${dayNum} ${monthName} · HYDERABAD`;
+            return 'HYDERABAD, INDIA';
         }
 
         function updatePhoneDisplays() {
@@ -3205,10 +3213,10 @@
             ctx.textAlign = 'center';
             ctx.fillText(timeStr, w / 2, 230);
 
-            // Dot and Date · HYDERABAD
+            // Dot and Location · HYDERABAD, INDIA
             ctx.fillStyle = '#84a98c';
             ctx.beginPath();
-            ctx.arc(w / 2 - 130, 282, 5, 0, Math.PI * 2);
+            ctx.arc(w / 2 - 110, 282, 5, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.fillStyle = '#cbd5e1';
@@ -3835,40 +3843,63 @@
                 el.innerHTML = '<div style="position:relative; width:100%; height:100%; background:#f6fbf8; overflow:hidden; display:flex; align-items:center; justify-content:center;">' +
                     '<img src="campus_connect_preview.png" alt="Campus Connect Mobile App Case Study" style="width:100%; height:100%; object-fit:contain; display:block;">' +
                     '<div style="position:absolute; bottom:14px; right:14px; background:rgba(20,30,24,0.92); backdrop-filter:blur(8px); padding:8px 14px; border-radius:8px; border:1px solid rgba(143,211,193,0.3); display:flex; align-items:center; gap:10px;">' +
-                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Campus Connect · Mobile App</span>' +
-                    '<a href="https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1" target="_blank" rel="noopener" style="color:#ff9ebb; font-weight:bold; font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none;">View Prototype ↗</a>' +
+                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Campus Connect · Education Management App</span>' +
                     '</div></div>';
             } else if (slug === 'mental-health') {
                 el.innerHTML = '<iframe src="https://www.figma.com/embed?embed_host=astra&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FZRUDuvvkSbTobVS1VpxlX0%2FTask%3Fnode-id%3D46-810" title="Mental Health Prototype" allowfullscreen></iframe>';
             } else if (slug === 'cms-websites') {
                 el.innerHTML = '<div style="width:100%; height:100%; display:flex; flex-direction:column; background:#120d1c;">' +
-                    '<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#1c142b; border-bottom:1px solid #2d2244; flex:none;">' +
-                    '<div style="display:flex; gap:8px;">' +
+                    '<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 14px; background:#1c142b; border-bottom:1px solid #2d2244; flex:none;">' +
+                    '<div style="display:flex; gap:8px; align-items:center;">' +
                     '<button type="button" id="cms-btn-vv" onclick="switchLiveCms(\'vv\')" style="background:#ff9ebb; color:#17121c; border:none; padding:5px 12px; border-radius:6px; font-family:\'Space Mono\', monospace; font-size:12px; font-weight:bold; cursor:pointer;">1 VibrantVista Fest</button>' +
                     '<button type="button" id="cms-btn-ditya" onclick="switchLiveCms(\'ditya\')" style="background:#281e3a; color:#c7bdd4; border:none; padding:5px 12px; border-radius:6px; font-family:\'Space Mono\', monospace; font-size:12px; font-weight:bold; cursor:pointer;">2 Ditya Jewellery</button>' +
+                    '<div style="margin-left:8px; display:inline-flex; background:rgba(255,255,255,0.06); padding:2px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">' +
+                    '<button type="button" id="cms-mode-live" onclick="switchCmsMode(\'live\')" style="background:#ff9ebb; color:#17121c; border:none; padding:3px 8px; border-radius:4px; font-family:\'Space Mono\', monospace; font-size:11px; font-weight:bold; cursor:pointer;">Live Frame</button>' +
+                    '<button type="button" id="cms-mode-preview" onclick="switchCmsMode(\'preview\')" style="background:transparent; color:#928b9e; border:none; padding:3px 8px; border-radius:4px; font-family:\'Space Mono\', monospace; font-size:11px; font-weight:bold; cursor:pointer;">HD Preview</button>' +
+                    '</div>' +
                     '</div>' +
                     '<div style="display:flex; gap:8px; align-items:center;">' +
-                    '<span id="cms-url-tag" style="color:#ff9ebb; font-size:11px; font-family:\'Space Mono\', monospace; background:rgba(255,158,187,0.1); padding:3px 8px; border-radius:4px; border:1px solid rgba(255,158,187,0.2);">🔒 brau-vibrantvista2k24.42web.io</span>' +
-                    '<a id="cms-open-btn" href="https://brau-vibrantvista2k24.42web.io" target="_blank" rel="noopener" style="color:#17121c; background:linear-gradient(135deg, #ff9ebb, #f0a35e); font-size:11px; font-family:\'Space Mono\', monospace; text-decoration:none; padding:5px 10px; border-radius:6px; font-weight:bold; display:inline-flex; align-items:center; gap:4px;">Visit Live Site ↗</a>' +
+                    '<span id="cms-url-tag" style="color:#ff9ebb; font-size:11px; font-family:\'Space Mono\', monospace; background:rgba(255,158,187,0.1); padding:4px 10px; border-radius:4px; border:1px solid rgba(255,158,187,0.2);">🔒 brau-vibrantvista2k24.42web.io</span>' +
+                    '<a id="cms-open-btn" href="https://brau-vibrantvista2k24.42web.io" target="_blank" rel="noopener" style="color:#17121c; background:linear-gradient(135deg, #ff9ebb, #f0a35e); font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none; padding:5px 12px; border-radius:6px; font-weight:bold; display:inline-flex; align-items:center; gap:4px;">Open Live Site ↗</a>' +
                     '</div></div>' +
                     '<div style="flex:1; position:relative; overflow:hidden; background:#0c0a14;">' +
-                    '<div id="cms-view-vv" style="width:100%; height:100%; position:relative; overflow-y:auto; display:block;">' +
-                    '<img src="vibrantvista_preview.png" alt="VibrantVista Fest" style="width:100%; height:auto; display:block;">' +
-                    '<div style="position:sticky; bottom:14px; left:14px; margin:0 14px 14px 14px; background:rgba(20,16,28,0.92); backdrop-filter:blur(8px); padding:8px 14px; border-radius:8px; border:1px solid rgba(255,158,187,0.3); display:flex; justify-content:space-between; align-items:center;">' +
-                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Dr. B.R. Ambedkar University Cultural Fest Platform</span>' +
-                    '<a href="https://brau-vibrantvista2k24.42web.io" target="_blank" rel="noopener" style="color:#ff9ebb; font-weight:bold; font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none;">Open Live Site ↗</a>' +
-                    '</div></div>' +
-                    '<div id="cms-view-ditya" style="width:100%; height:100%; position:relative; overflow-y:auto; display:none;">' +
-                    '<img src="dityajewellery_preview.png" alt="Ditya Jewellery" style="width:100%; height:auto; display:block;">' +
-                    '<div style="position:sticky; bottom:14px; left:14px; margin:0 14px 14px 14px; background:rgba(16,24,20,0.92); backdrop-filter:blur(8px); padding:8px 14px; border-radius:8px; border:1px solid rgba(143,211,193,0.3); display:flex; justify-content:space-between; align-items:center;">' +
-                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Ditya Handcrafted Royal Jewellery E-Commerce</span>' +
-                    '<a href="https://dityajewellery.great-site.net" target="_blank" rel="noopener" style="color:#8fd3c1; font-weight:bold; font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none;">Open Live Site ↗</a>' +
-                    '</div></div>' +
+                    '<div id="cms-view-vv" style="width:100%; height:100%; position:relative; display:block;">' +
+                    '<iframe id="cms-iframe-vv" src="https://brau-vibrantvista2k24.42web.io" title="VibrantVista Cultural Fest" style="width:100%; height:100%; border:none; display:block; background:#120d1c;" allow="fullscreen; autoplay;"></iframe>' +
+                    '<div id="cms-preview-vv" style="width:100%; height:100%; overflow-y:auto; display:none;"><img src="vibrantvista_preview.png" alt="VibrantVista Fest" style="width:100%; height:auto; display:block;"></div>' +
+                    '</div>' +
+                    '<div id="cms-view-ditya" style="width:100%; height:100%; position:relative; display:none;">' +
+                    '<iframe id="cms-iframe-ditya" src="https://dityajewellery.great-site.net" title="Ditya Jewellery" style="width:100%; height:100%; border:none; display:block; background:#0d1512;" allow="fullscreen; autoplay;"></iframe>' +
+                    '<div id="cms-preview-ditya" style="width:100%; height:100%; overflow-y:auto; display:none;"><img src="dityajewellery_preview.png" alt="Ditya Jewellery" style="width:100%; height:auto; display:block;"></div>' +
+                    '</div>' +
                     '</div></div>';
             } else {
                 el.innerHTML = '<iframe src="' + projectsData[curProjectIdx].link + '" style="width:100%; height:100%; border:none;" allow="fullscreen"></iframe>';
             }
         }
+
+        window.switchCmsMode = function(mode) {
+            const btnLive = document.getElementById('cms-mode-live');
+            const btnPrev = document.getElementById('cms-mode-preview');
+            const ifrVv = document.getElementById('cms-iframe-vv');
+            const ifrDitya = document.getElementById('cms-iframe-ditya');
+            const prevVv = document.getElementById('cms-preview-vv');
+            const prevDitya = document.getElementById('cms-preview-ditya');
+            if (mode === 'live') {
+                if (btnLive) { btnLive.style.background = '#ff9ebb'; btnLive.style.color = '#17121c'; }
+                if (btnPrev) { btnPrev.style.background = 'transparent'; btnPrev.style.color = '#928b9e'; }
+                if (ifrVv) ifrVv.style.display = 'block';
+                if (prevVv) prevVv.style.display = 'none';
+                if (ifrDitya) ifrDitya.style.display = 'block';
+                if (prevDitya) prevDitya.style.display = 'none';
+            } else {
+                if (btnLive) { btnLive.style.background = 'transparent'; btnLive.style.color = '#928b9e'; }
+                if (btnPrev) { btnPrev.style.background = '#8fd3c1'; btnPrev.style.color = '#17121c'; }
+                if (ifrVv) ifrVv.style.display = 'none';
+                if (prevVv) prevVv.style.display = 'block';
+                if (ifrDitya) ifrDitya.style.display = 'none';
+                if (prevDitya) prevDitya.style.display = 'block';
+            }
+        };
 
         window.switchLiveCms = function(which) {
             const viewVv = document.getElementById('cms-view-vv');
@@ -4358,10 +4389,40 @@
                             return;
                         }
 
-                        // Bottom Action Buttons
-                        if (projectsData[curProjectIdx].link) {
+                        // Bottom Action Buttons & Mockup Previews
+                        if (projectsData[curProjectIdx].id === 'cms-websites') {
+                            // Bottom Button 1: VibrantVista Fest
+                            if (px >= 32 && px <= 282 && py >= 925 && py <= 990) {
+                                window.open('https://brau-vibrantvista2k24.42web.io/', '_blank');
+                                showToast("Opening VibrantVista Festival Platform...");
+                                return;
+                            }
+                            // Bottom Button 2: Ditya Jewellery
+                            if (px >= 294 && px <= 544 && py >= 925 && py <= 990) {
+                                window.open('https://dityajewellery.great-site.net/', '_blank');
+                                showToast("Opening Ditya Jewellery Platform...");
+                                return;
+                            }
+                            // Bottom Button 3: All Projects
+                            if (px >= 556 && px <= 776 && py >= 925 && py <= 990) {
+                                showProject('');
+                                return;
+                            }
+                            // Top Card: VibrantVista Cultural Fest
+                            if (px >= 32 && px <= 1140 && py >= 176 && py < 536) {
+                                window.open('https://brau-vibrantvista2k24.42web.io/', '_blank');
+                                showToast("Opening VibrantVista Festival Platform...");
+                                return;
+                            }
+                            // Bottom Card: Ditya Jewellery
+                            if (px >= 32 && px <= 1140 && py >= 536 && py <= 911) {
+                                window.open('https://dityajewellery.great-site.net/', '_blank');
+                                showToast("Opening Ditya Jewellery Platform...");
+                                return;
+                            }
+                        } else if (projectsData[curProjectIdx].link) {
                             const ctaLabel = projectsData[curProjectIdx].ctaText || 'Visit Live Website ↗';
-                            // Button 1: CTA Button ("View Prototype ↗" or "Visit Live Website ↗")
+                            // Button 1: CTA Button ("Visit Live Website ↗")
                             if (px >= 32 && px <= 352 && py >= 925 && py <= 990) {
                                 window.open(projectsData[curProjectIdx].link, '_blank');
                                 showToast(ctaLabel + ': ' + projectsData[curProjectIdx].title);
@@ -4378,39 +4439,21 @@
                                 showToast(ctaLabel + ': ' + projectsData[curProjectIdx].title);
                                 return;
                             }
+                            // Preview area click
+                            if (px >= 32 && px <= 1140 && py >= 176 && py <= 911) {
+                                window.open(projectsData[curProjectIdx].link, '_blank');
+                                showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
+                                return;
+                            }
                         } else {
-                            // Single "← Back to All Projects" Button
+                            // Single "← Back to All Projects" Button (e.g. Campus Connect)
                             if (px >= 32 && px <= 352 && py >= 925 && py <= 990) {
                                 showProject('');
                                 return;
                             }
-                        }
-
-                        // CMS Websites: Dual Preview Click
-                        if (projectsData[curProjectIdx].id === 'cms-websites') {
-                            const prevW = 1108;
-                            const halfW = (prevW - 16) / 2;
-                            // Site 1: VibrantVista Cultural Fest
-                            if (px >= 36 && px <= 36 + halfW && py >= 176 && py <= 911) {
-                                window.open('https://brau-vibrantvista2k24.42web.io/', '_blank');
-                                showToast("Opening VibrantVista Festival Platform...");
-                                return;
-                            }
-                            // Site 2: Ditya Jewellery
-                            if (px >= 48 + halfW && px <= 48 + halfW * 2 && py >= 176 && py <= 911) {
-                                window.open('https://dityajewellery.great-site.net/', '_blank');
-                                showToast("Opening Ditya Jewellery Platform...");
-                                return;
-                            }
-                        } else {
-                            // Any other project: Clicking Mockup Preview area
+                            // Mockup Preview click
                             if (px >= 32 && px <= 1140 && py >= 176 && py <= 911) {
-                                if (projectsData[curProjectIdx].link) {
-                                    window.open(projectsData[curProjectIdx].link, '_blank');
-                                    showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
-                                } else {
-                                    showToast("Campus Connect · UI/UX Mobile App Design");
-                                }
+                                showToast("Campus Connect · Education Management Mobile App");
                                 return;
                             }
                         }
