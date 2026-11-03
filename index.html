@@ -1297,8 +1297,9 @@
                 <button type="button" data-p="mental-health" aria-pressed="false">1 <b>mental-health</b></button>
                 <button type="button" data-p="campus-connect" aria-pressed="false">2 <b>campus-connect</b></button>
                 <button type="button" data-p="cms-websites" aria-pressed="false">3 <b>cms-websites</b></button>
-                <button type="button" data-p="svelty-website" aria-pressed="false">4 <b>svelty-website</b></button>
-                <button type="button" data-p="svelty-crm" aria-pressed="false">5 <b>svelty-crm</b></button>
+                <button type="button" data-p="ultramind" aria-pressed="false">4 <b>ultramind</b></button>
+                <button type="button" data-p="svelty-website" aria-pressed="false">5 <b>svelty-website</b></button>
+                <button type="button" data-p="svelty-crm" aria-pressed="false">6 <b>svelty-crm</b></button>
             </nav>
             <span class="tray" aria-hidden="true">
                 <span class="seen" data-seen>
@@ -1348,27 +1349,11 @@
                     </span>
                 </button>
 
-                <!-- Tile 2: Campus Connect -->
+                                <!-- Tile 2: Campus Connect -->
                 <button type="button" class="tile" data-p="campus-connect" style="grid-area: p2">
                     <span class="t"><b>Campus Connect</b><span class="ctl"><i></i><i></i><i></i></span></span>
-                    <div class="tile-preview">
-                        <svg viewBox="0 0 320 180" width="100%" height="100%">
-                            <rect width="320" height="180" rx="6" fill="#0f141a"/>
-                            <rect x="20" y="16" width="180" height="34" rx="8" fill="#19232d"/>
-                            <text x="32" y="37" fill="#8fd3c1" font-size="12" font-family="sans-serif" font-weight="bold">Timetable Schedule</text>
-                            <!-- Attendance Ring -->
-                            <circle cx="260" cy="40" r="22" fill="none" stroke="#253545" stroke-width="5"/>
-                            <circle cx="260" cy="40" r="22" fill="none" stroke="#8fd3c1" stroke-width="5" stroke-dasharray="110 30" stroke-linecap="round"/>
-                            <text x="250" y="44" fill="#f0eaf6" font-size="10" font-family="'Space Mono', monospace" font-weight="bold">88%</text>
-                            <!-- Class cards -->
-                            <rect x="20" y="60" width="280" height="48" rx="8" fill="#18212b" stroke="#263646" stroke-width="1"/>
-                            <text x="34" y="82" fill="#fff" font-size="11" font-family="sans-serif" font-weight="bold">Advanced Interaction Design</text>
-                            <text x="34" y="98" fill="#8b9bb0" font-size="9.5" font-family="sans-serif">Studio 4B · 10:30 AM · Prof. Verma</text>
-                            <rect x="20" y="116" width="280" height="48" rx="8" fill="#18212b" stroke="#263646" stroke-width="1"/>
-                            <text x="34" y="138" fill="#fff" font-size="11" font-family="sans-serif" font-weight="bold">User Research & Synthesis</text>
-                            <text x="34" y="154" fill="#8b9bb0" font-size="9.5" font-family="sans-serif">Lab 2A · 02:00 PM · Attendance Recorded</text>
-                        </svg>
-                    </div>
+                    <div class="tile-preview" style="padding:0; background:#f6fbf8;">
+                        <img src="campus_connect_preview.png" alt="Campus Connect Mobile App" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
                     <span class="meta">
                         <span class="nm">Campus Connect</span>
                         <span class="pitch">Education Management Mobile App</span>
@@ -1438,62 +1423,42 @@
                     </span>
                 </div>
 
-                <!-- Tile 5: Svelty Website -->
-                <button type="button" class="tile" data-p="svelty-website" style="grid-area: p4">
+                <!-- Tile 5: Ultramind Official Website -->
+                <button type="button" class="tile" data-p="ultramind" style="grid-area: p4">
+                    <span class="t"><b>Ultramind.in</b><span class="ctl"><i></i><i></i><i></i></span></span>
+                    <div class="tile-preview" style="padding:0; background:#0e111a;">
+                        <!-- Ultramind Website In-Tile Real Preview -->
+                        <div style="width:100%; height:100%; background:linear-gradient(135deg, #0b0e17, #131a29); padding:10px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-weight:800; font-size:12px; color:#8fd3c1; letter-spacing:0.05em; font-family:'Space Mono', monospace;">⚡ ULTRAMIND</span>
+                                <span style="font-size:9px; background:rgba(143, 211, 193, 0.15); color:#8fd3c1; padding:2px 8px; border-radius:10px; font-weight:600;">iOS App Store</span>
+                            </div>
+                            <div style="text-align:left;">
+                                <div style="font-weight:700; font-size:13px; color:#fff; line-height:1.2;">Architecting Intelligent Product Experiences</div>
+                                <div style="font-size:9px; color:#94a3b8; margin-top:4px;">Custom AI Workflows & Enterprise UX</div>
+                            </div>
+                            <div style="display:flex; gap:6px;">
+                                <span style="background:#1e293b; color:#cbd5e1; font-size:8.5px; padding:3px 6px; border-radius:4px;">AI Pipeline</span>
+                                <span style="background:#1e293b; color:#cbd5e1; font-size:8.5px; padding:3px 6px; border-radius:4px;">Design System</span>
+                                <span style="background:#1e293b; color:#cbd5e1; font-size:8.5px; padding:3px 6px; border-radius:4px;">Figma AI</span>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="meta">
+                        <span class="nm">Ultramind.in Website</span>
+                        <span class="pitch">Official Corporate Platform · Visual & Interaction</span>
+                    </span>
+                </button>
+
+                <!-- Tile 6: Svelty Website (Real Screenshot) -->
+                <button type="button" class="tile" data-p="svelty-website" style="grid-area: p5">
                     <span class="t"><b>Svelty Website</b><span class="ctl"><i></i><i></i><i></i></span></span>
-                    <div class="tile-preview">
-                        <svg viewBox="0 0 320 180" width="100%" height="100%">
-                            <rect width="320" height="180" rx="6" fill="#13141f"/>
-                            <rect x="20" y="16" width="280" height="42" rx="8" fill="#1f2133"/>
-                            <text x="34" y="38" fill="#ff9ebb" font-size="12" font-family="sans-serif" font-weight="bold">Svelty Marketing Agency</text>
-                            <text x="34" y="51" fill="#9ea3c0" font-size="9" font-family="sans-serif">High-Conversion Digital Experiences</text>
-                            <!-- Metrics Cards -->
-                            <rect x="20" y="68" width="132" height="46" rx="6" fill="#191a28" stroke="#2d3047" stroke-width="1"/>
-                            <text x="32" y="88" fill="#8fd3c1" font-size="14" font-family="'Space Mono', monospace" font-weight="bold">+142%</text>
-                            <text x="32" y="104" fill="#9ea3c0" font-size="8.5" font-family="sans-serif">Conversion Uplift</text>
-
-                            <rect x="168" y="68" width="132" height="46" rx="6" fill="#191a28" stroke="#2d3047" stroke-width="1"/>
-                            <text x="180" y="88" fill="#f0a35e" font-size="14" font-family="'Space Mono', monospace" font-weight="bold">0.4s</text>
-                            <text x="180" y="104" fill="#9ea3c0" font-size="8.5" font-family="sans-serif">Page Interaction Speed</text>
-
-                            <rect x="20" y="124" width="280" height="38" rx="6" fill="linear-gradient(90deg, #ff9ebb, #f0a35e)" opacity="0.9"/>
-                            <text x="80" y="147" fill="#17121c" font-size="11" font-family="sans-serif" font-weight="bold">Explore Case Study ↗</text>
-                        </svg>
+                    <div class="tile-preview" style="padding:0; background:#000;">
+                        <img src="svelty_website_preview.png" alt="Svelty Website" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
                     </div>
                     <span class="meta">
                         <span class="nm">Svelty Website</span>
                         <span class="pitch">Agency Website · Marketing & Conversions</span>
-                    </span>
-                </button>
-
-                <!-- Tile 6: Svelty CRM -->
-                <button type="button" class="tile" data-p="svelty-crm" style="grid-area: p5">
-                    <span class="t"><b>Svelty CRM</b><span class="ctl"><i></i><i></i><i></i></span></span>
-                    <div class="tile-preview">
-                        <svg viewBox="0 0 320 180" width="100%" height="100%">
-                            <rect width="320" height="180" rx="6" fill="#10111a"/>
-                            <text x="20" y="30" fill="#f0eaf6" font-size="12" font-family="sans-serif" font-weight="bold">Deal Pipeline & Workflows</text>
-                            <!-- Kanban Columns -->
-                            <rect x="20" y="44" width="85" height="120" rx="6" fill="#191b29"/>
-                            <text x="28" y="60" fill="#ff9ebb" font-size="9" font-family="'Space Mono', monospace" font-weight="bold">LEADS (12)</text>
-                            <rect x="26" y="68" width="73" height="30" rx="4" fill="#24273b"/>
-                            <rect x="26" y="104" width="73" height="30" rx="4" fill="#24273b"/>
-
-                            <rect x="115" y="44" width="85" height="120" rx="6" fill="#191b29"/>
-                            <text x="123" y="60" fill="#f0a35e" font-size="9" font-family="'Space Mono', monospace" font-weight="bold">ACTIVE (8)</text>
-                            <rect x="121" y="68" width="73" height="30" rx="4" fill="#24273b"/>
-                            <rect x="121" y="104" width="73" height="30" rx="4" fill="#24273b"/>
-
-                            <rect x="210" y="44" width="90" height="120" rx="6" fill="#191b29"/>
-                            <text x="218" y="60" fill="#8fd3c1" font-size="9" font-family="'Space Mono', monospace" font-weight="bold">WON (24)</text>
-                            <rect x="216" y="68" width="78" height="42" rx="4" fill="#1e2c24" stroke="#8fd3c1" stroke-width="1"/>
-                            <text x="224" y="85" fill="#8fd3c1" font-size="10" font-family="'Space Mono', monospace" font-weight="bold">$180,000</text>
-                            <text x="224" y="100" fill="#a4c2b0" font-size="8" font-family="sans-serif">Enterprise Q4</text>
-                        </svg>
-                    </div>
-                    <span class="meta">
-                        <span class="nm">Svelty CRM</span>
-                        <span class="pitch">CRM Platform · Workflow Management</span>
                     </span>
                 </button>
             </div>
@@ -1591,33 +1556,13 @@
                     <div class="appbody">
                         <h3>Campus Connect Mobile Application</h3>
                         <p class="tagline">Education Management Mobile App</p>
-                        <div class="app-visual">
-                            <svg viewBox="0 0 540 280" width="100%" height="100%">
-                                <rect width="540" height="280" rx="8" fill="#0d1319"/>
-                                <rect x="35" y="20" width="220" height="240" rx="14" fill="#16202a" stroke="#253545" stroke-width="2"/>
-                                <text x="50" y="45" fill="#8fd3c1" font-size="12" font-family="sans-serif" font-weight="bold">Student Attendance Portal</text>
-                                <circle cx="145" cy="115" r="45" fill="none" stroke="#21303e" stroke-width="6"/>
-                                <circle cx="145" cy="115" r="45" fill="none" stroke="#8fd3c1" stroke-width="6" stroke-dasharray="220 60" stroke-linecap="round"/>
-                                <text x="127" y="122" fill="#fff" font-size="16" font-family="'Space Mono', monospace" font-weight="bold">88%</text>
-                                <rect x="50" y="180" width="190" height="32" rx="6" fill="#1f2d3a"/>
-                                <text x="60" y="200" fill="#8fd3c1" font-size="10" font-family="sans-serif">Minimum Requirement: 75% ✓</text>
-                                <rect x="50" y="220" width="190" height="30" rx="6" fill="#1f2d3a"/>
-                                <text x="60" y="239" fill="#f0a35e" font-size="10" font-family="sans-serif">2 Approaching Deadlines</text>
-
-                                <rect x="285" y="20" width="220" height="240" rx="14" fill="#16202a" stroke="#253545" stroke-width="2"/>
-                                <text x="300" y="45" fill="#f0eaf6" font-size="12" font-family="sans-serif" font-weight="bold">Daily Schedule & Alerts</text>
-                                <rect x="300" y="65" width="190" height="48" rx="6" fill="#1f2d3a"/>
-                                <text x="312" y="87" fill="#8fd3c1" font-size="10.5" font-family="sans-serif" font-weight="bold">09:30 AM · UX Architecture</text>
-                                <text x="312" y="103" fill="#8da3b8" font-size="9" font-family="sans-serif">Seminar Hall C · Dr. Rao</text>
-                                <rect x="300" y="125" width="190" height="48" rx="6" fill="#1f2d3a"/>
-                                <text x="312" y="147" fill="#ff9ebb" font-size="10.5" font-family="sans-serif" font-weight="bold">01:30 PM · Design Systems Lab</text>
-                                <text x="312" y="163" fill="#8da3b8" font-size="9" font-family="sans-serif">Design Studio 2 · Submission Due</text>
-                            </svg>
+                        <div class="app-visual" style="padding:0; background:#f6fbf8; overflow:hidden;">
+                            <img src="campus_connect_preview.png" alt="Campus Connect UI/UX Case Study" class="project-mockup-img" style="width:100%; height:100%; max-height:380px; object-fit:contain; object-position:center; display:block; border-radius:8px;">
                         </div>
                         <figcaption>Education management app focused on information structure, user flows, and interface design.</figcaption>
                         <div class="case-action-row">
                             <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UX Architect & UI Designer</span>
-                            <a href="https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11" target="_blank" rel="noopener" class="btn-case-cta">View Figma Prototype ↗</a>
+                            <a href="https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1" target="_blank" rel="noopener" class="btn-case-cta">View Figma Prototype ↗</a>
                         </div>
                     </div>
                 </div>
@@ -1649,7 +1594,7 @@
                             <li>Designed high-density overview widgets optimized for rapid one-handed mobile scanning between lectures.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Information Structure"</em>, <em>"User Flows"</em>, <em>"Interface Design"</em>]</p>
-                        <p class="gh"><span>Prototype: </span><a href="https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11" target="_blank" rel="noopener">figma.com/proto/MentalHealthApp</a></p>
+                        <p class="gh"><span>Prototype: </span><a href="https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1" target="_blank" rel="noopener">figma.com/proto/DRBRAU-CampusConnect</a></p>
                     </div>
                 </div>
             </article>
@@ -1668,38 +1613,58 @@
                     <div class="appbody">
                         <h3>CMS Websites</h3>
                         <p class="tagline">VibrantVista (Event) · Ditya Jewellery</p>
-                        <div class="app-visual">
-                            <svg viewBox="0 0 540 280" width="100%" height="100%">
-                                <rect width="540" height="280" rx="8" fill="#120f18"/>
-                                <!-- Fest Site Mockup -->
-                                <rect x="35" y="20" width="220" height="240" rx="10" fill="#24132b" stroke="#482452" stroke-width="1.5"/>
-                                <rect x="35" y="20" width="220" height="30" rx="10" fill="#381b42"/>
-                                <circle cx="50" cy="35" r="4" fill="#ff9ebb"/>
-                                <circle cx="62" cy="35" r="4" fill="#f0a35e"/>
-                                <circle cx="74" cy="35" r="4" fill="#8fd3c1"/>
-                                <text x="90" y="39" fill="#ff9ebb" font-size="10" font-family="sans-serif" font-weight="bold">vibrantvista.org</text>
-                                <text x="50" y="80" fill="#fff" font-size="15" font-family="sans-serif" font-weight="bold">VibrantVista '25</text>
-                                <text x="50" y="98" fill="#e2b4d4" font-size="10" font-family="sans-serif">Annual Cultural Extravaganza</text>
-                                <rect x="50" y="115" width="190" height="30" rx="4" fill="#4d1e5c"/>
-                                <text x="60" y="134" fill="#ff9ebb" font-size="10" font-family="'Space Mono', monospace">3 Days · 40 Events</text>
-                                <rect x="50" y="155" width="190" height="40" rx="6" fill="#351640"/>
-                                <text x="60" y="178" fill="#e2b4d4" font-size="9" font-family="sans-serif">Artist Lineup & Pass Booking</text>
-                                <rect x="50" y="205" width="110" height="28" rx="6" fill="#ff9ebb"/>
-                                <text x="65" y="223" fill="#17121c" font-size="9.5" font-family="sans-serif" font-weight="bold">Book Tickets</text>
+                        <div class="app-visual" style="padding:0; background:#0b0a12; overflow:hidden; display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:12px; box-sizing:border-box;">
+                            <!-- Site 1: VibrantVista Cultural Fest -->
+                            <div style="background:#1a1024; border:1px solid #3d2354; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">
+                                <div style="background:#261436; padding:6px 10px; display:flex; align-items:center; gap:6px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                                    <span style="width:6px; height:6px; border-radius:50%; background:#ef4444; display:inline-block;"></span>
+                                    <span style="width:6px; height:6px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
+                                    <span style="width:6px; height:6px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+                                    <span style="font-size:9.5px; color:#ff9ebb; font-family:'Space Mono', monospace; margin-left:4px;">vibrantvista.org</span>
+                                </div>
+                                <div style="padding:14px; flex:1; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(160deg, #281438, #140b1c);">
+                                    <div>
+                                        <div style="font-size:15px; font-weight:800; color:#fff; line-height:1.2;">VibrantVista '25</div>
+                                        <div style="font-size:9px; color:#d8b4e2; margin-top:2px;">Annual Cultural Festival Platform</div>
+                                    </div>
+                                    <div style="background:rgba(255,158,187,0.15); border:1px solid rgba(255,158,187,0.3); padding:6px; border-radius:6px; text-align:center;">
+                                        <div style="font-size:11px; font-weight:700; color:#ff9ebb; font-family:'Space Mono', monospace;">03d : 14h : 22m</div>
+                                        <div style="font-size:8px; color:#e2b4d4;">Live Countdown to Fest</div>
+                                    </div>
+                                    <div style="font-size:9.5px; color:#cbd5e1; line-height:1.3;">
+                                        • Dynamic Artist Lineups<br>
+                                        • Live Pass Registration<br>
+                                        • Interactive Event Matrix
+                                    </div>
+                                    <a href="https://vibrantvista-culturalfest.web.app" target="_blank" rel="noopener" style="background:#ff9ebb; color:#17121c; text-decoration:none; font-size:10px; font-weight:700; padding:6px 12px; border-radius:5px; text-align:center;">Visit Fest Website ↗</a>
+                                </div>
+                            </div>
 
-                                <!-- Jewellery Site Mockup -->
-                                <rect x="285" y="20" width="220" height="240" rx="10" fill="#131c15" stroke="#253a2a" stroke-width="1.5"/>
-                                <rect x="285" y="20" width="220" height="30" rx="10" fill="#1c2b20"/>
-                                <circle cx="300" cy="35" r="4" fill="#8fd3c1"/>
-                                <circle cx="312" cy="35" r="4" fill="#f0a35e"/>
-                                <text x="330" y="39" fill="#8fd3c1" font-size="10" font-family="serif">dityajewellery.com</text>
-                                <text x="300" y="80" fill="#f0eaf6" font-size="15" font-family="serif" font-weight="bold">Ditya Jewellery</text>
-                                <text x="300" y="96" fill="#8da895" font-size="10" font-family="sans-serif">Handcrafted Heirloom Collection</text>
-                                <circle cx="395" cy="145" r="32" fill="#1a2e20" stroke="#8fd3c1" stroke-width="1.5"/>
-                                <text x="375" y="149" fill="#8fd3c1" font-size="11" font-family="serif">HERITAGE</text>
-                                <rect x="300" y="200" width="190" height="32" rx="4" fill="#1e3324"/>
-                                <text x="325" y="220" fill="#8fd3c1" font-size="10" font-family="serif" font-weight="bold">Explore The Catalogue ↗</text>
-                            </svg>
+                            <!-- Site 2: Ditya Jewellery E-Commerce -->
+                            <div style="background:#0f1813; border:1px solid #233b2c; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">
+                                <div style="background:#17261d; padding:6px 10px; display:flex; align-items:center; gap:6px; border-bottom:1px solid rgba(255,255,255,0.08);">
+                                    <span style="width:6px; height:6px; border-radius:50%; background:#ef4444; display:inline-block;"></span>
+                                    <span style="width:6px; height:6px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
+                                    <span style="width:6px; height:6px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+                                    <span style="font-size:9.5px; color:#8fd3c1; font-family:'Space Mono', monospace; margin-left:4px;">dityajewellery.com</span>
+                                </div>
+                                <div style="padding:14px; flex:1; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(160deg, #15241b, #0c140f);">
+                                    <div>
+                                        <div style="font-size:15px; font-weight:700; color:#fff; font-family:serif; line-height:1.2;">Ditya Jewellery</div>
+                                        <div style="font-size:9px; color:#88a893; margin-top:2px;">Royal Heritage Handcrafted Gold</div>
+                                    </div>
+                                    <div style="background:rgba(143,211,193,0.1); border:1px solid rgba(143,211,193,0.25); padding:6px; border-radius:6px; text-align:center;">
+                                        <div style="font-size:10px; font-weight:700; color:#8fd3c1; font-family:serif;">HEIRLOOM COLLECTION</div>
+                                        <div style="font-size:8px; color:#94a3b8;">Navratna & Kundan Showcase</div>
+                                    </div>
+                                    <div style="font-size:9.5px; color:#cbd5e1; line-height:1.3;">
+                                        • Editorial Product Grids<br>
+                                        • Direct WhatsApp Concierge<br>
+                                        • Mobile Responsive CMS
+                                    </div>
+                                    <a href="https://dityajewellery.web.app" target="_blank" rel="noopener" style="background:#8fd3c1; color:#17121c; text-decoration:none; font-size:10px; font-weight:700; padding:6px 12px; border-radius:5px; text-align:center;">View Collection ↗</a>
+                                </div>
+                            </div>
                         </div>
                         <figcaption>Designed and developed CMS websites for different use cases, including a college cultural fest website and a jewellery website, focusing on clear content presentation, visual design, and easy content management.</figcaption>
                         <div class="case-action-row" style="gap: 10px; flex-wrap: wrap;">
@@ -1742,7 +1707,103 @@
                 </div>
             </article>
 
-            <!-- CASE 4: Svelty Website -->
+                        <!-- CASE 4: Ultramind.in Official Website -->
+            <article class="case" id="case-ultramind" hidden>
+                <div class="win app">
+                    <div class="t">
+                        <b>Ultramind.in Official Website</b>
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="appbody">
+                        <h3>Ultramind.in Official Website</h3>
+                        <p class="tagline">Official Corporate Platform · Visual & Interaction Design</p>
+                        <div class="app-visual" style="padding:0; background:#080b12; overflow:hidden; display:flex; flex-direction:column;">
+                            <!-- Realistic Ultramind Browser Window UI -->
+                            <div style="background:#131824; border-bottom:1px solid rgba(255,255,255,0.08); padding:8px 14px; display:flex; align-items:center; gap:10px;">
+                                <div style="display:flex; gap:5px;">
+                                    <span style="width:8px; height:8px; border-radius:50%; background:#ef4444; display:inline-block;"></span>
+                                    <span style="width:8px; height:8px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
+                                    <span style="width:8px; height:8px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+                                </div>
+                                <div style="background:#0b0f19; padding:4px 12px; border-radius:6px; font-size:10px; color:#8fd3c1; font-family:'Space Mono', monospace; flex:1; max-width:320px;">
+                                    🔒 https://ultramind.in
+                                </div>
+                            </div>
+                            <div style="flex:1; padding:20px; background:radial-gradient(ellipse at 80% 20%, rgba(143,211,193,0.12), transparent 70%), #0a0d16; display:flex; flex-direction:column; justify-content:space-between;">
+                                <div style="display:flex; justify-content:space-between; align-items:center;">
+                                    <span style="font-weight:900; font-size:16px; color:#fff; letter-spacing:0.04em;">⚡ ULTRAMIND</span>
+                                    <div style="display:flex; gap:12px; font-size:11px; color:#94a3b8;">
+                                        <span>AI Systems</span>
+                                        <span>Products</span>
+                                        <span>Enterprise</span>
+                                    </div>
+                                    <span style="background:rgba(255,158,187,0.15); border:1px solid #ff9ebb; color:#ff9ebb; padding:3px 10px; border-radius:100px; font-size:10px; font-weight:700;">App Store ✓</span>
+                                </div>
+                                <div style="margin:16px 0;">
+                                    <div style="font-size:22px; font-weight:800; color:#fff; line-height:1.2; letter-spacing:-0.02em;">
+                                        Architecting Intelligent <span style="background:linear-gradient(90deg, #8fd3c1, #ff9ebb); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Product Experiences</span>
+                                    </div>
+                                    <div style="font-size:11.5px; color:#94a3b8; margin-top:6px; max-width:440px; line-height:1.4;">
+                                        Designed the official Ultramind website and mobile product ecosystem, connecting generative LLM workflows with intuitive human interfaces.
+                                    </div>
+                                </div>
+                                <div style="display:flex; gap:10px; align-items:center;">
+                                    <div style="background:#131a29; border:1px solid #23304a; padding:8px 12px; border-radius:8px; font-size:10.5px; color:#e2e8f0; display:flex; align-items:center; gap:8px;">
+                                        <span style="width:6px; height:6px; border-radius:50%; background:#10b981;"></span>
+                                        <span>iOS Application Featured on App Store</span>
+                                    </div>
+                                    <div style="background:#131a29; border:1px solid #23304a; padding:8px 12px; border-radius:8px; font-size:10.5px; color:#8fd3c1;">
+                                        4.9 ★ Rating
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <figcaption>Designed the official Ultramind website and maintained consistency in structure, usability, and visual quality across product and web experiences.</figcaption>
+                        <div class="case-action-row">
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Product Designer @ UltraMind</span>
+                            <a href="https://ultramind.in" target="_blank" rel="noopener" class="btn-case-cta" style="background: linear-gradient(90deg, #8fd3c1, #ff9ebb);">Visit ultramind.in ↗</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="win term">
+                    <div class="t">
+                        <b>terminal</b>&nbsp;· ~/projects/ultramind
+                        <span class="btns">
+                            <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
+                            <button type="button" tabindex="-1" aria-hidden="true">□</button>
+                            <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
+                        </span>
+                    </div>
+                    <div class="readme" data-scroll>
+                        <p class="cmd"><em>~/projects/ultramind</em> $ glow README.md</p>
+                        <h4>Why I built it</h4>
+                        <p>As Product Designer at Ultramind, I designed the product experience from the early stages, including user flows, wireframes, high-fidelity UI, widgets, and interactive prototypes for the iOS application, alongside designing the official Ultramind website.</p>
+                        <p>The mission was to make complex AI capabilities transparent, accessible, and delighting for end-users while building a coherent brand and design system across web and mobile.</p>
+                        <h4>What it does</h4>
+                        <ul>
+                            <li>Designed the official Ultramind corporate website communicating AI consulting & product capabilities.</li>
+                            <li>Designed user flows, wireframes, high-fidelity UI, widgets, and prototypes for the iOS app (now on the App Store).</li>
+                            <li>Translated product requirements and user needs into clear, usable interfaces.</li>
+                            <li>Collaborated with developers and managers to review designs, resolve usability issues, and refine components.</li>
+                            <li>Built automation workflows to streamline repetitive design and handoff tasks.</li>
+                        </ul>
+                        <h4>How it's built</h4>
+                        <ul>
+                            <li>Engineered in Figma using Auto Layout, components, variants, variables, and unified design libraries.</li>
+                            <li>Used Figma AI, Claude, and Adobe tools for rapid design research, ideation, animation, and visual effects.</li>
+                            <li>Maintained consistency in structure, usability, and visual quality across product and web platforms.</li>
+                        </ul>
+                        <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Figma AI"</em>, <em>"Claude"</em>, <em>"Design Systems"</em>, <em>"iOS Design"</em>, <em>"Webflow"</em>]</p>
+                        <p class="gh"><span>Official Platform: </span><a href="https://ultramind.in" target="_blank" rel="noopener">ultramind.in ↗</a></p>
+                    </div>
+                </div>
+            </article>
+
+<!-- CASE 4: Svelty Website -->
             <article class="case" id="case-svelty-website" hidden>
                 <div class="win app">
                     <div class="t">
@@ -1756,37 +1817,8 @@
                     <div class="appbody">
                         <h3>Svelty Website</h3>
                         <p class="tagline">Agency Website · Marketing & Conversions</p>
-                        <div class="app-visual">
-                            <svg viewBox="0 0 540 280" width="100%" height="100%">
-                                <rect width="540" height="280" rx="8" fill="#11121d"/>
-                                <!-- Agency Hero Browser -->
-                                <rect x="40" y="20" width="460" height="240" rx="10" fill="#171929" stroke="#2d314d" stroke-width="1.5"/>
-                                <rect x="40" y="20" width="460" height="30" rx="10" fill="#21243b"/>
-                                <circle cx="56" cy="35" r="4" fill="#ff9ebb"/>
-                                <circle cx="68" cy="35" r="4" fill="#f0a35e"/>
-                                <circle cx="80" cy="35" r="4" fill="#8fd3c1"/>
-                                <rect x="100" y="28" width="180" height="15" rx="7" fill="#151726"/>
-                                <text x="120" y="39" fill="#9ea5c7" font-size="9" font-family="'Space Mono', monospace">sveltymarketing.com</text>
-
-                                <text x="65" y="85" fill="#f0eaf6" font-size="18" font-family="sans-serif" font-weight="bold">Elevating Brands With Human-Centric Design</text>
-                                <text x="65" y="105" fill="#9ea5c7" font-size="11" font-family="sans-serif">Strategy · User Experience · Growth Marketing</text>
-
-                                <!-- Performance Metric Badges -->
-                                <rect x="65" y="130" width="125" height="60" rx="6" fill="#1f2238" stroke="#313659" stroke-width="1"/>
-                                <text x="78" y="156" fill="#ff9ebb" font-size="18" font-family="'Space Mono', monospace" font-weight="bold">+142%</text>
-                                <text x="78" y="176" fill="#9ea5c7" font-size="9.5" font-family="sans-serif">Conversion Velocity</text>
-
-                                <rect x="205" y="130" width="125" height="60" rx="6" fill="#1f2238" stroke="#313659" stroke-width="1"/>
-                                <text x="218" y="156" fill="#8fd3c1" font-size="18" font-family="'Space Mono', monospace" font-weight="bold">99.4%</text>
-                                <text x="218" y="176" fill="#9ea5c7" font-size="9.5" font-family="sans-serif">Client Retention</text>
-
-                                <rect x="345" y="130" width="125" height="60" rx="6" fill="#1f2238" stroke="#313659" stroke-width="1"/>
-                                <text x="358" y="156" fill="#f0a35e" font-size="18" font-family="'Space Mono', monospace" font-weight="bold">&lt;0.8s</text>
-                                <text x="358" y="176" fill="#9ea5c7" font-size="9.5" font-family="sans-serif">Average Load Time</text>
-
-                                <rect x="65" y="210" width="150" height="32" rx="6" fill="linear-gradient(90deg, #ff9ebb, #f0a35e)"/>
-                                <text x="95" y="230" fill="#17121c" font-size="11" font-family="sans-serif" font-weight="bold">Start a Project ↗</text>
-                            </svg>
+                        <div class="app-visual" style="padding:0; background:#000; overflow:hidden;">
+                            <img src="svelty_website_preview.png" alt="Svelty Official Website" class="project-mockup-img" style="width:100%; height:100%; max-height:380px; object-fit:cover; object-position:top center; display:block; border-radius:8px;">
                         </div>
                         <figcaption>Designed and developed the Svelty Marketing Agency website to capture users' attention and encourage more conversions.</figcaption>
                         <div class="case-action-row">
@@ -2476,7 +2508,7 @@
         const projectsData = [
             {
                 id: 'mental-health',
-                badge: 'SELECTED PROJECT · 01 OF 05',
+                badge: 'SELECTED PROJECT · 01 OF 06',
                 title: 'Mental Health Application',
                 subtitle: 'Mobile Application · UI Design & Prototyping',
                 desc: 'Mental wellness tracking app focused on clear presentation of user insights, UI design, and prototyping.',
@@ -2487,7 +2519,7 @@
             },
             {
                 id: 'campus-connect',
-                badge: 'SELECTED PROJECT · 02 OF 05',
+                badge: 'SELECTED PROJECT · 02 OF 06',
                 title: 'Campus Connect Mobile Application',
                 subtitle: 'Education Management Mobile App',
                 desc: 'Education management app focused on information structure, user flows, and interface design.',
@@ -2498,7 +2530,7 @@
             },
             {
                 id: 'cms-websites',
-                badge: 'SELECTED PROJECT · 03 OF 05',
+                badge: 'SELECTED PROJECT · 03 OF 06',
                 title: 'CMS Websites',
                 subtitle: 'VibrantVista (Event) · Ditya Jewellery',
                 desc: 'Designed and developed CMS websites for different use cases, including a college cultural fest website and a jewellery website, focusing on clear content presentation, visual design, and easy content management.',
@@ -2508,11 +2540,22 @@
                 color: '#244735'
             },
             {
+                id: 'ultramind',
+                badge: 'SELECTED PROJECT · 04 OF 06',
+                title: 'UltraMind Corporate Platform',
+                subtitle: 'Enterprise AI Platform & Official Website',
+                desc: 'Designed the official website and iOS mobile application for UltraMind, establishing end-to-end design systems, product architecture, and AI model workflows.',
+                tools: ['Figma', 'Prototyping', 'Design Systems'],
+                highlights: ['Brand Identity', 'Enterprise AI Flows', 'iOS App Design'],
+                link: 'https://ultramind.in',
+                color: '#244735'
+            },
+            {
                 id: 'svelty-website',
-                badge: 'SELECTED PROJECT · 04 OF 05',
+                badge: 'SELECTED PROJECT · 05 OF 06',
                 title: 'Svelty Website',
                 subtitle: 'Agency Website · Marketing & Conversions',
-                desc: 'Designed and developed the Svelty Marketing Agency website to capture users\' attention and encourage more conversions.',
+                desc: "Designed and developed the Svelty Marketing Agency website to capture users' attention and encourage more conversions.",
                 tools: ['Figma', 'Claude Design'],
                 highlights: ['Attention Capture', 'Conversion Focus', 'Website Design'],
                 link: 'https://svelty.in',
@@ -2520,10 +2563,10 @@
             },
             {
                 id: 'svelty-crm',
-                badge: 'SELECTED PROJECT · 05 OF 05',
+                badge: 'SELECTED PROJECT · 06 OF 06',
                 title: 'Svelty CRM',
                 subtitle: 'CRM Platform · Workflow Management',
-                desc: 'Designed and developed Svelty\'s CRM platform to manage roles, responsibilities, tasks, and workflows.',
+                desc: "Designed and developed Svelty's CRM platform to manage roles, responsibilities, tasks, and workflows.",
                 tools: ['Figma', 'Claude Design'],
                 highlights: ['Role Management', 'Task Tracking', 'Workflows'],
                 link: 'https://svelty.in',
@@ -2581,7 +2624,7 @@
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.lineWidth = 1; ctx.stroke();
 
             // Tabs in Top Bar
-            const tabNames = ['0 all', '1 mental-health', '2 campus-connect', '3 cms-websites', '4 svelty-website', '5 svelty-crm'];
+            const tabNames = ['0 all', '1 mental-health', '2 campus-connect', '3 cms-websites', '4 ultramind', '5 svelty-website', '6 svelty-crm'];
             let curTabX = 28;
             for (let i = 0; i < tabNames.length; i++) {
                 const isCur = (activeProjectSlug === '' && i === 0) || (activeProjectSlug !== '' && i === (curProjectIdx + 1));
@@ -2703,8 +2746,8 @@
                     { x: 16 + tileW + 8, y: 78, title: 'Campus Connect', pitch: 'Education Management Mobile App', color: '#8fd3c1' },
                     { x: 16 + (tileW + 8) * 2, y: 78, title: 'CMS Websites', pitch: 'VibrantVista Fest & Ditya Jewellery', color: '#f0a35e' },
                     { x: 16, y: 78 + tileH + 8, title: 'terminal · ~', pitch: 'pranathi@desk ~ $ fetch', color: '#8fd3c1', isTerm: true },
-                    { x: 16 + tileW + 8, y: 78 + tileH + 8, title: 'Svelty Website', pitch: 'Agency Website · Marketing & Conversions', color: '#ff9ebb' },
-                    { x: 16 + (tileW + 8) * 2, y: 78 + tileH + 8, title: 'Svelty CRM', pitch: 'CRM Platform · Workflow Management', color: '#7ee2a8' }
+                    { x: 16 + tileW + 8, y: 78 + tileH + 8, title: 'Ultramind.in', pitch: 'Enterprise AI Platform & Website', color: '#8fd3c1' },
+                    { x: 16 + (tileW + 8) * 2, y: 78 + tileH + 8, title: 'Svelty Website', pitch: 'Agency Website · Marketing & Conversions', color: '#ff9ebb' }
                 ];
 
                 tiles.forEach((t) => {
