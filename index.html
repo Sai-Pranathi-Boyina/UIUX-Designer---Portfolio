@@ -1593,7 +1593,7 @@
                         <figcaption>Education management app focused on information structure, user flows, and interface design.</figcaption>
                         <div class="case-action-row">
                             <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UX Architect & UI Designer</span>
-                            <a href="https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1" target="_blank" rel="noopener" class="btn-case-cta">View Figma Prototype ↗</a>
+                            <span class="btn-case-cta" style="background:rgba(143,211,193,0.12); color:#8fd3c1; border:1px solid rgba(143,211,193,0.3); cursor:default;">UI/UX Design Case Study</span>
                         </div>
                     </div>
                 </div>
@@ -1621,11 +1621,11 @@
                         <h4>How it's built</h4>
                         <ul>
                             <li>Constructed complete user flow hierarchy and task analysis across undergraduate cohorts.</li>
-                            <li>Built high-fidelity clickable prototype in Figma with reusable card components and navigation tabs.</li>
+                            <li>Designed reusable card components, status tags, and intuitive navigation tabs.</li>
                             <li>Designed high-density overview widgets optimized for rapid one-handed mobile scanning between lectures.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Information Structure"</em>, <em>"User Flows"</em>, <em>"Interface Design"</em>]</p>
-                        <p class="gh"><span>Prototype: </span><a href="https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1" target="_blank" rel="noopener">figma.com/proto/DRBRAU-CampusConnect</a></p>
+                        <p class="gh"><span>Deliverable: </span><span style="color:#8fd3c1; font-family:'Space Mono', monospace;">Mobile UI/UX Design & Architecture</span></p>
                     </div>
                 </div>
             </article>
@@ -2520,7 +2520,7 @@
                 desc: 'Education management app focused on information structure, user flows, and interface design.',
                 tools: ['Figma'],
                 highlights: ['Information Structure', 'User Flows', 'Interface Design'],
-                link: 'https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1',
+                link: '',
                 color: '#244735'
             },
             {
@@ -2729,21 +2729,24 @@
                 ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(mockX + 20, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
                 ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(mockX + 35, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
                 ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 50, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                // URL Address Box
+                // URL Address Box / Path
                 ctx.fillStyle = '#0b0f19';
-                ctx.beginPath(); ctx.roundRect(mockX + 70, mockY + 8, Math.min(mockW - 220, 520), 24, 5); ctx.fill();
+                ctx.beginPath(); ctx.roundRect(mockX + 70, mockY + 8, Math.min(mockW - 220, 560), 24, 5); ctx.fill();
                 ctx.fillStyle = '#8fd3c1';
                 ctx.font = '12px "Space Mono", monospace';
                 ctx.textAlign = 'left';
-                ctx.fillText('🔒 ' + p.link, mockX + 85, mockY + 24);
-
-                // Open Live Site Badge
-                ctx.fillStyle = 'rgba(255, 158, 187, 0.15)';
-                ctx.beginPath(); ctx.roundRect(mockX + mockW - 120, mockY + 8, 105, 24, 4); ctx.fill();
-                ctx.fillStyle = '#ff9ebb';
-                ctx.font = 'bold 11px "Space Mono", monospace';
-                ctx.textAlign = 'center';
-                ctx.fillText('Open Live ↗', mockX + mockW - 68, mockY + 24);
+                if (p.link) {
+                    ctx.fillText('🔒 ' + p.link, mockX + 85, mockY + 24);
+                    // Open Live Site Badge
+                    ctx.fillStyle = 'rgba(255, 158, 187, 0.15)';
+                    ctx.beginPath(); ctx.roundRect(mockX + mockW - 120, mockY + 8, 105, 24, 4); ctx.fill();
+                    ctx.fillStyle = '#ff9ebb';
+                    ctx.font = 'bold 11px "Space Mono", monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Open Live ↗', mockX + mockW - 68, mockY + 24);
+                } else {
+                    ctx.fillText('📱 ~/projects/' + p.id + ' · Mobile App Design Case Study', mockX + 85, mockY + 24);
+                }
 
                 // Preview Area Inside Browser Frame
                 const prevX = mockX, prevY = mockY + 40, prevW = mockW, prevH = mockH - 40;
@@ -2840,24 +2843,29 @@
 
                 // Bottom Action Buttons Row
                 const btnY = 930;
-                // 1. Visit Live Project Button
-                const btnGrad = ctx.createLinearGradient(32, btnY, 32 + 300, btnY + 54);
-                btnGrad.addColorStop(0, '#ff9ebb');
-                btnGrad.addColorStop(1, '#f0a35e');
-                ctx.fillStyle = btnGrad;
-                ctx.beginPath(); ctx.roundRect(32, btnY, 300, 54, 12); ctx.fill();
-                ctx.fillStyle = '#17121c';
-                ctx.font = 'bold 16px "Montserrat", sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('Visit Live Website ↗', 32 + 150, btnY + 33);
+                if (p.link) {
+                    // 1. Visit Live Project Button
+                    const btnGrad = ctx.createLinearGradient(32, btnY, 32 + 300, btnY + 54);
+                    btnGrad.addColorStop(0, '#ff9ebb');
+                    btnGrad.addColorStop(1, '#f0a35e');
+                    ctx.fillStyle = btnGrad;
+                    ctx.beginPath(); ctx.roundRect(32, btnY, 300, 54, 12); ctx.fill();
+                    ctx.fillStyle = '#17121c';
+                    ctx.font = 'bold 16px "Montserrat", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Visit Live Website ↗', 32 + 150, btnY + 33);
+                }
 
                 // 2. Back to All Projects Button
+                const backX = p.link ? 350 : 32;
+                const backW = p.link ? 260 : 320;
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.roundRect(350, btnY, 260, 54, 12); ctx.fill();
+                ctx.beginPath(); ctx.roundRect(backX, btnY, backW, 54, 12); ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1; ctx.stroke();
                 ctx.fillStyle = '#f0eaf6';
                 ctx.font = 'bold 15px "Montserrat", sans-serif';
-                ctx.fillText('← Back to All Projects', 350 + 130, btnY + 33);
+                ctx.textAlign = 'center';
+                ctx.fillText('← Back to All Projects', backX + backW / 2, btnY + 33);
 
                 // Right Window (Details / Terminal)
                 ctx.fillStyle = '#0b0b12';
@@ -2939,10 +2947,16 @@
                 ctx.fillText('dependencies: ' + JSON.stringify(p.tools), 1200, termY);
                 termY += 30;
 
-                // 8. Live URL
-                ctx.fillStyle = '#f0a35e';
-                ctx.font = 'bold 13.5px "Space Mono", monospace';
-                ctx.fillText('url: ' + p.link + ' ↗', 1200, termY);
+                // 8. Live URL / Status
+                if (p.link) {
+                    ctx.fillStyle = '#f0a35e';
+                    ctx.font = 'bold 13.5px "Space Mono", monospace';
+                    ctx.fillText('url: ' + p.link + ' ↗', 1200, termY);
+                } else {
+                    ctx.fillStyle = '#8fd3c1';
+                    ctx.font = 'bold 13.5px "Space Mono", monospace';
+                    ctx.fillText('status: Deliverable Completed (UI/UX Architecture)', 1200, termY);
+                }
 
             } else {
                 // 0 ALL: Draw 6 Project Tiles with Real Previews
@@ -3795,7 +3809,11 @@
                     '<a href="https://svelty.in" target="_blank" rel="noopener" style="color:#ff9ebb; font-weight:bold; font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none;">Open svelty.in ↗</a>' +
                     '</div></div>';
             } else if (slug === 'campus-connect') {
-                el.innerHTML = '<iframe src="https://www.figma.com/embed?embed_host=astra&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1fP8Vs2twbhbyUbGFq3fOc%2FDRBRAU%3Fnode-id%3D391-108%26starting-point-node-id%3D357%253A77" title="Campus Connect Prototype" allowfullscreen></iframe>';
+                el.innerHTML = '<div style="position:relative; width:100%; height:100%; background:#f6fbf8; overflow:hidden; display:flex; align-items:center; justify-content:center;">' +
+                    '<img src="campus_connect_preview.png" alt="Campus Connect Mobile App Case Study" style="width:100%; height:100%; object-fit:contain; display:block;">' +
+                    '<div style="position:absolute; bottom:14px; right:14px; background:rgba(20,30,24,0.92); backdrop-filter:blur(8px); padding:8px 14px; border-radius:8px; border:1px solid rgba(143,211,193,0.3); display:flex; align-items:center; gap:8px;">' +
+                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Campus Connect · Education Management Mobile App</span>' +
+                    '</div></div>';
             } else if (slug === 'mental-health') {
                 el.innerHTML = '<iframe src="https://www.figma.com/embed?embed_host=astra&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FZRUDuvvkSbTobVS1VpxlX0%2FTask%3Fnode-id%3D46-810" title="Mental Health Prototype" allowfullscreen></iframe>';
             } else if (slug === 'cms-websites') {
@@ -4316,24 +4334,31 @@
                             return;
                         }
 
-                        // Bottom Action Button 1: "Visit Live Website ↗"
-                        if (px >= 32 && px <= 332 && py >= 925 && py <= 990) {
-                            window.open(projectsData[curProjectIdx].link, '_blank');
-                            showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
-                            return;
-                        }
-
-                        // Bottom Action Button 2: "← Back to All Projects"
-                        if (px >= 350 && px <= 610 && py >= 925 && py <= 990) {
-                            showProject('');
-                            return;
-                        }
-
-                        // Open Live Badge on Preview Header
-                        if (px >= 1000 && px <= 1140 && py >= 136 && py <= 180) {
-                            window.open(projectsData[curProjectIdx].link, '_blank');
-                            showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
-                            return;
+                        // Bottom Action Buttons
+                        if (projectsData[curProjectIdx].link) {
+                            // Button 1: "Visit Live Website ↗"
+                            if (px >= 32 && px <= 332 && py >= 925 && py <= 990) {
+                                window.open(projectsData[curProjectIdx].link, '_blank');
+                                showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
+                                return;
+                            }
+                            // Button 2: "← Back to All Projects"
+                            if (px >= 350 && px <= 610 && py >= 925 && py <= 990) {
+                                showProject('');
+                                return;
+                            }
+                            // Open Live Badge on Preview Header
+                            if (px >= 1000 && px <= 1140 && py >= 136 && py <= 180) {
+                                window.open(projectsData[curProjectIdx].link, '_blank');
+                                showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
+                                return;
+                            }
+                        } else {
+                            // Single "← Back to All Projects" Button
+                            if (px >= 32 && px <= 350 && py >= 925 && py <= 990) {
+                                showProject('');
+                                return;
+                            }
                         }
 
                         // CMS Websites: Dual Preview Click
@@ -4353,16 +4378,20 @@
                                 return;
                             }
                         } else {
-                            // Any other project: Clicking Mockup Preview area opens live link
+                            // Any other project: Clicking Mockup Preview area
                             if (px >= 32 && px <= 1140 && py >= 176 && py <= 911) {
-                                window.open(projectsData[curProjectIdx].link, '_blank');
-                                showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
+                                if (projectsData[curProjectIdx].link) {
+                                    window.open(projectsData[curProjectIdx].link, '_blank');
+                                    showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
+                                } else {
+                                    showToast("Campus Connect · UI/UX Mobile App Design");
+                                }
                                 return;
                             }
                         }
 
                         // Right Window Terminal URL Click
-                        if (px >= 1180 && px <= 1880 && py >= 320 && py <= 650) {
+                        if (projectsData[curProjectIdx].link && px >= 1180 && px <= 1880 && py >= 320 && py <= 650) {
                             window.open(projectsData[curProjectIdx].link, '_blank');
                             showToast("Opening " + projectsData[curProjectIdx].link);
                             return;
