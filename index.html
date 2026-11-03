@@ -344,10 +344,11 @@
             position: fixed;
             z-index: 50;
             left: 50%;
-            top: calc(50% - 14px);
-            width: min(1360px, calc(100vw - 120px));
-            height: min(780px, calc(100vh - 160px));
+            top: 50%;
+            width: min(73vw, 1100px);
+            height: min(67vh, 700px);
             transform: translate(-50%, -50%);
+            overflow: hidden;
             box-sizing: border-box;
             gap: var(--d-gap);
             padding: var(--d-gap);
@@ -390,6 +391,13 @@
             min-width: 0;
             display: flex;
             align-items: center;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            flex: 1;
+        }
+        .surface.desk .ws::-webkit-scrollbar {
+            display: none;
         }
         .surface.desk .ws button {
             all: unset;
@@ -657,10 +665,12 @@
         /* ---------------- SINGLE PROJECT CASE STUDY VIEW (.case) ---------------- */
         .surface.desk .case {
             gap: var(--d-gap);
-            grid-template-columns: 1.45fr 1fr;
+            grid-template-columns: 1.25fr 1fr;
             display: grid;
             position: absolute;
             inset: 0;
+            overflow: hidden;
+            min-height: 0;
         }
         .surface.desk .case[hidden] {
             display: none !important;
@@ -1601,76 +1611,44 @@
 
             <!-- CASE 3: CMS Websites -->
             <article class="case" id="case-cms-websites" hidden>
-                <div class="win app">
+                <div class="win app" style="display:flex; flex-direction:column; overflow:hidden;">
                     <div class="t">
-                        <b>CMS Websites</b>
+                        <b>CMS Websites</b>&nbsp;— VibrantVista Fest & Ditya Jewellery
                         <span class="btns">
                             <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
                             <button type="button" tabindex="-1" aria-hidden="true">□</button>
                             <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
                         </span>
                     </div>
-                    <div class="appbody">
-                        <h3>CMS Websites</h3>
-                        <p class="tagline">VibrantVista (Event) · Ditya Jewellery</p>
-                        <div class="app-visual" style="padding:0; background:#0b0a12; overflow:hidden; display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:12px; box-sizing:border-box;">
-                            <!-- Site 1: VibrantVista Cultural Fest -->
-                            <div style="background:#1a1024; border:1px solid #3d2354; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">
-                                <div style="background:#261436; padding:6px 10px; display:flex; align-items:center; gap:6px; border-bottom:1px solid rgba(255,255,255,0.08);">
-                                    <span style="width:6px; height:6px; border-radius:50%; background:#ef4444; display:inline-block;"></span>
-                                    <span style="width:6px; height:6px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
-                                    <span style="width:6px; height:6px; border-radius:50%; background:#10b981; display:inline-block;"></span>
-                                    <span style="font-size:9.5px; color:#ff9ebb; font-family:'Space Mono', monospace; margin-left:4px;">vibrantvista.org</span>
-                                </div>
-                                <div style="padding:14px; flex:1; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(160deg, #281438, #140b1c);">
-                                    <div>
-                                        <div style="font-size:15px; font-weight:800; color:#fff; line-height:1.2;">VibrantVista '25</div>
-                                        <div style="font-size:9px; color:#d8b4e2; margin-top:2px;">Annual Cultural Festival Platform</div>
-                                    </div>
-                                    <div style="background:rgba(255,158,187,0.15); border:1px solid rgba(255,158,187,0.3); padding:6px; border-radius:6px; text-align:center;">
-                                        <div style="font-size:11px; font-weight:700; color:#ff9ebb; font-family:'Space Mono', monospace;">03d : 14h : 22m</div>
-                                        <div style="font-size:8px; color:#e2b4d4;">Live Countdown to Fest</div>
-                                    </div>
-                                    <div style="font-size:9.5px; color:#cbd5e1; line-height:1.3;">
-                                        • Dynamic Artist Lineups<br>
-                                        • Live Pass Registration<br>
-                                        • Interactive Event Matrix
-                                    </div>
-                                    <a href="https://vibrantvista-culturalfest.web.app" target="_blank" rel="noopener" style="background:#ff9ebb; color:#17121c; text-decoration:none; font-size:10px; font-weight:700; padding:6px 12px; border-radius:5px; text-align:center;">Visit Fest Website ↗</a>
-                                </div>
+                    <div class="appbody" style="padding:0; gap:0; display:flex; flex-direction:column; overflow:hidden; flex:1; min-height:0; background:#080b12;">
+                        <!-- Tab switcher between the two CMS websites -->
+                        <div style="background:#131824; border-bottom:1px solid rgba(255,255,255,0.08); padding:8px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; flex:none;">
+                            <div style="display:flex; gap:6px;">
+                                <button type="button" id="cms-tab-vv" onclick="switchCmsTab('vv')" style="background:#ff9ebb; color:#17121c; border:none; padding:4px 10px; border-radius:5px; font-family:'Space Mono', monospace; font-size:11px; font-weight:bold; cursor:pointer;">1 VibrantVista Fest</button>
+                                <button type="button" id="cms-tab-ditya" onclick="switchCmsTab('ditya')" style="background:rgba(255,255,255,0.08); color:#cbd5e1; border:1px solid rgba(255,255,255,0.15); padding:4px 10px; border-radius:5px; font-family:'Space Mono', monospace; font-size:11px; cursor:pointer;">2 Ditya Jewellery</button>
                             </div>
-
-                            <!-- Site 2: Ditya Jewellery E-Commerce -->
-                            <div style="background:#0f1813; border:1px solid #233b2c; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">
-                                <div style="background:#17261d; padding:6px 10px; display:flex; align-items:center; gap:6px; border-bottom:1px solid rgba(255,255,255,0.08);">
-                                    <span style="width:6px; height:6px; border-radius:50%; background:#ef4444; display:inline-block;"></span>
-                                    <span style="width:6px; height:6px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
-                                    <span style="width:6px; height:6px; border-radius:50%; background:#10b981; display:inline-block;"></span>
-                                    <span style="font-size:9.5px; color:#8fd3c1; font-family:'Space Mono', monospace; margin-left:4px;">dityajewellery.com</span>
-                                </div>
-                                <div style="padding:14px; flex:1; display:flex; flex-direction:column; justify-content:space-between; background:linear-gradient(160deg, #15241b, #0c140f);">
-                                    <div>
-                                        <div style="font-size:15px; font-weight:700; color:#fff; font-family:serif; line-height:1.2;">Ditya Jewellery</div>
-                                        <div style="font-size:9px; color:#88a893; margin-top:2px;">Royal Heritage Handcrafted Gold</div>
-                                    </div>
-                                    <div style="background:rgba(143,211,193,0.1); border:1px solid rgba(143,211,193,0.25); padding:6px; border-radius:6px; text-align:center;">
-                                        <div style="font-size:10px; font-weight:700; color:#8fd3c1; font-family:serif;">HEIRLOOM COLLECTION</div>
-                                        <div style="font-size:8px; color:#94a3b8;">Navratna & Kundan Showcase</div>
-                                    </div>
-                                    <div style="font-size:9.5px; color:#cbd5e1; line-height:1.3;">
-                                        • Editorial Product Grids<br>
-                                        • Direct WhatsApp Concierge<br>
-                                        • Mobile Responsive CMS
-                                    </div>
-                                    <a href="https://dityajewellery.web.app" target="_blank" rel="noopener" style="background:#8fd3c1; color:#17121c; text-decoration:none; font-size:10px; font-weight:700; padding:6px 12px; border-radius:5px; text-align:center;">View Collection ↗</a>
-                                </div>
+                            <div id="cms-url-vv" style="background:#0b0f19; padding:4px 10px; border-radius:6px; font-size:11px; color:#ff9ebb; font-family:'Space Mono', monospace; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid rgba(255,255,255,0.06);">
+                                🔒 https://vibrantvista-culturalfest.web.app
+                            </div>
+                            <div id="cms-url-ditya" style="background:#0b0f19; padding:4px 10px; border-radius:6px; font-size:11px; color:#8fd3c1; font-family:'Space Mono', monospace; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid rgba(255,255,255,0.06); display:none;">
+                                🔒 https://dityajewellery.web.app
+                            </div>
+                            <div style="display:flex; gap:6px;">
+                                <a id="cms-link-vv" href="https://vibrantvista-culturalfest.web.app" target="_blank" rel="noopener" style="font-size:11px; color:#ff9ebb; text-decoration:none; background:rgba(255,158,187,0.12); border:1px solid rgba(255,158,187,0.3); padding:3px 8px; border-radius:4px; font-family:'Space Mono', monospace; font-weight:bold;">Open ↗</a>
+                                <a id="cms-link-ditya" href="https://dityajewellery.web.app" target="_blank" rel="noopener" style="font-size:11px; color:#8fd3c1; text-decoration:none; background:rgba(143,211,193,0.12); border:1px solid rgba(143,211,193,0.3); padding:3px 8px; border-radius:4px; font-family:'Space Mono', monospace; font-weight:bold; display:none;">Open ↗</a>
                             </div>
                         </div>
-                        <figcaption>Designed and developed CMS websites for different use cases, including a college cultural fest website and a jewellery website, focusing on clear content presentation, visual design, and easy content management.</figcaption>
-                        <div class="case-action-row" style="gap: 10px; flex-wrap: wrap;">
-                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono); margin-right: auto;">Role: Web Designer & CMS Architect</span>
-                            <a href="https://vibrantvista-culturalfest.web.app" target="_blank" rel="noopener" class="btn-case-cta" style="background: linear-gradient(90deg, #ff9ebb, #f0a35e);">VibrantVista Fest ↗</a>
-                            <a href="https://dityajewellery.web.app" target="_blank" rel="noopener" class="btn-case-cta" style="background: linear-gradient(90deg, #8fd3c1, #5fa896);">Ditya Jewellery ↗</a>
+                        <!-- Live Website Iframes -->
+                        <div class="app-visual" style="flex:1; width:100%; height:100%; min-height:0; max-height:none; padding:0; margin:0; background:#080b12; overflow:hidden; position:relative; border-radius:0;">
+                            <iframe id="iframe-vv" src="https://vibrantvista-culturalfest.web.app" title="VibrantVista Cultural Fest" style="width:100%; height:100%; border:none; display:block; background:#1a1024;" allow="fullscreen;"></iframe>
+                            <iframe id="iframe-ditya" src="https://dityajewellery.web.app" title="Ditya Jewellery" style="width:100%; height:100%; border:none; display:none; background:#0f1813;" allow="fullscreen;"></iframe>
+                        </div>
+                        <div class="case-action-row" style="padding:8px 12px; margin:0; background:#0c0e17; border-top:1px solid var(--d-line); flex:none;">
+                            <span style="font-size:11px; color:var(--d-dim); font-family:var(--d-mono);">Role: Web & Visual Designer</span>
+                            <div style="display:flex; gap:8px;">
+                                <a href="https://vibrantvista-culturalfest.web.app" target="_blank" rel="noopener" class="btn-case-cta" style="background:#ff9ebb; color:#17121c;">VibrantVista ↗</a>
+                                <a href="https://dityajewellery.web.app" target="_blank" rel="noopener" class="btn-case-cta" style="background:#8fd3c1; color:#17121c;">Ditya Jewellery ↗</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1709,63 +1687,36 @@
 
                         <!-- CASE 4: Ultramind.in Official Website -->
             <article class="case" id="case-ultramind" hidden>
-                <div class="win app">
+                <div class="win app" style="display:flex; flex-direction:column; overflow:hidden;">
                     <div class="t">
-                        <b>Ultramind.in Official Website</b>
+                        <b>ultramind.in</b>&nbsp;— Official Corporate Website
                         <span class="btns">
                             <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
                             <button type="button" tabindex="-1" aria-hidden="true">□</button>
                             <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
                         </span>
                     </div>
-                    <div class="appbody">
-                        <h3>Ultramind.in Official Website</h3>
-                        <p class="tagline">Official Corporate Platform · Visual & Interaction Design</p>
-                        <div class="app-visual" style="padding:0; background:#080b12; overflow:hidden; display:flex; flex-direction:column;">
-                            <!-- Realistic Ultramind Browser Window UI -->
-                            <div style="background:#131824; border-bottom:1px solid rgba(255,255,255,0.08); padding:8px 14px; display:flex; align-items:center; gap:10px;">
-                                <div style="display:flex; gap:5px;">
-                                    <span style="width:8px; height:8px; border-radius:50%; background:#ef4444; display:inline-block;"></span>
-                                    <span style="width:8px; height:8px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
-                                    <span style="width:8px; height:8px; border-radius:50%; background:#10b981; display:inline-block;"></span>
-                                </div>
-                                <div style="background:#0b0f19; padding:4px 12px; border-radius:6px; font-size:10px; color:#8fd3c1; font-family:'Space Mono', monospace; flex:1; max-width:320px;">
-                                    🔒 https://ultramind.in
-                                </div>
+                    <div class="appbody" style="padding:0; gap:0; display:flex; flex-direction:column; overflow:hidden; flex:1; min-height:0; background:#080b12;">
+                        <!-- Browser URL Bar -->
+                        <div style="background:#131824; border-bottom:1px solid rgba(255,255,255,0.08); padding:8px 12px; display:flex; align-items:center; gap:8px; flex:none;">
+                            <div style="display:flex; gap:5px;">
+                                <span style="width:9px; height:9px; border-radius:50%; background:#ef4444; display:inline-block;"></span>
+                                <span style="width:9px; height:9px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
+                                <span style="width:9px; height:9px; border-radius:50%; background:#10b981; display:inline-block;"></span>
                             </div>
-                            <div style="flex:1; padding:20px; background:radial-gradient(ellipse at 80% 20%, rgba(143,211,193,0.12), transparent 70%), #0a0d16; display:flex; flex-direction:column; justify-content:space-between;">
-                                <div style="display:flex; justify-content:space-between; align-items:center;">
-                                    <span style="font-weight:900; font-size:16px; color:#fff; letter-spacing:0.04em;">⚡ ULTRAMIND</span>
-                                    <div style="display:flex; gap:12px; font-size:11px; color:#94a3b8;">
-                                        <span>AI Systems</span>
-                                        <span>Products</span>
-                                        <span>Enterprise</span>
-                                    </div>
-                                    <span style="background:rgba(255,158,187,0.15); border:1px solid #ff9ebb; color:#ff9ebb; padding:3px 10px; border-radius:100px; font-size:10px; font-weight:700;">App Store ✓</span>
-                                </div>
-                                <div style="margin:16px 0;">
-                                    <div style="font-size:22px; font-weight:800; color:#fff; line-height:1.2; letter-spacing:-0.02em;">
-                                        Architecting Intelligent <span style="background:linear-gradient(90deg, #8fd3c1, #ff9ebb); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">Product Experiences</span>
-                                    </div>
-                                    <div style="font-size:11.5px; color:#94a3b8; margin-top:6px; max-width:440px; line-height:1.4;">
-                                        Designed the official Ultramind website and mobile product ecosystem, connecting generative LLM workflows with intuitive human interfaces.
-                                    </div>
-                                </div>
-                                <div style="display:flex; gap:10px; align-items:center;">
-                                    <div style="background:#131a29; border:1px solid #23304a; padding:8px 12px; border-radius:8px; font-size:10.5px; color:#e2e8f0; display:flex; align-items:center; gap:8px;">
-                                        <span style="width:6px; height:6px; border-radius:50%; background:#10b981;"></span>
-                                        <span>iOS Application Featured on App Store</span>
-                                    </div>
-                                    <div style="background:#131a29; border:1px solid #23304a; padding:8px 12px; border-radius:8px; font-size:10.5px; color:#8fd3c1;">
-                                        4.9 ★ Rating
-                                    </div>
-                                </div>
+                            <div style="background:#0b0f19; padding:5px 12px; border-radius:6px; font-size:11.5px; color:#8fd3c1; font-family:'Space Mono', monospace; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:6px;">
+                                <span>🔒</span>
+                                <span>https://ultramind.in</span>
                             </div>
+                            <a href="https://ultramind.in" target="_blank" rel="noopener" style="font-size:11px; color:#ff9ebb; text-decoration:none; background:rgba(255,158,187,0.12); border:1px solid rgba(255,158,187,0.3); padding:4px 10px; border-radius:5px; font-family:'Space Mono', monospace; white-space:nowrap; font-weight:bold;">Open ↗</a>
                         </div>
-                        <figcaption>Designed the official Ultramind website and maintained consistency in structure, usability, and visual quality across product and web experiences.</figcaption>
-                        <div class="case-action-row">
-                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Product Designer @ UltraMind</span>
-                            <a href="https://ultramind.in" target="_blank" rel="noopener" class="btn-case-cta" style="background: linear-gradient(90deg, #8fd3c1, #ff9ebb);">Visit ultramind.in ↗</a>
+                        <!-- Live Website Iframe -->
+                        <div class="app-visual" style="flex:1; width:100%; height:100%; min-height:0; max-height:none; padding:0; margin:0; background:#080b12; overflow:hidden; border-radius:0;">
+                            <iframe src="https://ultramind.in" title="Ultramind.in Official Website" style="width:100%; height:100%; border:none; display:block; background:#080b12;" allow="fullscreen; clipboard-read; clipboard-write;"></iframe>
+                        </div>
+                        <div class="case-action-row" style="padding:8px 12px; margin:0; background:#0c0e17; border-top:1px solid var(--d-line); flex:none;">
+                            <span style="font-size:11px; color:var(--d-dim); font-family:var(--d-mono);">Role: Lead Product Designer @ UltraMind</span>
+                            <a href="https://ultramind.in" target="_blank" rel="noopener" class="btn-case-cta" style="background:linear-gradient(90deg, #8fd3c1, #ff9ebb);">Visit ultramind.in ↗</a>
                         </div>
                     </div>
                 </div>
@@ -1805,25 +1756,36 @@
 
 <!-- CASE 4: Svelty Website -->
             <article class="case" id="case-svelty-website" hidden>
-                <div class="win app">
+                <div class="win app" style="display:flex; flex-direction:column; overflow:hidden;">
                     <div class="t">
-                        <b>Svelty Website</b>
+                        <b>svelty.in</b>&nbsp;— Agency Website
                         <span class="btns">
                             <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
                             <button type="button" tabindex="-1" aria-hidden="true">□</button>
                             <button type="button" data-back class="x" aria-label="Close, back to all projects">×</button>
                         </span>
                     </div>
-                    <div class="appbody">
-                        <h3>Svelty Website</h3>
-                        <p class="tagline">Agency Website · Marketing & Conversions</p>
-                        <div class="app-visual" style="padding:0; background:#000; overflow:hidden;">
-                            <img src="svelty_website_preview.png" alt="Svelty Official Website" class="project-mockup-img" style="width:100%; height:100%; max-height:380px; object-fit:cover; object-position:top center; display:block; border-radius:8px;">
+                    <div class="appbody" style="padding:0; gap:0; display:flex; flex-direction:column; overflow:hidden; flex:1; min-height:0; background:#000;">
+                        <!-- Browser URL Bar -->
+                        <div style="background:#131824; border-bottom:1px solid rgba(255,255,255,0.08); padding:8px 12px; display:flex; align-items:center; gap:8px; flex:none;">
+                            <div style="display:flex; gap:5px;">
+                                <span style="width:9px; height:9px; border-radius:50%; background:#ef4444; display:inline-block;"></span>
+                                <span style="width:9px; height:9px; border-radius:50%; background:#f59e0b; display:inline-block;"></span>
+                                <span style="width:9px; height:9px; border-radius:50%; background:#10b981; display:inline-block;"></span>
+                            </div>
+                            <div style="background:#0b0f19; padding:5px 12px; border-radius:6px; font-size:11.5px; color:#8fd3c1; font-family:'Space Mono', monospace; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:6px;">
+                                <span>🔒</span>
+                                <span>https://svelty.in</span>
+                            </div>
+                            <a href="https://svelty.in" target="_blank" rel="noopener" style="font-size:11px; color:#ff9ebb; text-decoration:none; background:rgba(255,158,187,0.12); border:1px solid rgba(255,158,187,0.3); padding:4px 10px; border-radius:5px; font-family:'Space Mono', monospace; white-space:nowrap; font-weight:bold;">Open ↗</a>
                         </div>
-                        <figcaption>Designed and developed the Svelty Marketing Agency website to capture users' attention and encourage more conversions.</figcaption>
-                        <div class="case-action-row">
-                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Lead Digital Product Designer</span>
-                            <a href="https://svelty.in" target="_blank" rel="noopener" class="btn-case-cta">Visit Svelty Website ↗</a>
+                        <!-- Official Website Visual -->
+                        <div class="app-visual" style="flex:1; width:100%; height:100%; min-height:0; max-height:none; padding:0; margin:0; background:#000; overflow:hidden; border-radius:0;">
+                            <img src="svelty_website_preview.png" alt="Svelty Official Website" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
+                        </div>
+                        <div class="case-action-row" style="padding:8px 12px; margin:0; background:#0c0e17; border-top:1px solid var(--d-line); flex:none;">
+                            <span style="font-size:11px; color:var(--d-dim); font-family:var(--d-mono);">Role: Lead Website Designer & Developer</span>
+                            <a href="https://svelty.in" target="_blank" rel="noopener" class="btn-case-cta">Visit svelty.in ↗</a>
                         </div>
                     </div>
                 </div>
@@ -3342,8 +3304,8 @@
             {
                 id: 3,
                 name: 'Projects (27" Desktop Monitor)',
-                cameraPos: [0.75, 2.65, -0.50],
-                cameraTarget: [0.774, 2.70, 2.125],
+                cameraPos: [0.774, 2.70, 0.16],
+                cameraTarget: [0.774, 2.70, 2.124],
                 fov: 40.0,
                 cupboardOpen: false,
                 hint: 'Click carousel buttons on 27" monitor to view projects'
@@ -3475,6 +3437,38 @@
         // ---------------- PROJECTS MONITOR DESK (RAO MUHAMMAD HAMZA DESKTOP INTERACTION) ----------------
         let activeProjectSlug = '';
 
+        
+        function switchCmsTab(which) {
+            const tabVv = document.getElementById('cms-tab-vv');
+            const tabDitya = document.getElementById('cms-tab-ditya');
+            const ifrVv = document.getElementById('iframe-vv');
+            const ifrDitya = document.getElementById('iframe-ditya');
+            const urlVv = document.getElementById('cms-url-vv');
+            const urlDitya = document.getElementById('cms-url-ditya');
+            const linkVv = document.getElementById('cms-link-vv');
+            const linkDitya = document.getElementById('cms-link-ditya');
+
+            if (which === 'vv') {
+                if (tabVv) { tabVv.style.background = '#ff9ebb'; tabVv.style.color = '#17121c'; tabVv.style.fontWeight = 'bold'; }
+                if (tabDitya) { tabDitya.style.background = 'rgba(255,255,255,0.08)'; tabDitya.style.color = '#cbd5e1'; tabDitya.style.fontWeight = 'normal'; }
+                if (ifrVv) ifrVv.style.display = 'block';
+                if (ifrDitya) ifrDitya.style.display = 'none';
+                if (urlVv) urlVv.style.display = 'block';
+                if (urlDitya) urlDitya.style.display = 'none';
+                if (linkVv) linkVv.style.display = 'block';
+                if (linkDitya) linkDitya.style.display = 'none';
+            } else {
+                if (tabVv) { tabVv.style.background = 'rgba(255,255,255,0.08)'; tabVv.style.color = '#cbd5e1'; tabVv.style.fontWeight = 'normal'; }
+                if (tabDitya) { tabDitya.style.background = '#8fd3c1'; tabDitya.style.color = '#17121c'; tabDitya.style.fontWeight = 'bold'; }
+                if (ifrVv) ifrVv.style.display = 'none';
+                if (ifrDitya) ifrDitya.style.display = 'block';
+                if (urlVv) urlVv.style.display = 'none';
+                if (urlDitya) urlDitya.style.display = 'block';
+                if (linkVv) linkVv.style.display = 'none';
+                if (linkDitya) linkDitya.style.display = 'block';
+            }
+        }
+
         function showProject(slug) {
             activeProjectSlug = slug;
             const surface = document.getElementById('projects-monitor-surface');
@@ -3520,37 +3514,52 @@
 
             // Only perform 3D projection if on desktop (width > 900)
             if (window.innerWidth <= 900) {
-                surface.style.left = '';
-                surface.style.top = '';
-                surface.style.width = '';
-                surface.style.height = '';
-                surface.style.transform = '';
+                surface.style.left = '50%';
+                surface.style.top = '50%';
+                surface.style.width = 'min(94vw, 500px)';
+                surface.style.height = 'min(80vh, 600px)';
+                surface.style.transform = 'translate(-50%, -50%)';
                 return;
             }
+
+            monitorScreenMesh.updateMatrixWorld(true);
+            camera.updateMatrixWorld(true);
 
             const halfW = 1.605 / 2;
             const halfH = 0.960 / 2;
             const meshMat = monitorScreenMesh.matrixWorld;
 
-            const pTL = new THREE.Vector3(-halfW, halfH, 0).applyMatrix4(meshMat).project(camera);
-            const pBR = new THREE.Vector3(halfW, -halfH, 0).applyMatrix4(meshMat).project(camera);
+            const corners = [
+                new THREE.Vector3(-halfW,  halfH, 0).applyMatrix4(meshMat).project(camera),
+                new THREE.Vector3( halfW,  halfH, 0).applyMatrix4(meshMat).project(camera),
+                new THREE.Vector3(-halfW, -halfH, 0).applyMatrix4(meshMat).project(camera),
+                new THREE.Vector3( halfW, -halfH, 0).applyMatrix4(meshMat).project(camera)
+            ];
 
-            if (pTL.z < 1 && pBR.z < 1) {
-                const x1 = (pTL.x * 0.5 + 0.5) * window.innerWidth;
-                const y1 = (-pTL.y * 0.5 + 0.5) * window.innerHeight;
-                const x2 = (pBR.x * 0.5 + 0.5) * window.innerWidth;
-                const y2 = (-pBR.y * 0.5 + 0.5) * window.innerHeight;
+            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+            let allValid = true;
+            for (const c of corners) {
+                if (c.z > 1 || isNaN(c.x) || isNaN(c.y)) {
+                    allValid = false;
+                    break;
+                }
+                const sx = (c.x * 0.5 + 0.5) * window.innerWidth;
+                const sy = (-c.y * 0.5 + 0.5) * window.innerHeight;
+                minX = Math.min(minX, sx);
+                maxX = Math.max(maxX, sx);
+                minY = Math.min(minY, sy);
+                maxY = Math.max(maxY, sy);
+            }
 
-                const left = Math.min(x1, x2);
-                const top = Math.min(y1, y2);
-                const width = Math.abs(x2 - x1);
-                const height = Math.abs(y2 - y1);
-
-                if (width > 350 && height > 220) {
-                    surface.style.left = Math.round(left) + 'px';
-                    surface.style.top = Math.round(top) + 'px';
-                    surface.style.width = Math.round(width) + 'px';
-                    surface.style.height = Math.round(height) + 'px';
+            if (allValid) {
+                const w = maxX - minX;
+                const h = maxY - minY;
+                if (w > 300 && h > 180) {
+                    // Sits cleanly inside the 3D monitor frame
+                    surface.style.left = (Math.round(minX) + 4) + 'px';
+                    surface.style.top = (Math.round(minY) + 4) + 'px';
+                    surface.style.width = (Math.round(w) - 8) + 'px';
+                    surface.style.height = (Math.round(h) - 8) + 'px';
                     surface.style.transform = 'none';
                     return;
                 }
@@ -3558,9 +3567,9 @@
 
             // Fallback centered
             surface.style.left = '50%';
-            surface.style.top = 'calc(50% - 14px)';
-            surface.style.width = 'min(1360px, calc(100vw - 120px))';
-            surface.style.height = 'min(780px, calc(100vh - 160px))';
+            surface.style.top = '50%';
+            surface.style.width = 'min(73vw, 1100px)';
+            surface.style.height = 'min(67vh, 700px)';
             surface.style.transform = 'translate(-50%, -50%)';
         }
 
