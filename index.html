@@ -331,6 +331,24 @@
 
         /* ---------------- SECTION 3: PROJECTS MONITOR DESK (RAO MUHAMMAD HAMZA DESKTOP OS) ---------------- */
         #projects-monitor-surface, .projects-monitor-surface { display: none !important; }
+        .live-monitor-preview {
+            position: fixed;
+            z-index: 40;
+            display: none;
+            opacity: 0;
+            pointer-events: none;
+            border-radius: 0 0 10px 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            transition: opacity 0.2s ease;
+            background: #0d0d15;
+        }
+        .live-monitor-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
         .surface.desk {
             --d-surf: #161622;
             --d-surf2: #1e1e2d;
@@ -1301,6 +1319,7 @@
     </section>
 
     <!-- ---------------- SECTION 3: PROJECTS MONITOR DESK (RAOMUHAMMADHAMZA STYLE DESKTOP OS) ---------------- -->
+    <div id="live-monitor-preview" class="live-monitor-preview" aria-label="Live Project Website"></div>
     <section class="surface desk projects-monitor-surface" id="projects-monitor-surface" aria-label="Projects">
         <!-- Desktop Top Bar -->
         <div class="dbar">
@@ -2131,6 +2150,18 @@
         controls.maxPolarAngle = Math.PI / 2 + 0.15;
         controls.enabled = true;
 
+        controls.addEventListener('start', () => {
+            isPointerDragging = true;
+            const el = document.getElementById('live-monitor-preview');
+            if (el) {
+                el.style.opacity = '0';
+                el.style.pointerEvents = 'none';
+            }
+        });
+        controls.addEventListener('end', () => {
+            setTimeout(() => { isPointerDragging = false; }, 150);
+        });
+
         controls.mouseButtons = {
             LEFT: THREE.MOUSE.ROTATE,
             MIDDLE: THREE.MOUSE.ROTATE,
@@ -2573,6 +2604,26 @@
             drawMonitorScreen();
         }
 
+        function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
+            if (!text) return y;
+            const words = text.split(' ');
+            let line = '';
+            let curY = y;
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > maxWidth && n > 0) {
+                    ctx.fillText(line, x, curY);
+                    line = words[n] + ' ';
+                    curY += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, x, curY);
+            return curY + lineHeight;
+        }
+
         // Draw In-Scene 3D 27" Desktop Monitor OS
         function drawMonitorScreen() {
             if (!monitorCtx) return;
@@ -2645,10 +2696,10 @@
                 // Left Window Title Bar
                 ctx.fillStyle = '#1e1e2d';
                 ctx.beginPath(); ctx.roundRect(16, 78, 1140, 44, [12, 12, 0, 0]); ctx.fill();
-                ctx.fillStyle = '#f0eaf6';
-                ctx.font = 'bold 15px "Space Mono", monospace';
+                ctx.fillStyle = '#8fd3c1';
+                ctx.font = 'bold 13px "Space Mono", monospace';
                 ctx.textAlign = 'left';
-                ctx.fillText(p.title, 36, 106);
+                ctx.fillText('browser · ' + p.link, 36, 106);
 
                 // Window Control buttons on right of left window
                 ctx.fillStyle = '#3b3b50';
@@ -2661,83 +2712,55 @@
                 ctx.textAlign = 'center';
                 ctx.fillText('×', 1140 - 20, 104);
 
-                // App Header Content
-                ctx.fillStyle = '#f0eaf6';
-                ctx.font = 'bold 30px "Montserrat", sans-serif';
-                ctx.textAlign = 'left';
-                ctx.fillText(p.title, 48, 160);
-                ctx.fillStyle = '#ff9ebb';
-                ctx.font = 'bold 16px "Space Mono", monospace';
-                ctx.fillText(p.subtitle, 48, 192);
-
-                // Mockup / Preview Container
-                const mockX = 48, mockY = 215, mockW = 1076, mockH = 695;
+                // Mockup / Preview Container: Starts directly below title bar!
+                const mockX = 32, mockY = 136, mockW = 1108, mockH = 775;
                 ctx.fillStyle = '#0a0a10';
                 ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, mockH, 10); ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.stroke();
 
-                // Project-Specific Visual Rendering
+                // Browser Bar
+                ctx.fillStyle = '#131824';
+                ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, 40, [10, 10, 0, 0]); ctx.fill();
+                // Dots
+                ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(mockX + 20, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(mockX + 35, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 50, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
+                // URL Address Box
+                ctx.fillStyle = '#0b0f19';
+                ctx.beginPath(); ctx.roundRect(mockX + 70, mockY + 8, Math.min(mockW - 220, 520), 24, 5); ctx.fill();
+                ctx.fillStyle = '#8fd3c1';
+                ctx.font = '12px "Space Mono", monospace';
+                ctx.textAlign = 'left';
+                ctx.fillText('🔒 ' + p.link, mockX + 85, mockY + 24);
+
+                // Open Live Site Badge
+                ctx.fillStyle = 'rgba(255, 158, 187, 0.15)';
+                ctx.beginPath(); ctx.roundRect(mockX + mockW - 120, mockY + 8, 105, 24, 4); ctx.fill();
+                ctx.fillStyle = '#ff9ebb';
+                ctx.font = 'bold 11px "Space Mono", monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('Open Live ↗', mockX + mockW - 68, mockY + 24);
+
+                // Preview Area Inside Browser Frame
+                const prevX = mockX, prevY = mockY + 40, prevW = mockW, prevH = mockH - 40;
                 if (p.id === 'ultramind') {
-                    // Browser Bar
-                    ctx.fillStyle = '#131824';
-                    ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, 40, [10, 10, 0, 0]); ctx.fill();
-                    // Dots
-                    ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(mockX + 20, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                    ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(mockX + 35, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                    ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 50, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                    // URL Box
-                    ctx.fillStyle = '#0b0f19';
-                    ctx.beginPath(); ctx.roundRect(mockX + 70, mockY + 8, 380, 24, 5); ctx.fill();
-                    ctx.fillStyle = '#8fd3c1';
-                    ctx.font = '12px "Space Mono", monospace';
-                    ctx.fillText('🔒 https://ultramind.life', mockX + 85, mockY + 24);
-
-                    // Open Live Site Badge
-                    ctx.fillStyle = 'rgba(255, 158, 187, 0.15)';
-                    ctx.beginPath(); ctx.roundRect(mockX + mockW - 120, mockY + 8, 105, 24, 4); ctx.fill();
-                    ctx.fillStyle = '#ff9ebb';
-                    ctx.font = 'bold 11px "Space Mono", monospace';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('Open Live ↗', mockX + mockW - 68, mockY + 24);
-
-                    // Live Fetched Website Image
                     const img = monitorImages['ultramind'];
                     if (img.complete && img.naturalWidth > 0) {
                         ctx.save();
                         ctx.beginPath();
-                        ctx.roundRect(mockX, mockY + 40, mockW, mockH - 40, [0, 0, 10, 10]);
+                        ctx.roundRect(prevX, prevY, prevW, prevH, [0, 0, 10, 10]);
                         ctx.clip();
-                        ctx.drawImage(img, mockX, mockY + 40, mockW, mockH - 40);
+                        ctx.drawImage(img, prevX, prevY, prevW, prevH);
                         ctx.restore();
                     }
                 } else if (p.id === 'svelty-website') {
-                    // Browser Bar
-                    ctx.fillStyle = '#131824';
-                    ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, 40, [10, 10, 0, 0]); ctx.fill();
-                    ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(mockX + 20, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                    ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(mockX + 35, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                    ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 50, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                    ctx.fillStyle = '#0b0f19';
-                    ctx.beginPath(); ctx.roundRect(mockX + 70, mockY + 8, 380, 24, 5); ctx.fill();
-                    ctx.fillStyle = '#ff9ebb';
-                    ctx.font = '12px "Space Mono", monospace';
-                    ctx.textAlign = 'left';
-                    ctx.fillText('🔒 https://svelty.in', mockX + 85, mockY + 24);
-
-                    ctx.fillStyle = 'rgba(255, 158, 187, 0.15)';
-                    ctx.beginPath(); ctx.roundRect(mockX + mockW - 120, mockY + 8, 105, 24, 4); ctx.fill();
-                    ctx.fillStyle = '#ff9ebb';
-                    ctx.font = 'bold 11px "Space Mono", monospace';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('Open Live ↗', mockX + mockW - 68, mockY + 24);
-
                     const img = monitorImages['svelty-website'];
                     if (img.complete && img.naturalWidth > 0) {
                         ctx.save();
                         ctx.beginPath();
-                        ctx.roundRect(mockX, mockY + 40, mockW, mockH - 40, [0, 0, 10, 10]);
+                        ctx.roundRect(prevX, prevY, prevW, prevH, [0, 0, 10, 10]);
                         ctx.clip();
-                        ctx.drawImage(img, mockX, mockY + 40, mockW, mockH - 40);
+                        ctx.drawImage(img, prevX, prevY, prevW, prevH);
                         ctx.restore();
                     }
                 } else if (p.id === 'campus-connect') {
@@ -2745,76 +2768,76 @@
                     if (img.complete && img.naturalWidth > 0) {
                         ctx.save();
                         ctx.beginPath();
-                        ctx.roundRect(mockX, mockY, mockW, mockH, 10);
+                        ctx.roundRect(prevX, prevY, prevW, prevH, [0, 0, 10, 10]);
                         ctx.clip();
-                        ctx.drawImage(img, mockX, mockY, mockW, mockH);
+                        ctx.drawImage(img, prevX, prevY, prevW, prevH);
                         ctx.restore();
                     }
                 } else if (p.id === 'cms-websites') {
                     // Dual CMS Websites
-                    const halfW = (mockW - 20) / 2;
+                    const halfW = (prevW - 16) / 2;
                     // Site 1: VibrantVista
                     ctx.fillStyle = '#1e1026';
-                    ctx.beginPath(); ctx.roundRect(mockX + 6, mockY + 10, halfW, mockH - 20, 8); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX + 4, prevY + 6, halfW, prevH - 12, 8); ctx.fill();
                     ctx.strokeStyle = '#3d2354'; ctx.stroke();
                     ctx.fillStyle = '#261436';
-                    ctx.beginPath(); ctx.roundRect(mockX + 6, mockY + 10, halfW, 36, [8, 8, 0, 0]); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX + 4, prevY + 6, halfW, 36, [8, 8, 0, 0]); ctx.fill();
                     ctx.fillStyle = '#ff9ebb'; ctx.font = 'bold 12px "Space Mono", monospace'; ctx.textAlign = 'left';
-                    ctx.fillText('vibrantvista.org', mockX + 20, mockY + 33);
-                    ctx.fillStyle = '#fff'; ctx.font = 'bold 22px "Montserrat", sans-serif';
-                    ctx.fillText("VibrantVista '25", mockX + 24, mockY + 90);
-                    ctx.fillStyle = '#d8b4e2'; ctx.font = '13px sans-serif';
-                    ctx.fillText('Cultural Festival Platform', mockX + 24, mockY + 115);
+                    ctx.fillText('vibrantvista-culturalfest.web.app', prevX + 16, prevY + 28);
+                    ctx.fillStyle = '#fff'; ctx.font = 'bold 24px "Montserrat", sans-serif';
+                    ctx.fillText("VibrantVista '25", prevX + 24, prevY + 90);
+                    ctx.fillStyle = '#d8b4e2'; ctx.font = '14px sans-serif';
+                    ctx.fillText('Cultural Festival Platform', prevX + 24, prevY + 120);
                     ctx.fillStyle = '#ff9ebb';
-                    ctx.beginPath(); ctx.roundRect(mockX + 24, mockY + 140, 180, 44, 6); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX + 24, prevY + 150, 190, 44, 6); ctx.fill();
                     ctx.fillStyle = '#17121c'; ctx.font = 'bold 16px "Space Mono", monospace';
-                    ctx.fillText('03d : 14h : 22m', mockX + 40, mockY + 168);
+                    ctx.fillText('03d : 14h : 22m', prevX + 40, prevY + 178);
 
                     // Site 2: Ditya Jewellery
                     ctx.fillStyle = '#0f1813';
-                    ctx.beginPath(); ctx.roundRect(mockX + 14 + halfW, mockY + 10, halfW, mockH - 20, 8); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX + 12 + halfW, prevY + 6, halfW, prevH - 12, 8); ctx.fill();
                     ctx.strokeStyle = '#233b2c'; ctx.stroke();
                     ctx.fillStyle = '#17261d';
-                    ctx.beginPath(); ctx.roundRect(mockX + 14 + halfW, mockY + 10, halfW, 36, [8, 8, 0, 0]); ctx.fill();
+                    ctx.beginPath(); ctx.roundRect(prevX + 12 + halfW, prevY + 6, halfW, 36, [8, 8, 0, 0]); ctx.fill();
                     ctx.fillStyle = '#8fd3c1'; ctx.font = 'bold 12px "Space Mono", monospace';
-                    ctx.fillText('dityajewellery.com', mockX + 28 + halfW, mockY + 33);
-                    ctx.fillStyle = '#fff'; ctx.font = 'bold 22px serif';
-                    ctx.fillText('Ditya Jewellery', mockX + 32 + halfW, mockY + 90);
-                    ctx.fillStyle = '#88a893'; ctx.font = '13px sans-serif';
-                    ctx.fillText('Royal Heritage Handcrafted Gold', mockX + 32 + halfW, mockY + 115);
+                    ctx.fillText('dityajewellery.web.app', prevX + 24 + halfW, prevY + 28);
+                    ctx.fillStyle = '#fff'; ctx.font = 'bold 24px serif';
+                    ctx.fillText('Ditya Jewellery', prevX + 32 + halfW, prevY + 90);
+                    ctx.fillStyle = '#88a893'; ctx.font = '14px sans-serif';
+                    ctx.fillText('Royal Heritage Handcrafted Gold', prevX + 32 + halfW, prevY + 120);
                 } else {
                     // Generic Mockup / Preview
                     ctx.fillStyle = '#8fd3c1';
                     ctx.font = 'bold 24px "Space Mono", monospace';
                     ctx.textAlign = 'center';
-                    ctx.fillText(p.title + ' · Interactive Prototype', mockX + mockW / 2, mockY + mockH / 2 - 20);
+                    ctx.fillText(p.title + ' · Interactive Prototype', prevX + prevW / 2, prevY + prevH / 2 - 20);
                     ctx.fillStyle = '#928b9e';
                     ctx.font = '16px "Montserrat", sans-serif';
-                    ctx.fillText(p.desc, mockX + mockW / 2, mockY + mockH / 2 + 25);
+                    ctx.fillText(p.subtitle, prevX + prevW / 2, prevY + prevH / 2 + 25);
                 }
 
                 // Bottom Action Buttons Row
                 const btnY = 930;
                 // 1. Visit Live Project Button
-                const btnGrad = ctx.createLinearGradient(48, btnY, 340, btnY + 54);
+                const btnGrad = ctx.createLinearGradient(32, btnY, 32 + 300, btnY + 54);
                 btnGrad.addColorStop(0, '#ff9ebb');
                 btnGrad.addColorStop(1, '#f0a35e');
                 ctx.fillStyle = btnGrad;
-                ctx.beginPath(); ctx.roundRect(48, btnY, 290, 54, 12); ctx.fill();
+                ctx.beginPath(); ctx.roundRect(32, btnY, 300, 54, 12); ctx.fill();
                 ctx.fillStyle = '#17121c';
                 ctx.font = 'bold 16px "Montserrat", sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('Visit Live Website ↗', 48 + 145, btnY + 33);
+                ctx.fillText('Visit Live Website ↗', 32 + 150, btnY + 33);
 
                 // 2. Back to All Projects Button
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.roundRect(360, btnY, 260, 54, 12); ctx.fill();
+                ctx.beginPath(); ctx.roundRect(350, btnY, 260, 54, 12); ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1; ctx.stroke();
                 ctx.fillStyle = '#f0eaf6';
                 ctx.font = 'bold 15px "Montserrat", sans-serif';
-                ctx.fillText('← Back to All Projects', 360 + 130, btnY + 33);
+                ctx.fillText('← Back to All Projects', 350 + 130, btnY + 33);
 
-                // Right Window (Terminal)
+                // Right Window (Details / Terminal)
                 ctx.fillStyle = '#0b0b12';
                 ctx.beginPath(); ctx.roundRect(1172, 78, 732, 985, 12); ctx.fill();
                 ctx.strokeStyle = '#28283a'; ctx.lineWidth = 2; ctx.stroke();
@@ -2833,40 +2856,70 @@
                 ctx.textAlign = 'center';
                 ctx.fillText('×', 1904 - 20, 104);
 
-                // Monospace Terminal Text
-                let termY = 165;
+                // Monospace Terminal Text on Right
+                let termY = 160;
                 ctx.textAlign = 'left';
+
+                // 1. Project Title (Prominent & bold on the right side)
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 26px "Montserrat", sans-serif';
+                ctx.fillText(p.title, 1200, termY);
+                termY += 34;
+
+                // 2. Subtitle / Pitch (Pink badge on the right side)
+                ctx.fillStyle = '#ff9ebb';
+                ctx.font = 'bold 14px "Space Mono", monospace';
+                ctx.fillText(p.subtitle, 1200, termY);
+                termY += 24;
+
+                // Divider line
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(1200, termY); ctx.lineTo(1870, termY); ctx.stroke();
+                termY += 32;
+
+                // 3. Command prompt
                 ctx.fillStyle = '#8fd3c1';
-                ctx.font = '15px "Space Mono", monospace';
-                ctx.fillText('~/projects/' + p.id + ' $ glow README.md', 1200, termY);
-                termY += 40;
-
-                ctx.fillStyle = '#ff9ebb';
-                ctx.font = 'bold 17px "Space Mono", monospace';
-                ctx.fillText('== Why I built it', 1200, termY);
-                termY += 28;
-                ctx.fillStyle = '#c4bcd0';
                 ctx.font = '14.5px "Space Mono", monospace';
-                ctx.fillText(p.desc, 1200, termY, 680);
-                termY += 55;
+                ctx.fillText('~/projects/' + p.id + ' $ glow README.md', 1200, termY);
+                termY += 38;
 
+                // 4. "== Why I built it"
                 ctx.fillStyle = '#ff9ebb';
-                ctx.font = 'bold 17px "Space Mono", monospace';
+                ctx.font = 'bold 16px "Space Mono", monospace';
+                ctx.fillText('== Why I built it', 1200, termY);
+                termY += 26;
+
+                // 5. Word-wrapped Description (100% readable!)
+                ctx.fillStyle = '#e5dfea';
+                ctx.font = '15.5px "Montserrat", sans-serif';
+                termY = drawWrappedText(ctx, p.desc, 1200, termY, 670, 25);
+                termY += 20;
+
+                // 6. "== Key Highlights"
+                ctx.fillStyle = '#ff9ebb';
+                ctx.font = 'bold 16px "Space Mono", monospace';
                 ctx.fillText('== Key Highlights', 1200, termY);
-                termY += 28;
+                termY += 26;
                 p.highlights.forEach(h => {
                     ctx.fillStyle = '#f0a35e';
                     ctx.fillText('•', 1205, termY);
-                    ctx.fillStyle = '#d4cddf';
+                    ctx.fillStyle = '#ded8e6';
+                    ctx.font = '14.5px "Space Mono", monospace';
                     ctx.fillText(h, 1225, termY);
                     termY += 26;
                 });
-                termY += 25;
+                termY += 18;
 
+                // 7. Dependencies / Tools
                 ctx.fillStyle = '#8fd3c1';
+                ctx.font = '13.5px "Space Mono", monospace';
                 ctx.fillText('dependencies: ' + JSON.stringify(p.tools), 1200, termY);
-                termY += 35;
+                termY += 30;
+
+                // 8. Live URL
                 ctx.fillStyle = '#f0a35e';
+                ctx.font = 'bold 13.5px "Space Mono", monospace';
                 ctx.fillText('url: ' + p.link + ' ↗', 1200, termY);
 
             } else {
@@ -3679,71 +3732,123 @@
                 showToast('All Projects (0 all)');
             }
             drawMonitorScreen();
+            updateLiveIframeContent(slug);
         }
 
-        function updateMonitorSurfacePosition() {
-            const surface = document.getElementById('projects-monitor-surface');
-            if (!surface || currentSection !== 3 || !monitorScreenMesh) return;
+        function updateLiveIframeContent(slug) {
+            const el = document.getElementById('live-monitor-preview');
+            if (!el) return;
+            if (!slug || currentSection !== 3) {
+                el.innerHTML = '';
+                el.style.display = 'none';
+                el.style.opacity = '0';
+                el.style.pointerEvents = 'none';
+                return;
+            }
+            el.style.display = 'block';
+            if (slug === 'ultramind') {
+                el.innerHTML = '<iframe src="https://ultramind.life" title="UltraMind Official Live Website" allow="fullscreen; autoplay; encrypted-media"></iframe>';
+            } else if (slug === 'svelty-website') {
+                el.innerHTML = '<div style="position:relative; width:100%; height:100%; background:#0a0a0a;">' +
+                    '<iframe src="https://svelty.in" title="Svelty Agency Live Website" style="width:100%; height:100%; border:none; display:block;" allow="fullscreen; autoplay;"></iframe>' +
+                    '<div style="position:absolute; bottom:16px; right:16px; z-index:10; background:rgba(20,20,28,0.9); backdrop-filter:blur(8px); padding:8px 14px; border-radius:8px; border:1px solid rgba(255,158,187,0.3); display:flex; align-items:center; gap:8px;">' +
+                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Live Agency Platform</span>' +
+                    '<a href="https://svelty.in" target="_blank" rel="noopener" style="color:#ff9ebb; font-weight:bold; font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none;">Open svelty.in ↗</a>' +
+                    '</div></div>';
+            } else if (slug === 'campus-connect') {
+                el.innerHTML = '<iframe src="https://www.figma.com/embed?embed_host=astra&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1fP8Vs2twbhbyUbGFq3fOc%2FDRBRAU%3Fnode-id%3D391-108%26starting-point-node-id%3D357%253A77" title="Campus Connect Prototype" allowfullscreen></iframe>';
+            } else if (slug === 'mental-health') {
+                el.innerHTML = '<iframe src="https://www.figma.com/embed?embed_host=astra&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FZRUDuvvkSbTobVS1VpxlX0%2FTask%3Fnode-id%3D46-810" title="Mental Health Prototype" allowfullscreen></iframe>';
+            } else if (slug === 'cms-websites') {
+                el.innerHTML = '<div style="width:100%; height:100%; display:flex; flex-direction:column; background:#120d1c;">' +
+                    '<div style="display:flex; gap:8px; padding:8px 12px; background:#1c142b; border-bottom:1px solid #2d2244;">' +
+                    '<button type="button" id="cms-btn-vv" onclick="switchLiveCms(\'vv\')" style="background:#ff9ebb; color:#17121c; border:none; padding:5px 12px; border-radius:6px; font-family:\'Space Mono\', monospace; font-size:12px; font-weight:bold; cursor:pointer;">1 VibrantVista Fest</button>' +
+                    '<button type="button" id="cms-btn-ditya" onclick="switchLiveCms(\'ditya\')" style="background:#281e3a; color:#c7bdd4; border:none; padding:5px 12px; border-radius:6px; font-family:\'Space Mono\', monospace; font-size:12px; font-weight:bold; cursor:pointer;">2 Ditya Jewellery</button>' +
+                    '</div>' +
+                    '<div style="flex:1; position:relative;">' +
+                    '<iframe id="live-iframe-vv" src="https://vibrantvista-culturalfest.web.app" style="width:100%; height:100%; border:none; display:block; background:#1a1024;"></iframe>' +
+                    '<iframe id="live-iframe-ditya" src="https://dityajewellery.web.app" style="width:100%; height:100%; border:none; display:none; background:#0f1813;"></iframe>' +
+                    '</div></div>';
+            } else {
+                el.innerHTML = '<iframe src="' + projectsData[curProjectIdx].link + '" style="width:100%; height:100%; border:none;" allow="fullscreen"></iframe>';
+            }
+        }
 
-            // Only perform 3D projection if on desktop (width > 900)
-            if (window.innerWidth <= 900) {
-                surface.style.left = '50%';
-                surface.style.top = '50%';
-                surface.style.width = 'min(94vw, 500px)';
-                surface.style.height = 'min(80vh, 600px)';
-                surface.style.transform = 'translate(-50%, -50%)';
+        window.switchLiveCms = function(which) {
+            const ifrVv = document.getElementById('live-iframe-vv');
+            const ifrDitya = document.getElementById('live-iframe-ditya');
+            const btnVv = document.getElementById('cms-btn-vv');
+            const btnDitya = document.getElementById('cms-btn-ditya');
+            if (!ifrVv || !ifrDitya) return;
+            if (which === 'vv') {
+                ifrVv.style.display = 'block';
+                ifrDitya.style.display = 'none';
+                if (btnVv) { btnVv.style.background = '#ff9ebb'; btnVv.style.color = '#17121c'; }
+                if (btnDitya) { btnDitya.style.background = '#281e3a'; btnDitya.style.color = '#c7bdd4'; }
+            } else {
+                ifrVv.style.display = 'none';
+                ifrDitya.style.display = 'block';
+                if (btnVv) { btnVv.style.background = '#281e3a'; btnVv.style.color = '#c7bdd4'; }
+                if (btnDitya) { btnDitya.style.background = '#8fd3c1'; btnDitya.style.color = '#17121c'; }
+            }
+        };
+
+        function updateLiveMonitorPreviewPosition() {
+            const el = document.getElementById('live-monitor-preview');
+            if (!el) return;
+            if (currentSection !== 3 || activeProjectSlug === '' || isPointerDragging) {
+                el.style.opacity = '0';
+                el.style.pointerEvents = 'none';
                 return;
             }
 
-            monitorScreenMesh.updateMatrixWorld(true);
-            camera.updateMatrixWorld(true);
-
-            const halfW = 1.605 / 2;
-            const halfH = 0.960 / 2;
-            const meshMat = monitorScreenMesh.matrixWorld;
-
-            const corners = [
-                new THREE.Vector3(-halfW,  halfH, 0).applyMatrix4(meshMat).project(camera),
-                new THREE.Vector3( halfW,  halfH, 0).applyMatrix4(meshMat).project(camera),
-                new THREE.Vector3(-halfW, -halfH, 0).applyMatrix4(meshMat).project(camera),
-                new THREE.Vector3( halfW, -halfH, 0).applyMatrix4(meshMat).project(camera)
-            ];
-
-            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-            let allValid = true;
-            for (const c of corners) {
-                if (c.z > 1 || isNaN(c.x) || isNaN(c.y)) {
-                    allValid = false;
-                    break;
-                }
-                const sx = (c.x * 0.5 + 0.5) * window.innerWidth;
-                const sy = (-c.y * 0.5 + 0.5) * window.innerHeight;
-                minX = Math.min(minX, sx);
-                maxX = Math.max(maxX, sx);
-                minY = Math.min(minY, sy);
-                maxY = Math.max(maxY, sy);
+            const camDir = new THREE.Vector3();
+            camera.getWorldDirection(camDir);
+            if (camDir.z < 0.88) {
+                el.style.opacity = '0';
+                el.style.pointerEvents = 'none';
+                return;
             }
 
-            if (allValid) {
-                const w = maxX - minX;
-                const h = maxY - minY;
-                if (w > 300 && h > 180) {
-                    // Sits cleanly inside the 3D monitor frame
-                    surface.style.left = (Math.round(minX) + 4) + 'px';
-                    surface.style.top = (Math.round(minY) + 4) + 'px';
-                    surface.style.width = (Math.round(w) - 8) + 'px';
-                    surface.style.height = (Math.round(h) - 8) + 'px';
-                    surface.style.transform = 'none';
+            if (monitorScreenMesh) {
+                // Bounds of preview container on monitorScreenMesh (Canvas: 1920x1080)
+                // Browser content area: X: 32 to 1140, Y: 176 to 911 (40px below mockY 136)
+                const x1 = 1920 - 1140; // 780
+                const x2 = 1920 - 32;   // 1888
+                const pTL = new THREE.Vector3(-0.8025 + (x1 / 1920) * 1.605, 0.480 - (176 / 1080) * 0.960, 0.005);
+                const pBR = new THREE.Vector3(-0.8025 + (x2 / 1920) * 1.605, 0.480 - (911 / 1080) * 0.960, 0.005);
+
+                pTL.applyMatrix4(monitorScreenMesh.matrixWorld);
+                pBR.applyMatrix4(monitorScreenMesh.matrixWorld);
+
+                const vTL = pTL.project(camera);
+                const vBR = pBR.project(camera);
+
+                if (vTL.z > 1 || vBR.z > 1 || isNaN(vTL.x) || isNaN(vBR.x)) {
+                    el.style.opacity = '0';
+                    el.style.pointerEvents = 'none';
                     return;
                 }
-            }
 
-            // Fallback centered
-            surface.style.left = '50%';
-            surface.style.top = '50%';
-            surface.style.width = 'min(73vw, 1100px)';
-            surface.style.height = 'min(67vh, 700px)';
-            surface.style.transform = 'translate(-50%, -50%)';
+                const screenX1 = (vTL.x * 0.5 + 0.5) * window.innerWidth;
+                const screenY1 = (-vTL.y * 0.5 + 0.5) * window.innerHeight;
+                const screenX2 = (vBR.x * 0.5 + 0.5) * window.innerWidth;
+                const screenY2 = (-vBR.y * 0.5 + 0.5) * window.innerHeight;
+
+                const left = Math.round(Math.min(screenX1, screenX2));
+                const top = Math.round(Math.min(screenY1, screenY2));
+                const width = Math.round(Math.abs(screenX2 - screenX1));
+                const height = Math.round(Math.abs(screenY2 - screenY1));
+
+                if (width > 120 && height > 80) {
+                    el.style.left = left + 'px';
+                    el.style.top = top + 'px';
+                    el.style.width = width + 'px';
+                    el.style.height = height + 'px';
+                    el.style.opacity = '1';
+                    el.style.pointerEvents = 'auto';
+                }
+            }
         }
 
         // Attach Event Listeners to Desk Surface Buttons
@@ -3824,7 +3929,12 @@
                 else expPanel.classList.remove('active');
             }
 
-            // 3D in-model monitor handles all projects (no 2D overlay)
+            // Live iframe update on section change
+            if (index === 3 && activeProjectSlug) {
+                updateLiveIframeContent(activeProjectSlug);
+            } else {
+                updateLiveIframeContent('');
+            }
             // Education leader lines and cards column
             const eduSvg = document.getElementById('edu-lines-svg');
             const eduCol = document.getElementById('edu-cards-col');
@@ -4133,20 +4243,20 @@
                         }
 
                         // Bottom Action Button 1: "Visit Live Website ↗"
-                        if (px >= 48 && px <= 338 && py >= 925 && py <= 990) {
+                        if (px >= 32 && px <= 332 && py >= 925 && py <= 990) {
                             window.open(projectsData[curProjectIdx].link, '_blank');
                             showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
                             return;
                         }
 
                         // Bottom Action Button 2: "← Back to All Projects"
-                        if (px >= 360 && px <= 620 && py >= 925 && py <= 990) {
+                        if (px >= 350 && px <= 610 && py >= 925 && py <= 990) {
                             showProject('');
                             return;
                         }
 
                         // Open Live Badge on Preview Header
-                        if (px >= 995 && px <= 1115 && py >= 220 && py <= 255) {
+                        if (px >= 1000 && px <= 1140 && py >= 136 && py <= 180) {
                             window.open(projectsData[curProjectIdx].link, '_blank');
                             showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
                             return;
@@ -4154,22 +4264,23 @@
 
                         // CMS Websites: Dual Preview Click
                         if (projectsData[curProjectIdx].id === 'cms-websites') {
-                            const halfW = (1076 - 20) / 2;
+                            const prevW = 1108;
+                            const halfW = (prevW - 16) / 2;
                             // Site 1: VibrantVista Cultural Fest
-                            if (px >= 54 && px <= 54 + halfW && py >= 225 && py <= 900) {
+                            if (px >= 36 && px <= 36 + halfW && py >= 176 && py <= 911) {
                                 window.open('https://vibrantvista-culturalfest.web.app/', '_blank');
                                 showToast("Opening VibrantVista Festival Platform...");
                                 return;
                             }
                             // Site 2: Ditya Jewellery
-                            if (px >= 62 + halfW && px <= 62 + halfW * 2 && py >= 225 && py <= 900) {
+                            if (px >= 48 + halfW && px <= 48 + halfW * 2 && py >= 176 && py <= 911) {
                                 window.open('https://dityajewellery.web.app/', '_blank');
                                 showToast("Opening Ditya Jewellery Platform...");
                                 return;
                             }
                         } else {
                             // Any other project: Clicking Mockup Preview area opens live link
-                            if (px >= 48 && px <= 1124 && py >= 215 && py <= 910) {
+                            if (px >= 32 && px <= 1140 && py >= 176 && py <= 911) {
                                 window.open(projectsData[curProjectIdx].link, '_blank');
                                 showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
                                 return;
@@ -4288,7 +4399,7 @@
             const elapsedTime = clock.getElapsedTime();
 
             TWEEN.update();
-            // monitor is rendered on 3D mesh texture
+            updateLiveMonitorPreviewPosition();
 
             // Continuous subtle physics for noticeboard badges
             if (badgeCard1) {
