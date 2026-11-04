@@ -1591,7 +1591,7 @@
                         <figcaption>Education management app focused on information structure, user flows, and interface design.</figcaption>
                         <div class="case-action-row">
                             <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UX Architect & UI Designer</span>
-                            <a href="https://www.figma.com/proto/1fP8Vs2twbhbyUbGFq3fOc/DRBRAU?node-id=391-108&starting-point-node-id=357%3A77&t=SFPToRmfmBBh3W8Z-1" target="_blank" rel="noopener" class="btn-case-cta" style="background:#ff9ebb; color:#17121c; font-weight:bold;">View Prototype ↗</a>
+                            <a href="https://www.behance.net/gallery/257994833/Campus-Connect-College-Management-App-UIUX" target="_blank" rel="noopener" class="btn-case-cta" style="background:#0057ff; color:#ffffff; font-weight:bold;">View Behance Case Study ↗</a>
                         </div>
                     </div>
                 </div>
@@ -2509,9 +2509,9 @@
                 desc: 'Education management app focused on information structure, user flows, and interface design.',
                 tools: ['Figma'],
                 highlights: ['Information Structure', 'User Flows', 'Interface Design'],
-                link: '',
-                displayUrl: 'Case Study · Mobile App',
-                ctaText: '',
+                link: 'https://www.behance.net/gallery/257994833/Campus-Connect-College-Management-App-UIUX',
+                displayUrl: 'behance.net/gallery/campus-connect',
+                ctaText: 'View Behance Case Study ↗',
                 color: '#244735'
             },
             {
@@ -2983,7 +2983,8 @@
                 // 8. Live URL / Status Action Button
                 if (p.link) {
                     const isProto = p.ctaText && p.ctaText.includes('Prototype');
-                    const linkLabel = isProto ? 'prototype: ' : 'url: ';
+                    const isBehance = p.link && p.link.includes('behance');
+                    const linkLabel = isProto ? 'prototype: ' : (isBehance ? 'behance: ' : 'url: ');
                     const fullUrlText = linkLabel + (p.displayUrl || p.link) + ' ↗';
 
                     ctx.font = 'bold 19px "Space Mono", monospace';
