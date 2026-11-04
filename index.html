@@ -3457,11 +3457,12 @@
                 const planterMesh = findNode('large faceted floor planter') || floorPlantGroup;
                 const wasteBinBody = findNode('waste bin body') || findNode('waste bin');
 
+                // Collect all waste bin / trash can nodes (cleaning spaces/underscores)
                 const wasteBinNodes = [];
                 officeModel.traverse((child) => {
                     if (child.name) {
-                        const cName = child.name.toLowerCase();
-                        if (cName.includes('waste bin') || cName.includes('trash can')) {
+                        const clean = child.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                        if (clean.includes('wastebin') || clean.includes('trashcan') || clean.includes('trashbin') || clean.includes('garbagecan') || clean.includes('dustbin')) {
                             wasteBinNodes.push(child);
                         }
                     }
@@ -3496,12 +3497,20 @@
                     }
                     floorPlantGroup.position.copy(newWorldPos);
                     floorPlantGroup.updateMatrixWorld(true);
-
-                    // Remove/hide trash can
-                    wasteBinNodes.forEach((node) => {
-                        node.visible = false;
-                    });
                 }
+
+                // Completely remove and hide all trash can / waste bin nodes unconditionally
+                wasteBinNodes.forEach((node) => {
+                    node.visible = false;
+                    node.position.set(0, -9999, 0);
+                    node.scale.set(0, 0, 0);
+                    node.traverse((sub) => {
+                        sub.visible = false;
+                    });
+                    if (node.parent) {
+                        node.parent.remove(node);
+                    }
+                });
 
                 // Dismiss loading screen
                 const loaderEl = document.getElementById('loader');
