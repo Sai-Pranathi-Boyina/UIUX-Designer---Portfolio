@@ -2071,8 +2071,8 @@
 
         // Perspective Camera
         const camera = new THREE.PerspectiveCamera(46.0, window.innerWidth / window.innerHeight, 0.1, 100);
-        // Start from high 3/4 isometric room view (starting scene)
-        camera.position.set(7.8, 5.3, -4.5);
+        // Start from second image view (Room Home overview [8.60, 2.35, -0.25])
+        camera.position.set(8.60, 2.35, -0.25);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -2092,8 +2092,8 @@
         controls.enableZoom = true;
         controls.minDistance = 0.3;
         controls.maxDistance = 15.0;
-        // Looking at character desk in starting isometric angle
-        controls.target.set(0.7, 1.8, -0.9);
+        // Looking at character desk in Room Home overview
+        controls.target.set(0.76, 1.80, -1.50);
         controls.maxPolarAngle = Math.PI / 2 + 0.15;
         controls.enabled = true;
 
@@ -3548,38 +3548,20 @@
                     setTimeout(() => loaderEl.style.display = 'none', 300);
                 }
 
-                // ---------------- CINEMATIC OPENING CAMERA TRANSITION ----------------
-                // Starts immediately from the high 3/4 isometric room view [7.8, 5.3, -4.5] (first frame)
-                // and glides with zero delay to the ending pose [8.60, 2.35, -0.25] (fov 46.0)
-                const duration = 2400;
+                // Initialize desk event listeners
+                initDeskEventListeners();
 
-                new TWEEN.Tween(camera.position)
-                    .to({ x: 8.60, y: 2.35, z: -0.25 }, duration)
-                    .easing(TWEEN.Easing.Cubic.InOut)
-                    .start();
-                new TWEEN.Tween(controls.target)
-                    .to({ x: 0.76, y: 1.80, z: -1.50 }, duration)
-                    .easing(TWEEN.Easing.Cubic.InOut)
-                    .onComplete(() => {
-                        controls.enabled = true;
-                        controls.update();
-                    })
-                    .start();
-                new TWEEN.Tween(camera)
-                    .to({ fov: 46.0 }, duration)
-                    .easing(TWEEN.Easing.Cubic.InOut)
-                    .onUpdate(() => camera.updateProjectionMatrix())
-                    .onComplete(() => {
-                        // Reveal hero text ONLY upon landing on the ending pose (Hero Section)
+                // Starting scene opens directly in second image view (without text).
+                // Once 3D room is displayed, smoothly trigger hero text typing & reveal.
+                setTimeout(() => {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const initSec = parseInt(urlParams.get('sec') || '0', 10);
+                    if (!isNaN(initSec) && initSec > 0 && initSec < sectionsData.length) {
+                        goToSection(initSec);
+                    } else {
                         showHeroTextWithTransition();
-                        initDeskEventListeners();
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const initSec = parseInt(urlParams.get('sec') || '0', 10);
-                        if (!isNaN(initSec) && initSec > 0 && initSec < sectionsData.length) {
-                            goToSection(initSec);
-                        }
-                    })
-                    .start();
+                    }
+                }, 400);
             },
             (xhr) => {
                 // Progress
