@@ -1186,26 +1186,37 @@
             opacity: 1;
         }
 
-        /* Loader */
+        /* Loader: First frame background with sleek loading symbol */
         #loader {
             position: fixed;
             inset: 0;
-            background: var(--bg-ivory);
+            background: #F4EFE7 url('first_frame_bg.png') center center / cover no-repeat;
             z-index: 200;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 18px;
-            transition: opacity 0.6s ease;
+            transition: opacity 0.4s ease;
         }
-        .spinner {
-            width: 44px;
-            height: 44px;
-            border: 3.5px solid rgba(36, 71, 53, 0.15);
+        .loader-symbol {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: rgba(244, 239, 231, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1.5px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 14px 36px rgba(36, 71, 53, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loader-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid rgba(36, 71, 53, 0.18);
             border-top-color: var(--accent-green);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
         @keyframes spin {
             to { transform: rotate(360deg); }
@@ -1229,11 +1240,11 @@
     <!-- Action Toast Notification -->
     <div class="action-toast" id="action-toast">Action Completed</div>
 
-    <!-- Loading Screen -->
+    <!-- Loading Screen (First frame background with loading symbol on top) -->
     <div id="loader">
-        <div class="spinner"></div>
-        <div style="font-size: 16px; color: #242522; font-weight: 700; letter-spacing: -0.01em;">Entering 3D Studio...</div>
-        <div style="font-size: 13px; color: #7a7c75;">Loading workspace, character & in-model screens</div>
+        <div class="loader-symbol">
+            <div class="loader-spinner"></div>
+        </div>
     </div>
 
     <!-- ---------------- TOP NAVBAR (Logo & Left Text Removed) ---------------- -->
@@ -3544,30 +3555,24 @@
                     }
                 });
 
-                // Dismiss loading screen
+                // Dismiss loading screen seamlessly
                 const loaderEl = document.getElementById('loader');
                 if (loaderEl) {
                     loaderEl.style.opacity = '0';
-                    setTimeout(() => loaderEl.style.display = 'none', 600);
+                    setTimeout(() => loaderEl.style.display = 'none', 450);
                 }
 
-                // Show hero text during starting scene
-                showHeroTextWithTransition();
-
                 // ---------------- CINEMATIC OPENING CAMERA TRANSITION ----------------
-                // Starts from the high 3/4 isometric room view [7.8, 5.3, -4.5] (starting scene)
-                // and continues/glides to current Room Home overview [8.60, 2.35, -0.25] (fov 46.0)
-                const duration = 2800;
-                const startDelay = 800; // Brief pause so visitor appreciates starting isometric scene before glide
+                // Starts immediately from the high 3/4 isometric room view [7.8, 5.3, -4.5] (first frame)
+                // and glides with zero delay to the ending pose [8.60, 2.35, -0.25] (fov 46.0)
+                const duration = 2400;
 
                 new TWEEN.Tween(camera.position)
                     .to({ x: 8.60, y: 2.35, z: -0.25 }, duration)
-                    .delay(startDelay)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .start();
                 new TWEEN.Tween(controls.target)
                     .to({ x: 0.76, y: 1.80, z: -1.50 }, duration)
-                    .delay(startDelay)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .onComplete(() => {
                         controls.enabled = true;
@@ -3576,10 +3581,11 @@
                     .start();
                 new TWEEN.Tween(camera)
                     .to({ fov: 46.0 }, duration)
-                    .delay(startDelay)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .onUpdate(() => camera.updateProjectionMatrix())
                     .onComplete(() => {
+                        // Reveal hero text ONLY upon landing on the ending pose (Hero Section)
+                        showHeroTextWithTransition();
                         initDeskEventListeners();
                         const urlParams = new URLSearchParams(window.location.search);
                         const initSec = parseInt(urlParams.get('sec') || '0', 10);
