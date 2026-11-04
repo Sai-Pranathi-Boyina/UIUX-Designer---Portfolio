@@ -1848,7 +1848,7 @@
                         <figcaption>Designed and developed Svelty's CRM platform to manage roles, responsibilities, tasks, and workflows.</figcaption>
                         <div class="case-action-row">
                             <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Lead Product Designer</span>
-                            <a href="https://svelty.in" target="_blank" rel="noopener" class="btn-case-cta">View CRM Platform ↗</a>
+                            <a href="https://crm.svelty.in" target="_blank" rel="noopener" class="btn-case-cta">Open crm.svelty.in ↗</a>
                         </div>
                     </div>
                 </div>
@@ -1880,7 +1880,7 @@
                             <li>Dark mode palette designed for high contrast and sustained power user focus throughout long working days.</li>
                         </ul>
                         <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Claude Design"</em>, <em>"Role Management"</em>, <em>"Task Tracking"</em>, <em>"Workflows"</em>]</p>
-                        <p class="gh"><span>Platform Architecture: </span><a href="https://svelty.in" target="_blank" rel="noopener">svelty.in/crm ↗</a></p>
+                        <p class="gh"><span>Platform Architecture: </span><a href="https://crm.svelty.in" target="_blank" rel="noopener">crm.svelty.in ↗</a></p>
                     </div>
                 </div>
             </article>
@@ -2525,9 +2525,9 @@
                 desc: "Designed and developed Svelty's CRM platform to manage roles, responsibilities, tasks, and workflows.",
                 tools: ['Figma', 'Claude Design'],
                 highlights: ['Role Management', 'Task Tracking', 'Workflows'],
-                link: 'https://svelty.in',
-                displayUrl: 'https://svelty.in',
-                ctaText: 'Visit Live Website ↗',
+                link: 'https://crm.svelty.in',
+                displayUrl: 'crm.svelty.in',
+                ctaText: 'Open CRM Platform ↗',
                 color: '#244735'
             }
         ];
@@ -2868,92 +2868,99 @@
                 ctx.beginPath(); ctx.roundRect(1172, 78, 732, 985, 12); ctx.fill();
                 ctx.strokeStyle = '#28283a'; ctx.lineWidth = 2; ctx.stroke();
                 ctx.fillStyle = '#1e1e2d';
-                ctx.beginPath(); ctx.roundRect(1172, 78, 732, 44, [12, 12, 0, 0]); ctx.fill();
+                ctx.beginPath(); ctx.roundRect(1172, 78, 732, 48, [12, 12, 0, 0]); ctx.fill();
                 ctx.fillStyle = '#8fd3c1';
-                ctx.font = 'bold 15px "Space Mono", monospace';
+                ctx.font = 'bold 18px "Space Mono", monospace';
                 ctx.textAlign = 'left';
-                ctx.fillText('terminal · ~/projects/' + p.id, 1195, 106);
+                ctx.fillText('terminal · ~/projects/' + p.id, 1195, 109);
 
                 // Terminal Close Button
                 ctx.fillStyle = '#ff9ebb';
-                ctx.beginPath(); ctx.arc(1904 - 20, 100, 6, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(1904 - 22, 102, 8, 0, Math.PI * 2); ctx.fill();
                 ctx.fillStyle = '#17121c';
-                ctx.font = 'bold 11px sans-serif';
+                ctx.font = 'bold 13px sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('×', 1904 - 20, 104);
+                ctx.fillText('×', 1904 - 22, 107);
 
-                // Monospace Terminal Text on Right - INCREASED SIZES FOR MAXIMUM READABILITY
-                let termY = 160;
+                // Monospace Terminal Text on Right - HIGH READABILITY (LARGER TEXT SIZES)
+                let termY = 172;
                 ctx.textAlign = 'left';
 
-                // 1. Project Title (Prominent & bold on the right side)
+                // 1. Project Title (Prominent, crisp & bold on the right side)
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 30px "Montserrat", sans-serif';
+                ctx.font = 'bold 36px "Montserrat", sans-serif';
                 ctx.fillText(p.title, 1205, termY);
-                termY += 38;
+                termY += 44;
 
                 // 2. Subtitle / Pitch (Pink badge on the right side)
                 ctx.fillStyle = '#ff9ebb';
-                ctx.font = 'bold 17px "Space Mono", monospace';
+                ctx.font = 'bold 20px "Space Mono", monospace';
                 ctx.fillText(p.subtitle, 1205, termY);
-                termY += 28;
+                termY += 30;
 
                 // Divider line
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
-                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+                ctx.lineWidth = 1.5;
                 ctx.beginPath(); ctx.moveTo(1205, termY); ctx.lineTo(1875, termY); ctx.stroke();
                 termY += 34;
 
                 // 3. Command prompt
                 ctx.fillStyle = '#8fd3c1';
-                ctx.font = 'bold 16.5px "Space Mono", monospace';
+                ctx.font = 'bold 20px "Space Mono", monospace';
                 ctx.fillText('~/projects/' + p.id + ' $ glow README.md', 1205, termY);
-                termY += 38;
+                termY += 40;
 
                 // 4. "== Why I built it"
                 ctx.fillStyle = '#ff9ebb';
-                ctx.font = 'bold 19px "Space Mono", monospace';
+                ctx.font = 'bold 23px "Space Mono", monospace';
                 ctx.fillText('== Why I built it', 1205, termY);
-                termY += 28;
+                termY += 32;
 
-                // 5. Word-wrapped Description (100% readable!)
-                ctx.fillStyle = '#e8e2ee';
-                ctx.font = '18px "Montserrat", sans-serif';
-                termY = drawWrappedText(ctx, p.desc, 1205, termY, 660, 29);
+                // 5. Word-wrapped Description (Crisp, large, fully readable)
+                ctx.fillStyle = '#f0eaf6';
+                ctx.font = '500 22px "Montserrat", sans-serif';
+                termY = drawWrappedText(ctx, p.desc, 1205, termY, 660, 33);
                 termY += 22;
 
                 // 6. "== Key Highlights"
                 ctx.fillStyle = '#ff9ebb';
-                ctx.font = 'bold 19px "Space Mono", monospace';
+                ctx.font = 'bold 23px "Space Mono", monospace';
                 ctx.fillText('== Key Highlights', 1205, termY);
-                termY += 28;
+                termY += 32;
                 p.highlights.forEach(h => {
                     ctx.fillStyle = '#f0a35e';
-                    ctx.font = 'bold 19px "Space Mono", monospace';
+                    ctx.font = 'bold 23px "Space Mono", monospace';
                     ctx.fillText('•', 1210, termY);
                     ctx.fillStyle = '#f2edf7';
-                    ctx.font = '17.5px "Space Mono", monospace';
-                    ctx.fillText(h, 1235, termY);
-                    termY += 29;
+                    ctx.font = '20px "Space Mono", monospace';
+                    ctx.fillText(h, 1238, termY);
+                    termY += 32;
                 });
                 termY += 18;
 
                 // 7. Dependencies / Tools
                 ctx.fillStyle = '#8fd3c1';
-                ctx.font = 'bold 16px "Space Mono", monospace';
+                ctx.font = 'bold 19px "Space Mono", monospace';
                 ctx.fillText('dependencies: ' + JSON.stringify(p.tools), 1205, termY);
-                termY += 34;
+                termY += 38;
 
-                // 8. Live URL / Status
+                // 8. Live URL / Status Action Button
                 if (p.link) {
                     const isProto = p.ctaText && p.ctaText.includes('Prototype');
-                    ctx.fillStyle = '#f0a35e';
-                    ctx.font = 'bold 16.5px "Space Mono", monospace';
                     const linkLabel = isProto ? 'prototype: ' : 'url: ';
-                    ctx.fillText(linkLabel + (p.displayUrl || p.link) + ' ↗', 1205, termY);
+                    const fullUrlText = linkLabel + (p.displayUrl || p.link) + ' ↗';
+
+                    ctx.font = 'bold 19px "Space Mono", monospace';
+                    const pillW = Math.min(660, ctx.measureText(fullUrlText).width + 36);
+                    ctx.fillStyle = 'rgba(240, 163, 94, 0.12)';
+                    ctx.beginPath(); ctx.roundRect(1205, termY - 24, pillW, 46, 8); ctx.fill();
+                    ctx.strokeStyle = 'rgba(240, 163, 94, 0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+                    ctx.fillStyle = '#f0a35e';
+                    ctx.fillText(fullUrlText, 1223, termY + 6);
                 } else {
                     ctx.fillStyle = '#8fd3c1';
-                    ctx.font = 'bold 16.5px "Space Mono", monospace';
+                    ctx.font = 'bold 19px "Space Mono", monospace';
                     ctx.fillText('status: Deliverable Completed (UI/UX Architecture)', 1205, termY);
                 }
 
@@ -3779,187 +3786,20 @@
 
         function updateLiveIframeContent(slug) {
             const el = document.getElementById('live-monitor-preview');
-            if (!el) return;
-            if (!slug || currentSection !== 3) {
+            if (el) {
                 el.innerHTML = '';
                 el.style.display = 'none';
                 el.style.opacity = '0';
                 el.style.pointerEvents = 'none';
-                return;
-            }
-            el.style.display = 'block';
-            if (slug === 'ultramind') {
-                el.innerHTML = '<iframe src="https://ultramind.life" title="UltraMind Official Live Website" allow="fullscreen; autoplay; encrypted-media"></iframe>';
-            } else if (slug === 'svelty-website') {
-                el.innerHTML = '<div style="position:relative; width:100%; height:100%; background:#0a0a0a;">' +
-                    '<iframe src="https://svelty.in" title="Svelty Agency Live Website" style="width:100%; height:100%; border:none; display:block;" allow="fullscreen; autoplay;"></iframe>' +
-                    '<div style="position:absolute; bottom:16px; right:16px; z-index:10; background:rgba(20,20,28,0.9); backdrop-filter:blur(8px); padding:8px 14px; border-radius:8px; border:1px solid rgba(255,158,187,0.3); display:flex; align-items:center; gap:8px;">' +
-                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Live Agency Platform</span>' +
-                    '<a href="https://svelty.in" target="_blank" rel="noopener" style="color:#ff9ebb; font-weight:bold; font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none;">Open svelty.in ↗</a>' +
-                    '</div></div>';
-            } else if (slug === 'campus-connect') {
-                el.innerHTML = '<div style="position:relative; width:100%; height:100%; background:#f6fbf8; overflow:hidden; display:flex; align-items:center; justify-content:center;">' +
-                    '<img src="campus_connect_preview.png" alt="Campus Connect Mobile App Case Study" style="width:100%; height:100%; object-fit:contain; display:block;">' +
-                    '<div style="position:absolute; bottom:14px; right:14px; background:rgba(20,30,24,0.92); backdrop-filter:blur(8px); padding:8px 14px; border-radius:8px; border:1px solid rgba(143,211,193,0.3); display:flex; align-items:center; gap:10px;">' +
-                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Campus Connect · Education Management App</span>' +
-                    '</div></div>';
-            } else if (slug === 'mental-health') {
-                el.innerHTML = '<iframe src="https://www.figma.com/embed?embed_host=astra&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FZRUDuvvkSbTobVS1VpxlX0%2FTask%3Fnode-id%3D46-810" title="Mental Health Prototype" allowfullscreen></iframe>';
-            } else if (slug === 'cms-websites') {
-                el.innerHTML = '<div style="width:100%; height:100%; display:flex; flex-direction:column; background:#120d1c;">' +
-                    '<div style="display:flex; justify-content:space-between; align-items:center; padding:8px 14px; background:#1c142b; border-bottom:1px solid #2d2244; flex:none;">' +
-                    '<div style="display:flex; gap:8px; align-items:center;">' +
-                    '<button type="button" id="cms-btn-vv" onclick="switchLiveCms(\'vv\')" style="background:#ff9ebb; color:#17121c; border:none; padding:5px 12px; border-radius:6px; font-family:\'Space Mono\', monospace; font-size:12px; font-weight:bold; cursor:pointer;">1 VibrantVista Fest</button>' +
-                    '<button type="button" id="cms-btn-ditya" onclick="switchLiveCms(\'ditya\')" style="background:#281e3a; color:#c7bdd4; border:none; padding:5px 12px; border-radius:6px; font-family:\'Space Mono\', monospace; font-size:12px; font-weight:bold; cursor:pointer;">2 Ditya Jewellery</button>' +
-                    '<div style="margin-left:8px; display:inline-flex; background:rgba(255,255,255,0.06); padding:2px; border-radius:6px; border:1px solid rgba(255,255,255,0.1);">' +
-                    '<button type="button" id="cms-mode-live" onclick="switchCmsMode(\'live\')" style="background:#ff9ebb; color:#17121c; border:none; padding:3px 8px; border-radius:4px; font-family:\'Space Mono\', monospace; font-size:11px; font-weight:bold; cursor:pointer;">Live Frame</button>' +
-                    '<button type="button" id="cms-mode-preview" onclick="switchCmsMode(\'preview\')" style="background:transparent; color:#928b9e; border:none; padding:3px 8px; border-radius:4px; font-family:\'Space Mono\', monospace; font-size:11px; font-weight:bold; cursor:pointer;">HD Preview</button>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div style="display:flex; gap:8px; align-items:center;">' +
-                    '<span id="cms-url-tag" style="color:#ff9ebb; font-size:11px; font-family:\'Space Mono\', monospace; background:rgba(255,158,187,0.1); padding:4px 10px; border-radius:4px; border:1px solid rgba(255,158,187,0.2);">🔒 brau-vibrantvista2k24.42web.io</span>' +
-                    '<a id="cms-open-btn" href="https://brau-vibrantvista2k24.42web.io" target="_blank" rel="noopener" style="color:#17121c; background:linear-gradient(135deg, #ff9ebb, #f0a35e); font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none; padding:5px 12px; border-radius:6px; font-weight:bold; display:inline-flex; align-items:center; gap:4px;">Open Live Site ↗</a>' +
-                    '</div></div>' +
-                    '<div style="flex:1; position:relative; overflow:hidden; background:#0c0a14;">' +
-                    '<div id="cms-view-vv" style="width:100%; height:100%; position:relative; display:block;">' +
-                    '<iframe id="cms-iframe-vv" src="https://brau-vibrantvista2k24.42web.io" title="VibrantVista Cultural Fest" style="width:100%; height:100%; border:none; display:block; background:#120d1c;" allow="fullscreen; autoplay;"></iframe>' +
-                    '<div id="cms-preview-vv" style="width:100%; height:100%; overflow-y:auto; display:none;"><img src="vibrantvista_preview.png" alt="VibrantVista Fest" style="width:100%; height:auto; display:block;"></div>' +
-                    '</div>' +
-                    '<div id="cms-view-ditya" style="width:100%; height:100%; position:relative; display:none;">' +
-                    '<iframe id="cms-iframe-ditya" src="https://dityajewellery.great-site.net" title="Ditya Jewellery" style="width:100%; height:100%; border:none; display:block; background:#0d1512;" allow="fullscreen; autoplay;"></iframe>' +
-                    '<div id="cms-preview-ditya" style="width:100%; height:100%; overflow-y:auto; display:none;"><img src="dityajewellery_preview.png" alt="Ditya Jewellery" style="width:100%; height:auto; display:block;"></div>' +
-                    '</div>' +
-                    '</div></div>';
-            } else if (slug === 'svelty-crm') {
-                el.innerHTML = '<div style="position:relative; width:100%; height:100%; background:#0d0d12; overflow:hidden; display:flex; align-items:center; justify-content:center;">' +
-                    '<img src="svelty_crm_preview.png" alt="Svelty CRM Dashboard" style="width:100%; height:100%; object-fit:contain; display:block;">' +
-                    '<div style="position:absolute; bottom:16px; right:16px; z-index:10; background:rgba(20,20,28,0.92); backdrop-filter:blur(8px); padding:8px 14px; border-radius:8px; border:1px solid rgba(240,163,94,0.3); display:flex; align-items:center; gap:8px;">' +
-                    '<span style="color:#ded8e6; font-size:12px; font-family:\'Space Mono\', monospace;">Svelty CRM · Operations SaaS</span>' +
-                    '<a href="https://svelty.in" target="_blank" rel="noopener" style="color:#f0a35e; font-weight:bold; font-size:12px; font-family:\'Space Mono\', monospace; text-decoration:none;">View Agency ↗</a>' +
-                    '</div></div>';
-            } else {
-                el.innerHTML = '<iframe src="' + projectsData[curProjectIdx].link + '" style="width:100%; height:100%; border:none;" allow="fullscreen"></iframe>';
             }
         }
 
-        window.switchCmsMode = function(mode) {
-            const btnLive = document.getElementById('cms-mode-live');
-            const btnPrev = document.getElementById('cms-mode-preview');
-            const ifrVv = document.getElementById('cms-iframe-vv');
-            const ifrDitya = document.getElementById('cms-iframe-ditya');
-            const prevVv = document.getElementById('cms-preview-vv');
-            const prevDitya = document.getElementById('cms-preview-ditya');
-            if (mode === 'live') {
-                if (btnLive) { btnLive.style.background = '#ff9ebb'; btnLive.style.color = '#17121c'; }
-                if (btnPrev) { btnPrev.style.background = 'transparent'; btnPrev.style.color = '#928b9e'; }
-                if (ifrVv) ifrVv.style.display = 'block';
-                if (prevVv) prevVv.style.display = 'none';
-                if (ifrDitya) ifrDitya.style.display = 'block';
-                if (prevDitya) prevDitya.style.display = 'none';
-            } else {
-                if (btnLive) { btnLive.style.background = 'transparent'; btnLive.style.color = '#928b9e'; }
-                if (btnPrev) { btnPrev.style.background = '#8fd3c1'; btnPrev.style.color = '#17121c'; }
-                if (ifrVv) ifrVv.style.display = 'none';
-                if (prevVv) prevVv.style.display = 'block';
-                if (ifrDitya) ifrDitya.style.display = 'none';
-                if (prevDitya) prevDitya.style.display = 'block';
-            }
-        };
-
-        window.switchLiveCms = function(which) {
-            const viewVv = document.getElementById('cms-view-vv');
-            const viewDitya = document.getElementById('cms-view-ditya');
-            const btnVv = document.getElementById('cms-btn-vv');
-            const btnDitya = document.getElementById('cms-btn-ditya');
-            const urlTag = document.getElementById('cms-url-tag');
-            const openBtn = document.getElementById('cms-open-btn');
-            if (!viewVv || !viewDitya) return;
-            if (which === 'vv') {
-                viewVv.style.display = 'block';
-                viewDitya.style.display = 'none';
-                if (btnVv) { btnVv.style.background = '#ff9ebb'; btnVv.style.color = '#17121c'; }
-                if (btnDitya) { btnDitya.style.background = '#281e3a'; btnDitya.style.color = '#c7bdd4'; }
-                if (urlTag) {
-                    urlTag.innerText = '🔒 brau-vibrantvista2k24.42web.io';
-                    urlTag.style.color = '#ff9ebb';
-                    urlTag.style.borderColor = 'rgba(255,158,187,0.2)';
-                }
-                if (openBtn) {
-                    openBtn.href = 'https://brau-vibrantvista2k24.42web.io';
-                    openBtn.style.background = 'linear-gradient(135deg, #ff9ebb, #f0a35e)';
-                }
-            } else {
-                viewVv.style.display = 'none';
-                viewDitya.style.display = 'block';
-                if (btnVv) { btnVv.style.background = '#281e3a'; btnVv.style.color = '#c7bdd4'; }
-                if (btnDitya) { btnDitya.style.background = '#8fd3c1'; btnDitya.style.color = '#17121c'; }
-                if (urlTag) {
-                    urlTag.innerText = '🔒 dityajewellery.great-site.net';
-                    urlTag.style.color = '#8fd3c1';
-                    urlTag.style.borderColor = 'rgba(143,211,193,0.2)';
-                }
-                if (openBtn) {
-                    openBtn.href = 'https://dityajewellery.great-site.net';
-                    openBtn.style.background = 'linear-gradient(135deg, #8fd3c1, #a3e0d8)';
-                }
-            }
-        };
-
         function updateLiveMonitorPreviewPosition() {
             const el = document.getElementById('live-monitor-preview');
-            if (!el) return;
-            if (currentSection !== 3 || activeProjectSlug === '' || isPointerDragging) {
+            if (el) {
+                el.style.display = 'none';
                 el.style.opacity = '0';
                 el.style.pointerEvents = 'none';
-                return;
-            }
-
-            const camDir = new THREE.Vector3();
-            camera.getWorldDirection(camDir);
-            if (camDir.z < 0.88) {
-                el.style.opacity = '0';
-                el.style.pointerEvents = 'none';
-                return;
-            }
-
-            if (monitorScreenMesh) {
-                // Bounds of preview container on monitorScreenMesh (Canvas: 1920x1080)
-                // Browser content area: X: 32 to 1140, Y: 176 to 911 (40px below mockY 136)
-                const x1 = 1920 - 1140; // 780
-                const x2 = 1920 - 32;   // 1888
-                const pTL = new THREE.Vector3(-0.8025 + (x1 / 1920) * 1.605, 0.480 - (176 / 1080) * 0.960, 0.005);
-                const pBR = new THREE.Vector3(-0.8025 + (x2 / 1920) * 1.605, 0.480 - (911 / 1080) * 0.960, 0.005);
-
-                pTL.applyMatrix4(monitorScreenMesh.matrixWorld);
-                pBR.applyMatrix4(monitorScreenMesh.matrixWorld);
-
-                const vTL = pTL.project(camera);
-                const vBR = pBR.project(camera);
-
-                if (vTL.z > 1 || vBR.z > 1 || isNaN(vTL.x) || isNaN(vBR.x)) {
-                    el.style.opacity = '0';
-                    el.style.pointerEvents = 'none';
-                    return;
-                }
-
-                const screenX1 = (vTL.x * 0.5 + 0.5) * window.innerWidth;
-                const screenY1 = (-vTL.y * 0.5 + 0.5) * window.innerHeight;
-                const screenX2 = (vBR.x * 0.5 + 0.5) * window.innerWidth;
-                const screenY2 = (-vBR.y * 0.5 + 0.5) * window.innerHeight;
-
-                const left = Math.round(Math.min(screenX1, screenX2));
-                const top = Math.round(Math.min(screenY1, screenY2));
-                const width = Math.round(Math.abs(screenX2 - screenX1));
-                const height = Math.round(Math.abs(screenY2 - screenY1));
-
-                if (width > 120 && height > 80) {
-                    el.style.left = left + 'px';
-                    el.style.top = top + 'px';
-                    el.style.width = width + 'px';
-                    el.style.height = height + 'px';
-                    el.style.opacity = '1';
-                    el.style.pointerEvents = 'auto';
-                }
             }
         }
 
@@ -4250,8 +4090,45 @@
                 if (currentSection === 3 && monitorScreenMesh) {
                     const hits = raycaster.intersectObject(monitorScreenMesh);
                     if (hits.length > 0) {
-                        renderer.domElement.style.cursor = 'pointer';
-                        return;
+                        const hit = hits[0];
+                        const px = (1.0 - hit.uv.x) * 1920;
+                        const py = (1.0 - hit.uv.y) * 1080;
+                        let isClickable = false;
+
+                        // 1. Top bar workspace tabs
+                        if (py >= 12 && py <= 66 && px >= 28 && px <= 1080) {
+                            isClickable = true;
+                        }
+                        // 2. Overview grid tiles
+                        else if (activeProjectSlug === '') {
+                            if ((py >= 78 && py <= 567) || (py >= 575 && py <= 1064)) {
+                                if (px >= 16 && px <= 1904) isClickable = true;
+                            }
+                        }
+                        // 3. Single project view buttons
+                        else {
+                            // Close buttons
+                            if (py >= 78 && py <= 122 && ((px >= 1090 && px <= 1145) || (px >= 1860 && px <= 1910))) {
+                                isClickable = true;
+                            }
+                            // Bottom Action buttons (Visit Live, Back to all)
+                            else if (py >= 925 && py <= 990 && px >= 32 && px <= 780) {
+                                isClickable = true;
+                            }
+                            // Top preview header badge
+                            else if (py >= 136 && py <= 180 && px >= 900 && px <= 1140) {
+                                isClickable = true;
+                            }
+                            // Terminal URL action pill
+                            else if (py >= 650 && py <= 800 && px >= 1205 && px <= 1870 && projectsData[curProjectIdx].link) {
+                                isClickable = true;
+                            }
+                        }
+
+                        if (isClickable) {
+                            renderer.domElement.style.cursor = 'pointer';
+                            return;
+                        }
                     }
                 }
                 if ((currentSection === 5 || currentSection === 0) && phoneScreenMesh) {
@@ -4355,6 +4232,7 @@
                         }
 
                         // Bottom Action Buttons & Mockup Previews
+                        // Bottom Action Buttons & Mockup Previews
                         if (projectsData[curProjectIdx].id === 'cms-websites') {
                             // Bottom Button 1: VibrantVista Fest
                             if (px >= 32 && px <= 282 && py >= 925 && py <= 990) {
@@ -4373,58 +4251,35 @@
                                 showProject('');
                                 return;
                             }
-                            // Top Card: VibrantVista Cultural Fest
-                            if (px >= 32 && px <= 1140 && py >= 176 && py < 536) {
-                                window.open('https://brau-vibrantvista2k24.42web.io/', '_blank');
-                                showToast("Opening VibrantVista Festival Platform...");
-                                return;
-                            }
-                            // Bottom Card: Ditya Jewellery
-                            if (px >= 32 && px <= 1140 && py >= 536 && py <= 911) {
-                                window.open('https://dityajewellery.great-site.net/', '_blank');
-                                showToast("Opening Ditya Jewellery Platform...");
-                                return;
-                            }
                         } else if (projectsData[curProjectIdx].link) {
                             const ctaLabel = projectsData[curProjectIdx].ctaText || 'Visit Live Website ↗';
-                            // Button 1: CTA Button ("Visit Live Website ↗")
-                            if (px >= 32 && px <= 352 && py >= 925 && py <= 990) {
+                            // Button 1: CTA Button ("Visit Live Website ↗" / "Open CRM Platform ↗")
+                            if (px >= 32 && px <= 380 && py >= 925 && py <= 990) {
                                 window.open(projectsData[curProjectIdx].link, '_blank');
                                 showToast(ctaLabel + ': ' + projectsData[curProjectIdx].title);
                                 return;
                             }
                             // Button 2: "← Back to All Projects"
-                            if (px >= 370 && px <= 635 && py >= 925 && py <= 990) {
+                            if (px >= 390 && px <= 660 && py >= 925 && py <= 990) {
                                 showProject('');
                                 return;
                             }
                             // Action Badge on Preview Header
-                            if (px >= 950 && px <= 1140 && py >= 136 && py <= 180) {
+                            if (px >= 900 && px <= 1140 && py >= 136 && py <= 180) {
                                 window.open(projectsData[curProjectIdx].link, '_blank');
                                 showToast(ctaLabel + ': ' + projectsData[curProjectIdx].title);
                                 return;
                             }
-                            // Preview area click
-                            if (px >= 32 && px <= 1140 && py >= 176 && py <= 911) {
-                                window.open(projectsData[curProjectIdx].link, '_blank');
-                                showToast("Opening Live Website: " + projectsData[curProjectIdx].title);
-                                return;
-                            }
                         } else {
                             // Single "← Back to All Projects" Button (e.g. Campus Connect)
-                            if (px >= 32 && px <= 352 && py >= 925 && py <= 990) {
+                            if (px >= 32 && px <= 360 && py >= 925 && py <= 990) {
                                 showProject('');
-                                return;
-                            }
-                            // Mockup Preview click
-                            if (px >= 32 && px <= 1140 && py >= 176 && py <= 911) {
-                                showToast("Campus Connect · Education Management Mobile App");
                                 return;
                             }
                         }
 
-                        // Right Window Terminal URL Click
-                        if (projectsData[curProjectIdx].link && px >= 1180 && px <= 1880 && py >= 320 && py <= 650) {
+                        // Right Window Terminal URL Click (Dedicated URL button pill)
+                        if (projectsData[curProjectIdx].link && px >= 1205 && px <= 1870 && py >= 650 && py <= 800) {
                             window.open(projectsData[curProjectIdx].link, '_blank');
                             showToast("Opening " + projectsData[curProjectIdx].link);
                             return;
