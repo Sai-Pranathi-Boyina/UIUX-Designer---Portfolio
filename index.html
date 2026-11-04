@@ -2217,27 +2217,27 @@
             const w = 1024;
             const h = 700;
 
-            // Clean Dark Slate IDE Canvas for ultra-high contrast readability
+            // Deep High-Contrast Obsidian Dark Canvas for maximum readability
             const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-            bgGrad.addColorStop(0, '#16191f');
-            bgGrad.addColorStop(1, '#1e222b');
+            bgGrad.addColorStop(0, '#06070a');
+            bgGrad.addColorStop(1, '#0b0d13');
             ctx.fillStyle = bgGrad;
             ctx.fillRect(0, 0, w, h);
 
-            // Subtle Grid
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+            // Subtle Deep Grid
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
             ctx.lineWidth = 1;
-            for (let x = 0; x < w; x += 40) {
+            for (let x = 0; x < w; x += 36) {
                 ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
             }
-            for (let y = 0; y < h; y += 40) {
+            for (let y = 0; y < h; y += 36) {
                 ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
             }
 
             // Top Header Bar
-            ctx.fillStyle = '#222632';
+            ctx.fillStyle = '#0e1118';
             ctx.fillRect(0, 0, w, 52);
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.09)';
             ctx.beginPath(); ctx.moveTo(0, 52); ctx.lineTo(w, 52); ctx.stroke();
 
             // macOS Window Dots
@@ -2245,17 +2245,17 @@
             ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(50, 26, 7, 0, Math.PI * 2); ctx.fill();
             ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(74, 26, 7, 0, Math.PI * 2); ctx.fill();
 
-            // Figma / Workspace Title
+            // Figma / Workspace Title (Enlarged)
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 18px "Montserrat", sans-serif';
+            ctx.font = 'bold 19.5px "Montserrat", sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText('❖ Sai_Pranathi_Design_System.fig', 110, 32);
+            ctx.fillText('❖ Sai_Pranathi_Design_System.fig', 106, 33);
 
             ctx.fillStyle = '#10b981';
-            ctx.beginPath(); ctx.arc(880, 26, 5, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#A8B49A';
-            ctx.font = '600 14px "Montserrat", sans-serif';
-            ctx.fillText('Ready for Production', 894, 31);
+            ctx.beginPath(); ctx.arc(840, 26, 5.5, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#34d399';
+            ctx.font = 'bold 15px "Montserrat", sans-serif';
+            ctx.fillText('Ready for Production', 855, 32);
 
             // Category Filter Tabs Row
             const tabs = [
@@ -2268,25 +2268,25 @@
 
             tabs.forEach(t => {
                 const isActive = activeSkillTab === t.id;
-                ctx.fillStyle = isActive ? '#244735' : 'rgba(255, 255, 255, 0.06)';
-                ctx.beginPath(); ctx.roundRect(t.x, 64, t.w, 42, 12); ctx.fill();
-                ctx.strokeStyle = isActive ? '#A8B49A' : 'rgba(255, 255, 255, 0.12)';
+                ctx.fillStyle = isActive ? '#1a3b2b' : '#11141d';
+                ctx.beginPath(); ctx.roundRect(t.x, 62, t.w, 44, 12); ctx.fill();
+                ctx.strokeStyle = isActive ? '#4ade80' : 'rgba(255, 255, 255, 0.12)';
                 ctx.lineWidth = isActive ? 2 : 1;
                 ctx.stroke();
 
-                ctx.fillStyle = isActive ? '#F4EFE7' : '#cbd5e1';
-                ctx.font = isActive ? 'bold 15px "Montserrat", sans-serif' : '600 14.5px "Montserrat", sans-serif';
+                ctx.fillStyle = isActive ? '#ffffff' : '#cbd5e1';
+                ctx.font = isActive ? 'bold 15.5px "Montserrat", sans-serif' : '600 14.5px "Montserrat", sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(t.label, t.x + t.w / 2, 90);
+                ctx.fillText(t.label, t.x + t.w / 2, 89);
             });
 
-            // Helper to draw clean skill badge pills (NO progress bars)
+            // Helper to draw clean skill badge pills (Enlarged text & high-contrast background)
             function drawSkillChips(skills, startX, startY, maxW, isFeatured) {
                 let curX = startX;
                 let curY = startY;
-                const pillH = isFeatured ? 36 : 30;
-                const pillPaddingX = isFeatured ? 16 : 12;
-                ctx.font = isFeatured ? '600 14px "Montserrat", sans-serif' : '500 13px "Montserrat", sans-serif';
+                const pillH = isFeatured ? 42 : 34;
+                const pillPaddingX = isFeatured ? 18 : 13;
+                ctx.font = isFeatured ? '600 16px "Montserrat", sans-serif' : '600 14px "Montserrat", sans-serif';
 
                 skills.forEach(skill => {
                     const textW = ctx.measureText(skill).width;
@@ -2294,51 +2294,76 @@
 
                     if (curX + pillW > startX + maxW) {
                         curX = startX;
-                        curY += pillH + 8;
+                        curY += pillH + (isFeatured ? 9 : 8);
                     }
 
                     // Background
-                    ctx.fillStyle = isFeatured ? 'rgba(36, 71, 53, 0.5)' : 'rgba(255, 255, 255, 0.08)';
+                    ctx.fillStyle = isFeatured ? 'rgba(26, 59, 43, 0.75)' : '#161a24';
                     ctx.beginPath();
-                    ctx.roundRect(curX, curY, pillW, pillH, 8);
+                    ctx.roundRect(curX, curY, pillW, pillH, isFeatured ? 10 : 8);
                     ctx.fill();
 
                     // Border
-                    ctx.strokeStyle = isFeatured ? '#A8B49A' : 'rgba(255, 255, 255, 0.16)';
-                    ctx.lineWidth = 1;
+                    ctx.strokeStyle = isFeatured ? '#4ade80' : 'rgba(255, 255, 255, 0.18)';
+                    ctx.lineWidth = isFeatured ? 1.5 : 1;
                     ctx.stroke();
 
                     // Text
-                    ctx.fillStyle = isFeatured ? '#ffffff' : '#f8fafc';
+                    ctx.fillStyle = '#ffffff';
                     ctx.textAlign = 'left';
-                    ctx.fillText(skill, curX + pillPaddingX, curY + pillH - (isFeatured ? 12 : 9));
+                    ctx.fillText(skill, curX + pillPaddingX, curY + pillH - (isFeatured ? 14 : 11));
 
-                    curX += pillW + 8;
+                    curX += pillW + (isFeatured ? 10 : 8);
                 });
             }
 
-            // Authentic Resume Skills Data
-            const figmaSkills = [
+            // Authentic Resume Skills Data - Curated for optimal readability & zero overflow
+            const figmaSkillsAll = [
+                'Auto Layout', 'Components', 'Variants', 'Variables', 'Design Systems',
+                'Responsive Design', 'Interactive Prototypes', 'Design Libraries', 'Dev Mode', 'Figma AI'
+            ];
+
+            const aiUxSkillsAll = [
+                'Claude (Research & Ideation)', 'Figma AI (Design Support)',
+                'User Flows', 'Wireframing', 'High-Fidelity UI',
+                'Information Architecture', 'Usability Testing', 'Workflow Automation'
+            ];
+
+            const creativeSkillsAll = [
+                'Adobe Creative Suite', 'Visual Design', 'Visual Effects',
+                'Spline 3D', 'Blender 3D Modeling', '3D Rigging & Animation',
+                'Lottie & Rive (Motion)'
+            ];
+
+            const noCodeSkillsAll = [
+                'FlutterFlow (UI Building)', 'App Interface Design',
+                'Interactive Prototypes', 'Webflow (Design & CMS)',
+                'WordPress (Website Design)', 'Developer Collaboration',
+                'HTML5 / CSS3'
+            ];
+
+            // Full extended sets for single-category focus
+            const figmaSkillsFull = [
                 'Auto Layout', 'Components', 'Variants', 'Variables', 'Styles',
                 'Design Systems', 'Responsive Design', 'Constraints',
                 'Wireframing', 'Prototyping', 'Interactive Prototypes',
                 'Design Libraries', 'Dev Mode', 'Figma AI'
             ];
 
-            const aiUxSkills = [
+            const aiUxSkillsFull = [
                 'Claude (Research & Ideation)', 'Figma AI (Design Support)',
                 'User Flows', 'Wireframing', 'High-Fidelity UI',
                 'Information Architecture', 'Usability Testing',
                 'Workflow Automation', 'Interface Clarity'
             ];
 
-            const creativeSkills = [
+            const creativeSkillsFull = [
                 'Adobe Creative Suite', 'Visual Design', 'Animation',
                 'Visual Effects', 'Spline 3D', 'Blender 3D Modeling',
                 '3D Rigging & Animation', 'Lottie & Rive (Vector Animation)'
             ];
 
-            const noCodeSkills = [
+            const noCodeSkillsFull = [
                 'FlutterFlow (UI Building)', 'App Interface Design',
                 'Interactive Prototypes', 'Webflow (Design & CMS)',
                 'WordPress (Website Design)', 'Developer Collaboration',
@@ -2347,56 +2372,56 @@
 
             // Render content based on activeSkillTab
             if (activeSkillTab === 'all') {
-                // 2x2 Grid of Clean Skill Cards
+                // 2x2 Grid of Solid Dark High-Contrast Skill Cards
                 // Card 1: Figma (Top Left)
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(28, 120, 472, 265, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
-                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('❖ FIGMA (3+ YEARS)', 48, 150);
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "Montserrat", sans-serif';
-                ctx.fillText('Design Systems, Variables & Interactive Prototyping', 48, 170);
-                drawSkillChips(figmaSkills, 48, 186, 432, false);
+                ctx.fillStyle = '#0f121a';
+                ctx.beginPath(); ctx.roundRect(28, 118, 472, 270, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 18.5px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('❖ FIGMA (3+ YEARS)', 48, 148);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 13.5px "Montserrat", sans-serif';
+                ctx.fillText('Design Systems, Variables & Interactive Prototyping', 48, 168);
+                drawSkillChips(figmaSkillsAll, 46, 184, 436, false);
 
                 // Card 2: AI & Research (Top Right)
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(524, 120, 472, 265, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
-                ctx.fillStyle = '#10b981'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('🤖 AI & DESIGN RESEARCH', 544, 150);
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "Montserrat", sans-serif';
-                ctx.fillText('Claude & Figma AI Ideation, Flows & Usability', 544, 170);
-                drawSkillChips(aiUxSkills, 544, 186, 432, false);
+                ctx.fillStyle = '#0f121a';
+                ctx.beginPath(); ctx.roundRect(524, 118, 472, 270, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.fillStyle = '#34d399'; ctx.font = 'bold 18.5px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🤖 AI & DESIGN RESEARCH', 544, 148);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 13.5px "Montserrat", sans-serif';
+                ctx.fillText('Claude & Figma AI Ideation, Flows & Usability', 544, 168);
+                drawSkillChips(aiUxSkillsAll, 542, 184, 436, false);
 
                 // Card 3: Creative & 3D (Bottom Left)
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(28, 400, 472, 265, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
-                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('🎨 CREATIVE SUITE & 3D', 48, 430);
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "Montserrat", sans-serif';
-                ctx.fillText('Adobe Creative Suite, Spline, Blender & Vector Motion', 48, 450);
-                drawSkillChips(creativeSkills, 48, 466, 432, false);
+                ctx.fillStyle = '#0f121a';
+                ctx.beginPath(); ctx.roundRect(28, 402, 472, 270, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 18.5px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('🎨 CREATIVE SUITE & 3D', 48, 432);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 13.5px "Montserrat", sans-serif';
+                ctx.fillText('Adobe Creative Suite, Spline, Blender & Vector Motion', 48, 452);
+                drawSkillChips(creativeSkillsAll, 46, 468, 436, false);
 
                 // Card 4: No-Code & CMS (Bottom Right)
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
-                ctx.beginPath(); ctx.roundRect(524, 400, 472, 265, 14); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
-                ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 16px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('💻 NO-CODE & WEB CMS', 544, 430);
-                ctx.fillStyle = '#94a3b8'; ctx.font = '500 12px "Montserrat", sans-serif';
-                ctx.fillText('FlutterFlow, Webflow, WordPress & App Interfaces', 544, 450);
-                drawSkillChips(noCodeSkills, 544, 466, 432, false);
+                ctx.fillStyle = '#0f121a';
+                ctx.beginPath(); ctx.roundRect(524, 402, 472, 270, 14); ctx.fill();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 18.5px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText('💻 NO-CODE & WEB CMS', 544, 432);
+                ctx.fillStyle = '#94a3b8'; ctx.font = '500 13.5px "Montserrat", sans-serif';
+                ctx.fillText('FlutterFlow, Webflow, WordPress & App Interfaces', 544, 452);
+                drawSkillChips(noCodeSkillsAll, 542, 468, 436, false);
             } else {
                 // Expanded Single Domain View
                 const cx = 32;
-                const cy = 122;
+                const cy = 118;
                 const cw = 960;
-                const ch = 544;
+                const ch = 550;
 
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+                ctx.fillStyle = '#0f121a';
                 ctx.beginPath(); ctx.roundRect(cx, cy, cw, ch, 16); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)'; ctx.lineWidth = 1.5; ctx.stroke();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1.5; ctx.stroke();
 
                 let activeTitle = '';
                 let activeSub = '';
@@ -2405,39 +2430,39 @@
 
                 if (activeSkillTab === 'figma') {
                     activeTitle = '❖ FIGMA (3+ YEARS EXPERIENCE) · TECHNICAL PROFICIENCY';
-                    activeSub = 'Specialized in scalable component architecture, design system variables, and responsive prototypes directly from resume.';
-                    activeItems = figmaSkills;
+                    activeSub = 'Specialized in scalable component architecture, design system variables, and responsive prototypes.';
+                    activeItems = figmaSkillsFull;
                     activeColor = '#A8B49A';
                 } else if (activeSkillTab === 'ux') {
                     activeTitle = '🤖 AI & DESIGN RESEARCH · CLAUDE & FIGMA AI';
-                    activeSub = 'Leveraging Claude and Figma AI for design research, ideation, user flows, and usability optimization.';
-                    activeItems = aiUxSkills;
-                    activeColor = '#10b981';
+                    activeSub = 'Leveraging Claude and Figma AI for design research, user flows, and usability optimization.';
+                    activeItems = aiUxSkillsFull;
+                    activeColor = '#34d399';
                 } else if (activeSkillTab === 'spatial') {
                     activeTitle = '🎨 CREATIVE SUITE & 3D SPATIAL DESIGN';
                     activeSub = 'Visual design, animation, visual effects, and 3D modeling across Adobe, Spline, Blender, and Rive.';
-                    activeItems = creativeSkills;
+                    activeItems = creativeSkillsFull;
                     activeColor = '#38bdf8';
                 } else if (activeSkillTab === 'tools') {
                     activeTitle = '💻 NO-CODE, CMS & APP INTERFACE BUILDING';
                     activeSub = 'Building robust digital products with FlutterFlow, Webflow, WordPress, and developer design handoff.';
-                    activeItems = noCodeSkills;
-                    activeColor = '#f59e0b';
+                    activeItems = noCodeSkillsFull;
+                    activeColor = '#fbbf24';
                 }
 
-                ctx.fillStyle = activeColor; ctx.font = 'bold 20px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText(activeTitle, cx + 32, cy + 44);
+                ctx.fillStyle = activeColor; ctx.font = 'bold 24px "Montserrat", sans-serif'; ctx.textAlign = 'left';
+                ctx.fillText(activeTitle, cx + 32, cy + 46);
 
-                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 14px "Montserrat", sans-serif';
-                ctx.fillText(activeSub, cx + 32, cy + 76);
+                ctx.fillStyle = '#cbd5e1'; ctx.font = '500 16px "Montserrat", sans-serif';
+                ctx.fillText(activeSub, cx + 32, cy + 78);
 
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.beginPath();
-                ctx.moveTo(cx + 32, cy + 96); ctx.lineTo(cx + cw - 32, cy + 96); ctx.stroke();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.09)'; ctx.beginPath();
+                ctx.moveTo(cx + 32, cy + 102); ctx.lineTo(cx + cw - 32, cy + 102); ctx.stroke();
 
-                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 15px "Montserrat", sans-serif';
-                ctx.fillText('VERIFIED SKILLS FROM RESUME:', cx + 32, cy + 130);
+                ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16.5px "Montserrat", sans-serif';
+                ctx.fillText('VERIFIED SKILLS FROM RESUME:', cx + 32, cy + 134);
 
-                drawSkillChips(activeItems, cx + 32, cy + 154, cw - 64, true);
+                drawSkillChips(activeItems, cx + 32, cy + 158, cw - 64, true);
             }
 
             ctx.restore();
