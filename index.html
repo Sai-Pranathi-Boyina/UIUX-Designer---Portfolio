@@ -1186,37 +1186,24 @@
             opacity: 1;
         }
 
-        /* Loader: First frame background with sleek loading symbol */
+        /* Loader: Clean, lightweight spinner on matching studio ivory background */
         #loader {
             position: fixed;
             inset: 0;
-            background: #F4EFE7 url('first_frame_bg.png') center center / cover no-repeat;
+            background: #F4EFE7;
             z-index: 200;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: opacity 0.4s ease;
-        }
-        .loader-symbol {
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            background: rgba(244, 239, 231, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1.5px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 14px 36px rgba(36, 71, 53, 0.16);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: opacity 0.3s ease;
         }
         .loader-spinner {
-            width: 32px;
-            height: 32px;
-            border: 3px solid rgba(36, 71, 53, 0.18);
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(36, 71, 53, 0.15);
             border-top-color: var(--accent-green);
             border-radius: 50%;
-            animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            animation: spin 0.75s linear infinite;
         }
         @keyframes spin {
             to { transform: rotate(360deg); }
@@ -1240,11 +1227,9 @@
     <!-- Action Toast Notification -->
     <div class="action-toast" id="action-toast">Action Completed</div>
 
-    <!-- Loading Screen (First frame background with loading symbol on top) -->
+    <!-- Loading Screen (Smooth minimal spinner) -->
     <div id="loader">
-        <div class="loader-symbol">
-            <div class="loader-spinner"></div>
-        </div>
+        <div class="loader-spinner"></div>
     </div>
 
     <!-- ---------------- TOP NAVBAR (Logo & Left Text Removed) ---------------- -->
@@ -3560,7 +3545,7 @@
                 const loaderEl = document.getElementById('loader');
                 if (loaderEl) {
                     loaderEl.style.opacity = '0';
-                    setTimeout(() => loaderEl.style.display = 'none', 450);
+                    setTimeout(() => loaderEl.style.display = 'none', 300);
                 }
 
                 // ---------------- CINEMATIC OPENING CAMERA TRANSITION ----------------
