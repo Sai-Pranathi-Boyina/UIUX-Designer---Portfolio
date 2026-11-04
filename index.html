@@ -2074,9 +2074,9 @@
         scene.background = new THREE.Color(0xF4EFE7);
 
         // Perspective Camera
-        const camera = new THREE.PerspectiveCamera(44.0, window.innerWidth / window.innerHeight, 0.1, 100);
-        // Start zoomed into desk/character (opening view)
-        camera.position.set(3.2, 2.7, 1.7);
+        const camera = new THREE.PerspectiveCamera(46.0, window.innerWidth / window.innerHeight, 0.1, 100);
+        // Start from high 3/4 isometric room view (starting scene)
+        camera.position.set(7.8, 5.3, -4.5);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -2096,8 +2096,8 @@
         controls.enableZoom = true;
         controls.minDistance = 0.3;
         controls.maxDistance = 15.0;
-        // Looking at character desk in opening angle
-        controls.target.set(-0.2, 2.0, 0.4);
+        // Looking at character desk in starting isometric angle
+        controls.target.set(0.7, 1.8, -0.9);
         controls.maxPolarAngle = Math.PI / 2 + 0.15;
         controls.enabled = true;
 
@@ -3519,15 +3519,23 @@
                     setTimeout(() => loaderEl.style.display = 'none', 600);
                 }
 
+                // Show hero text during starting scene
+                showHeroTextWithTransition();
+
                 // ---------------- CINEMATIC OPENING CAMERA TRANSITION ----------------
-                // Starts zoomed into desk/character at [3.2, 2.7, 1.7] and glides back over 3.0s to Room Home overview [8.60, 2.35, -0.25] (fov 46.0)
-                const duration = 3000;
+                // Starts from the high 3/4 isometric room view [7.8, 5.3, -4.5] (starting scene)
+                // and continues/glides to current Room Home overview [8.60, 2.35, -0.25] (fov 46.0)
+                const duration = 2800;
+                const startDelay = 800; // Brief pause so visitor appreciates starting isometric scene before glide
+
                 new TWEEN.Tween(camera.position)
                     .to({ x: 8.60, y: 2.35, z: -0.25 }, duration)
+                    .delay(startDelay)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .start();
                 new TWEEN.Tween(controls.target)
                     .to({ x: 0.76, y: 1.80, z: -1.50 }, duration)
+                    .delay(startDelay)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .onComplete(() => {
                         controls.enabled = true;
@@ -3536,10 +3544,10 @@
                     .start();
                 new TWEEN.Tween(camera)
                     .to({ fov: 46.0 }, duration)
+                    .delay(startDelay)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .onUpdate(() => camera.updateProjectionMatrix())
                     .onComplete(() => {
-                        showHeroTextWithTransition();
                         initDeskEventListeners();
                         const urlParams = new URLSearchParams(window.location.search);
                         const initSec = parseInt(urlParams.get('sec') || '0', 10);
