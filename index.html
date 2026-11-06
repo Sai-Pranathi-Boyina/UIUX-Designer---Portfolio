@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sai Pranathi Boyina · UI/UX & Product Designer</title>
-    <meta name="description" content="Portfolio of Sai Pranathi Boyina — UI/UX & Product Designer passionate about understanding people, solving problems, and crafting meaningful product experiences.">
-    
     <!-- Prevent stale browser caching -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -200,7 +198,9 @@
             color: var(--accent-green);
             text-transform: uppercase;
             margin-bottom: 14px;
-            opacity: 1;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         /* Second line styling: large bold charcoal heading for "UI/UX & Product Designer" */
@@ -215,15 +215,24 @@
         }
 
         .type-cursor {
-            display: none;
+            display: inline-block;
+            color: var(--accent-green);
+            font-weight: 300;
+            margin-left: 3px;
+            animation: blinkCursor 0.8s infinite;
+        }
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .hero-accent-line {
-            width: 64px;
+            width: 0px;
             height: 3.5px;
             background: var(--accent-sage);
             border-radius: 2px;
             margin-bottom: 22px;
+            transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-lead {
@@ -233,14 +242,18 @@
             line-height: 1.65;
             max-width: 480px;
             margin-bottom: 34px;
-            opacity: 1;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .hero-buttons {
             display: flex;
             align-items: center;
             gap: 16px;
-            opacity: 1;
+            opacity: 0;
+            transform: translateY(14px) scale(0.96);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .btn-primary-hero {
@@ -1250,9 +1263,9 @@
     </button>
 
     <!-- ---------------- HERO SECTION (Right Side - Hierarchy Refined) ---------------- -->
-    <div class="hero-panel-wrapper active" id="hero-panel">
+    <div class="hero-panel-wrapper" id="hero-panel">
         <div class="hero-kicker">HI, I'M SAI PRANATHI</div>
-        <h1 class="hero-heading">UI/UX & Product Designer</h1>
+        <h1 class="hero-heading"><span class="typed-text"></span><span class="type-cursor">|</span></h1>
         <div class="hero-accent-line"></div>
         <p class="hero-lead">Passionate about understanding people, solving problems, and crafting meaningful product experiences.</p>
         <div class="hero-buttons">
@@ -2061,8 +2074,8 @@
 
         // Perspective Camera
         const camera = new THREE.PerspectiveCamera(46.0, window.innerWidth / window.innerHeight, 0.1, 100);
-        // Start from second image view (Room Home overview [8.60, 2.35, -0.25])
-        camera.position.set(8.60, 2.35, -0.25);
+        // Start from high 3/4 isometric room view (starting scene)
+        camera.position.set(7.8, 5.3, -4.5);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -2082,8 +2095,8 @@
         controls.enableZoom = true;
         controls.minDistance = 0.3;
         controls.maxDistance = 15.0;
-        // Looking at character desk in Room Home overview
-        controls.target.set(0.76, 1.80, -1.50);
+        // Looking at character desk in starting isometric angle
+        controls.target.set(0.7, 1.8, -0.9);
         controls.maxPolarAngle = Math.PI / 2 + 0.15;
         controls.enabled = true;
 
@@ -3531,24 +3544,45 @@
                     }
                 });
 
-                // Dismiss loading screen immediately
+                // Dismiss loading screen seamlessly
                 const loaderEl = document.getElementById('loader');
                 if (loaderEl) {
-                    loaderEl.style.display = 'none';
+                    loaderEl.style.opacity = '0';
+                    setTimeout(() => loaderEl.style.display = 'none', 300);
                 }
 
-                // Initialize desk event listeners
-                initDeskEventListeners();
+                // ---------------- CINEMATIC OPENING CAMERA TRANSITION ----------------
+                // Starts immediately from the high 3/4 isometric room view [7.8, 5.3, -4.5] (first frame)
+                // and glides with zero delay to the ending pose [8.60, 2.35, -0.25] (fov 46.0)
+                const duration = 2400;
 
-                // No starting animation: hero panel is active and visible immediately
-                const urlParams = new URLSearchParams(window.location.search);
-                const initSec = parseInt(urlParams.get('sec') || '0', 10);
-                if (!isNaN(initSec) && initSec > 0 && initSec < sectionsData.length) {
-                    goToSection(initSec);
-                } else {
-                    const heroPanel = document.getElementById('hero-panel');
-                    if (heroPanel) heroPanel.classList.add('active');
-                }
+                new TWEEN.Tween(camera.position)
+                    .to({ x: 8.60, y: 2.35, z: -0.25 }, duration)
+                    .easing(TWEEN.Easing.Cubic.InOut)
+                    .start();
+                new TWEEN.Tween(controls.target)
+                    .to({ x: 0.76, y: 1.80, z: -1.50 }, duration)
+                    .easing(TWEEN.Easing.Cubic.InOut)
+                    .onComplete(() => {
+                        controls.enabled = true;
+                        controls.update();
+                    })
+                    .start();
+                new TWEEN.Tween(camera)
+                    .to({ fov: 46.0 }, duration)
+                    .easing(TWEEN.Easing.Cubic.InOut)
+                    .onUpdate(() => camera.updateProjectionMatrix())
+                    .onComplete(() => {
+                        // Reveal hero text ONLY upon landing on the ending pose (Hero Section)
+                        showHeroTextWithTransition();
+                        initDeskEventListeners();
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const initSec = parseInt(urlParams.get('sec') || '0', 10);
+                        if (!isNaN(initSec) && initSec > 0 && initSec < sectionsData.length) {
+                            goToSection(initSec);
+                        }
+                    })
+                    .start();
             },
             (xhr) => {
                 // Progress
@@ -3639,10 +3673,86 @@
             }
         }
 
-        // ---------------- HERO TEXT DISPLAY (No starting animation) ----------------
+        // ---------------- HERO TEXT ENTRANCE & TYPING TRANSITION ----------------
+        let hasIntroHeroPlayed = false;
+
         function showHeroTextWithTransition() {
             const heroPanel = document.getElementById('hero-panel');
-            if (heroPanel) heroPanel.classList.add('active');
+            if (!heroPanel) return;
+
+            heroPanel.classList.add('active');
+
+            const kickerEl = heroPanel.querySelector('.hero-kicker');
+            const typedSpan = heroPanel.querySelector('.typed-text');
+            const cursorSpan = heroPanel.querySelector('.type-cursor');
+            const lineEl = heroPanel.querySelector('.hero-accent-line');
+            const descEl = heroPanel.querySelector('.hero-lead');
+            const actionsEl = heroPanel.querySelector('.hero-buttons');
+
+            const fullHeadingText = "UI/UX & Product Designer";
+
+            if (hasIntroHeroPlayed) {
+                if (typedSpan) typedSpan.textContent = fullHeadingText;
+                if (cursorSpan) cursorSpan.style.display = 'none';
+                if (kickerEl) { kickerEl.style.opacity = '1'; kickerEl.style.transform = 'translateY(0)'; }
+                if (lineEl) lineEl.style.width = '64px';
+                if (descEl) { descEl.style.opacity = '1'; descEl.style.transform = 'translateY(0)'; }
+                if (actionsEl) { actionsEl.style.opacity = '1'; actionsEl.style.transform = 'translateY(0) scale(1)'; }
+                return;
+            }
+            hasIntroHeroPlayed = true;
+
+            // 1. Kicker appears smoothly
+            setTimeout(() => {
+                if (kickerEl) {
+                    kickerEl.style.opacity = '1';
+                    kickerEl.style.transform = 'translateY(0)';
+                }
+            }, 100);
+
+            // 2. Heading typing effect starts cleanly
+            if (typedSpan) typedSpan.textContent = '';
+            let charIdx = 0;
+            const typeSpeed = 34; // ~34ms per char = ~800ms total
+            setTimeout(() => {
+                const interval = setInterval(() => {
+                    if (charIdx < fullHeadingText.length) {
+                        if (typedSpan) typedSpan.textContent += fullHeadingText.charAt(charIdx);
+                        charIdx++;
+                    } else {
+                        clearInterval(interval);
+
+                        // Cursor fade
+                        setTimeout(() => {
+                            if (cursorSpan) {
+                                cursorSpan.style.transition = 'opacity 0.4s ease';
+                                cursorSpan.style.opacity = '0';
+                            }
+                        }, 400);
+
+                        // 3. Accent Line expands
+                        setTimeout(() => {
+                            if (lineEl) lineEl.style.width = '64px';
+                        }, 100);
+
+                        // 4. Description fades & floats up
+                        setTimeout(() => {
+                            if (descEl) {
+                                descEl.style.opacity = '1';
+                                descEl.style.transform = 'translateY(0)';
+                            }
+                        }, 220);
+
+                        // 5. Buttons pop in
+                        setTimeout(() => {
+                            if (actionsEl) {
+                                actionsEl.style.opacity = '1';
+                                actionsEl.style.transform = 'translateY(0) scale(1)';
+                            }
+                        }, 360);
+                    }
+                }, typeSpeed);
+            }, 350);
         }
 
         
