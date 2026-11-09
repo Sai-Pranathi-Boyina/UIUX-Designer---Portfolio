@@ -82,7 +82,7 @@
             ctx.fillRect(x, 1150, width, 91);
             x += width + 5;
         }
-        label(ctx, 'CLICK TO FLIP', 500, 1355, 30, 500, muted, 'center', monoFont);
+        label(ctx, 'VIEW RESPONSIBILITIES', 500, 1355, 30, 500, muted, 'center', monoFont);
         ctx.restore();
     }
 
@@ -107,7 +107,7 @@
             ctx.fillRect(112, 1330, linkWidth, 2);
             links.push({ x: 96, y: 1285, width: linkWidth + 32, height: 58, url: data.website });
         }
-        label(ctx, 'CLICK TO FLIP BACK', 500, 1385, 28, 500, muted, 'center', monoFont);
+        label(ctx, 'VIEW ID CARD', 500, 1385, 28, 500, muted, 'center', monoFont);
         ctx.restore();
     }
 
