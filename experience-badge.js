@@ -16,7 +16,7 @@
         ctx.font = `${weight} ${size}px ${font}`;
         ctx.fillStyle = color;
         ctx.textAlign = align;
-        ctx.fillText(text, x, y);
+        drawPortfolioText(ctx, text, x, y);
     }
 
     function wrap(ctx, text, x, y, width, size = 31, lineHeight = 46, weight = 500) {
@@ -27,12 +27,12 @@
         for (const word of text.split(/\s+/)) {
             const next = line ? `${line} ${word}` : word;
             if (line && ctx.measureText(next).width > width) {
-                ctx.fillText(line, x, y);
+                drawPortfolioText(ctx, line, x, y);
                 y += lineHeight;
                 line = word;
             } else line = next;
         }
-        if (line) ctx.fillText(line, x, y);
+        if (line) drawPortfolioText(ctx, line, x, y);
         return y + lineHeight;
     }
 

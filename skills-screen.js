@@ -19,6 +19,20 @@
           tools: 'Webflow · WordPress · FlutterFlow · Claude', outcome: 'Connect design, development and day-to-day team workflows.' }
     ];
     window.skillsCategories = categories;
+    window.getSkillsTarget = function (x, y, active = 'all') {
+        const tabs = [{ id: 'all', x: 24, w: 160 }, { id: 'figma', x: 194, w: 190 },
+            { id: 'ux', x: 394, w: 175 }, { id: 'spatial', x: 579, w: 175 }, { id: 'tools', x: 764, w: 160 }];
+        if (y >= 62 && y <= 106) {
+            const tab = tabs.find(tab => x >= tab.x && x < tab.x + tab.w);
+            return tab ? tab.id : null;
+        }
+        if (active !== 'all') return null;
+        const cards = [{ id: 'figma', x: 28, y: 118 }, { id: 'ux', x: 524, y: 118 },
+            { id: 'spatial', x: 28, y: 402 }, { id: 'tools', x: 524, y: 402 }];
+        const card = cards.find(card => x >= card.x && x <= card.x + 472 && y >= card.y && y <= card.y + 270);
+        return card ? card.id : null;
+    };
+
         window.drawSkillsArtwork = function (ctx, activeSkillTab = 'all') {
             ctx.save();
             ctx.setTransform(2, 0, 0, 2, 0, 0);
@@ -57,13 +71,13 @@
             ctx.fillStyle = '#ffffff';
             ctx.font = 'bold 19.5px "Montserrat", sans-serif';
             ctx.textAlign = 'left';
-            ctx.fillText('❖ Sai_Pranathi_Design_System.fig', 106, 33);
+            drawPortfolioText(ctx, '❖ Sai_Pranathi_Design_System.fig', 106, 33);
 
             ctx.fillStyle = '#10b981';
             ctx.beginPath(); ctx.arc(840, 26, 5.5, 0, Math.PI * 2); ctx.fill();
             ctx.fillStyle = '#34d399';
             ctx.font = 'bold 15px "Montserrat", sans-serif';
-            ctx.fillText('Design workspace', 855, 32);
+            drawPortfolioText(ctx, 'Design workspace', 855, 32);
 
             // Category Filter Tabs Row
             const tabs = [
@@ -85,7 +99,7 @@
                 ctx.fillStyle = isActive ? '#ffffff' : '#cbd5e1';
                 ctx.font = isActive ? 'bold 15.5px "Montserrat", sans-serif' : '600 14.5px "Montserrat", sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(t.label, t.x + t.w / 2, 89);
+                drawPortfolioText(ctx, t.label, t.x + t.w / 2, 89);
             });
 
             // Helper to draw clean skill badge pills (Enlarged text & high-contrast background)
@@ -119,7 +133,7 @@
                     // Text
                     ctx.fillStyle = '#ffffff';
                     ctx.textAlign = 'left';
-                    ctx.fillText(skill, curX + pillPaddingX, curY + pillH - (isFeatured ? 14 : 11));
+                    drawPortfolioText(ctx, skill, curX + pillPaddingX, curY + pillH - (isFeatured ? 14 : 11));
 
                     curX += pillW + (isFeatured ? 10 : 8);
                 });
@@ -143,9 +157,9 @@
                 ctx.beginPath(); ctx.roundRect(28, 118, 472, 270, 14); ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.lineWidth = 1.5; ctx.stroke();
                 ctx.fillStyle = '#A8B49A'; ctx.font = 'bold 18.5px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('❖ UI & DESIGN SYSTEMS', 48, 148);
+                drawPortfolioText(ctx, '❖ UI & DESIGN SYSTEMS', 48, 148);
                 ctx.fillStyle = '#94a3b8'; ctx.font = '500 13.5px "Montserrat", sans-serif';
-                ctx.fillText('Reusable components and responsive interfaces', 48, 168);
+                drawPortfolioText(ctx, 'Reusable components and responsive interfaces', 48, 168);
                 drawSkillChips(figmaSkillsAll, 46, 184, 436, false);
 
                 // Card 2: AI & Research (Top Right)
@@ -153,9 +167,9 @@
                 ctx.beginPath(); ctx.roundRect(524, 118, 472, 270, 14); ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.lineWidth = 1.5; ctx.stroke();
                 ctx.fillStyle = '#34d399'; ctx.font = 'bold 18.5px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('UX METHODS & RESEARCH', 544, 148);
+                drawPortfolioText(ctx, 'UX METHODS & RESEARCH', 544, 148);
                 ctx.fillStyle = '#94a3b8'; ctx.font = '500 13.5px "Montserrat", sans-serif';
-                ctx.fillText('User journeys, structure and usability', 544, 168);
+                drawPortfolioText(ctx, 'User journeys, structure and usability', 544, 168);
                 drawSkillChips(aiUxSkillsAll, 542, 184, 436, false);
 
                 // Card 3: Creative & 3D (Bottom Left)
@@ -163,9 +177,9 @@
                 ctx.beginPath(); ctx.roundRect(28, 402, 472, 270, 14); ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.lineWidth = 1.5; ctx.stroke();
                 ctx.fillStyle = '#38bdf8'; ctx.font = 'bold 18.5px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('VISUAL DESIGN & MOTION', 48, 432);
+                drawPortfolioText(ctx, 'VISUAL DESIGN & MOTION', 48, 432);
                 ctx.fillStyle = '#94a3b8'; ctx.font = '500 13.5px "Montserrat", sans-serif';
-                ctx.fillText('Client creatives, visual identity and 3D', 48, 452);
+                drawPortfolioText(ctx, 'Client creatives, visual identity and 3D', 48, 452);
                 drawSkillChips(creativeSkillsAll, 46, 468, 436, false);
 
                 // Card 4: No-Code & CMS (Bottom Right)
@@ -173,10 +187,15 @@
                 ctx.beginPath(); ctx.roundRect(524, 402, 472, 270, 14); ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.14)'; ctx.lineWidth = 1.5; ctx.stroke();
                 ctx.fillStyle = '#fbbf24'; ctx.font = 'bold 18.5px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText('DEVELOPMENT & TOOLS', 544, 432);
+                drawPortfolioText(ctx, 'DEVELOPMENT & TOOLS', 544, 432);
                 ctx.fillStyle = '#94a3b8'; ctx.font = '500 13.5px "Montserrat", sans-serif';
-                ctx.fillText('Websites, CRM tools and delivery workflows', 544, 452);
+                drawPortfolioText(ctx, 'Websites, CRM tools and delivery workflows', 544, 452);
                 drawSkillChips(noCodeSkillsAll, 542, 468, 436, false);
+                ctx.fillStyle = '#b7c4b9';
+                ctx.font = '600 22px "Montserrat", sans-serif';
+                ctx.textAlign = 'right';
+                [[478,148],[974,148],[478,432],[974,432]].forEach(([x,y]) => drawPortfolioText(ctx, '↗',x,y));
+                ctx.textAlign = 'left';
             } else {
                 // Expanded Single Domain View
                 const cx = 32;
@@ -216,25 +235,25 @@
                 }
 
                 ctx.fillStyle = activeColor; ctx.font = 'bold 24px "Montserrat", sans-serif'; ctx.textAlign = 'left';
-                ctx.fillText(activeTitle, cx + 32, cy + 46);
+                drawPortfolioText(ctx, activeTitle, cx + 32, cy + 46);
 
                 ctx.fillStyle = '#cbd5e1'; ctx.font = '500 16px "Montserrat", sans-serif';
-                ctx.fillText(activeSub, cx + 32, cy + 78);
+                drawPortfolioText(ctx, activeSub, cx + 32, cy + 78);
 
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.09)'; ctx.beginPath();
                 ctx.moveTo(cx + 32, cy + 102); ctx.lineTo(cx + cw - 32, cy + 102); ctx.stroke();
 
                 ctx.fillStyle = '#ffffff'; ctx.font = 'bold 16.5px "Montserrat", sans-serif';
-                ctx.fillText('METHODS & TOOLS', cx + 32, cy + 134);
+                drawPortfolioText(ctx, 'METHODS & TOOLS', cx + 32, cy + 134);
 
                 activeItems.forEach((skill, index) => {
                     const rowY = cy + 180 + index * 62;
                     ctx.fillStyle = activeColor;
                     ctx.font = '600 15px "JetBrains Mono", monospace';
-                    ctx.fillText(String(index + 1).padStart(2, '0'), cx + 32, rowY);
+                    drawPortfolioText(ctx, String(index + 1).padStart(2, '0'), cx + 32, rowY);
                     ctx.fillStyle = '#f0f3f7';
                     ctx.font = '600 23px "Montserrat", sans-serif';
-                    ctx.fillText(skill, cx + 80, rowY);
+                    drawPortfolioText(ctx, skill, cx + 80, rowY);
                     if (index < activeItems.length - 1) {
                         ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
                         ctx.beginPath();
