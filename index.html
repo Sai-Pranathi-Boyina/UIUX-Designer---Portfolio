@@ -2188,7 +2188,7 @@
         controls.dampingFactor = 0.05;
         controls.enablePan = true;
         controls.screenSpacePanning = true;
-        controls.enableZoom = true;
+        controls.enableZoom = false; // Trackpad/wheel scrolling navigates sections.
         controls.minDistance = 0.3;
         controls.maxDistance = 15.0;
         // Looking at character desk in starting isometric angle
@@ -2932,165 +2932,107 @@
             setInterval(updatePhoneDisplays, 1000);
         }
 
+        const phoneWallpaper = new Image();
+        phoneWallpaper.onload = () => { if (phoneCtx) drawPhoneScreen(); };
+        phoneWallpaper.src = 'ios27-lockscreen.jpg';
+
+        function drawPhoneWallpaper(ctx) {
+            ctx.fillStyle='#151824';ctx.fillRect(0,0,720,1440);
+            if (phoneWallpaper.complete && phoneWallpaper.naturalWidth) {
+                const scale=Math.max(720/phoneWallpaper.naturalWidth,1440/phoneWallpaper.naturalHeight);
+                const w=phoneWallpaper.naturalWidth*scale,h=phoneWallpaper.naturalHeight*scale;
+                ctx.drawImage(phoneWallpaper,(720-w)/2,(1440-h)/2,w,h);
+            }
+        }
+        // Resolve Apple's actual display face locally; do not redistribute system fonts.
+        const phoneClockFont = new FontFace('Phone Clock SF',
+            'local("SFProDisplay-Thin"), local("SF Pro Display Thin")', {weight: '100'});
+        phoneClockFont.load().then(face => {
+            document.fonts.add(face);
+            if (phoneCtx) drawPhoneScreen();
+        }).catch(() => { /* Use the platform's system font when SF Pro is unavailable. */ });
+
+        function drawIOSLockClock(ctx, date = new Date()) {
+            const time = `${date.getHours()%12 || 12}:${String(date.getMinutes()).padStart(2,'0')}`;
+            const family = '"Phone Clock SF", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif';
+            ctx.save();
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'alphabetic';
+            // Fit with font size, preserving the real glyph proportions and stroke weight.
+            let size = 286;
+            ctx.font = `100 ${size}px ${family}`;
+            size *= Math.min(1, 612 / ctx.measureText(time).width);
+            ctx.font = `100 ${size}px ${family}`;
+            const metrics = ctx.measureText(time);
+            const ascent = metrics.actualBoundingBoxAscent || size * .72;
+            const descent = metrics.actualBoundingBoxDescent || 0;
+            const baseline = 286 + (ascent - descent) / 2;
+            const glass = ctx.createLinearGradient(0, baseline-ascent, 0, baseline+descent);
+            glass.addColorStop(0,'rgba(255,255,255,.97)');
+            glass.addColorStop(.42,'rgba(226,233,253,.78)');
+            glass.addColorStop(.78,'rgba(185,201,237,.42)');
+            glass.addColorStop(1,'rgba(229,237,255,.72)');
+            ctx.fillStyle = glass;
+            ctx.shadowColor = 'rgba(7,13,30,.18)';
+            ctx.shadowBlur = 2;
+            ctx.shadowOffsetY = 1;
+            ctx.fillText(time,360,baseline);
+            ctx.restore();
+        }
+
         function drawPhoneScreen() {
             if (!phoneCtx) return;
-            const ctx = phoneCtx;
-            ctx.save();
-            ctx.setTransform(2, 0, 0, 2, 0, 0);
-            const w = 720;
-            const h = 1440;
+            const ctx=phoneCtx;
+            ctx.save();ctx.setTransform(2,0,0,2,0,0);
+            drawPhoneWallpaper(ctx);
+            const font='-apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif';
+            ctx.textBaseline='alphabetic';ctx.textAlign='left';
+            ctx.fillStyle='#f6f7ff';ctx.font=`500 20px ${font}`;
+            drawPortfolioText(ctx,'••••',56,53);
+            ctx.textAlign='right';drawPortfolioText(ctx,'5G',590,54);
+            ctx.strokeStyle='#f6f7ff';ctx.lineWidth=2;
+            ctx.beginPath();ctx.roundRect(607,36,45,23,6);ctx.stroke();
+            ctx.fillStyle='#f6f7ff';ctx.beginPath();ctx.roundRect(611,40,35,15,3);ctx.fill();ctx.fillRect(655,43,3,9);
+            ctx.fillStyle='#000';ctx.beginPath();ctx.roundRect(258,24,204,58,29);ctx.fill();
+            ctx.fillStyle='#152033';ctx.beginPath();ctx.arc(432,53,9,0,Math.PI*2);ctx.fill();
 
-            // Deep background matching reference
-            ctx.fillStyle = '#0b0f0d';
-            ctx.fillRect(0, 0, w, h);
+            ctx.textAlign='center';ctx.fillStyle='#ecedfa';ctx.font=`500 29px ${font}`;
+            const date=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+            drawPortfolioText(ctx,date,360,146);
+            drawIOSLockClock(ctx);
+            ctx.fillStyle='#e6e9f5';ctx.font=`600 28px ${font}`;drawPortfolioText(ctx,'Sai Pranathi',360,429);
+            ctx.fillStyle='#bcc5db';ctx.font=`400 22px ${font}`;drawPortfolioText(ctx,'UI/UX & Product Designer',360,461);
 
-            // Matrix dots
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            const dotSpacing = 28;
-            for (let x = 14; x < w; x += dotSpacing) {
-                for (let y = 14; y < h; y += dotSpacing) {
-                    ctx.beginPath();
-                    ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            }
-
-            // Punch hole camera at top center
-            ctx.fillStyle = '#050706';
-            ctx.beginPath();
-            ctx.arc(w / 2, 44, 14, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.strokeStyle = '#1a221d';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            const timeStr = formatCurrentPhoneTime();
-            const dateStr = formatCurrentPhoneDate();
-
-            // Status Bar Text & Icons
-            ctx.fillStyle = '#c3cec5';
-            ctx.font = '600 22px "Montserrat", sans-serif';
-            ctx.textAlign = 'left';
-            drawPortfolioText(ctx, timeStr, 56, 52);
-
-            ctx.textAlign = 'right';
-            ctx.font = '600 20px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, '5G 100%', w - 56, 52);
-
-            // Big Clock (Matching reference)
-            ctx.fillStyle = '#f4efe7';
-            ctx.font = '800 114px "Montserrat", sans-serif';
-            ctx.textAlign = 'center';
-            drawPortfolioText(ctx, timeStr, w / 2, 230);
-
-            // Dot and Location · HYDERABAD, INDIA
-            ctx.fillStyle = '#84a98c';
-            ctx.beginPath();
-            ctx.arc(w / 2 - 110, 282, 5, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#c3cec5';
-            ctx.font = '700 20px "Montserrat", sans-serif';
-            ctx.textAlign = 'center';
-            drawPortfolioText(ctx, dateStr, w / 2 + 10, 288);
-
-            // Profile Header (Left Aligned with cards at x = 54)
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#f4efe7';
-            ctx.font = '800 38px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, 'Boyina Sai Pranathi', 54, 395);
-
-            ctx.fillStyle = '#b1beb5';
-            ctx.font = '500 24px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, 'UI/UX & Product Designer', 54, 435);
-
-            // 1. Card: Email (y: 480 to 620)
-            const cardW = w - 108;
-            ctx.fillStyle = 'rgba(28, 35, 31, 0.85)';
-            ctx.beginPath(); ctx.roundRect(54, 480, cardW, 140, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-            drawPortfolioIcon(ctx, 'mail', 87, 532, 36, '#84a98c');
-
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#f4efe7';
-            ctx.font = '700 26px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, 'Email', 156, 542);
-            ctx.fillStyle = '#b1beb5';
-            ctx.font = '500 20px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, 'boyinasaipranathi@gmail.com', 156, 580);
-
-            ctx.fillStyle = '#8fa698';
-            ctx.beginPath(); ctx.arc(w - 90, 550, 4, 0, Math.PI * 2); ctx.fill();
-
-            // 2. Card: LinkedIn (y: 650 to 790)
-            ctx.fillStyle = 'rgba(28, 35, 31, 0.85)';
-            ctx.beginPath(); ctx.roundRect(54, 650, cardW, 140, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-            drawPortfolioIcon(ctx, 'linkedin', 87, 702, 36, '#84a98c');
-
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#f4efe7';
-            ctx.font = '700 26px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, 'LinkedIn', 156, 712);
-            ctx.fillStyle = '#b1beb5';
-            ctx.font = '500 20px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, 'sai-pranathi-boyina', 156, 750);
-
-            ctx.fillStyle = '#8fa698';
-            ctx.beginPath(); ctx.arc(w - 90, 720, 4, 0, Math.PI * 2); ctx.fill();
-
-            // 3. Card: CV.pdf (Highlighted Pill in Theme Sage Green) (y: 820 to 960)
-            const cvGrad = ctx.createLinearGradient(54, 820, w - 54, 960);
-            cvGrad.addColorStop(0, '#84a98c');
-            cvGrad.addColorStop(1, '#689172');
-            ctx.fillStyle = cvGrad;
-            ctx.beginPath(); ctx.roundRect(54, 820, cardW, 140, 26); ctx.fill();
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-            drawPortfolioIcon(ctx, 'document', 87, 872, 36, '#12241b');
-
-            ctx.textAlign = 'left';
-            ctx.fillStyle = '#12241b';
-            ctx.font = '800 26px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, 'Resume', 156, 882);
-            ctx.fillStyle = '#213c2c';
-            ctx.font = '600 20px "Montserrat", sans-serif';
-            drawPortfolioText(ctx, 'Download PDF', 156, 920);
-
-            // Download circular button
-            ctx.fillStyle = '#12241b';
-            ctx.beginPath(); ctx.arc(w - 105, 890, 28, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#84a98c';
-            ctx.font = 'bold 24px sans-serif';
-            ctx.textAlign = 'center';
-            drawPortfolioIcon(ctx, 'download', w - 121, 874, 32, '#84a98c');
-
-            // Bottom 4 App Circular Icons (y: 1220 to 1310)
-            const dockIcons = [
-                { icon: 'mail', cx: 140 },
-                { icon: 'message', cx: 286 },
-                { icon: 'linkedin', cx: 434 },
-                { icon: 'home', cx: 580 }
+            const rows=[
+                {y:480,icon:'mail',title:'Email',detail:'boyinasaipranathi@gmail.com',color:'#198aff'},
+                {y:650,icon:'linkedin',title:'LinkedIn',detail:'sai-pranathi-boyina',color:'#087cbd'},
+                {y:820,icon:'document',title:'Resume',detail:'Download PDF',color:'#628a76'}
             ];
-            dockIcons.forEach(app => {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                ctx.beginPath(); ctx.arc(app.cx, 1260, 40, 0, Math.PI * 2); ctx.fill();
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.lineWidth = 1.5; ctx.stroke();
-
-                ctx.fillStyle = '#f4efe7';
-                ctx.font = '28px sans-serif';
-                ctx.textAlign = 'center';
-                drawPortfolioIcon(ctx, app.icon, app.cx - 18, 1242, 36, '#f4efe7');
+            rows.forEach(row=>{
+                ctx.save();ctx.beginPath();ctx.roundRect(54,row.y,612,140,30);ctx.clip();
+                ctx.filter='blur(14px)';drawPhoneWallpaper(ctx);ctx.filter='none';
+                const glass=ctx.createLinearGradient(54,row.y,666,row.y+140);
+                glass.addColorStop(0,'rgba(233,239,255,.25)');glass.addColorStop(1,'rgba(187,203,240,.13)');
+                ctx.fillStyle=glass;ctx.fillRect(54,row.y,612,140);ctx.restore();
+                ctx.strokeStyle='rgba(255,255,255,.27)';ctx.lineWidth=1.5;
+                ctx.beginPath();ctx.roundRect(54,row.y,612,140,30);ctx.stroke();
+                ctx.fillStyle=row.color;ctx.beginPath();ctx.roundRect(78,row.y+24,44,44,12);ctx.fill();
+                drawPortfolioIcon(ctx,row.icon,87,row.y+33,26,'#fff');
+                ctx.textAlign='left';ctx.fillStyle='#fff';ctx.font=`600 27px ${font}`;
+                drawPortfolioText(ctx,row.title,138,row.y+55);
+                ctx.fillStyle='#ecf0fb';ctx.font=`400 24px ${font}`;drawPortfolioText(ctx,row.detail,80,row.y+104);
+                ctx.textAlign='right';ctx.fillStyle='#c0c9df';ctx.font=`400 19px ${font}`;drawPortfolioText(ctx,'Tap to open',638,row.y+53);
             });
-
-            // Home indicator bar at bottom
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            ctx.beginPath(); ctx.roundRect(w / 2 - 90, 1380, 180, 6, 3); ctx.fill();
-
-            ctx.restore();
-            if (phoneTexture) phoneTexture.needsUpdate = true;
+            ctx.textAlign='center';ctx.fillStyle='#c8d0e4';ctx.font=`400 23px ${font}`;
+            drawPortfolioText(ctx,'Tap a card to connect',360,1150);
+            // Two useful lock-screen shortcuts in place of a home-screen dock.
+            [{icon:'mail',cx:140},{icon:'home',cx:580}].forEach(app=>{
+                ctx.fillStyle='rgba(225,234,255,.16)';ctx.beginPath();ctx.arc(app.cx,1260,43,0,Math.PI*2);ctx.fill();
+                ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1.5;ctx.stroke();
+                drawPortfolioIcon(ctx,app.icon,app.cx-20,1240,40,'#fff');
+            });
+            ctx.fillStyle='rgba(255,255,255,.85)';ctx.beginPath();ctx.roundRect(270,1380,180,7,3.5);ctx.fill();
+            ctx.restore();if(phoneTexture)phoneTexture.needsUpdate=true;
         }
 
         // ---------------- LOAD GLTF OFFICE MODEL ----------------
@@ -3210,42 +3152,66 @@
                 phoneAssembly.position.set(-2.120, 1.869, 0.630);
                 phoneParent.add(phoneAssembly);
 
-                if (phoneGlass) {
-                    phoneGlass.position.set(0, 0, 0);
-                    phoneGlass.rotation.set(0, 0, 0);
-                    phoneAssembly.add(phoneGlass);
-                }
-                if (phoneRim) {
-                    phoneRim.position.set(0, -0.021, 0);
-                    phoneRim.rotation.set(0, 0, 0);
-                    phoneAssembly.add(phoneRim);
-                }
-                if (phoneEarpiece) {
-                    phoneEarpiece.visible = false; // Removed button-like element on phone as requested
-                }
-
-                // Orient phone rotated 90 deg anti-clockwise on desk
+                // Replace the original slab with a rounded iPhone enclosure.
+                [phoneGlass, phoneRim, phoneEarpiece].filter(Boolean).forEach(node => { node.visible = false; });
                 phoneAssembly.rotation.y = Math.PI;
-
-                const phoneMat = new THREE.MeshBasicMaterial({
-                    map: phoneTexture,
-                    toneMapped: false,
-                    side: THREE.DoubleSide
+                const phoneFace = new THREE.Group();
+                phoneFace.position.set(0, 0.0055, 0);
+                phoneFace.rotation.set(-Math.PI / 2, 0, Math.PI / 2);
+                phoneAssembly.add(phoneFace);
+                function phoneOutline(width, height, radius) {
+                    const x = width / 2, y = height / 2, r = radius;
+                    const shape = new THREE.Shape();
+                    shape.moveTo(-x+r,-y); shape.lineTo(x-r,-y);
+                    shape.quadraticCurveTo(x,-y,x,-y+r); shape.lineTo(x,y-r);
+                    shape.quadraticCurveTo(x,y,x-r,y); shape.lineTo(-x+r,y);
+                    shape.quadraticCurveTo(-x,y,-x,y-r); shape.lineTo(-x,-y+r);
+                    shape.quadraticCurveTo(-x,-y,-x+r,-y);
+                    return shape;
+                }
+                const titanium = new THREE.MeshStandardMaterial({ color: 0x8d9298, metalness: 0.72, roughness: 0.36 });
+                const shellGeometry = new THREE.ExtrudeGeometry(phoneOutline(0.226,0.446,0.032), {
+                    depth: 0.018, bevelEnabled: true, bevelSize: 0.0015,
+                    bevelThickness: 0.0015, bevelSegments: 3, curveSegments: 12, steps: 1
                 });
-                const phoneGeom = new THREE.PlaneGeometry(0.210, 0.420);
-                const uvs = phoneGeom.attributes.uv;
-                for (let i = 0; i < uvs.count; i++) {
-                    uvs.setX(i, 1.0 - uvs.getX(i));
+                shellGeometry.translate(0,0,-0.021);
+                const shell = new THREE.Mesh(shellGeometry,titanium);
+                shell.name = 'iPhoneTitaniumFrame'; shell.castShadow = true;
+                phoneFace.add(shell);
+                const glass = new THREE.Mesh(new THREE.ShapeGeometry(phoneOutline(0.222,0.442,0.031),24),
+                    new THREE.MeshBasicMaterial({color:0x030405,side:THREE.DoubleSide}));
+                glass.name = 'iPhoneBlackBezel'; glass.position.z = -0.0005;
+                phoneFace.add(glass);
+                const phoneGeom = new THREE.ShapeGeometry(phoneOutline(0.210,0.420,0.026),24);
+                const vertices = phoneGeom.attributes.position, uvs = phoneGeom.attributes.uv;
+                // Same normalized coordinates as the old screen: retain all contact hit regions.
+                for (let i=0;i<uvs.count;i++) {
+                    uvs.setXY(i, 1-(vertices.getX(i)/0.210+0.5), vertices.getY(i)/0.420+0.5);
                 }
                 uvs.needsUpdate = true;
-
-                phoneScreenMesh = new THREE.Mesh(phoneGeom, phoneMat);
+                const phoneMat = new THREE.MeshBasicMaterial({map:phoneTexture,toneMapped:false,side:THREE.DoubleSide});
+                phoneScreenMesh = new THREE.Mesh(phoneGeom,phoneMat);
                 phoneScreenMesh.name = 'InteractivePhoneScreen';
-                phoneScreenMesh.position.set(0, 0.0055, 0);
-                phoneScreenMesh.rotation.set(-Math.PI / 2, 0, Math.PI / 2);
-                phoneAssembly.add(phoneScreenMesh);
+                phoneScreenMesh.position.z = 0.0005;
+                phoneFace.add(phoneScreenMesh);
+                // Separate controls preserve their small edge details without stretching the body.
+                [[-0.115,0.116,0.018],[-0.115,0.067,0.039],[-0.115,0.012,0.039],[0.115,0.060,0.057]].forEach(([x,y,height],i) => {
+                    const button = new THREE.Mesh(new THREE.BoxGeometry(0.003,height,0.008),titanium);
+                    button.name = i===3 ? 'iPhoneSideButton' : i===0 ? 'iPhoneActionButton' : 'iPhoneVolumeButton';
+                    button.position.set(x,y,-0.011); phoneFace.add(button);
+                });
 
-
+                // Seat the enclosure on the actual desk in world space (the GLB has mirrored parents).
+                const desktopSurface = findNode('solid oak desktop');
+                if (desktopSurface) {
+                    officeModel.updateMatrixWorld(true);
+                    const deskBounds = new THREE.Box3().setFromObject(desktopSurface);
+                    const phoneBounds = new THREE.Box3().setFromObject(phoneAssembly);
+                    const seatedPosition = phoneAssembly.getWorldPosition(new THREE.Vector3());
+                    seatedPosition.y += deskBounds.max.y + 0.0003 - phoneBounds.min.y;
+                    phoneAssembly.position.copy(phoneAssembly.parent.worldToLocal(seatedPosition));
+                    phoneAssembly.updateMatrixWorld(true);
+                }
 
                 // Relocate potted floor plant from beside cupboard into the trash can position, and remove/hide trash can
                 const floorPlantGroup = findNode('floor plant group');
@@ -3399,7 +3365,7 @@
             if (container.hidden) return;
             const point = new THREE.Vector3();
             roomTouchpoints.forEach(marker => {
-                point.copy(marker.worldPoint).project(camera);
+                point.copy(marker.worldPoint).project(parallaxCamera);
                 const x = (point.x + 1) * window.innerWidth / 2;
                 const y = (1 - point.y) * window.innerHeight / 2;
                 marker.button.hidden = point.z < -1 || point.z > 1 || x < 24 || x > window.innerWidth - 24 || y < 80 || y > window.innerHeight - 30;
@@ -4252,7 +4218,7 @@
                 } else {
                     bbox.getCenter(v);
                 }
-                v.project(camera);
+                v.project(parallaxCamera);
 
                 const sx = (v.x * 0.5 + 0.5) * window.innerWidth;
                 const sy = (-(v.y * 0.5) + 0.5) * window.innerHeight;
@@ -4336,6 +4302,45 @@
             });
         }
 
+        // One section per scroll gesture, following the visible navigation order.
+        const scrollSectionOrder = [0, 1, 3, 2, 4, 5];
+        let sectionScrollTotal = 0;
+        let sectionScrollLastEvent = 0;
+        let sectionScrollConsumed = false;
+        let sectionScrollBlockedUntil = 0;
+        window.addEventListener('wheel', (event) => {
+            // Preserve browser pinch-to-zoom and horizontal scrolling in control bars.
+            if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY) return;
+            // Let text panels scroll naturally before handing their boundary to navigation.
+            for (let node = event.target; node instanceof Element && node !== document.body; node = node.parentElement) {
+                const style = getComputedStyle(node);
+                if (/auto|scroll/.test(style.overflowY) && node.scrollHeight > node.clientHeight + 1) {
+                    const canScroll = event.deltaY > 0
+                        ? node.scrollTop + node.clientHeight < node.scrollHeight - 1
+                        : node.scrollTop > 1;
+                    if (canScroll) return;
+                }
+            }
+            event.preventDefault();
+            event.stopPropagation();
+            const now = performance.now();
+            if (now - sectionScrollLastEvent > 220) {
+                sectionScrollTotal = 0;
+                sectionScrollConsumed = false;
+            }
+            sectionScrollLastEvent = now;
+            if (sectionScrollConsumed || now < sectionScrollBlockedUntil) return;
+            const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1);
+            if (Math.sign(delta) !== Math.sign(sectionScrollTotal)) sectionScrollTotal = 0;
+            sectionScrollTotal += delta;
+            if (Math.abs(sectionScrollTotal) < 45) return;
+            sectionScrollConsumed = true;
+            const next = scrollSectionOrder.indexOf(currentSection) + Math.sign(sectionScrollTotal);
+            if (next < 0 || next >= scrollSectionOrder.length) return;
+            sectionScrollBlockedUntil = now + 1200;
+            goToSection(scrollSectionOrder[next]);
+        }, { passive: false, capture: true });
+
         // Keyboard Shortcuts
         window.addEventListener('keydown', (e) => {
             if (currentSection === 1 && e.target.closest('#skills-controls') && ['ArrowLeft', 'ArrowRight'].includes(e.key)) {
@@ -4370,11 +4375,27 @@
         const mouse = new THREE.Vector2();
         let isPointerDragging = false;
         let pointerDownPos = { x: 0, y: 0 };
+        let pressedSkillTarget = null;
+        // Resolve the displayed pill before OrbitControls can consume the press.
+        renderer.domElement.addEventListener('pointerdown', event => {
+            pressedSkillTarget = null;
+            if (event.button !== 0 || currentSection !== 1 || !laptopScreenMesh || laptopOpenState.progress <= .9) return;
+            mouse.set(event.clientX / window.innerWidth * 2 - 1, 1 - event.clientY / window.innerHeight * 2);
+            raycaster.setFromCamera(mouse, parallaxCamera);
+            const hit = raycaster.intersectObject(laptopScreenMesh)[0];
+            if (hit) pressedSkillTarget = getSkillsTarget((1-hit.uv.x)*1024, (1-hit.uv.y)*700, activeSkillTab);
+            if (pressedSkillTarget) controls.enabled = false;
+        }, { capture: true });
+        renderer.domElement.addEventListener('pointercancel', () => {
+            pressedSkillTarget = null;
+            controls.enabled = true;
+        });
+
 
         renderer.domElement.addEventListener('pointerdown', (e) => {
             pointerDownPos = { x: e.clientX, y: e.clientY };
             isPointerDragging = false;
-            controls.enabled = true;
+            controls.enabled = !pressedSkillTarget;
         });
 
         renderer.domElement.addEventListener('pointermove', (e) => {
@@ -4385,7 +4406,7 @@
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
             if (officeModel) {
-                raycaster.setFromCamera(mouse, camera);
+                raycaster.setFromCamera(mouse, parallaxCamera);
                 if (currentSection === 0 && roomTouchpointsReady) {
                     renderer.domElement.style.cursor = roomSectionAtPointer() !== null ? 'pointer' : 'default';
                     return;
@@ -4470,11 +4491,19 @@
         });
 
         renderer.domElement.addEventListener('pointerup', (e) => {
+            const skillTarget = pressedSkillTarget;
+            pressedSkillTarget = null;
+            controls.enabled = true;
+            if (skillTarget) {
+                const travel = Math.hypot(e.clientX-pointerDownPos.x, e.clientY-pointerDownPos.y);
+                if (currentSection === 1 && travel <= 8) setSkillTab(skillTarget);
+                return;
+            }
             if (isPointerDragging) return;
 
             mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-            raycaster.setFromCamera(mouse, camera);
+            raycaster.setFromCamera(mouse, parallaxCamera);
 
             if (currentSection === 0 && officeModel && roomTouchpointsReady) {
                 const section = roomSectionAtPointer();
@@ -4667,14 +4696,6 @@
                             window.location.href = 'mailto:boyinasaipranathi@gmail.com';
                             showToast('Contact: boyinasaipranathi@gmail.com');
                             return;
-                        } else if (px >= 236 && px <= 336) {
-                            window.location.href = 'mailto:boyinasaipranathi@gmail.com';
-                            showToast('Opening your email app…');
-                            return;
-                        } else if (px >= 384 && px <= 484) {
-                            window.open('https://www.linkedin.com/in/sai-pranathi-boyina-193ba723b/', '_blank');
-                            showToast('Opening LinkedIn…');
-                            return;
                         } else if (px >= 530 && px <= 630) {
                             goToSection(0);
                             showToast('Back to the room');
@@ -4705,6 +4726,49 @@
             }
         });
 
+        // Keep section camera poses stable; apply cursor depth only to the rendered view.
+        const parallaxCamera = camera.clone();
+        const cursorDepthTarget = new THREE.Vector2();
+        const cursorDepth = new THREE.Vector2();
+        const cursorRight = new THREE.Vector3();
+        const cursorUp = new THREE.Vector3();
+        const cursorMotionAllowed = window.matchMedia('(hover: hover) and (pointer: fine)');
+        const cursorReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        window.addEventListener('pointermove', event => {
+            if (event.pointerType !== 'mouse' || event.buttons || !cursorMotionAllowed.matches || cursorReducedMotion.matches) {
+                cursorDepthTarget.set(0, 0);
+                return;
+            }
+            cursorDepthTarget.set(
+                THREE.MathUtils.clamp(event.clientX / window.innerWidth * 2 - 1, -1, 1),
+                THREE.MathUtils.clamp(1 - event.clientY / window.innerHeight * 2, -1, 1)
+            );
+        });
+        const resetCursorDepth = () => cursorDepthTarget.set(0, 0);
+        document.documentElement.addEventListener('pointerleave', resetCursorDepth);
+        window.addEventListener('blur', resetCursorDepth);
+        window.addEventListener('pointerdown', () => {
+            if (!pressedSkillTarget) resetCursorDepth();
+        });
+
+        function updateCursorDepth(delta) {
+            if (!cursorMotionAllowed.matches || cursorReducedMotion.matches) {
+                cursorDepthTarget.set(0, 0);
+                cursorDepth.set(0, 0);
+            }
+            cursorDepth.lerp(cursorDepthTarget, 1 - Math.exp(-5 * Math.min(delta, .1)));
+            parallaxCamera.copy(camera, false);
+            const distance = camera.position.distanceTo(controls.target);
+            // Lock the top-down Contact view so its screen buttons remain stationary.
+            const amount = currentSection === 5 ? 0 : Math.min(.24, distance * .05);
+            cursorRight.set(1, 0, 0).applyQuaternion(camera.quaternion);
+            cursorUp.set(0, 1, 0).applyQuaternion(camera.quaternion);
+            parallaxCamera.position.addScaledVector(cursorRight, cursorDepth.x * amount);
+            parallaxCamera.position.addScaledVector(cursorUp, cursorDepth.y * amount * .65);
+            if (currentSection !== 5) parallaxCamera.lookAt(controls.target);
+            parallaxCamera.updateMatrixWorld();
+        }
+
         // ---------------- MAIN ANIMATION LOOP ----------------
         const clock = new THREE.Clock();
 
@@ -4716,10 +4780,6 @@
 
             TWEEN.update();
             updateExperienceBadges(elapsedTime, delta);
-            updateLiveMonitorPreviewPosition();
-
-            // Real-time projector for Education Uniform leader lines
-            updateEducationLeaderLines();
 
             if (mixer) {
                 mixer.update(delta);
@@ -4727,8 +4787,11 @@
 
             controls.update();
             camera.updateMatrixWorld();
+            updateCursorDepth(delta);
+            updateLiveMonitorPreviewPosition();
+            updateEducationLeaderLines();
             updateRoomTouchpoints();
-            renderer.render(scene, camera);
+            renderer.render(scene, parallaxCamera);
         }
         animate();
 
