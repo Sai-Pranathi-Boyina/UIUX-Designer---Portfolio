@@ -3676,6 +3676,7 @@
 
         function goToSection(index) {
             if (index < 0 || index >= sectionsData.length) return;
+            hideScrollBoundary();
             currentSection = index;
             configureRoomOrbit(index, true);
             setMonitorApp(index === 3, index !== 3);
@@ -4323,6 +4324,49 @@
         let sectionScrollLastEvent = 0;
         let sectionScrollConsumed = false;
         let sectionScrollBlockedUntil = 0;
+        let sectionScrollLastDelta = 0;
+        let sectionScrollDirection = 0;
+        let sectionScrollPending = null;
+
+        const scrollBoundarySpring = { offset: 0, velocity: 0, target: 0 };
+        function hideScrollBoundary() {
+            scrollBoundarySpring.offset = 0;
+            scrollBoundarySpring.velocity = 0;
+            scrollBoundarySpring.target = 0;
+        }
+        function showScrollBoundary(direction, pressure = 45) {
+            if (cursorReducedMotion.matches) return;
+            // Feed a resisted target without resetting position or velocity mid-rebound.
+            const spring = scrollBoundarySpring;
+            const resistance = 1 - Math.abs(spring.target) / 14;
+            spring.target = THREE.MathUtils.clamp(spring.target + direction * Math.min(pressure, 100) * .22 * resistance, -14, 14);
+        }
+        function updateScrollBoundary(delta) {
+            if (cursorReducedMotion.matches) hideScrollBoundary();
+            const steps = Math.max(1, Math.ceil(Math.min(delta, .1) / .008));
+            const dt = Math.min(delta, .1) / steps;
+            for (let i = 0; i < steps; i++) {
+                const spring = scrollBoundarySpring;
+                spring.target *= Math.exp(-18 * dt);
+                spring.velocity += (2500 * (spring.target - spring.offset) - 100 * spring.velocity) * dt;
+                spring.offset = THREE.MathUtils.clamp(spring.offset + spring.velocity * dt, -14, 14);
+            }
+            if (Math.abs(scrollBoundarySpring.target) < .02 && Math.abs(scrollBoundarySpring.offset) < .02 && Math.abs(scrollBoundarySpring.velocity) < .1) hideScrollBoundary();
+            if (scrollBoundarySpring.offset !== 0) {
+                parallaxCamera.setViewOffset(window.innerWidth, window.innerHeight, 0,
+                    scrollBoundarySpring.offset, window.innerWidth, window.innerHeight);
+            }
+        }
+
+        function navigateByScroll(direction) {
+            const next = scrollSectionOrder.indexOf(currentSection) + direction;
+            if (next < 0 || next >= scrollSectionOrder.length) {
+                showScrollBoundary(direction);
+                return;
+            }
+            sectionScrollBlockedUntil = performance.now() + 1200;
+            goToSection(scrollSectionOrder[next]);
+        }
         window.addEventListener('wheel', (event) => {
             // Preserve browser pinch-to-zoom and horizontal scrolling in control bars.
             if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY) return;
@@ -4339,21 +4383,56 @@
             event.preventDefault();
             event.stopPropagation();
             const now = performance.now();
-            if (now - sectionScrollLastEvent > 220) {
+            const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1);
+            const direction = Math.sign(delta);
+            const renewed = direction === sectionScrollDirection && Math.abs(delta) >= 12 && Math.abs(sectionScrollLastDelta) <= 4;
+            if (now - sectionScrollLastEvent > 180 || renewed) {
                 sectionScrollTotal = 0;
                 sectionScrollConsumed = false;
             }
             sectionScrollLastEvent = now;
-            if (sectionScrollConsumed || now < sectionScrollBlockedUntil) return;
-            const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1);
-            if (Math.sign(delta) !== Math.sign(sectionScrollTotal)) sectionScrollTotal = 0;
+            sectionScrollLastDelta = delta;
+            const boundaryIndex = scrollSectionOrder.indexOf(currentSection) + direction;
+            if (boundaryIndex < 0 || boundaryIndex >= scrollSectionOrder.length) {
+                // Boundary feedback follows every wheel event, independent of navigation locking.
+                if (sectionScrollPending !== null) clearTimeout(sectionScrollPending);
+                sectionScrollPending = null;
+                sectionScrollTotal = 0;
+                sectionScrollConsumed = true;
+                sectionScrollDirection = direction;
+                showScrollBoundary(direction, Math.abs(delta));
+                return;
+            }
+            scrollBoundarySpring.target = 0;
+            if (sectionScrollConsumed && direction === sectionScrollDirection) {
+                sectionScrollTotal = 0;
+                return;
+            }
+            // Accumulate even sub-pixel reverse events; do not require one large event to unlock.
+            if (direction !== Math.sign(sectionScrollTotal)) sectionScrollTotal = 0;
             sectionScrollTotal += delta;
-            if (Math.abs(sectionScrollTotal) < 45) return;
+            const reversing = sectionScrollDirection !== 0 && direction !== sectionScrollDirection;
+            if (Math.abs(sectionScrollTotal) < (reversing ? 24 : 45)) return;
             sectionScrollConsumed = true;
-            const next = scrollSectionOrder.indexOf(currentSection) + Math.sign(sectionScrollTotal);
-            if (next < 0 || next >= scrollSectionOrder.length) return;
-            sectionScrollBlockedUntil = now + 1200;
-            goToSection(scrollSectionOrder[next]);
+            sectionScrollDirection = direction;
+            sectionScrollTotal = 0;
+            if (sectionScrollPending !== null) clearTimeout(sectionScrollPending);
+            sectionScrollPending = null;
+            const nextIndex = scrollSectionOrder.indexOf(currentSection) + direction;
+            if (nextIndex < 0 || nextIndex >= scrollSectionOrder.length) {
+                showScrollBoundary(direction);
+                return;
+            }
+            if (now < sectionScrollBlockedUntil) {
+                // Remember one deliberate swipe rather than dropping it during the camera flight.
+                const fromSection = currentSection;
+                sectionScrollPending = setTimeout(() => {
+                    sectionScrollPending = null;
+                    if (currentSection === fromSection) navigateByScroll(direction);
+                }, sectionScrollBlockedUntil - now);
+            } else {
+                navigateByScroll(direction);
+            }
         }, { passive: false, capture: true });
 
         // Keyboard Shortcuts
@@ -4803,6 +4882,7 @@
             controls.update();
             camera.updateMatrixWorld();
             updateCursorDepth(delta);
+            updateScrollBoundary(delta);
             updateLiveMonitorPreviewPosition();
             updateEducationLeaderLines();
             updateRoomTouchpoints();
