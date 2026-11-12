@@ -2186,14 +2186,27 @@
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
-        controls.enablePan = true;
+        controls.enablePan = false; // Keep the orbit target inside the room.
         controls.screenSpacePanning = true;
         controls.enableZoom = false; // Trackpad/wheel scrolling navigates sections.
         controls.minDistance = 0.3;
         controls.maxDistance = 15.0;
         // Looking at character desk in starting isometric angle
         controls.target.set(0.7, 1.8, -0.9);
-        controls.maxPolarAngle = Math.PI / 2 + 0.15;
+        controls.minPolarAngle = .01;
+        controls.maxPolarAngle = Math.PI / 2;
+        controls.minAzimuthAngle = 1.25;
+        controls.maxAzimuthAngle = 2.25;
+
+        function configureRoomOrbit(index, transitioning = false) {
+            // Only the overview can be dragged. Focused screens keep their intended pose.
+            controls.enableRotate = index === 0 && !transitioning;
+            controls.enablePan = false;
+            controls.minAzimuthAngle = index === 0 && !transitioning ? 1.25 : -Infinity;
+            controls.maxAzimuthAngle = index === 0 && !transitioning ? 2.25 : Infinity;
+            controls.minPolarAngle = .01;
+            controls.maxPolarAngle = Math.PI / 2;
+        }
         controls.enabled = true;
 
         controls.addEventListener('start', () => {
@@ -3664,6 +3677,7 @@
         function goToSection(index) {
             if (index < 0 || index >= sectionsData.length) return;
             currentSection = index;
+            configureRoomOrbit(index, true);
             setMonitorApp(index === 3, index !== 3);
             drawMonitorScreen();
             document.getElementById('monitor-controls').hidden = index !== 3;
@@ -3696,6 +3710,7 @@
                 .to({ x: data.cameraPos[0], y: data.cameraPos[1], z: data.cameraPos[2] }, 1100)
                 .easing(TWEEN.Easing.Cubic.Out)
                 .onComplete(() => {
+                    if (currentSection === index) configureRoomOrbit(index);
                     controls.enabled = true;
                     controls.update();
                 })
