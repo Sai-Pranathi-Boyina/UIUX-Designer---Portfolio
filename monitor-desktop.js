@@ -40,14 +40,6 @@ function drawMonitorScreen(rebuild = true) {
     if (rebuild) drawProjectWorkspace();
     const ctx = monitorCtx;
     const p = monitorApp.progress;
-    const button = document.getElementById('monitor-app-toggle');
-    if (button) {
-        button.textContent = p === 1 ? '−' : 'Open Figma projects';
-        button.setAttribute('aria-label', p === 1 ? 'Minimize Figma' : 'Open Figma projects');
-        button.title = p === 1 ? 'Minimize Figma' : 'Open Figma projects';
-        button.disabled = !!monitorApp.tween;
-        button.setAttribute('aria-expanded', String(p === 1));
-    }
     ctx.save(); ctx.setTransform(2,0,0,2,0,0);
     ctx.fillStyle = '#326653'; ctx.fillRect(0,0,1920,1080);
     if (monitorWallpaper.complete && monitorWallpaper.naturalWidth) {
@@ -88,6 +80,7 @@ function drawMonitorScreen(rebuild = true) {
     if (monitorTexture) monitorTexture.needsUpdate=true;
 }
 
+const BEHANCE_PROFILE_URL = "https://www.behance.net/saipraboyina2";
 // Shared measured layout for rendering, hover, and selection.
 let projectTabLayout = { items: [], contentTop: 94 };
 function layoutProjectTabs(ctx, rightEdge = 1808) {

@@ -342,7 +342,7 @@
             pointer-events: none;
             border-radius: 0 0 10px 10px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+            box-shadow: none;
             transition: opacity 0.2s ease;
             background: #0d0d15;
         }
@@ -796,6 +796,8 @@
         }
         .surface.desk .appbody .case-action-row {
             display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
             align-items: center;
             justify-content: space-between;
             margin-top: 0.4em;
@@ -1298,6 +1300,14 @@
             background: var(--accent-green); color: white; font-weight: 700;
             box-shadow: 0 4px 12px rgba(36, 71, 53, 0.25);
         }
+        #monitor-controls { width: max-content; justify-content: center; }
+        #monitor-behance-link {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            min-height: 44px; padding: 7px 14px; border-radius: 100px;
+            color: var(--text-charcoal); font: 600 14px 'Montserrat', sans-serif;
+            text-decoration: none; transition: background .2s, color .2s;
+        }
+        #monitor-behance-link:hover { color: var(--accent-green); background: rgba(36,71,53,.08); }
         .badge-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
             overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
         @media (max-width: 600px) {
@@ -1332,10 +1342,22 @@
             box-shadow: 0 0 0 3px rgba(247,246,242,.08), 0 2px 6px rgba(36,71,53,.12);
             transition: background .2s, transform .2s, box-shadow .2s; }
         .touchpoint-dot::before { content: ''; width: 5px; height: 5px; border-radius: 50%;
-            background: #fffdf5; box-shadow: 0 0 6px rgba(255,253,245,.55); }
+            background: #fffdf5; box-shadow: 0 0 6px rgba(255,253,245,.55);
+            animation: touchpoint-breathe 5.5s ease-in-out infinite; }
         .touchpoint-dot::after { content: ''; position: absolute; inset: -5px;
             border: 1px solid rgba(255,255,255,.42); border-radius: 50%;
             opacity: 0; transform: scale(.8); transition: opacity .25s, transform .25s; }
+        @keyframes touchpoint-breathe {
+            0%, 100% { opacity: .68; transform: scale(.92); box-shadow: 0 0 4px rgba(255,253,245,.3); }
+            50% { opacity: 1; transform: scale(1.16); box-shadow: 0 0 9px rgba(255,253,245,.6); }
+        }
+        .room-touchpoint:nth-child(2) .touchpoint-dot::before { animation-delay: -1.1s; }
+        .room-touchpoint:nth-child(3) .touchpoint-dot::before { animation-delay: -2.2s; }
+        .room-touchpoint:nth-child(4) .touchpoint-dot::before { animation-delay: -3.3s; }
+        .room-touchpoint:nth-child(5) .touchpoint-dot::before { animation-delay: -4.4s; }
+        .room-touchpoint:hover .touchpoint-dot::before,
+        .room-touchpoint:focus-visible .touchpoint-dot::before { animation: none; }
+        @media (prefers-reduced-motion: reduce) { .touchpoint-dot::before { animation: none; } }
         .touchpoint-label { position: absolute; left: 38px; top: 50%;
             transform: translateY(-50%) translateX(-3px); padding: 6px 10px;
             border-radius: 100px; background: rgba(247,246,242,.92); color: #244735;
@@ -1461,31 +1483,11 @@
                     <span class="t"><b>Mental Health</b><span class="ctl"><i></i><i></i><i></i></span></span>
                     <div class="tile-preview">
                         <!-- SVG Graphic Mockup for Mental Health App -->
-                        <svg viewBox="0 0 320 180" width="100%" height="100%">
-                            <rect width="320" height="180" rx="6" fill="#12131d"/>
-                            <rect x="20" y="16" width="280" height="26" rx="13" fill="#1b1c2b"/>
-                            <text x="35" y="33" fill="#8fd3c1" font-size="11" font-family="'Space Mono', monospace" font-weight="bold">Daily Mindset Check</text>
-                            <circle cx="282" cy="29" r="5" fill="#7ee2a8"/>
-                            <!-- Chart Line -->
-                            <path d="M 25 125 C 60 70, 95 140, 140 85 C 185 30, 230 110, 295 65" fill="none" stroke="#ff9ebb" stroke-width="3" stroke-linecap="round"/>
-                            <path d="M 25 125 C 60 70, 95 140, 140 85 C 185 30, 230 110, 295 65 L 295 155 L 25 155 Z" fill="url(#pinkGlowGrad)" opacity="0.15"/>
-                            <defs>
-                                <linearGradient id="pinkGlowGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="#ff9ebb"/>
-                                    <stop offset="100%" stop-color="transparent"/>
-                                </linearGradient>
-                            </defs>
-                            <rect x="25" y="140" width="75" height="24" rx="6" fill="#202235"/>
-                            <text x="34" y="156" fill="#ff9ebb" font-size="9" font-family="sans-serif" font-weight="bold">Mood: Calm</text>
-                            <rect x="110" y="140" width="95" height="24" rx="6" fill="#202235"/>
-                            <text x="118" y="156" fill="#8fd3c1" font-size="9" font-family="sans-serif" font-weight="bold">Reflection Log</text>
-                            <rect x="215" y="140" width="80" height="24" rx="6" fill="#202235"/>
-                            <text x="225" y="156" fill="#f0a35e" font-size="9" font-family="sans-serif" font-weight="bold">Habit Streak</text>
-                        </svg>
+                        <img src="mental_health_behance_cover.png" alt="Mood and Mind Insights Behance cover" style="width:100%;height:100%;object-fit:cover;display:block;">
                     </div>
                     <span class="meta">
                         <span class="nm">Mental Health App</span>
-                        <span class="pitch">Mobile Application · UI Design & Prototyping</span>
+                        <span class="pitch">Android Dashboard · UI Design</span>
                     </span>
                 </button>
 
@@ -1493,10 +1495,10 @@
                 <button type="button" class="tile" data-p="campus-connect" style="grid-area: p2">
                     <span class="t"><b>Campus Connect</b><span class="ctl"><i></i><i></i><i></i></span></span>
                     <div class="tile-preview" style="padding:0; background:#f6fbf8;">
-                        <img src="campus_connect_preview.png" alt="Campus Connect Mobile App" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
+                        <img src="campus_connect_behance_cover.png" alt="Campus Connect Behance cover" style="width:100%; height:100%; object-fit:cover; object-position:center; display:block;"></div>
                     <span class="meta">
                         <span class="nm">Campus Connect</span>
-                        <span class="pitch">Education Management Mobile App</span>
+                        <span class="pitch">College Management · UI/UX Design</span>
                     </span>
                 </button>
 
@@ -1581,7 +1583,7 @@
                 <button type="button" class="tile" data-p="svelty-website" style="grid-area: p5">
                     <span class="t"><b>Svelty Website</b><span class="ctl"><i></i><i></i><i></i></span></span>
                     <div class="tile-preview" style="padding:0; background:#000;">
-                        <img src="svelty_website_preview.png" alt="Svelty Website" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
+                        <img src="svelty_home_screen.png" alt="Svelty Website" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
                     </div>
                     <span class="meta">
                         <span class="nm">Svelty Website</span>
@@ -1590,11 +1592,11 @@
                 </button>
             </div>
 
-            <!-- CASE 1: Mental Health Application -->
+            <!-- CASE 1: Mood &amp; Mind Insights -->
             <article class="case" id="case-mental-health" hidden>
                 <div class="win app">
                     <div class="t">
-                        <b>Mental Health Application</b>
+                        <b>Mood &amp; Mind Insights</b>
                         <span class="btns">
                             <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
                             <button type="button" tabindex="-1" aria-hidden="true">□</button>
@@ -1602,36 +1604,15 @@
                         </span>
                     </div>
                     <div class="appbody">
-                        <h3>Mental Health Application</h3>
-                        <p class="tagline">Mobile Application · UI Design & Prototyping</p>
+                        <h3>Mood &amp; Mind Insights</h3>
+                        <p class="tagline">Android Dashboard · UI Design</p>
                         <div class="app-visual">
-                            <svg viewBox="0 0 540 280" width="100%" height="100%">
-                                <rect width="540" height="280" rx="8" fill="#11121d"/>
-                                <!-- Phone Mockup 1 -->
-                                <rect x="40" y="20" width="200" height="240" rx="16" fill="#191a29" stroke="#2d3047" stroke-width="2"/>
-                                <rect x="55" y="35" width="170" height="24" rx="12" fill="#23253b"/>
-                                <text x="75" y="51" fill="#8fd3c1" font-size="11" font-family="sans-serif" font-weight="bold">Daily Mood Reflection</text>
-                                <circle cx="140" cy="110" r="40" fill="none" stroke="#ff9ebb" stroke-width="4"/>
-                                <text x="122" y="115" fill="#ff9ebb" font-size="13" font-family="'Space Mono', monospace" font-weight="bold">Calm</text>
-                                <rect x="55" y="165" width="170" height="34" rx="8" fill="#25273d"/>
-                                <text x="68" y="186" fill="#e9e3ef" font-size="10" font-family="sans-serif">Breathing Anchor · 4-7-8</text>
-                                <rect x="55" y="210" width="170" height="34" rx="8" fill="linear-gradient(90deg, #ff9ebb, #f0a35e)"/>
-                                <text x="90" y="231" fill="#17121c" font-size="10" font-family="sans-serif" font-weight="bold">Log Habit Entry</text>
-
-                                <!-- Phone Mockup 2 (Insights) -->
-                                <rect x="280" y="20" width="220" height="240" rx="16" fill="#191a29" stroke="#2d3047" stroke-width="2"/>
-                                <text x="300" y="48" fill="#f0eaf6" font-size="12" font-family="sans-serif" font-weight="bold">Weekly Mood Trends</text>
-                                <path d="M 300 130 C 330 90, 360 150, 390 100 C 420 70, 450 120, 480 80" fill="none" stroke="#8fd3c1" stroke-width="3" stroke-linecap="round"/>
-                                <rect x="300" y="160" width="180" height="32" rx="6" fill="#222538"/>
-                                <text x="312" y="180" fill="#8fd3c1" font-size="10" font-family="sans-serif">Anxiety Index reduced 32%</text>
-                                <rect x="300" y="202" width="180" height="32" rx="6" fill="#222538"/>
-                                <text x="312" y="222" fill="#f0a35e" font-size="10" font-family="sans-serif">Consecutive 7-Day Mind Streak</text>
-                            </svg>
+                            <img src="mental_health_behance_cover.png" alt="Mood and Mind Insights dashboard cover" style="width:100%;height:100%;max-height:380px;object-fit:cover;display:block;">
                         </div>
-                        <figcaption>Mental wellness tracking app focused on clear presentation of user insights, UI design, and prototyping.</figcaption>
+                        <figcaption>A self-insight dashboard for logical and creative daily patterns, with two switchable feeds and a calm, consistent chart language.</figcaption>
                         <div class="case-action-row">
-                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UI Designer & UX Researcher</span>
-                            <a href="https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11" target="_blank" rel="noopener" class="btn-case-cta">View Figma Prototype <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 18 18 6 M6 6h12v12"></path></svg></a>
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UI Designer · Android · Figma</span>
+                            <a href="https://www.behance.net/gallery/258423315/Mood-Mind-Insights-Dashboard-Mobile-UI-Design" target="_blank" rel="noopener" class="btn-case-cta">View Behance Case Study <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 18 18 6 M6 6h12v12"></path></svg></a>
                         </div>
                     </div>
                 </div>
@@ -1646,25 +1627,22 @@
                     </div>
                     <div class="readme" data-scroll>
                         <p class="cmd"><em>~/projects/mental-health</em> $ glow README.md</p>
-                        <h4>Why I built it</h4>
-                        <p>Most wellness apps suffer from high cognitive load, complex forms, and clinical friction that trigger anxiety instead of soothing it. Users drop off because daily logging feels like an administrative chore rather than self-care.</p>
-                        <p>I designed this mobile application to make mood check-ins effortless, tactile, and psychologically calming—focusing on visual clarity, empathetic typography, and positive reinforcement loops.</p>
-                        <h4>What it does</h4>
+                        <h4>Project overview</h4>
+                        <p>An Android self-insight dashboard that presents daily patterns through two complementary views: logical activity and creative wellbeing.</p>
+                        <h4>What it explores</h4>
                         <ul>
-                            <li>One-tap tactile mood logging with expressive visual spectrum and contextual tags.</li>
-                            <li>Personalized insight dashboards mapping sleep, activity, and emotional states over weekly timelines.</li>
-                            <li>Interactive guided breathing exercises with smooth fluid micro-animations.</li>
-                            <li>Gentle daily habit tracking that rewards progress without punishing missed days.</li>
+                            <li>Left Brain mode presents focus, organisation and learning as measurable insights.</li>
+                            <li>Right Brain mode visualises mood, creativity, music, media and surroundings.</li>
+                            <li>A brain toggle switches the entire feed between the two modes.</li>
                         </ul>
-                        <h4>How it's built</h4>
+                        <h4>Design approach</h4>
                         <ul>
-                            <li>Complete UI design system and component architecture crafted in Figma with atomic design tokens.</li>
-                            <li>High-fidelity interactive prototype mapping all primary user journeys and edge states.</li>
-                            <li>Color palette engineered for low eyestrain with WCAG AAA accessibility compliance.</li>
-                            <li>Tested with user personas across diverse stress levels to validate information hierarchy.</li>
+                            <li>11 insight cards use a consistent visual language across six chart types.</li>
+                            <li>Rounded charts and a calm pastel palette make the dashboard approachable.</li>
+                            <li>Facial expressions, colour and labels communicate mood together, without relying on colour alone.</li>
                         </ul>
-                        <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"User Insights"</em>, <em>"UI Design"</em>, <em>"Prototyping"</em>]</p>
-                        <p class="gh"><span>Prototype: </span><a href="https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11" target="_blank" rel="noopener">figma.com/proto/MentalHealthApp</a></p>
+                        <p class="deps">Role: UI Design · Platform: Android · Tool: Figma</p>
+                        <p class="gh"><span>Case study: </span><a href="https://www.behance.net/gallery/258423315/Mood-Mind-Insights-Dashboard-Mobile-UI-Design" target="_blank" rel="noopener">behance.net · Mood &amp; Mind Insights</a></p>
                     </div>
                 </div>
             </article>
@@ -1673,7 +1651,7 @@
             <article class="case" id="case-campus-connect" hidden>
                 <div class="win app">
                     <div class="t">
-                        <b>Campus Connect Mobile Application</b>
+                        <b>Campus Connect</b>
                         <span class="btns">
                             <button type="button" data-back aria-label="Minimise, back to all projects">−</button>
                             <button type="button" tabindex="-1" aria-hidden="true">□</button>
@@ -1681,14 +1659,14 @@
                         </span>
                     </div>
                     <div class="appbody">
-                        <h3>Campus Connect Mobile Application</h3>
-                        <p class="tagline">Education Management Mobile App</p>
+                        <h3>Campus Connect</h3>
+                        <p class="tagline">College Management · UI/UX Design</p>
                         <div class="app-visual" style="padding:0; background:#f6fbf8; overflow:hidden;">
-                            <img src="campus_connect_preview.png" alt="Campus Connect UI/UX Case Study" class="project-mockup-img" style="width:100%; height:100%; max-height:380px; object-fit:contain; object-position:center; display:block; border-radius:8px;">
+                            <img src="campus_connect_behance_cover.png" alt="Campus Connect UI/UX Case Study" class="project-mockup-img" style="width:100%; height:100%; max-height:380px; object-fit:cover; object-position:center; display:block; border-radius:8px;">
                         </div>
-                        <figcaption>Education management app focused on information structure, user flows, and interface design.</figcaption>
+                        <figcaption>College information was scattered across notices, PDFs and chats. Campus Connect brings fees, syllabus, results and previous papers into one mobile experience.</figcaption>
                         <div class="case-action-row">
-                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: UX Architect & UI Designer</span>
+                            <span style="font-size: 11px; color: var(--d-dim); font-family: var(--d-mono);">Role: Solo UI/UX Designer · 2023</span>
                             <a href="https://www.behance.net/gallery/257994833/Campus-Connect-College-Management-App-UIUX" target="_blank" rel="noopener" class="btn-case-cta" style="background:#0057ff; color:#ffffff; font-weight:bold;">View Behance Case Study <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 18 18 6 M6 6h12v12"></path></svg></a>
                         </div>
                     </div>
@@ -1705,22 +1683,20 @@
                     <div class="readme" data-scroll>
                         <p class="cmd"><em>~/projects/campus-connect</em> $ glow README.md</p>
                         <h4>Why I built it</h4>
-                        <p>University life involves juggling attendance thresholds, conflicting timetables, exam notifications, and campus news scattered across different bulletin boards and slow portals.</p>
-                        <p>Campus Connect consolidates the essential daily student workflow into a pocket-sized interface where students can immediately see what class is next, where to go, and whether their attendance is safe.</p>
+                        <p>College information was scattered across notice boards, office counters, PDFs and group chats. Students spent time asking around and missed updates.</p>
                         <h4>What it does</h4>
                         <ul>
-                            <li>Real-time visual attendance tracker with proactive threshold warnings before critical cutoffs.</li>
-                            <li>Dynamic class timetable integrated with lecture hall numbers, faculty contacts, and cancellations.</li>
-                            <li>Campus announcement feed categorized by academic notices, extracurriculars, and placement drives.</li>
-                            <li>Fast leave application workflow with status tracking from advisor to dean.</li>
+                            <li>Brings year-wise fee dues, syllabus, semester results and previous papers into one mobile app.</li>
+                            <li>Places essential student tasks within two taps of Home.</li>
+                            <li>Includes error, empty and help states for a more complete experience.</li>
                         </ul>
-                        <h4>How it's built</h4>
+                        <h4>Design process</h4>
                         <ul>
-                            <li>Constructed complete user flow hierarchy and task analysis across undergraduate cohorts.</li>
-                            <li>Designed reusable card components, status tags, and intuitive navigation tabs.</li>
-                            <li>Designed high-density overview widgets optimized for rapid one-handed mobile scanning between lectures.</li>
+                            <li>4W+H problem framing, user roles, journey mapping and competitive analysis.</li>
+                            <li>Information architecture and flows for sign-in, fees, results, syllabus and papers.</li>
+                            <li>A Paper, Ink, Forest and Gilt design system with Libre Franklin typography.</li>
                         </ul>
-                        <p class="deps">"<b>tools</b>": [<em>"Figma"</em>, <em>"Information Structure"</em>, <em>"User Flows"</em>, <em>"Interface Design"</em>]</p>
+                        <p class="deps">Role: Solo UI/UX Designer · Tool: Figma · Year: 2023</p>
                     </div>
                 </div>
             </article>
@@ -1897,7 +1873,7 @@
                         </div>
                         <!-- Official Website Visual -->
                         <div class="app-visual" style="flex:1; width:100%; height:100%; min-height:0; max-height:none; padding:0; margin:0; background:#000; overflow:hidden; border-radius:0;">
-                            <img src="svelty_website_preview.png" alt="Svelty Official Website" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
+                            <img src="svelty_home_screen.png" alt="Svelty Official Website" style="width:100%; height:100%; object-fit:cover; object-position:top center; display:block;">
                         </div>
                         <div class="case-action-row" style="padding:8px 12px; margin:0; background:#0c0e17; border-top:1px solid var(--d-line); flex:none;">
                             <span style="font-size:11px; color:var(--d-dim); font-family:var(--d-mono);">Role: Lead Website Designer & Developer</span>
@@ -2081,7 +2057,7 @@
                 <div class="phone-profile-title">UI/UX & Product Designer</div>
             </div>
 
-            <!-- 3 Notification / Action Cards -->
+            <!-- Contact action cards -->
             <div class="phone-cards-container">
                 <!-- Card 1: Email -->
                 <a class="phone-action-card" href="mailto:boyinasaipranathi@gmail.com" onclick="showToast('Opening your email app…')">
@@ -2120,6 +2096,16 @@
                         <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12 M7 10l5 5 5-5 M4 16v4h16v-4"></path></svg>
                     </div>
                 </a>
+                <a class="phone-action-card" href="https://www.behance.net/saipraboyina2" target="_blank" rel="noopener noreferrer">
+                    <div class="phone-card-icon">
+                        <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h5a3 3 0 0 1 0 6H3V6Z M3 12h5a3 3 0 0 1 0 6H3v-6 M16 6h4 M14 14h8a4 4 0 0 0-8 0v1a4 4 0 0 0 7 2"></path></svg>
+                    </div>
+                    <div class="phone-card-content">
+                        <div class="phone-card-title">Behance</div>
+                        <div class="phone-card-sub">Explore my design work</div>
+                    </div>
+                    <span class="phone-card-dot"></span>
+                </a>
             </div>
 
             <!-- Bottom Dock with 4 Circular Apps -->
@@ -2154,13 +2140,13 @@
         <span id="hint-text">Explore the room to discover my work</span>
     </div>
 
-    <nav id="monitor-controls" class="skills-controls" aria-label="Figma window controls" hidden>
-        <button id="monitor-app-toggle" type="button" aria-expanded="false" onclick="setMonitorApp(monitorApp.progress < 1)">Open Figma projects</button>
+    <nav id="monitor-controls" class="skills-controls" aria-label="Explore more design work" hidden>
+        <a id="monitor-behance-link" href="https://www.behance.net/saipraboyina2" target="_blank" rel="noopener noreferrer">View all work on Behance <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6 M6 6h12v12"></path></svg></a>
     </nav>
-    <script src="ui-icons.js?v=20261109-outline"></script>
+    <script src="ui-icons.js?v=20261113-behance"></script>
     <script src="experience-badge.js?v=20261109-outline"></script>
     <script src="skills-screen.js?v=20261109-outline"></script>
-    <script src="monitor-desktop.js?v=20261109-desktop"></script>
+    <script src="monitor-desktop.js?v=20261113-behance-overlay"></script>
     <script>
         // ---------------- THREE.JS INITIALIZATION ----------------
         const container = document.getElementById('canvas-container');
@@ -2350,26 +2336,26 @@
             {
                 id: 'mental-health',
                 badge: 'SELECTED PROJECT · 01 OF 06',
-                title: 'Mental Health Application',
-                subtitle: 'Mobile Application · UI Design & Prototyping',
-                desc: 'Mental wellness tracking app focused on clear presentation of user insights, UI design, and prototyping.',
+                title: 'Mood & Mind Insights',
+                subtitle: 'Android Dashboard · UI Design',
+                desc: 'A self-insight dashboard for logical and creative daily patterns, with two switchable feeds and a calm, consistent chart language.',
                 tools: ['Figma'],
-                highlights: ['User Insights', 'UI Design', 'Prototyping'],
-                link: 'https://www.figma.com/proto/ZRUDuvvkSbTobVS1VpxlX0/Task?node-id=46-810&node-type=canvas&t=OLdpcCk9hubmj6Nd-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=15%3A11',
-                displayUrl: 'figma.com/proto/mental-health-app',
-                ctaText: 'View Prototype ↗',
+                highlights: ['Logical & creative feeds', '11 cards · 6 chart types', 'Mood: expression, colour & label'],
+                link: 'https://www.behance.net/gallery/258423315/Mood-Mind-Insights-Dashboard-Mobile-UI-Design',
+                displayUrl: 'behance.net/gallery/258423315',
+                ctaText: 'View Behance Case Study ↗',
                 color: '#244735'
             },
             {
                 id: 'campus-connect',
                 badge: 'SELECTED PROJECT · 02 OF 06',
-                title: 'Campus Connect Mobile Application',
-                subtitle: 'Education Management Mobile App',
-                desc: 'Education management app focused on information structure, user flows, and interface design.',
+                title: 'Campus Connect',
+                subtitle: 'College Management · UI/UX Design',
+                desc: 'College information was scattered across notices, PDFs and chats. Campus Connect brings fees, syllabus, results and previous papers into one mobile experience.',
                 tools: ['Figma'],
-                highlights: ['Information Structure', 'User Flows', 'Interface Design'],
+                highlights: ['Fees, syllabus, results & papers', '4W+H, journeys & user flows', 'Design system & interface states'],
                 link: 'https://www.behance.net/gallery/257994833/Campus-Connect-College-Management-App-UIUX',
-                displayUrl: 'behance.net/gallery/campus-connect',
+                displayUrl: 'behance.net/gallery/257994833',
                 ctaText: 'View Behance Case Study ↗',
                 color: '#244735'
             },
@@ -2434,13 +2420,15 @@
             'svelty-website': new Image(),
             'svelty-crm': new Image(),
             'campus-connect': new Image(),
+            'mental-health': new Image(),
             'vibrantvista': new Image(),
             'dityajewellery': new Image()
         };
         monitorImages['ultramind'].src = 'ultramind_website_preview.png';
-        monitorImages['svelty-website'].src = 'svelty_website_preview.png';
+        monitorImages['svelty-website'].src = 'svelty_home_screen.png';
         monitorImages['svelty-crm'].src = 'svelty_crm_preview.png';
-        monitorImages['campus-connect'].src = 'campus_connect_preview.png';
+        monitorImages['mental-health'].src = 'mental_health_behance_cover.png';
+        monitorImages['campus-connect'].src = 'campus_connect_behance_cover.png';
         monitorImages['vibrantvista'].src = 'vibrantvista_preview.png';
         monitorImages['dityajewellery'].src = 'dityajewellery_preview.png';
 
@@ -2465,6 +2453,8 @@
             monitorWorkspaceCtx = monitorWorkspaceCanvas.getContext('2d');
 
             monitorTexture = new THREE.CanvasTexture(monitorCanvas);
+            // Preserve canvas pixels with this renderer's linear output, as on the phone.
+            monitorTexture.encoding = THREE.LinearEncoding;
             monitorTexture.generateMipmaps = true;
             monitorTexture.minFilter = THREE.LinearMipmapLinearFilter;
             monitorTexture.magFilter = THREE.LinearFilter;
@@ -2495,6 +2485,46 @@
             }
             drawPortfolioText(ctx, line, x, curY);
             return curY + lineHeight;
+        }
+
+        let projectActionLayout = [];
+        function projectActionAt(x, y) {
+            return projectActionLayout.find(action => x >= action.x && x <= action.x + action.w && y >= action.y && y <= action.y + action.h);
+        }
+        function drawProjectActions(ctx, project) {
+            const actions = project.id === 'cms-websites' ? [
+                {label:'1 VibrantVista ↗', url:'https://brau-vibrantvista2k24.42web.io/'},
+                {label:'2 Ditya Jewellery ↗', url:'https://dityajewellery.great-site.net/'}
+            ] : project.link ? [{label:project.ctaText || 'Visit Live Website ↗',url:project.link}] : [];
+            actions.push({label:'← Back to All Projects', back:true});
+            let x=32, y=930;
+            ctx.font='600 22px "Montserrat", sans-serif';
+            actions.forEach(action => {
+                const w=Math.ceil(ctx.measureText(action.label).width)+48, h=54;
+                if (x+w>1140) { x=32; y+=66; }
+                projectActionLayout.push({...action,x,y,w,h});
+                const gradient=ctx.createLinearGradient(x,y,x+w,y+h);
+                gradient.addColorStop(0,'#ff9ebb'); gradient.addColorStop(1,'#f0a35e');
+                ctx.fillStyle=action.back ? 'rgba(255,255,255,.08)' : gradient;
+                ctx.beginPath(); ctx.roundRect(x,y,w,h,12); ctx.fill();
+                if (action.back) { ctx.strokeStyle='rgba(255,255,255,.15)';ctx.lineWidth=1.5;ctx.stroke(); }
+                ctx.fillStyle=action.back ? '#f0eaf6' : '#17121c';
+                ctx.textAlign='center';
+                drawPortfolioText(ctx,action.label,x+w/2,y+34);
+                x+=w+16;
+            });
+        }
+
+        function drawProjectCover(ctx, img, x, y, width, height) {
+            if (!img || !img.complete || !img.naturalWidth) return false;
+            const scale = Math.max(width / img.naturalWidth, height / img.naturalHeight);
+            const w = img.naturalWidth * scale, h = img.naturalHeight * scale;
+            ctx.save();
+            ctx.beginPath(); ctx.roundRect(x, y, width, height, 6); ctx.clip();
+            ctx.fillStyle = '#0a0a10'; ctx.fillRect(x, y, width, height);
+            ctx.drawImage(img, x + (width-w)/2, y + (height-h)/2, w, h);
+            ctx.restore();
+            return true;
         }
 
         function drawCoverImage(ctx, img, dx, dy, dw, dh, radius, anchorY) {
@@ -2543,6 +2573,7 @@
             ctx.fillStyle = radGlow;
             ctx.fillRect(0, 0, w, h);
 
+            projectActionLayout = [];
             drawProjectTabs(ctx);
             // Keep the workspace below the measured navigation, including wrapped rows.
             ctx.save();
@@ -2614,6 +2645,7 @@
                     ctx.font = '600 17px "Montserrat", sans-serif';
                     ctx.textAlign = 'center';
                     drawPortfolioText(ctx, badgeText, mockX + mockW - 16 - bW / 2, mockY + 24);
+                    projectActionLayout.push({url:p.link, x:mockX+mockW-bW-16, y:mockY+8, w:bW, h:24});
                 }
 
                 // Preview Area Inside Browser Frame
@@ -2624,8 +2656,8 @@
                     drawCoverImage(ctx, monitorImages['svelty-website'], prevX, prevY, prevW, prevH, [0, 0, 10, 10], 0.1);
                 } else if (p.id === 'svelty-crm') {
                     drawCoverImage(ctx, monitorImages['svelty-crm'], prevX, prevY, prevW, prevH, [0, 0, 10, 10], 0.05);
-                } else if (p.id === 'campus-connect') {
-                    drawCoverImage(ctx, monitorImages['campus-connect'], prevX, prevY, prevW, prevH, [0, 0, 10, 10], 0.5);
+                } else if (p.id === 'campus-connect' || p.id === 'mental-health') {
+                    drawProjectCover(ctx, monitorImages[p.id], prevX, prevY, prevW, prevH);
                 } else if (p.id === 'cms-websites') {
                     // Dual CMS Websites with Clean Landscape Proportions
                     const cardH = (prevH - 12) / 2;
@@ -2669,74 +2701,7 @@
                 }
 
                 // Bottom Action Buttons Row
-                const btnY = 930;
-                if (p.id === 'cms-websites') {
-                    // Button 1: Visit VibrantVista
-                    const b1Grad = ctx.createLinearGradient(32, btnY, 32 + 250, btnY + 54);
-                    b1Grad.addColorStop(0, '#ff9ebb');
-                    b1Grad.addColorStop(1, '#f0a35e');
-                    ctx.fillStyle = b1Grad;
-                    ctx.beginPath(); ctx.roundRect(32, btnY, 250, 54, 10); ctx.fill();
-                    ctx.fillStyle = '#17121c';
-                    ctx.font = '600 20px "Montserrat", sans-serif';
-                    ctx.textAlign = 'center';
-                    drawPortfolioText(ctx, '1 VibrantVista ↗', 32 + 125, btnY + 33);
-
-                    // Button 2: Visit Ditya Jewellery
-                    const b2Grad = ctx.createLinearGradient(294, btnY, 294 + 250, btnY + 54);
-                    b2Grad.addColorStop(0, '#8fd3c1');
-                    b2Grad.addColorStop(1, '#a3e0d8');
-                    ctx.fillStyle = b2Grad;
-                    ctx.beginPath(); ctx.roundRect(294, btnY, 250, 54, 10); ctx.fill();
-                    ctx.fillStyle = '#17121c';
-                    ctx.font = '600 20px "Montserrat", sans-serif';
-                    ctx.textAlign = 'center';
-                    drawPortfolioText(ctx, '2 Ditya Jewellery ↗', 294 + 125, btnY + 33);
-
-                    // Button 3: Back to All Projects
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                    ctx.beginPath(); ctx.roundRect(556, btnY, 220, 54, 10); ctx.fill();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
-                    ctx.fillStyle = '#cbd5e1';
-                    ctx.font = '600 20px "Montserrat", sans-serif';
-                    ctx.textAlign = 'center';
-                    drawPortfolioText(ctx, '← All Projects', 556 + 110, btnY + 33);
-                } else if (p.link) {
-                    // 1. Primary Action Button ("Visit Live Website ↗")
-                    const btnText = p.ctaText || 'Visit Live Website ↗';
-                    const btnW = 320;
-                    const btnGrad = ctx.createLinearGradient(32, btnY, 32 + btnW, btnY + 54);
-                    btnGrad.addColorStop(0, '#ff9ebb');
-                    btnGrad.addColorStop(1, '#f0a35e');
-                    ctx.fillStyle = btnGrad;
-                    ctx.beginPath(); ctx.roundRect(32, btnY, btnW, 54, 12); ctx.fill();
-                    ctx.fillStyle = '#17121c';
-                    ctx.font = '600 22px "Montserrat", sans-serif';
-                    ctx.textAlign = 'center';
-                    drawPortfolioText(ctx, btnText, 32 + btnW / 2, btnY + 33);
-
-                    // 2. Back to All Projects Button
-                    const backX = 372;
-                    const backW = 260;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                    ctx.beginPath(); ctx.roundRect(backX, btnY, backW, 54, 12); ctx.fill();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
-                    ctx.fillStyle = '#f0eaf6';
-                    ctx.font = '600 20px "Montserrat", sans-serif';
-                    ctx.textAlign = 'center';
-                    drawPortfolioText(ctx, '← Back to All Projects', backX + backW / 2, btnY + 33);
-                } else {
-                    // For projects without external link (e.g. Campus Connect case study)
-                    const backX = 32;
-                    const backW = 320;
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-                    ctx.beginPath(); ctx.roundRect(backX, btnY, backW, 54, 12); ctx.fill();
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'; ctx.stroke();
-                    ctx.fillStyle = '#f0eaf6';
-                    ctx.font = '600 20px "Montserrat", sans-serif';
-                    ctx.textAlign = 'center';
-                    drawPortfolioText(ctx, '← Back to All Projects', backX + backW / 2, btnY + 33);
-                }
+                drawProjectActions(ctx, p);
 
                 // Right Window (Details / Terminal)
                 ctx.fillStyle = '#0b0b12';
@@ -2771,7 +2736,7 @@
                 termY += 38;
                 ctx.fillStyle = '#ffb1cb';
                 ctx.font = 'bold 27px "Montserrat", sans-serif';
-                drawPortfolioText(ctx, 'Why I built it', 1205, termY);
+                drawPortfolioText(ctx, p.id === 'mental-health' ? 'Project overview' : 'Why I built it', 1205, termY);
                 termY += 39;
                 ctx.fillStyle = '#f0eaf6';
                 ctx.font = '500 26px "Montserrat", sans-serif';
@@ -2794,6 +2759,7 @@
                 if (p.link) {
                     ctx.fillStyle = 'rgba(240,163,94,.14)';
                     ctx.beginPath(); ctx.roundRect(1205, 982, 660, 56, 10); ctx.fill();
+                    projectActionLayout.push({url:p.link,x:1205,y:982,w:660,h:56});
                     ctx.strokeStyle = 'rgba(240,163,94,.45)'; ctx.stroke();
                     ctx.fillStyle = '#ffc58e';
                     ctx.font = '600 24px "Montserrat", sans-serif';
@@ -2805,8 +2771,8 @@
                 const tileW = (w - 32 - 16) / 3;
                 const tileH = (h - 78 - 24) / 2;
                 const tiles = [
-                    { x: 16, y: 78, id: 'mental-health', title: 'Mental Health App', pitch: 'Mobile Application · UI Design & Prototyping', color: '#ff9ebb' },
-                    { x: 16 + tileW + 8, y: 78, id: 'campus-connect', title: 'Campus Connect', pitch: 'Education Management Mobile App', color: '#8fd3c1' },
+                    { x: 16, y: 78, id: 'mental-health', title: 'Mental Health App', pitch: 'Android Dashboard · UI Design', color: '#ff9ebb' },
+                    { x: 16 + tileW + 8, y: 78, id: 'campus-connect', title: 'Campus Connect', pitch: 'College Management · UI/UX Design', color: '#8fd3c1' },
                     { x: 16 + (tileW + 8) * 2, y: 78, id: 'cms-websites', title: 'CMS Websites', pitch: 'VibrantVista Fest & Ditya Jewellery', color: '#f0a35e' },
                     { x: 16, y: 78 + tileH + 8, id: 'svelty-crm', title: 'Svelty CRM', pitch: 'Agency Operations & Workflow SaaS', color: '#f0a35e' },
                     { x: 16 + tileW + 8, y: 78 + tileH + 8, id: 'ultramind', title: 'Ultramind.life', pitch: 'Official Website · AI Systems', color: '#8fd3c1' },
@@ -2845,8 +2811,8 @@
                         drawnImage = drawCoverImage(ctx, monitorImages['svelty-website'], pX, pY, pW, pH, 6, 0.1);
                     } else if (t.id === 'svelty-crm') {
                         drawnImage = drawCoverImage(ctx, monitorImages['svelty-crm'], pX, pY, pW, pH, 6, 0.05);
-                    } else if (t.id === 'campus-connect') {
-                        drawnImage = drawCoverImage(ctx, monitorImages['campus-connect'], pX, pY, pW, pH, 6, 0.5);
+                    } else if (t.id === 'campus-connect' || t.id === 'mental-health') {
+                        drawnImage = drawProjectCover(ctx, monitorImages[t.id], pX, pY, pW, pH);
                     } else if (t.id === 'cms-websites') {
                             const cardH = (pH - 8) / 2;
                             const imgVv = monitorImages['vibrantvista'];
@@ -3019,7 +2985,8 @@
             const rows=[
                 {y:480,icon:'mail',title:'Email',detail:'boyinasaipranathi@gmail.com',color:'#198aff'},
                 {y:650,icon:'linkedin',title:'LinkedIn',detail:'sai-pranathi-boyina',color:'#087cbd'},
-                {y:820,icon:'document',title:'Resume',detail:'Download PDF',color:'#628a76'}
+                {y:820,icon:'document',title:'Resume',detail:'Download PDF',color:'#628a76'},
+                {y:990,icon:'behance',title:'Behance',detail:'Explore my design work',color:'#1768e8'}
             ];
             rows.forEach(row=>{
                 ctx.save();ctx.beginPath();ctx.roundRect(54,row.y,612,140,30);ctx.clip();
@@ -3037,7 +3004,7 @@
                 ctx.textAlign='right';ctx.fillStyle='#c0c9df';ctx.font=`400 19px ${font}`;drawPortfolioText(ctx,'Tap to open',638,row.y+53);
             });
             ctx.textAlign='center';ctx.fillStyle='#c8d0e4';ctx.font=`400 23px ${font}`;
-            drawPortfolioText(ctx,'Tap a card to connect',360,1150);
+            drawPortfolioText(ctx,'Tap a card to connect',360,1180);
             // Two useful lock-screen shortcuts in place of a home-screen dock.
             [{icon:'mail',cx:140},{icon:'home',cx:580}].forEach(app=>{
                 ctx.fillStyle='rgba(225,234,255,.16)';ctx.beginPath();ctx.arc(app.cx,1260,43,0,Math.PI*2);ctx.fill();
@@ -3145,6 +3112,7 @@
                 if (monitorAssembly) {
                     const monitorMat = new THREE.MeshBasicMaterial({
                         map: monitorTexture,
+                        toneMapped: false,
                         side: THREE.DoubleSide
                     });
                     monitorScreenMesh = new THREE.Mesh(new THREE.PlaneGeometry(1.605, 0.960), monitorMat);
@@ -3635,23 +3603,57 @@
             updateLiveIframeContent(slug);
         }
 
-        function updateLiveIframeContent(slug) {
+        const liveProjectUrls = { ultramind: 'https://ultramind.life' };
+        const livePreviewState = { key: '' };
+        function updateLiveIframeContent() {
             const el = document.getElementById('live-monitor-preview');
-            if (el) {
-                el.innerHTML = '';
-                el.style.display = 'none';
-                el.style.opacity = '0';
-                el.style.pointerEvents = 'none';
-            }
+            const visible = currentSection === 3 && monitorApp.progress >= .999 && !monitorApp.tween;
+            const overview = activeProjectSlug === '';
+            const slug = overview ? 'ultramind' : activeProjectSlug;
+            const url = visible && liveProjectUrls[slug];
+            const key = url ? (overview ? 'grid:' : 'detail:') + slug : '';
+            if (livePreviewState.key === key) return;
+            livePreviewState.key = key;
+            el.replaceChildren(); el.style.display = 'none';
+            if (!url) return;
+            const frame = document.createElement('iframe');
+            frame.title = projectsData.find(project => project.id === slug).title + ' — live website';
+            frame.referrerPolicy = 'strict-origin-when-cross-origin';
+            frame.allow = 'fullscreen';
+            frame.tabIndex = overview ? -1 : 0;
+            if (overview) frame.setAttribute('aria-hidden', 'true');
+            frame.src = url;
+            el.replaceChildren(frame);
         }
 
         function updateLiveMonitorPreviewPosition() {
+            updateLiveIframeContent();
             const el = document.getElementById('live-monitor-preview');
-            if (el) {
+            if (!livePreviewState.key || !monitorScreenMesh) {
                 el.style.display = 'none';
-                el.style.opacity = '0';
-                el.style.pointerEvents = 'none';
+                return;
             }
+            const overview = activeProjectSlug === '';
+            const bodyY = y => projectTabLayout.contentTop + (y-78) * (1080-projectTabLayout.contentTop)/(1080-78);
+            // Match the four corners of the actual preview on the mirrored monitor texture.
+            const corners = overview ? [[660,637],[1260,637],[1260,978],[660,978]] : [[32,176],[1140,176],[1140,911],[32,911]];
+            const points = corners.map(([x,y]) => {
+                const point = new THREE.Vector3((.5-x/1920)*1.605, (.5-bodyY(y)/1080)*.960, 0);
+                monitorScreenMesh.localToWorld(point); point.project(parallaxCamera);
+                return {x:(point.x+1)*window.innerWidth/2, y:(1-point.y)*window.innerHeight/2};
+            });
+            const [p0,p1,p2,p3] = points;
+            const dx1=p1.x-p2.x, dx2=p3.x-p2.x, dx3=p0.x-p1.x+p2.x-p3.x;
+            const dy1=p1.y-p2.y, dy2=p3.y-p2.y, dy3=p0.y-p1.y+p2.y-p3.y;
+            const det=dx1*dy2-dx2*dy1;
+            if (Math.abs(det)<.001) { el.style.display='none'; return; }
+            const g=(dx3*dy2-dx2*dy3)/det, h=(dx1*dy3-dx3*dy1)/det;
+            const width=1108, height=overview ? 1108*341/600 : 735;
+            const matrix=[(p1.x-p0.x+g*p1.x)/width,(p1.y-p0.y+g*p1.y)/width,0,g/width,
+                (p3.x-p0.x+h*p3.x)/height,(p3.y-p0.y+h*p3.y)/height,0,h/height,
+                0,0,1,0,p0.x,p0.y,0,1];
+            Object.assign(el.style, {display:'block',left:'0',top:'0',width:width+'px',height:height+'px',
+                transformOrigin:'0 0',transform:'matrix3d('+matrix.join(',')+')',opacity:'1',pointerEvents:overview ? 'none' : 'auto'});
         }
 
         // Attach Event Listeners to Desk Surface Buttons
@@ -4545,18 +4547,7 @@
                             if (py >= 78 && py <= 122 && ((px >= 1090 && px <= 1145) || (px >= 1860 && px <= 1910))) {
                                 isClickable = true;
                             }
-                            // Bottom Action buttons (Visit Live, Back to all)
-                            else if (py >= 925 && py <= 990 && px >= 32 && px <= 780) {
-                                isClickable = true;
-                            }
-                            // Top preview header badge
-                            else if (py >= 136 && py <= 180 && px >= 900 && px <= 1140) {
-                                isClickable = true;
-                            }
-                            // Terminal URL action pill
-                            else if (py >= 982 && py <= 1038 && px >= 1205 && px <= 1870 && projectsData[curProjectIdx].link) {
-                                isClickable = true;
-                            }
+                            else if (projectActionAt(px, py)) isClickable = true;
                         }
 
                         if (isClickable) {
@@ -4668,57 +4659,10 @@
                             return;
                         }
 
-                        // Bottom Action Buttons & Mockup Previews
-                        // Bottom Action Buttons & Mockup Previews
-                        if (projectsData[curProjectIdx].id === 'cms-websites') {
-                            // Bottom Button 1: VibrantVista Fest
-                            if (px >= 32 && px <= 282 && py >= 925 && py <= 990) {
-                                window.open('https://brau-vibrantvista2k24.42web.io/', '_blank');
-                                showToast("Opening VibrantVista Festival Platform...");
-                                return;
-                            }
-                            // Bottom Button 2: Ditya Jewellery
-                            if (px >= 294 && px <= 544 && py >= 925 && py <= 990) {
-                                window.open('https://dityajewellery.great-site.net/', '_blank');
-                                showToast("Opening Ditya Jewellery Platform...");
-                                return;
-                            }
-                            // Bottom Button 3: All Projects
-                            if (px >= 556 && px <= 776 && py >= 925 && py <= 990) {
-                                showProject('');
-                                return;
-                            }
-                        } else if (projectsData[curProjectIdx].link) {
-                            const ctaLabel = projectsData[curProjectIdx].ctaText || 'Visit Live Website ↗';
-                            // Button 1: CTA Button ("Visit Live Website ↗" / "Open CRM Platform ↗")
-                            if (px >= 32 && px <= 380 && py >= 925 && py <= 990) {
-                                window.open(projectsData[curProjectIdx].link, '_blank');
-                                showToast(ctaLabel + ': ' + projectsData[curProjectIdx].title);
-                                return;
-                            }
-                            // Button 2: "← Back to All Projects"
-                            if (px >= 372 && px <= 632 && py >= 925 && py <= 990) {
-                                showProject('');
-                                return;
-                            }
-                            // Action Badge on Preview Header
-                            if (px >= 900 && px <= 1140 && py >= 136 && py <= 180) {
-                                window.open(projectsData[curProjectIdx].link, '_blank');
-                                showToast(ctaLabel + ': ' + projectsData[curProjectIdx].title);
-                                return;
-                            }
-                        } else {
-                            // Single "← Back to All Projects" Button (e.g. Campus Connect)
-                            if (px >= 32 && px <= 360 && py >= 925 && py <= 990) {
-                                showProject('');
-                                return;
-                            }
-                        }
-
-                        // Right Window Terminal URL Click (Dedicated URL button pill)
-                        if (projectsData[curProjectIdx].link && px >= 1205 && px <= 1870 && py >= 982 && py <= 1038) {
-                            window.open(projectsData[curProjectIdx].link, '_blank');
-                            showToast("Opening " + projectsData[curProjectIdx].link);
+                        const action = projectActionAt(px, py);
+                        if (action) {
+                            if (action.back) showProject('');
+                            else window.open(action.url, '_blank', 'noopener,noreferrer');
                             return;
                         }
                     } else {
@@ -4784,6 +4728,10 @@
                     } else if (py >= 820 && py <= 960) {
                         window.open('Boyina_Sai_Pranathi_CV.pdf', '_blank');
                         showToast('Downloading resume…');
+                        return;
+                    } else if (px >= 54 && px <= 666 && py >= 990 && py <= 1130) {
+                        window.open(BEHANCE_PROFILE_URL, '_blank', 'noopener,noreferrer');
+                        showToast('Opening Behance…');
                         return;
                     } else if (py >= 1210 && py <= 1320) {
                         if (px >= 90 && px <= 190) {
