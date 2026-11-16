@@ -136,6 +136,8 @@
         }
     };
 
+    window.portfolioExperience = companies;
+
     window.createExperienceBadgeTextures = function (THREE, renderer, company = 'ultramind') {
         const data = companies[company];
         const frontCanvas = document.createElement('canvas');

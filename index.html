@@ -1373,6 +1373,7 @@
         .room-touchpoint:focus-visible { outline: 2px solid #244735; outline-offset: 1px; }
         @media (prefers-reduced-motion: reduce) { .touchpoint-dot, .touchpoint-dot::after, .touchpoint-label { transition: none; } }
     </style>
+    <link rel="stylesheet" href="mobile.css?v=20261115-auto">
 </head>
 <body>
     <div id="canvas-container"></div>
@@ -2144,7 +2145,7 @@
         <a id="monitor-behance-link" href="https://www.behance.net/saipraboyina2" target="_blank" rel="noopener noreferrer">View all work on Behance <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6 M6 6h12v12"></path></svg></a>
     </nav>
     <script src="ui-icons.js?v=20261113-behance"></script>
-    <script src="experience-badge.js?v=20261109-outline"></script>
+    <script src="experience-badge.js?v=20261114-mobile"></script>
     <script src="skills-screen.js?v=20261109-outline"></script>
     <script src="monitor-desktop.js?v=20261113-behance-overlay"></script>
     <script>
@@ -2155,13 +2156,19 @@
         scene.background = new THREE.Color(0xF4EFE7);
 
         // Perspective Camera
+        const compactViewport = window.matchMedia('(max-width: 900px)');
+        function responsiveFov(base) {
+            // Frame each physical object for portrait rather than a generic desktop crop.
+            const referenceAspect = [1.5, 1.4, .7, 1.5, 1.15, .62][typeof currentSection === 'undefined' ? 0 : currentSection];
+            return compactViewport.matches ? Math.min(95, 2 * Math.atan(Math.tan(base*Math.PI/360) * Math.max(1, referenceAspect/(window.innerWidth/window.innerHeight))) * 180/Math.PI) : base;
+        }
         const camera = new THREE.PerspectiveCamera(46.0, window.innerWidth / window.innerHeight, 0.1, 100);
         // Start from high 3/4 isometric room view (starting scene)
         camera.position.set(7.8, 5.3, -4.5);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, compactViewport.matches ? 1.5 : 2));
         renderer.setClearColor(0xF4EFE7, 1);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -2174,6 +2181,7 @@
         controls.dampingFactor = 0.05;
         controls.enablePan = false; // Keep the orbit target inside the room.
         controls.screenSpacePanning = true;
+        controls.enableRotate = !compactViewport.matches;
         controls.enableZoom = false; // Trackpad/wheel scrolling navigates sections.
         controls.minDistance = 0.3;
         controls.maxDistance = 15.0;
@@ -2186,7 +2194,7 @@
 
         function configureRoomOrbit(index, transitioning = false) {
             // Only the overview can be dragged. Focused screens keep their intended pose.
-            controls.enableRotate = index === 0 && !transitioning;
+            controls.enableRotate = index === 0 && !transitioning && !compactViewport.matches;
             controls.enablePan = false;
             controls.minAzimuthAngle = index === 0 && !transitioning ? 1.25 : -Infinity;
             controls.maxAzimuthAngle = index === 0 && !transitioning ? 2.25 : Infinity;
@@ -2329,6 +2337,7 @@
             const selected = tab === 'all' ? skillsCategories : skillsCategories.filter(category => category.id === tab);
             document.getElementById('skills-description').textContent = selected.map(category =>
                 `${category.title}. ${category.description} ${category.skills.join(', ')}.`).join(' ');
+            window.syncMobilePortfolio?.();
         }
 
         // ---------------- 2. IN-MODEL 27" MONITOR CANVAS TEXTURE (PROJECTS CAROUSEL - LARGE & VISIBLE) ----------------
@@ -3281,7 +3290,7 @@
                     })
                     .start();
                 new TWEEN.Tween(camera)
-                    .to({ fov: 46.0 }, duration)
+                    .to({ fov: responsiveFov(46.0) }, duration)
                     .easing(TWEEN.Easing.Cubic.InOut)
                     .onUpdate(() => camera.updateProjectionMatrix())
                     .onComplete(() => {
@@ -3601,13 +3610,14 @@
             }
             drawMonitorScreen();
             updateLiveIframeContent(slug);
+            window.syncMobilePortfolio?.();
         }
 
         const liveProjectUrls = { ultramind: 'https://ultramind.life' };
         const livePreviewState = { key: '' };
         function updateLiveIframeContent() {
             const el = document.getElementById('live-monitor-preview');
-            const visible = currentSection === 3 && monitorApp.progress >= .999 && !monitorApp.tween;
+            const visible = !compactViewport.matches && currentSection === 3 && monitorApp.progress >= .999 && !monitorApp.tween;
             const overview = activeProjectSlug === '';
             const slug = overview ? 'ultramind' : activeProjectSlug;
             const url = visible && liveProjectUrls[slug];
@@ -3685,7 +3695,7 @@
             drawMonitorScreen();
             document.getElementById('monitor-controls').hidden = index !== 3;
 
-            const data = sectionsData[index];
+            const data = {...sectionsData[index]};
             if (index === 2) {
                 const pose = experienceCameraPose();
                 if (pose) {
@@ -3694,6 +3704,8 @@
                     data.fov = pose.fov;
                 }
             }
+
+            data.fov = responsiveFov(data.fov);
 
             // Animate Cupboard Doors
             animateCupboard(data.cupboardOpen);
@@ -3789,7 +3801,10 @@
             document.querySelectorAll('.nav-link').forEach((link) => {
                 const targetSec = parseInt(link.getAttribute('data-section'));
                 link.classList.toggle('active', targetSec === index);
+                if (targetSec === index) link.setAttribute('aria-current', 'page');
+                else link.removeAttribute('aria-current');
             });
+            window.syncMobilePortfolio?.();
         }
 
         function refineLaptopBody(pivot) {
@@ -4354,7 +4369,7 @@
                 spring.offset = THREE.MathUtils.clamp(spring.offset + spring.velocity * dt, -14, 14);
             }
             if (Math.abs(scrollBoundarySpring.target) < .02 && Math.abs(scrollBoundarySpring.offset) < .02 && Math.abs(scrollBoundarySpring.velocity) < .1) hideScrollBoundary();
-            if (scrollBoundarySpring.offset !== 0) {
+            if (scrollBoundarySpring.offset !== 0 && !compactViewport.matches) {
                 parallaxCamera.setViewOffset(window.innerWidth, window.innerHeight, 0,
                     scrollBoundarySpring.offset, window.innerWidth, window.innerHeight);
             }
@@ -4370,6 +4385,8 @@
             goToSection(scrollSectionOrder[next]);
         }
         window.addEventListener('wheel', (event) => {
+            // Compact layouts navigate through the dock; panel scrolling stays native.
+            if (compactViewport.matches) return;
             // Preserve browser pinch-to-zoom and horizontal scrolling in control bars.
             if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY) return;
             // Let text panels scroll naturally before handing their boundary to navigation.
@@ -4583,6 +4600,14 @@
                 const travel = Math.hypot(e.clientX-pointerDownPos.x, e.clientY-pointerDownPos.y);
                 if (currentSection === 1 && travel <= 8) setSkillTab(skillTarget);
                 return;
+            }
+            if (compactViewport.matches && currentSection === 2 && e.pointerType === 'touch') {
+                const dx = e.clientX - pointerDownPos.x;
+                const dy = e.clientY - pointerDownPos.y;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.25) {
+                    selectExperienceBadge(activeExperienceIndex + (dx < 0 ? 1 : -1));
+                    return;
+                }
             }
             if (isPointerDragging) return;
 
@@ -4808,6 +4833,12 @@
             parallaxCamera.position.addScaledVector(cursorRight, cursorDepth.x * amount);
             parallaxCamera.position.addScaledVector(cursorUp, cursorDepth.y * amount * .65);
             if (currentSection !== 5) parallaxCamera.lookAt(controls.target);
+            if (compactViewport.matches) {
+                const landscape = window.innerHeight < 520;
+                parallaxCamera.setViewOffset(window.innerWidth, window.innerHeight,
+                    landscape && (currentSection === 0 || document.body.dataset.mobileDetails === 'true') ? window.innerWidth*.24 : 0,
+                    landscape ? 0 : window.innerHeight * (currentSection === 0 ? .24 : document.body.dataset.mobileDetails === 'true' ? .22 : .04), window.innerWidth, window.innerHeight);
+            }
             parallaxCamera.updateMatrixWorld();
         }
 
@@ -4841,10 +4872,12 @@
         // Responsive Resizing
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
+            camera.fov = responsiveFov(sectionsData[currentSection].fov);
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, compactViewport.matches ? 1.5 : 2));
         });
     </script>
+    <script src="mobile.js?v=20261115-auto"></script>
 </body>
 </html>
