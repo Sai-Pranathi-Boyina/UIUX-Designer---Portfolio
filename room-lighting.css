@@ -1,0 +1,126 @@
+/* Night UI follows the room state without changing the colours of the 3D materials. */
+body[data-room-mode="night"] {
+    --night-accent: #dfc5a0;
+    --night-accent-hover: #eddbc0;
+    --night-on-accent: #29241e;
+}
+body[data-room-mode="night"] .hero-panel-wrapper {
+    --text-charcoal: #f6ecdd;
+    --text-muted: #d3c9bc;
+    --accent-green: #dfc5a0;
+    --accent-green-hover: #eddbc0;
+    --accent-sage: #d6b789;
+}
+body[data-room-mode="night"] .hero-heading,
+body[data-room-mode="night"] .hero-lead {
+    text-shadow: 0 2px 16px #0006;
+}
+body[data-room-mode="night"] .hero-buttons .btn-primary-hero {
+    background: var(--night-accent);
+    color: var(--night-on-accent);
+    border: 1px solid #f3dfbf66;
+    box-shadow: 0 6px 20px #0003;
+}
+body[data-room-mode="night"] .hero-buttons .btn-secondary-hero {
+    background: #25231fcc;
+    color: #f6ecdd;
+    border-color: #e6d4b85c;
+}
+body[data-room-mode="night"] .top-navbar {
+    background: #24221fd9;
+    border-color: #e6d4b82e;
+    box-shadow: 0 12px 32px #0003;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+body[data-room-mode="night"] .top-navbar .nav-link { color: #e8e1d6; }
+body[data-room-mode="night"] .top-navbar .nav-link:hover { background: #ffffff12; }
+body[data-room-mode="night"] .top-navbar .nav-link.active { background: var(--night-accent); color: var(--night-on-accent); box-shadow: 0 4px 12px #0002; }
+body[data-room-mode="night"] .btn-nav-cta {
+    background: var(--night-accent);
+    color: var(--night-on-accent);
+    border-color: #f3dfbf66;
+    box-shadow: 0 4px 12px #0002;
+}
+body[data-room-mode="night"] .btn-nav-cta:hover,
+body[data-room-mode="night"] .hero-buttons .btn-primary-hero:hover {
+    background: var(--night-accent-hover);
+    box-shadow: 0 8px 20px #0003;
+}
+#room-theme-toggle {
+    position: fixed;
+    top: 22px;
+    right: 24px;
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-sizing: border-box;
+    width: 92px;
+    height: 44px;
+    padding: 4px;
+    border: 1px solid #ffffffd9;
+    border-radius: 999px;
+    background: rgba(247,246,242,.9);
+    box-shadow: 0 8px 24px #0002;
+    color: var(--text-charcoal);
+}
+#room-theme-toggle button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    align-self: stretch;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+}
+#room-theme-toggle button:hover { background: #24473514; }
+#room-theme-toggle button[aria-pressed="true"] { background: #244735; color: #fff6e9; }
+#room-theme-toggle button:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+body[data-room-mode="night"] #room-theme-toggle { color: #e8e1d6; background: #24221fed; border-color: #e6d4b82e; }
+body[data-room-mode="night"] #room-theme-toggle button:hover { background: #ffffff12; }
+body[data-room-mode="night"] #room-theme-toggle button[aria-pressed="true"] { background: var(--night-accent); color: var(--night-on-accent); }
+@media (max-width: 900px) {
+    #room-theme-toggle {
+        position: fixed;
+        top: calc(12px + env(safe-area-inset-top, 0px));
+        right: 12px;
+        z-index: 100;
+        width: 100px;
+        height: 48px;
+        background: rgba(247,246,242,.9);
+        border-color: #ffffffd9;
+        box-shadow: 0 8px 24px #0002;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+    body[data-room-mode="night"] #room-theme-toggle { background: #24221fd9; border-color: #e6d4b82e; }
+    body[data-room-mode="night"] .hero-panel-wrapper,
+    body[data-room-mode="night"][data-mobile-section] #mobile-content {
+        background: #25231ff2;
+        color: #ece4d9;
+        border-color: #ead9bd30;
+    }
+    body[data-room-mode="night"] #mobile-content .mobile-card,
+    body[data-room-mode="night"][data-mobile-section="5"] #mobile-content .mobile-contact {
+        background: #302c27;
+        color: #ece4d9;
+        border-color: #ead9bd30;
+    }
+    body[data-room-mode="night"] #mobile-content .mobile-action,
+    body[data-room-mode="night"] #mobile-content .mobile-skill-origin,
+    body[data-room-mode="night"] .mobile-company-tabs button[aria-pressed="true"],
+    body[data-room-mode="night"] #mobile-section-controls button[aria-current] {
+        background: var(--night-accent);
+        color: var(--night-on-accent);
+        border-color: #f3dfbf66;
+    }
+    body[data-room-mode="night"] #mobile-content :focus-visible,
+    body[data-room-mode="night"] #mobile-section-controls :focus-visible { outline-color: var(--night-accent); }
+    body[data-room-mode="night"] #mobile-content .mobile-muted { color: #c9bfb2; }
+}

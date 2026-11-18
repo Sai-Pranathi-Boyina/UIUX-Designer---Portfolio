@@ -11,3 +11,6 @@
 - `campus_connect_behance_cover.png`: original cover from Sai Pranathi Boyina’s [Campus Connect](https://www.behance.net/gallery/257994833/Campus-Connect-College-Management-App-UIUX) Behance project, used at the owner’s request. Project descriptions adapted from the same published case study.
 
 - `svelty_home_screen.png`: screenshot of the current fullscreen Svelty homepage hero at https://svelty.in on 2026-11-13, preserving the user-selected viewport without the following section. Used for the Svelty grid and detailed project previews.
+
+- `room-accents.js`: procedural pear night-light geometry based on the user-provided [Amazon product image](https://m.media-amazon.com/images/I/619QhIS0AVL.jpg) and [TinyMinyMo illuminated pear image](https://www.tinyminymo.com/cdn/shop/files/Kawaii-Pear-Mini-Night-Light-9.jpg). Product photos are references only, not bundled assets.
+- Notice-board concealed warm backlighting in `room-accents.js`: visual treatment inspired by the user-provided [Hamza’s Desk experience view](https://www.raomuhammadhamza.tech/#experience); original implementation with an amber wall halo.

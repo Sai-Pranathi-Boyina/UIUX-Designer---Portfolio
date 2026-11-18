@@ -1374,8 +1374,9 @@
         @media (prefers-reduced-motion: reduce) { .touchpoint-dot, .touchpoint-dot::after, .touchpoint-label { transition: none; } }
     </style>
     <link rel="stylesheet" href="mobile.css?v=20261115-auto">
+    <link rel="stylesheet" href="room-lighting.css?v=20261117-champagne">
 </head>
-<body>
+<body data-room-mode="night">
     <div id="canvas-container"></div>
     <nav id="room-touchpoints" aria-label="Explore the room" hidden></nav>
 
@@ -2148,6 +2149,10 @@
     <script src="experience-badge.js?v=20261114-mobile"></script>
     <script src="skills-screen.js?v=20261109-outline"></script>
     <script src="monitor-desktop.js?v=20261113-behance-overlay"></script>
+    <script src="room-accents.js?v=20261117-pear3"></script>
+    <script src="room-lighting.js?v=20261117-icon-toggle"></script>
+    <script src="room-batching.js?v=20261117-performance3"></script>
+    <script src="room-performance.js?v=20261117-performance3"></script>
     <script>
         // ---------------- THREE.JS INITIALIZATION ----------------
         const container = document.getElementById('canvas-container');
@@ -2168,11 +2173,17 @@
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, compactViewport.matches ? 1.5 : 2));
+        let roomQualityScale=1;
+        function roomPixelRatio() {
+            return Math.min(window.devicePixelRatio, 1.5, Math.sqrt(2000000/(window.innerWidth*window.innerHeight))) * roomQualityScale;
+        }
+        renderer.setPixelRatio(roomPixelRatio());
         renderer.setClearColor(0xF4EFE7, 1);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.shadowMap.autoUpdate = false;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.outputEncoding = THREE.LinearEncoding;
         renderer.toneMappingExposure = 1.08;
         container.appendChild(renderer.domElement);
 
@@ -2193,13 +2204,31 @@
         controls.maxAzimuthAngle = 2.25;
 
         function configureRoomOrbit(index, transitioning = false) {
-            // Only the overview can be dragged. Focused screens keep their intended pose.
-            controls.enableRotate = index === 0 && !transitioning && !compactViewport.matches;
+            // Each object has a small orbit around its landing pose, so dragging
+            // stays useful without moving behind screens or through the walls.
+            controls.enableRotate = !transitioning && !compactViewport.matches;
             controls.enablePan = false;
-            controls.minAzimuthAngle = index === 0 && !transitioning ? 1.25 : -Infinity;
-            controls.maxAzimuthAngle = index === 0 && !transitioning ? 2.25 : Infinity;
+            controls.minAzimuthAngle = -Infinity;
+            controls.maxAzimuthAngle = Infinity;
             controls.minPolarAngle = .01;
             controls.maxPolarAngle = Math.PI / 2;
+            controls.rotateSpeed = index === 0 ? 1 : .45;
+            if (transitioning) return;
+            if (index === 0) {
+                controls.minAzimuthAngle = 1.25;
+                controls.maxAzimuthAngle = 2.25;
+            } else {
+                const pose = index === 2 ? experienceCameraPose() : null;
+                const position = pose ? pose.position : sectionsData[index].cameraPos;
+                const target = pose ? pose.target : sectionsData[index].cameraTarget;
+                const offset = new THREE.Vector3().fromArray(position).sub(new THREE.Vector3().fromArray(target));
+                const orbit = new THREE.Spherical().setFromVector3(offset);
+                const horizontal = index === 5 ? .32 : .42;
+                controls.minAzimuthAngle = orbit.theta - horizontal;
+                controls.maxAzimuthAngle = orbit.theta + horizontal;
+                controls.minPolarAngle = Math.max(.01, orbit.phi - .22);
+                controls.maxPolarAngle = Math.min(Math.PI / 2 + .12, orbit.phi + .22);
+            }
         }
         controls.enabled = true;
 
@@ -2254,6 +2283,7 @@
         const fillLight = new THREE.DirectionalLight(0xf4efe7, 0.85);
         fillLight.position.set(1.5, 6.5, -4.2);
         scene.add(fillLight);
+        let roomLighting = null;
 
         let mixer;
         let activeActions = [];
@@ -2462,7 +2492,7 @@
             monitorWorkspaceCtx = monitorWorkspaceCanvas.getContext('2d');
 
             monitorTexture = new THREE.CanvasTexture(monitorCanvas);
-            // Preserve canvas pixels with this renderer's linear output, as on the phone.
+            // Start with Day's output; room lighting synchronizes this on mode changes.
             monitorTexture.encoding = THREE.LinearEncoding;
             monitorTexture.generateMipmaps = true;
             monitorTexture.minFilter = THREE.LinearMipmapLinearFilter;
@@ -2896,8 +2926,11 @@
             return 'HYDERABAD, INDIA';
         }
 
+        let lastPhoneMinute = '';
         function updatePhoneDisplays() {
-            if (phoneCtx) {
+            const minute=formatCurrentPhoneTime();
+            if (phoneCtx && !document.hidden && minute!==lastPhoneMinute) {
+                lastPhoneMinute=minute;
                 drawPhoneScreen();
             }
         }
@@ -2909,7 +2942,7 @@
             phoneCtx = phoneCanvas.getContext('2d');
 
             phoneTexture = new THREE.CanvasTexture(phoneCanvas);
-            // Match canvas colors to this renderer's linear output, without scene tone mapping.
+            // Room lighting matches texture decoding to the active output profile.
             phoneTexture.encoding = THREE.LinearEncoding;
             phoneTexture.generateMipmaps = true;
             phoneTexture.minFilter = THREE.LinearMipmapLinearFilter;
@@ -3263,7 +3296,13 @@
                     }
                 });
 
+                roomLighting = createRoomLighting({scene, renderer, ambientLight, keyLight, fillLight, findNode});
                 initRoomTouchpoints();
+                window.roomBatchStats=batchStaticRoom(officeModel,gltf.animations||[],[
+                    findNode('laptop assembly'),findNode('monitor assembly'),phoneAssembly,
+                    findNode('cabinet left door hinge'),findNode('cabinet right door hinge'),findNode('cork noticeboard'),
+                    findNode('ContinuousNoticeboardFrame'),...Object.values(experienceBadges).map(b=>b.anchor)
+                ]);
 
                 // Dismiss loading screen seamlessly
                 const loaderEl = document.getElementById('loader');
@@ -3639,6 +3678,7 @@
         function updateLiveMonitorPreviewPosition() {
             updateLiveIframeContent();
             const el = document.getElementById('live-monitor-preview');
+            if(isPointerDragging) {el.style.display='none';return;}
             if (!livePreviewState.key || !monitorScreenMesh) {
                 el.style.display = 'none';
                 return;
@@ -4206,8 +4246,9 @@
             syncExperienceControls();
         }
 
+        const badgeReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
         function updateExperienceBadges(time, delta) {
-            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const reduced = badgeReducedMotion.matches;
             const step = reduced ? 1 : Math.min(delta, 0.05) / 0.4;
             const approach = (value, goal) => value + Math.max(-step, Math.min(step, goal - value));
             const smooth = value => value * value * (3 - 2 * value);
@@ -4228,6 +4269,7 @@
         }
 
         // ---------------- EDUCATION LEADER LINES REAL-TIME PROJECTOR ----------------
+        const educationAnchors=new WeakMap();
         function updateEducationLeaderLines() {
             const svg = document.getElementById('edu-lines-svg');
             if (!svg || currentSection !== 4) return;
@@ -4242,15 +4284,15 @@
 
             hangers.forEach(h => {
                 if (!h.obj) return;
-                const bbox = new THREE.Box3().setFromObject(h.obj);
-                const v = new THREE.Vector3();
-                if (h.anchorMode === 'top') {
-                    v.set((bbox.min.x + bbox.max.x) * 0.5, bbox.max.y - 0.05, (bbox.min.z + bbox.max.z) * 0.5);
-                } else if (h.anchorMode === 'bot') {
-                    v.set((bbox.min.x + bbox.max.x) * 0.5, bbox.min.y + 0.16, (bbox.min.z + bbox.max.z) * 0.5);
-                } else {
-                    bbox.getCenter(v);
+                let anchor=educationAnchors.get(h.obj);
+                if(!anchor) {
+                    const bbox = new THREE.Box3().setFromObject(h.obj);
+                    anchor=bbox.getCenter(new THREE.Vector3());
+                    if(h.anchorMode==='top') anchor.y=bbox.max.y-.05;
+                    if(h.anchorMode==='bot') anchor.y=bbox.min.y+.16;
+                    educationAnchors.set(h.obj,anchor);
                 }
+                const v=anchor.clone();
                 v.project(parallaxCamera);
 
                 const sx = (v.x * 0.5 + 0.5) * window.innerWidth;
@@ -4258,13 +4300,15 @@
 
                 const card = document.getElementById(h.cardId);
                 const cardH = card ? (card.offsetHeight || 84) : 84;
+                const cardLeft=card?card.getBoundingClientRect().left:0;
 
                 screenItems.push({
                     h,
                     sx,
                     sy,
                     card,
-                    cardH
+                    cardH,
+                    cardLeft
                 });
             });
 
@@ -4317,8 +4361,7 @@
             screenItems.forEach(item => {
                 if (item.card) {
                     item.card.style.top = Math.round(item.top) + 'px';
-                    const rect = item.card.getBoundingClientRect();
-                    const cardLeft = rect.left;
+                    const cardLeft = item.cardLeft;
 
                     // 100% straight horizontal dashed line
                     const d = 'M ' + item.sx.toFixed(1) + ' ' + item.lineY.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + item.lineY.toFixed(1);
@@ -4489,6 +4532,7 @@
         let isPointerDragging = false;
         let pointerDownPos = { x: 0, y: 0 };
         let pressedSkillTarget = null;
+        let lastHoverCheck=0;
         // Resolve the displayed pill before OrbitControls can consume the press.
         renderer.domElement.addEventListener('pointerdown', event => {
             pressedSkillTarget = null;
@@ -4513,7 +4557,12 @@
 
         renderer.domElement.addEventListener('pointermove', (e) => {
             const dist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
-            if (dist > 5) isPointerDragging = true;
+            if (e.buttons && dist > 5) isPointerDragging = true;
+            // Hover picking need not scan the full model for every trackpad event,
+            // and dragging already belongs to OrbitControls.
+            const now=performance.now();
+            if(e.buttons || now-lastHoverCheck<50) return;
+            lastHoverCheck=now;
 
             mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -4844,14 +4893,22 @@
 
         // ---------------- MAIN ANIMATION LOOP ----------------
         const clock = new THREE.Clock();
+        const roomPerformance = createRoomPerformance(renderer, quality=>{
+            roomQualityScale=quality;
+            renderer.setPixelRatio(roomPixelRatio());
+        });
+        let lastShadowUpdate=-Infinity,lastOverlayUpdate=-Infinity;
 
         function animate() {
             requestAnimationFrame(animate);
 
-            const delta = clock.getDelta();
-            const elapsedTime = clock.getElapsedTime();
+            if(document.hidden) {clock.getDelta();return;}
+
+            const delta = Math.min(clock.getDelta(),.1);
+            const elapsedTime = clock.elapsedTime;
 
             TWEEN.update();
+            roomLighting?.update(delta);
             updateExperienceBadges(elapsedTime, delta);
 
             if (mixer) {
@@ -4862,10 +4919,19 @@
             camera.updateMatrixWorld();
             updateCursorDepth(delta);
             updateScrollBoundary(delta);
-            updateLiveMonitorPreviewPosition();
-            updateEducationLeaderLines();
-            updateRoomTouchpoints();
+            if(elapsedTime-lastOverlayUpdate>=1/30) {
+                updateLiveMonitorPreviewPosition();
+                updateEducationLeaderLines();
+                updateRoomTouchpoints();
+                lastOverlayUpdate=elapsedTime;
+            }
+            const shadowInterval=document.body.dataset.roomMode==='night'?.2:1/15;
+            if(elapsedTime-lastShadowUpdate>=shadowInterval) {
+                renderer.shadowMap.needsUpdate=true;
+                lastShadowUpdate=elapsedTime;
+            }
             renderer.render(scene, parallaxCamera);
+            roomPerformance.sample(performance.now(),!!roomLighting);
         }
         animate();
 
@@ -4875,7 +4941,7 @@
             camera.fov = responsiveFov(sectionsData[currentSection].fov);
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, compactViewport.matches ? 1.5 : 2));
+            renderer.setPixelRatio(roomPixelRatio());
         });
     </script>
     <script src="mobile.js?v=20261115-auto"></script>
