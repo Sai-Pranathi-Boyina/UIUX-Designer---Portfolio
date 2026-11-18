@@ -5063,8 +5063,10 @@
                 renderer.shadowMap.needsUpdate=true;
                 lastShadowUpdate=elapsedTime;
             }
-            renderer.render(scene, parallaxCamera);
+            // Quality adjustments can resize and clear the canvas. Draw afterward
+            // in the same frame so the browser never presents the cleared buffer.
             roomPerformance.sample(performance.now(),!!roomLighting,!screenInspection);
+            renderer.render(scene, parallaxCamera);
         }
         animate();
 
