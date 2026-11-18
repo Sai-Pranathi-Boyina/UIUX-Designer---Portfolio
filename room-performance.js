@@ -13,14 +13,15 @@ window.createRoomPerformance = function(renderer, setQuality) {
     document.addEventListener('visibilitychange',()=>{
         previous=0;qualityTimes.length=0;times.length=0;readyAt=0;
     });
-    return {sample(now, ready=true) {
+    return {sample(now, ready=true, adapt=true) {
         if(!ready || document.hidden) {previous=0;return;}
         if(!readyAt) readyAt=now;
+        if(!adapt) {qualityTimes.length=0;readyAt=now;}
         const interval=previous?now-previous:0;
         previous=now;
         if(interval>0 && interval<250) {
             if(panel) {times.push(interval);if(times.length>180)times.shift();}
-            if(now-readyAt>4000) qualityTimes.push(interval);
+            if(adapt && now-readyAt>4000) qualityTimes.push(interval);
         }
         // A sustained slow window lowers only the 3D framebuffer. HTML UI stays sharp.
         // Never react to loading, shader compilation, or a background-tab pause.

@@ -7,6 +7,7 @@ window.createRoomLighting = function ({scene, renderer, ambientLight, keyLight, 
     const sources = [], emitters = [];
     const cabinetSources = [];
     const washes = [];
+    const shelfBeamStrength = {value:0};
     const palette = [], screenMaterials = [], woodMix = {value:0};
     const noticeboardMaterials = new Set();
     for (const name of ['cork noticeboard', 'ContinuousNoticeboardFrame']) {
@@ -113,13 +114,47 @@ window.createRoomLighting = function ({scene, renderer, ambientLight, keyLight, 
     if(shelf) {
         const size=shelf.getSize(new THREE.Vector3()), center=shelf.getCenter(new THREE.Vector3());
         const alongX=size.x>size.z;
-        const strip=mesh(new THREE.BoxGeometry(alongX?size.x*.8:.025,.018,alongX?.025:size.z*.8),diffuser(),new THREE.Vector3(center.x,shelf.min.y-.016,center.z));
-        strip.name='Under-shelf warm diffuser'; strip.castShadow=false;
-        // Several overlapping, low-power sources approximate the length of the diffuser.
+        // Flush opal discs, with no separate housing or contrasting rim.
+        const puckMaterial=diffuser();
+        const beamMaterial=new THREE.ShaderMaterial({
+            uniforms:{strength:shelfBeamStrength, tint:{value:new THREE.Color(0xffdfb0)}},
+            vertexShader:`varying vec2 beamUV;
+                varying vec3 beamNormal;
+                varying vec3 beamView;
+                void main() {
+                    beamUV=uv;
+                    vec4 viewPosition=modelViewMatrix*vec4(position,1.0);
+                    beamNormal=normalize(normalMatrix*normal);
+                    beamView=-viewPosition.xyz;
+                    gl_Position=projectionMatrix*viewPosition;
+                }`,
+            fragmentShader:`uniform float strength;
+                uniform vec3 tint;
+                varying vec2 beamUV;
+                varying vec3 beamNormal;
+                varying vec3 beamView;
+                void main() {
+                    float edge=pow(abs(dot(normalize(beamNormal),normalize(beamView))),1.6);
+                    float fade=pow(beamUV.y,1.8)*smoothstep(0.0,0.18,beamUV.y);
+                    gl_FragColor=vec4(tint,strength*edge*fade);
+                }`,
+            transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,toneMapped:false
+        });
         for (const fraction of [-.33,0,.33]) {
-            const position=strip.position.clone().add(new THREE.Vector3(0,-.12,-.06));
+            // Align the flush disc and beam with the original soft light source.
+            const position=new THREE.Vector3(center.x,shelf.min.y-.002,center.z-.06);
             position[alongX?'x':'z']+=(alongX?size.x:size.z)*fraction;
-            point(position,.36,2.1);
+            const lens=mesh(new THREE.CircleGeometry(.052,40),puckMaterial,position);
+            lens.rotation.x=Math.PI/2;
+            lens.name='Flush circular warm shelf diffuser'; lens.castShadow=false;
+            const beam=mesh(new THREE.CylinderGeometry(.047,.26,.85,40,1,true),beamMaterial,
+                position.clone().add(new THREE.Vector3(0,-.427,0)));
+            beam.name='Subtle warm shelf beam'; beam.castShadow=false;beam.receiveShadow=false;
+            // Restore the original strip's source position and strength: the extra
+            // distance from the wood gives the highlight its broad, gradual falloff.
+            const reflectionSource=position.clone();
+            reflectionSource.y=shelf.min.y-.136;
+            point(reflectionSource,.36,2.1);
         }
     }
     // Low skirting light runs all the way to both wall boundaries.
@@ -300,6 +335,7 @@ window.createRoomLighting = function ({scene, renderer, ambientLight, keyLight, 
         fillLight.intensity=THREE.MathUtils.lerp(.85,.16,mix);
         renderer.toneMappingExposure=THREE.MathUtils.lerp(1.08,.90,mix);
         washes.forEach(material=>{material.opacity=.40*mix;});
+        shelfBeamStrength.value=.075*mix;
         palette.forEach(({material,day,night})=>material.color.copy(day).lerp(night,mix));
         woodMix.value=mix;
         sources.forEach(({light,intensity})=>{light.intensity=intensity*mix;});
