@@ -153,6 +153,10 @@
         for (const texture of [frontTexture, backTexture]) {
             // The existing renderer uses linear output; retain the artwork's CSS colors.
             texture.encoding = THREE.LinearEncoding;
+            // Keep the full-resolution lettering instead of softened mip levels.
+            texture.generateMipmaps = false;
+            texture.minFilter = THREE.LinearFilter;
+            texture.magFilter = THREE.LinearFilter;
             // The imported office hierarchy mirrors the card's local X axis.
             texture.repeat.x = -1;
             texture.offset.x = 1;

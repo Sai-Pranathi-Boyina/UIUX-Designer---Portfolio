@@ -6,7 +6,6 @@
     const pager = document.createElement('nav');
     pager.id = 'mobile-section-controls'; pager.setAttribute('aria-label', 'Section navigation');
     let previousSection = -1;
-    let revealTimer = 0;
     let revealAnimation = null;
     document.body.append(sheet, pager);
     const order = [1,3,2,4,5];
@@ -28,7 +27,7 @@
         return {left,top,width:Math.max(...points.map(p=>p.x))-left,height:Math.max(...points.map(p=>p.y))-top};
     }
     function revealReadableSurface(section) {
-        if(!media.matches || currentSection!==section || ![1,3,4].includes(section)) return;
+        if(!media.matches || sectionCameraMoving || currentSection!==section || ![1,3,4].includes(section) || !sheet.hidden) return;
         const source=screenBounds(section);
         // Approximately 12px minimum for the screens' smallest useful text.
         const readableWidth=section===1?680:760;
@@ -36,7 +35,7 @@
         document.body.dataset.mobileDetails='true';
         sheet.hidden=false;
         const target=sheet.getBoundingClientRect();
-        if(!reducedMotion.matches) {
+        if(!reducedMotion.matches && section!==4) {
             const from=source ? {
                 transform:`translate(${source.left+source.width/2-target.left-target.width/2}px, ${source.top+source.height/2-target.top-target.height/2}px) scale(${Math.min(1,source.width/target.width)}, ${Math.min(1,source.height/target.height)})`, opacity:0
             } : {transform:'translateY(24px)',opacity:0};
@@ -64,17 +63,15 @@
     }
     window.syncMobilePortfolio = function(reset = true) {
         if (!media.matches) {
-            clearTimeout(revealTimer); revealAnimation?.cancel(); sheet.hidden=true;
+            revealAnimation?.cancel(); sheet.hidden=true;
             previousSection=-1;
             delete document.body.dataset.mobileSection; delete document.body.dataset.mobileDetails; return;
         }
         const changed=previousSection!==currentSection;
-        if(changed) {
-            clearTimeout(revealTimer); revealAnimation?.cancel();
+        if(changed || sectionCameraMoving) {
+            revealAnimation?.cancel();
             previousSection=currentSection; sheet.hidden=true;
             document.body.dataset.mobileDetails='false';
-            const section=currentSection;
-            revealTimer=setTimeout(()=>revealReadableSurface(section), reducedMotion.matches?0:1150);
         }
         document.body.dataset.mobileSection = currentSection;
         pager.innerHTML = order.map(n=>`<button data-section="${n}" aria-label="${names[n]}" ${n===currentSection?'aria-current="page"':''}>${icon(n)}<span>${names[n]}</span></button>`).join('');
@@ -93,10 +90,12 @@
         }
 
         sheet.innerHTML=html;
+        if (!sectionCameraMoving) revealReadableSurface(currentSection);
         if(reset) sheet.scrollTop=0;
         const active=document.querySelector('.nav-link.active');
         if(active) active.scrollIntoView({block:'nearest',inline:'nearest',behavior:'auto'});
     };
+    window.onPortfolioSectionLanded = () => revealReadableSurface(currentSection);
     sheet.addEventListener('click',event=>{
         const project=event.target.closest('[data-project]');
         const skill=event.target.closest('[data-skill]');

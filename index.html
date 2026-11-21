@@ -1056,10 +1056,11 @@
             pointer-events: none;
             z-index: 9;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            visibility: hidden;
         }
         .education-lines-overlay.active {
             opacity: 1;
+            visibility: visible;
         }
         .education-lines-overlay circle {
             fill: #f4efe7;
@@ -1073,10 +1074,28 @@
             pointer-events: none;
             z-index: 10;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            visibility: hidden;
         }
         .education-cards-column.active {
             opacity: 1;
+            visibility: visible;
+        }
+        #edu-dot-btech, .card-btech { --edu-delay: 0ms; }
+        #edu-dot-inter, .card-inter { --edu-delay: 85ms; }
+        #edu-dot-ssc, .card-ssc { --edu-delay: 170ms; }
+        .education-lines-overlay.active circle {
+            animation: education-appear 90ms ease-out var(--edu-delay) both;
+        }
+        .education-cards-column.active .edu-callout-card {
+            animation: education-appear 180ms ease-out calc(var(--edu-delay) + 320ms) both;
+        }
+        @keyframes education-appear {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .education-lines-overlay.active circle,
+            .education-cards-column.active .edu-callout-card { animation: none; }
         }
         .edu-callout-card {
             position: fixed;
@@ -1391,7 +1410,7 @@
         .room-touchpoint:focus-visible { outline: 2px solid #244735; outline-offset: 1px; }
         @media (prefers-reduced-motion: reduce) { .touchpoint-dot, .touchpoint-dot::after, .touchpoint-label { transition: none; } }
     </style>
-    <link rel="stylesheet" href="mobile.css?v=20261115-auto">
+    <link rel="stylesheet" href="mobile.css?v=20261121-reveal">
     <link rel="stylesheet" href="room-lighting.css?v=20261118-shared-ui-glass">
 </head>
 <body data-room-mode="night">
@@ -2164,7 +2183,7 @@
         <a id="monitor-behance-link" href="https://www.behance.net/saipraboyina2" target="_blank" rel="noopener noreferrer">View all work on Behance <svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6 M6 6h12v12"></path></svg></a>
     </nav>
     <script src="ui-icons.js?v=20261113-behance"></script>
-    <script src="experience-badge.js?v=20261114-mobile"></script>
+    <script src="experience-badge.js?v=20261121-clarity"></script>
     <script src="skills-screen.js?v=20261109-outline"></script>
     <script src="monitor-desktop.js?v=20261113-behance-overlay"></script>
     <script src="room-accents.js?v=20261117-pear3"></script>
@@ -2194,12 +2213,16 @@
         let roomQualityScale=1;
         let screenInspection=false;
         let phoneInspection=false;
+        let badgeInspection=false;
+        let sectionCameraMoving=false;
+        let sectionCameraTweens=[];
+        let roomResolutionPending=false;
         function roomPixelRatio() {
             const pixels=window.innerWidth*window.innerHeight;
-            // The phone's small labels need native Retina resolution in its locked close-up.
-            if (phoneInspection) return Math.min(window.devicePixelRatio, 2, Math.sqrt(8000000/pixels));
+            // Small phone and ID-badge labels need native Retina resolution on landing.
+            if ((phoneInspection || badgeInspection) && !sectionCameraMoving) return Math.min(window.devicePixelRatio, 2, Math.sqrt(8000000/pixels));
             // Preserve readable screen text in close-ups; adapt only the wider room.
-            if (screenInspection) return Math.min(window.devicePixelRatio, 2, Math.sqrt(3200000/pixels));
+            if (screenInspection && !sectionCameraMoving) return Math.min(window.devicePixelRatio, 2, Math.sqrt(3200000/pixels));
             const budget=Math.min(window.devicePixelRatio, 1.5, Math.sqrt(2000000/pixels));
             return Math.max(Math.min(1,budget), budget*roomQualityScale);
         }
@@ -2554,6 +2577,7 @@
             return curY + lineHeight;
         }
 
+        const projectPreviewLayout = {x:32, y:94, width:1108, height:817, barHeight:56};
         let projectActionLayout = [];
         function projectActionAt(x, y) {
             return projectActionLayout.find(action => x >= action.x && x <= action.x + action.w && y >= action.y && y <= action.y + action.h);
@@ -2657,66 +2681,47 @@
                 ctx.beginPath(); ctx.roundRect(16, 78, 1140, 985, 12); ctx.fill();
                 ctx.strokeStyle = '#28283a'; ctx.lineWidth = 2; ctx.stroke();
 
-                // Left Window Title Bar
-                ctx.fillStyle = '#1e1e2d';
-                ctx.beginPath(); ctx.roundRect(16, 78, 1140, 44, [12, 12, 0, 0]); ctx.fill();
-                ctx.fillStyle = '#8fd3c1';
-                ctx.font = 'bold 20px "Montserrat", sans-serif';
-                ctx.textAlign = 'left';
-                const winHeader = p.displayUrl ? ('browser · ' + p.displayUrl) : ('browser · ' + p.title);
-                drawPortfolioText(ctx, winHeader, 36, 106);
-
-                // Window Control buttons on right of left window
-                ctx.fillStyle = '#3b3b50';
-                ctx.beginPath(); ctx.arc(1140 - 55, 100, 5, 0, Math.PI * 2); ctx.fill();
-                ctx.beginPath(); ctx.arc(1140 - 38, 100, 5, 0, Math.PI * 2); ctx.fill();
-                ctx.fillStyle = '#ff9ebb';
-                ctx.beginPath(); ctx.arc(1140 - 20, 100, 6, 0, Math.PI * 2); ctx.fill();
-                ctx.fillStyle = '#17121c';
-                ctx.font = 'bold 11px sans-serif';
-                ctx.textAlign = 'center';
-                drawPortfolioText(ctx, '×', 1140 - 20, 104);
-
-                // Mockup / Preview Container: Starts directly below title bar!
-                const mockX = 32, mockY = 136, mockW = 1108, mockH = 775;
+                // One Mac-style browser window: controls, address and live action.
+                const {x:mockX, y:mockY, width:mockW, height:mockH, barHeight} = projectPreviewLayout;
                 ctx.fillStyle = '#0a0a10';
                 ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, mockH, 10); ctx.fill();
                 ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'; ctx.stroke();
 
                 // Browser Bar
-                ctx.fillStyle = '#131824';
-                ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, 40, [10, 10, 0, 0]); ctx.fill();
+                ctx.fillStyle = '#20202e';
+                ctx.beginPath(); ctx.roundRect(mockX, mockY, mockW, barHeight, [10, 10, 0, 0]); ctx.fill();
                 // Dots
-                ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(mockX + 20, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(mockX + 35, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
-                ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 50, mockY + 20, 4.5, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#ef4444'; ctx.beginPath(); ctx.arc(mockX + 22, mockY + 28, 6.5, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#f59e0b'; ctx.beginPath(); ctx.arc(mockX + 43, mockY + 28, 6.5, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = '#10b981'; ctx.beginPath(); ctx.arc(mockX + 64, mockY + 28, 6.5, 0, Math.PI*2); ctx.fill();
+                projectActionLayout.push({back:true,x:mockX+10,y:mockY+16,w:24,h:24});
                 // URL Address Box / Path
                 const dispUrl = p.displayUrl || (p.link ? p.link.replace(/^https?:\/\//, '') : p.title);
                 const badgeText = p.ctaText || 'Open Live ↗';
-                ctx.font = '600 17px "Montserrat", sans-serif';
-                const bW = p.link ? Math.max(130, ctx.measureText(badgeText).width + 24) : 0;
-                const addrW = Math.min(mockW - bW - 120, 560);
+                ctx.font = '600 20px "Montserrat", sans-serif';
+                const bW = p.link ? Math.max(150, ctx.measureText(badgeText).width + 32) : 0;
+                const addrW = Math.min(mockW - bW - 138, 650);
 
                 ctx.fillStyle = '#0b0f19';
-                ctx.beginPath(); ctx.roundRect(mockX + 70, mockY + 8, addrW, 24, 5); ctx.fill();
+                ctx.beginPath(); ctx.roundRect(mockX + 88, mockY + 11, addrW, 34, 7); ctx.fill();
                 ctx.fillStyle = '#8fd3c1';
                 ctx.font = '18px "Montserrat", sans-serif';
                 ctx.textAlign = 'left';
-                drawPortfolioText(ctx, '🔒 ' + dispUrl, mockX + 85, mockY + 24);
+                drawPortfolioText(ctx, '🔒 ' + dispUrl, mockX + 102, mockY + 34);
 
                 if (p.link) {
                     // Open Live / View Prototype Badge
-                    ctx.fillStyle = 'rgba(255, 158, 187, 0.15)';
-                    ctx.beginPath(); ctx.roundRect(mockX + mockW - bW - 16, mockY + 8, bW, 24, 4); ctx.fill();
-                    ctx.fillStyle = '#ff9ebb';
-                    ctx.font = '600 17px "Montserrat", sans-serif';
+                    ctx.fillStyle = '#f3b8bc';
+                    ctx.beginPath(); ctx.roundRect(mockX + mockW - bW - 16, mockY + 11, bW, 34, 7); ctx.fill();
+                    ctx.fillStyle = '#17121c';
+                    ctx.font = '600 20px "Montserrat", sans-serif';
                     ctx.textAlign = 'center';
-                    drawPortfolioText(ctx, badgeText, mockX + mockW - 16 - bW / 2, mockY + 24);
-                    projectActionLayout.push({url:p.link, x:mockX+mockW-bW-16, y:mockY+8, w:bW, h:24});
+                    drawPortfolioText(ctx, badgeText, mockX + mockW - 16 - bW / 2, mockY + 35);
+                    projectActionLayout.push({url:p.link, x:mockX+mockW-bW-16, y:mockY+11, w:bW, h:34});
                 }
 
                 // Preview Area Inside Browser Frame
-                const prevX = mockX, prevY = mockY + 40, prevW = mockW, prevH = mockH - 40;
+                const prevX = mockX, prevY = mockY + barHeight, prevW = mockW, prevH = mockH - barHeight;
                 if (p.id === 'ultramind') {
                     drawCoverImage(ctx, monitorImages['ultramind'], prevX, prevY, prevW, prevH, [0, 0, 10, 10], 0.15);
                 } else if (p.id === 'svelty-website') {
@@ -3812,7 +3817,9 @@
             const overview = activeProjectSlug === '';
             const bodyY = y => projectTabLayout.contentTop + (y-78) * (1080-projectTabLayout.contentTop)/(1080-78);
             // Match the four corners of the actual preview on the mirrored monitor texture.
-            const corners = overview ? [[660,637],[1260,637],[1260,978],[660,978]] : [[32,176],[1140,176],[1140,911],[32,911]];
+            const {x,y,width:previewWidth,height:previewHeight,barHeight} = projectPreviewLayout;
+            const corners = overview ? [[660,637],[1260,637],[1260,978],[660,978]]
+                : [[x,y+barHeight],[x+previewWidth,y+barHeight],[x+previewWidth,y+previewHeight],[x,y+previewHeight]];
             const points = corners.map(([x,y]) => {
                 const point = new THREE.Vector3((.5-x/1920)*1.605, (.5-bodyY(y)/1080)*.960, 0);
                 monitorScreenMesh.localToWorld(point); point.project(parallaxCamera);
@@ -3824,7 +3831,7 @@
             const det=dx1*dy2-dx2*dy1;
             if (Math.abs(det)<.001) { el.style.display='none'; return; }
             const g=(dx3*dy2-dx2*dy3)/det, h=(dx1*dy3-dx3*dy1)/det;
-            const width=1108, height=overview ? 1108*341/600 : 735;
+            const width=previewWidth, height=overview ? previewWidth*341/600 : previewHeight-barHeight;
             const matrix=[(p1.x-p0.x+g*p1.x)/width,(p1.y-p0.y+g*p1.y)/width,0,g/width,
                 (p3.x-p0.x+h*p3.x)/height,(p3.y-p0.y+h*p3.y)/height,0,h/height,
                 0,0,1,0,p0.x,p0.y,0,1];
@@ -3852,15 +3859,35 @@
             });
         }
 
+        let educationRevealStartedAt = null;
+        function setEducationVisible(visible) {
+            educationRevealStartedAt = visible && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+                ? performance.now() : null;
+            // Start each dashed line at its dot before exposing the overlay.
+            if (visible) updateEducationLeaderLines();
+            for (const id of ['edu-lines-svg', 'edu-cards-col']) {
+                const element = document.getElementById(id);
+                if (!element) continue;
+                element.classList.toggle('active', visible);
+                element.setAttribute('aria-hidden', String(!visible));
+            }
+        }
+
         function goToSection(index) {
             if (index < 0 || index >= sectionsData.length) return;
             hideScrollBoundary();
+            setEducationVisible(false);
+            sectionCameraTweens.forEach(tween=>tween.stop());
+            sectionCameraTweens=[];
+            sectionCameraMoving=true;
             currentSection = index;
             // Every navigation path returns the phone face-down outside Contact.
             animatePhone(index === 5);
-            screenInspection = index === 1 || index === 3 || index === 5;
+            screenInspection = index === 1 || index === 2 || index === 3 || index === 5;
             phoneInspection = index === 5;
-            renderer.setPixelRatio(roomPixelRatio());
+            badgeInspection = index === 2;
+            // Fly at room resolution, then restore full screen clarity on landing.
+            roomResolutionPending=true;
             configureRoomOrbit(index, true);
             setMonitorApp(index === 3, index !== 3);
             drawMonitorScreen();
@@ -3882,36 +3909,36 @@
             animateCupboard(data.cupboardOpen);
             animateLaptop(index === 1);
 
-            // Animate Camera FOV
+            // Keep only one section flight active, including rapid nav clicks.
             if (data.fov && Math.abs(camera.fov - data.fov) > 0.3) {
-                new TWEEN.Tween(camera)
+                sectionCameraTweens.push(new TWEEN.Tween(camera)
                     .to({ fov: data.fov }, 1100)
                     .easing(TWEEN.Easing.Cubic.Out)
                     .onUpdate(() => camera.updateProjectionMatrix())
-                    .start();
+                    .start());
             }
 
-            // Smoothly fly camera to new section and focus target
-            new TWEEN.Tween(camera.position)
+            sectionCameraTweens.push(new TWEEN.Tween(camera.position)
                 .to({ x: data.cameraPos[0], y: data.cameraPos[1], z: data.cameraPos[2] }, 1100)
                 .easing(TWEEN.Easing.Cubic.Out)
-                .onComplete(() => {
-                    if (currentSection === index) configureRoomOrbit(index);
-                    controls.enabled = true;
-                    controls.update();
-                })
-                .start();
+                .start());
 
-            new TWEEN.Tween(controls.target)
+            sectionCameraTweens.push(new TWEEN.Tween(controls.target)
                 .to({ x: data.cameraTarget[0], y: data.cameraTarget[1], z: data.cameraTarget[2] }, 1100)
                 .easing(TWEEN.Easing.Cubic.Out)
                 .onComplete(() => {
+                    sectionCameraMoving=false;
+                    sectionCameraTweens=[];
+                    roomResolutionPending=true;
+                    configureRoomOrbit(index);
                     controls.enabled = true;
                     controls.update();
+                    if (index === 4) {
+                        setEducationVisible(true);
+                    }
+                    window.onPortfolioSectionLanded?.();
                 })
-                .start();
-
-            setTimeout(() => { controls.enabled = true; }, 1200);
+                .start());
 
             document.getElementById('room-touchpoints').hidden = index !== 0 || !roomTouchpointsReady;
             document.getElementById('skills-controls').hidden = index !== 1;
@@ -3939,19 +3966,6 @@
             } else {
                 updateLiveIframeContent('');
             }
-            // Education leader lines and cards column
-            const eduSvg = document.getElementById('edu-lines-svg');
-            const eduCol = document.getElementById('edu-cards-col');
-            if (eduSvg && eduCol) {
-                if (index === 4) {
-                    eduSvg.classList.add('active');
-                    eduCol.classList.add('active');
-                } else {
-                    eduSvg.classList.remove('active');
-                    eduCol.classList.remove('active');
-                }
-            }
-
             // Contact section is rendered entirely in 3D on the physical desk phone
 
             document.getElementById('contact-connect').hidden = index !== 5;
@@ -4489,13 +4503,17 @@
             screenItems[2].lineY = line2_Y;
 
             // Apply card positions & draw straight horizontal leader lines from uniforms to cards
-            screenItems.forEach(item => {
+            const revealElapsed = educationRevealStartedAt === null ? Infinity : performance.now() - educationRevealStartedAt;
+            screenItems.forEach((item, index) => {
                 if (item.card) {
                     item.card.style.top = Math.round(item.top) + 'px';
                     const cardLeft = item.cardLeft;
 
-                    // 100% straight horizontal dashed line
-                    const d = 'M ' + item.sx.toFixed(1) + ' ' + item.lineY.toFixed(1) + ' L ' + (cardLeft - 4).toFixed(1) + ' ' + item.lineY.toFixed(1);
+                    // Grow from the dot without stretching the existing dash pattern.
+                    const progress = Math.max(0, Math.min(1, (revealElapsed - index * 85) / 320));
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const endX = item.sx + (cardLeft - 4 - item.sx) * eased;
+                    const d = 'M ' + item.sx.toFixed(1) + ' ' + item.lineY.toFixed(1) + ' L ' + endX.toFixed(1) + ' ' + item.lineY.toFixed(1);
 
                     const lineEl = document.getElementById(item.h.lineId);
                     const dotEl = document.getElementById(item.h.dotId);
@@ -4507,6 +4525,7 @@
                     }
                 }
             });
+            if (revealElapsed >= 490) educationRevealStartedAt = null;
         }
 
         // One section per scroll gesture, following the visible navigation order.
@@ -4741,7 +4760,7 @@
                         // 3. Single project view buttons
                         else {
                             // Close buttons
-                            if (py >= 78 && py <= 122 && ((px >= 1090 && px <= 1145) || (px >= 1860 && px <= 1910))) {
+                            if (py >= 78 && py <= 122 && px >= 1860 && px <= 1910) {
                                 isClickable = true;
                             }
                             else if (projectActionAt(px, py)) isClickable = true;
@@ -4855,11 +4874,6 @@
 
                     // 2. Case Study View Active
                     if (activeProjectSlug !== '') {
-                        // Left Window Close '×' Button
-                        if (px >= 1100 && px <= 1145 && py >= 78 && py <= 122) {
-                            showProject('');
-                            return;
-                        }
                         // Right Window (Terminal) Close '×' Button
                         if (px >= 1860 && px <= 1910 && py >= 78 && py <= 122) {
                             showProject('');
@@ -5052,9 +5066,10 @@
             camera.updateMatrixWorld();
             updateCursorDepth(delta);
             updateScrollBoundary(delta);
-            if(elapsedTime-lastOverlayUpdate>=1/30) {
+            const overlayDue = elapsedTime-lastOverlayUpdate>=1/30;
+            if (overlayDue || educationRevealStartedAt !== null) updateEducationLeaderLines();
+            if(overlayDue) {
                 updateLiveMonitorPreviewPosition();
-                updateEducationLeaderLines();
                 updateRoomTouchpoints();
                 lastOverlayUpdate=elapsedTime;
             }
@@ -5066,6 +5081,11 @@
             // Quality adjustments can resize and clear the canvas. Draw afterward
             // in the same frame so the browser never presents the cleared buffer.
             roomPerformance.sample(performance.now(),!!roomLighting,!screenInspection);
+            if (roomResolutionPending) {
+                const ratio=roomPixelRatio();
+                if (Math.abs(renderer.getPixelRatio()-ratio)>.001) renderer.setPixelRatio(ratio);
+                roomResolutionPending=false;
+            }
             renderer.render(scene, parallaxCamera);
         }
         animate();
@@ -5079,6 +5099,6 @@
             renderer.setPixelRatio(roomPixelRatio());
         });
     </script>
-    <script src="mobile.js?v=20261115-auto"></script>
+    <script src="mobile.js?v=20261121-reveal"></script>
 </body>
 </html>
